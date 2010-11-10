@@ -32,13 +32,13 @@
   (interactive)
   (color-theme-install
    '(color-theme-almost-monokai
-     ((background-color . "#272821")
+     ((background-color . "#101112")
       (foreground-color . "#F8F8F2")
       (cursor-color . "#DAD085"))
      (default ((t (nil))))
      (modeline ((t (:background "white" :foreground "black" :box (:line-width 1 :style released-button)))))
      (font-lock-builtin-face ((t (:foreground "#A6E22A"))))
-     (font-lock-comment-face ((t (:italic t :foreground "#75715D"))))
+     (font-lock-comment-face ((t (:italic t :foreground "#9933cc"))))
      (font-lock-constant-face ((t (:foreground "#A6E22A"))))
      (font-lock-doc-string-face ((t (:foreground "#65B042"))))
      (font-lock-string-face ((t (:foreground "#DFD874"))))

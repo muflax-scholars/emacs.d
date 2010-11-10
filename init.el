@@ -19,8 +19,13 @@
 ;;-------
 ;; color 
 ;;-------
-(load-file "~/.emacs.d/elisp/themes/color-theme-almost-monokai.el")
+(require 'color-theme)
+(color-theme-initialize)
 
+; makes sure each frame has its own unique color
+(setq color-theme-is-global nil)
+
+; use different color scheme depending on whether we run in X or a terminal
 (defvar after-make-console-frame-hooks '()
     "Hooks to run after creating a new TTY frame")
 (defvar after-make-window-system-frame-hooks '()
@@ -40,7 +45,20 @@
             (run-after-make-frame-hooks (selected-frame))))
 
 (add-hook 'after-make-window-system-frame-hooks 'color-theme-almost-monokai)
-;(add-hook 'after-make-console-frame-hooks 'color-theme-standard)
+;(add-hook 'after-make-console-frame-hooks 'color-theme-emacs-nw)
+
+;;--------
+;; auctex
+;;--------
+(load "auctex.el" nil t t)
+(load "preview-latex.el" nil t t)
+(add-hook 'LaTeX-mode-hook 'TeX-PDF-mode)
+
+;;---------
+;; icicles
+;;---------
+(require 'icicles)
+;(icy-mode 1)
 
 ;;-----------------
 ;; general options
@@ -63,11 +81,14 @@
 (tool-bar-mode -1)
 
 ;; fonts
-(set-default-font "Anonymous Pro-9")
-(set-fontset-font (frame-parameter nil 'font)
-    'japanese-jisx0208 '("Kochi Gothic" . "unicode-bmp"))
-(set-fontset-font (frame-parameter nil 'font)
-    'japanese-jisx0212 '("Kochi Gothic" . "unicode-bmp"))
+(defun set-window-fonts ()
+    (set-default-font "Anonymous Pro-9")
+    (set-fontset-font (frame-parameter nil 'font)
+        'japanese-jisx0208 '("Kochi Gothic" . "unicode-bmp"))
+    (set-fontset-font (frame-parameter nil 'font)
+        'japanese-jisx0212 '("Kochi Gothic" . "unicode-bmp"))
+)
+(add-hook 'after-make-window-system-frame-hooks 'set-window-fonts)
 
 ;; text stuff
 (setq default-tab-width 4)
@@ -75,12 +96,11 @@
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
 (setq fill-column 80)
 (prefer-coding-system 'utf-8)
-(setq undo-limit 10000)
+(setq undo-limit 1000000)
 (setq sentence-end-double-space nil)
 (column-number-mode t)
 (setq-default indicate-empty-lines t)
 (setq default-major-mode 'text-mode)
-(setq next-line-add-newlines t)
 
 ;; parentheses are connected and their content highlighted
 (show-paren-mode 1)
