@@ -57,18 +57,19 @@
 ;;---------
 ;; icicles
 ;;---------
-(require 'icicles)
+;(require 'icicles)
 ;(icy-mode 1)
 
 ;;-----------------
 ;; general options
 ;;-----------------
 
-;; file stuff
+;; safety
 (setq make-backup-files nil)
 (defvar autosave-dir (expand-file-name "~/.emacs.d/autosave-dir/"))
 (setq auto-save-list-file-prefix autosave-dir)
 (setq auto-save-file-name-transforms `((".*" ,autosave-dir t)))
+(setq confirm-kill-emacs 'y-or-n-p)
 
 ;; optical stuff
 (blink-cursor-mode -1)
@@ -120,6 +121,15 @@
 (global-set-key "\C-cn" 'next-error)	
 (global-set-key "\C-cp" 'previous-error) 
 (global-set-key "\C-cr" 'query-replace-regexp)
+; because we navigate via cursor keys, we can put something more useful on the
+; default navigational keys
+(global-set-key "\C-p" 'undo)
+(global-set-key "\C-n" 'other-window)
+(global-set-key "\M-n" 'execute-extended-command)
+(global-set-key "\C-f" 'forward-word)
+(global-set-key "\C-b" 'backward-word)
+(global-set-key "\M-f" 'forward-sentence)
+(global-set-key "\M-b" 'backward-sentence)
 
 ;; random stuff
 (setq calendar-week-start-day 1) ; monday
