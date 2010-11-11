@@ -60,6 +60,13 @@
 ;(require 'icicles)
 ;(icy-mode 1)
 
+;;------------------
+;; smooth scrolling
+;;------------------
+(require 'smooth-scrolling)
+(setq scroll-margin 0)
+(setq smooth-scroll-margin 5)
+
 ;;-----------------
 ;; general options
 ;;-----------------
