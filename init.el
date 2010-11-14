@@ -1,9 +1,9 @@
 ;;-----------
 ;; load path 
 ;;-----------
-;; elisp stores foreign packages, emacs.d only my own
+;; site-lisp stores foreign packages, emacs.d only my own
 (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
-    (let* ((my-lisp-dir "~/.emacs.d/elisp/")
+    (let* ((my-lisp-dir "~/.emacs.d/site-lisp/")
            (default-directory my-lisp-dir))
       (progn
         (setq load-path (cons my-lisp-dir load-path))
@@ -66,6 +66,11 @@
 (require 'smooth-scrolling)
 (setq scroll-margin 0)
 (setq smooth-scroll-margin 5)
+
+;;--------------
+;; rainbow mode
+;;--------------
+(require 'rainbow-mode)
 
 ;;-----------------
 ;; general options
