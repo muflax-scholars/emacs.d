@@ -72,6 +72,18 @@
 ;;--------------
 (require 'rainbow-mode)
 
+;;--------------
+;; undo-tree
+;;--------------
+(require 'undo-tree)
+(global-undo-tree-mode)
+
+;;--------------
+;; undo highlighting
+;;--------------
+(require 'volatile-highlights)
+(volatile-highlights-mode t)
+
 ;;-----------------
 ;; general options
 ;;-----------------
@@ -135,7 +147,8 @@
 (global-set-key "\C-cr" 'query-replace-regexp)
 ; because we navigate via cursor keys, we can put something more useful on the
 ; default navigational keys
-(global-set-key "\C-p" 'undo)
+(global-set-key "\C-p" 'undo-tree-undo)
+(global-set-key "\M-p" 'undo-tree-redo)
 (global-set-key "\C-n" 'other-window)
 (global-set-key "\M-n" 'execute-extended-command)
 (global-set-key "\C-f" 'forward-word)
