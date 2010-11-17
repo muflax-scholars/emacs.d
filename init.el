@@ -104,6 +104,7 @@
 (set-scroll-bar-mode 'right)
 (setq frame-title-format "%b - emacs")
 (tool-bar-mode -1)
+(setq scroll-preserve-screen-position t)
 
 ;; fonts
 (defun set-window-fonts ()
