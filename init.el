@@ -215,3 +215,22 @@
 ;; auto indentation
 (require 'auto-indent-mode)
 (auto-indent-global-mode)
+(setq auto-indent-on-save-file nil)
+
+;; mark stuff like FIXME
+(require 'fixme-mode)
+(fixme-mode 1)
+
+;; use automatic file headers
+; #TODO recognize name automagically
+; #TODO add end-of-buffer
+(require 'autoinsert)
+(auto-insert-mode)
+(setq auto-insert-directory "~/.emacs.d/templates/")
+(setq auto-insert-query nil)
+(define-auto-insert "\.sh"  "sh")
+(define-auto-insert "\.py"  "python")
+(define-auto-insert "\.pl"  "perl")
+(define-auto-insert "\.rb"  "ruby")
+(define-auto-insert "\.c"   "c")
+(define-auto-insert "\.cpp" "cpp")

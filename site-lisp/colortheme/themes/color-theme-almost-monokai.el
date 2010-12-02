@@ -3,7 +3,7 @@
 
 ;; Author: Prateek Saxena <prtksxna@gmail.com>
 ;; Author: Pratul Kalia   <pratul@pratul.in>
-;;
+;; 
 ;; Based on the Monokai TextMate theme
 ;; Author: Wimer Hazenberg <http://www.monokai.nl>
 
@@ -24,24 +24,28 @@
 ;; the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 ;; Boston, MA 02110-1301, USA.
 
-; Color theme support is required.
+                                        ; Color theme support is required.
 (require 'color-theme)
 
-; Code start.
+                                        ; Code start.
 (defun color-theme-almost-monokai ()
   (interactive)
   (color-theme-install
    '(color-theme-almost-monokai
-     ((background-color . "#101112")
+     ((background-color . "black")
+      (background-mode  . dark)
       (foreground-color . "#F8F8F2")
       (cursor-color . "#DAD085"))
      (default ((t (nil))))
-     (modeline ((t (:background "white" :foreground "black" :box (:line-width 1 :style released-button)))))
+     (mode-line ((t (:background "gray5" :foreground "gray" :box '(:width 1 :style nil)))))
+     (mode-line-buffer-id ((t (:background "gray5" :foreground "gray"))))
+     (mode-line-highlight ((t (:box '(:width 1 :style nil)))))
+     (mode-line-inactive ((t (:background "gray5" :foreground "gray40"))))
      (font-lock-builtin-face ((t (:foreground "#A6E22A"))))
      (font-lock-comment-face ((t (:italic t :foreground "#9933cc"))))
      (font-lock-constant-face ((t (:foreground "#A6E22A"))))
      (font-lock-doc-string-face ((t (:foreground "#65B042"))))
-     (font-lock-string-face ((t (:foreground "#DFD874"))))
+     (font-lock-string-face ((t (:foreground "#65b042"))))
      (font-lock-function-name-face ((t (:foreground "#F1266F" :italic t))))
      (font-lock-keyword-face ((t (:foreground "#66D9EF"))))
      (font-lock-type-face ((t (:underline t :foreground "#89BDFF"))))
@@ -51,9 +55,9 @@
      (hl-line ((t (:background "#1A1A1A"))))
      (region ((t (:background "#6DC5F1"))))
      (ido-subdir ((t (:foreground "#F1266F"))))
-    )
+     )
+   )
   )
-)
 (provide 'color-theme-almost-monokai)
-;---------------
-; Code end.
+                                        ;---------------
+                                        ; Code end.
