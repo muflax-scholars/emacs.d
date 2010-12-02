@@ -47,46 +47,34 @@
 (add-hook 'after-make-window-system-frame-hooks 'color-theme-almost-monokai)
 ;(add-hook 'after-make-console-frame-hooks 'color-theme-emacs-nw)
 
-;;--------
+
+;;-----------------------------------
+;; general options and minor plugins
+;;-----------------------------------
 ;; auctex
-;;--------
 (load "auctex.el" nil t t)
 (load "preview-latex.el" nil t t)
 (add-hook 'LaTeX-mode-hook 'TeX-PDF-mode)
 
-;;---------
 ;; icicles
-;;---------
 ;(require 'icicles)
 ;(icy-mode 1)
 
-;;------------------
-;; smooth scrolling
-;;------------------
+;; smooth scrolling with margin
 (require 'smooth-scrolling)
 (setq scroll-margin 0)
 (setq smooth-scroll-margin 5)
 
-;;--------------
-;; rainbow mode
-;;--------------
+;; show #colors in matching color
 (require 'rainbow-mode)
 
-;;--------------
-;; undo-tree
-;;--------------
+;; undo-tree like in vim
 (require 'undo-tree)
 (global-undo-tree-mode)
 
-;;--------------
 ;; undo highlighting
-;;--------------
 (require 'volatile-highlights)
 (volatile-highlights-mode t)
-
-;;-----------------
-;; general options
-;;-----------------
 
 ;; safety
 (setq make-backup-files nil)
@@ -105,6 +93,7 @@
 (setq frame-title-format "%b - emacs")
 (tool-bar-mode -1)
 (setq scroll-preserve-screen-position t)
+(highlight-parentheses-mode 1)
 
 ;; fonts
 (defun set-window-fonts ()
@@ -131,7 +120,7 @@
 ;; parentheses are connected and their content highlighted
 (show-paren-mode 1)
 (setq blink-matching-paren-distance nil)
-(setq show-paren-style 'expression)
+(setq show-paren-style 'parenthesis)
 (setq show-paren-delay 0.1)
 
 ;; fix mod4 bug
@@ -157,9 +146,72 @@
 (global-set-key "\M-f" 'forward-sentence)
 (global-set-key "\M-b" 'backward-sentence)
 
-;; random stuff
+;; calendar
 (setq calendar-week-start-day 1) ; monday
 (setq european-calendar-style 't) ; sanity
 
 ;; enable useful command
 (put 'narrow-to-region 'disabled nil)
+
+;; associate non-standardish interpreters with modes
+(add-to-list 'interpreter-mode-alist '("python2" . python-mode))
+(add-to-list 'interpreter-mode-alist '("python3" . python-mode))
+(add-to-list 'interpreter-mode-alist '("ruby18" . ruby-mode))
+(add-to-list 'interpreter-mode-alist '("ruby19" . ruby-mode))
+
+;; save minibuffer history
+(savehist-mode 1)
+(setq savehist-additional-variables '(search-ring regexp-search-ring))
+
+;; ido and smex (ido for M-x)
+(require 'ido)
+; fuzzy matching
+(setq ido-enable-flex-matching t)
+(require 'smex)
+(smex-initialize)
+(global-set-key "\M-x" 'smex)
+(global-set-key "\M-X" 'smex-major-mode-commands)
+
+;; number windows, i.e. M-1 .. M-0 to jump to window
+(require 'window-numbering)
+(window-numbering-mode 1)
+
+;; smart tab completion
+(require 'smart-tab)
+(global-smart-tab-mode 1)
+
+;; just some saviors
+(defun jesus ()
+  "Because Jesus saves."
+  (interactive)
+  (save-buffer))
+
+;; search wort at point, like vim
+(defun my-isearch-word-at-point ()
+  (interactive)
+  (call-interactively 'isearch-forward-regexp))
+
+(defun my-isearch-yank-word-hook ()
+  (when (equal this-command 'my-isearch-word-at-point)
+    (let ((string (concat "\\<"
+                          (buffer-substring-no-properties
+                           (progn (skip-syntax-backward "w_") (point))
+                           (progn (skip-syntax-forward "w_") (point)))
+                          "\\>")))
+      (if (and isearch-case-fold-search
+               (eq 'not-yanks search-upper-case))
+          (setq string (downcase string)))
+      (setq isearch-string string
+            isearch-message
+            (concat isearch-message
+                    (mapconcat 'isearch-text-char-description
+                               string ""))
+            isearch-yank-flag t)
+      (isearch-search-and-update))))
+
+(add-hook 'isearch-mode-hook 'my-isearch-yank-word-hook)
+(global-set-key (kbd "C-c *") 'my-isearch-word-at-point)
+
+;; auto indentation
+(require 'auto-indent-mode)
+(auto-indent-global-mode)
