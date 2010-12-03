@@ -1,0 +1,5 @@
+#name : struct ... { ... }
+# --
+typedef enum {
+    $0
+} ${1:name};
