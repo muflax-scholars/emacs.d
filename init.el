@@ -93,11 +93,10 @@
 (setq frame-title-format "%b - emacs")
 (tool-bar-mode -1)
 (setq scroll-preserve-screen-position t)
-(highlight-parentheses-mode 1)
 
 ;; fonts
 (defun set-window-fonts ()
-    (set-default-font "Anonymous Pro-9")
+    (set-frame-font "Anonymous Pro-9")
     (set-fontset-font (frame-parameter nil 'font)
         'japanese-jisx0208 '("Kochi Gothic" . "unicode-bmp"))
     (set-fontset-font (frame-parameter nil 'font)
@@ -106,22 +105,30 @@
 (add-hook 'after-make-window-system-frame-hooks 'set-window-fonts)
 
 ;; text stuff
-(setq default-tab-width 4)
-(setq-default indent-tabs-mode nil)
-(add-hook 'text-mode-hook 'turn-on-auto-fill)
-(setq fill-column 80)
+(setq default-major-mode 'text-mode)
+(setq-default fill-column 80)
+(setq-default auto-fill-function 'do-auto-fill)
 (prefer-coding-system 'utf-8)
 (setq undo-limit 1000000)
 (setq sentence-end-double-space nil)
 (column-number-mode t)
 (setq-default indicate-empty-lines t)
-(setq default-major-mode 'text-mode)
 
 ;; parentheses are connected and their content highlighted
 (show-paren-mode 1)
 (setq blink-matching-paren-distance nil)
 (setq show-paren-style 'parenthesis)
-(setq show-paren-delay 0.1)
+(setq show-paren-delay 0)
+(require 'highlight-parentheses)
+(defun turn-on-highlight-parentheses () (highlight-parentheses-mode 1))
+(add-hook 'emacs-lisp-mode-hook 'turn-on-highlight-parentheses)
+(add-hook 'lisp-mode-hook 'turn-on-highlight-parentheses)
+(add-hook 'java-mode-hook 'turn-on-highlight-parentheses)
+(add-hook 'python-mode-hook 'turn-on-highlight-parentheses)
+(add-hook 'c-mode-hook 'turn-on-highlight-parentheses)
+(add-hook 'ruby-mode-hook 'turn-on-highlight-parentheses)
+(add-hook 'haskell-mode-hook 'turn-on-highlight-parentheses)
+(add-hook 'text-mode-hook 'turn-on-highlight-parentheses)
 
 ;; fix mod4 bug
 (define-key special-event-map (kbd "<key-17>") 'ignore)
@@ -140,7 +147,7 @@
 (global-set-key "\C-p" 'undo-tree-undo)
 (global-set-key "\M-p" 'undo-tree-redo)
 (global-set-key "\C-n" 'other-window)
-(global-set-key "\M-n" 'execute-extended-command)
+(global-set-key "\M-n" 'comment-indent-new-line)
 (global-set-key "\C-f" 'forward-word)
 (global-set-key "\C-b" 'backward-word)
 (global-set-key "\M-f" 'forward-sentence)
@@ -176,9 +183,16 @@
 (require 'window-numbering)
 (window-numbering-mode 1)
 
-;; smart tab completion
-(require 'smart-tab)
-(global-smart-tab-mode 1)
+;; text completion
+; auto completion
+(require 'auto-complete-config)
+(add-to-list 'ac-dictionary-directories "~/.emacs.d/site-lisp/auto-complete/ac-dict")
+(add-to-list 'ac-modes 'text-mode)
+(setq ac-comphist-file "~/.emacs.d/ac-comphist.dat")
+(ac-config-default)
+; smart tab
+;(require 'smart-tab)
+;(global-smart-tab-mode 1)
 
 ;; just some saviors
 (defun jesus ()
@@ -212,10 +226,31 @@
 (add-hook 'isearch-mode-hook 'my-isearch-yank-word-hook)
 (global-set-key (kbd "C-c *") 'my-isearch-word-at-point)
 
-;; auto indentation
-(require 'auto-indent-mode)
-(auto-indent-global-mode)
-(setq auto-indent-on-save-file nil)
+;; indentation
+(setq tab-width 4)
+(setq-default indent-tabs-mode nil)
+; automatically turn on indenting
+(define-key global-map (kbd "RET") 'newline-and-indent)
+; also when yanked
+(defun yank-and-indent ()
+  "Yank and then indent the newly formed region according to mode."
+  (interactive)
+  (yank)
+  (call-interactively 'indent-region))
+(global-set-key "\C-y" 'yank-and-indent)
+; and delete spaces when killing a line
+(defun kill-and-join-forward (&optional arg)
+  "If at end of line, join with following; otherwise kill line. 
+   Deletes whitespace at join."
+  (interactive "P")
+  (if (and (eolp) (not (bolp)))
+	  (delete-indentation t)
+	(kill-line arg)))
+(global-set-key "\C-k" 'kill-and-join-forward)
+
+; c style (1TBS, but guess offsets for other files)
+(setq c-default-style "k&r" c-basic-offset 4)
+(require 'guess-offset)
 
 ;; mark stuff like FIXME
 (require 'fixme-mode)
@@ -234,3 +269,16 @@
 (define-auto-insert "\.rb"  "ruby")
 (define-auto-insert "\.c"   "c")
 (define-auto-insert "\.cpp" "cpp")
+
+;; spell checker
+(setq-default ispell-program-name "aspell")
+(setq ispell-process-directory (expand-file-name "~/"))
+(setq ispell-dictionary "english")
+; faster checking
+(setq ispell-list-command "list")
+
+;; git
+(require 'magit)
+(require 'gitsum)
+(require 'format-spec)
+(require 'git-blame)
