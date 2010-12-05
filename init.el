@@ -1,7 +1,5 @@
-;;-----------
 ;; load path 
-;;-----------
-;; site-lisp stores foreign packages, emacs.d only my own
+; site-lisp stores foreign packages, emacs.d only my own
 	(if (fboundp 'normal-top-level-add-subdirs-to-load-path)
 		(let* ((my-lisp-dir "~/.emacs.d/site-lisp/")
 			   (default-directory my-lisp-dir))
@@ -12,7 +10,9 @@
 
 ;; color 
 	(require 'color-theme)
-	(color-theme-initialize)
+; only load used color theme
+	(require 'color-theme-almost-monokai)
+	;(color-theme-initialize)
 
 ; makes sure each frame has its own unique color
 	(setq color-theme-is-global nil)
