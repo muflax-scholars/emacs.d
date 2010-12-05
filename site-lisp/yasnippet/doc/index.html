@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="generator" content="Docutils 0.7: http://docutils.sourceforge.net/" />
+<meta name="generator" content="Docutils 0.6: http://docutils.sourceforge.net/" />
 <title>Yet Another Snippet extension</title>
 <link rel="stylesheet" href="styles.css" type="text/css" />
 </head>
@@ -101,15 +101,15 @@ package.</p>
 <li>Download the latest <tt class="docutils literal"><span class="pre">yasnippet-bundle-x.y.z.el.tgz</span></tt> and unpack it.</li>
 <li>You'll get a file named <tt class="docutils literal"><span class="pre">yasnippet-bundle.el</span></tt>, put it under
 <tt class="docutils literal"><span class="pre">~/.emacs.d/plugins/</span></tt> (create the directory if not exists).</li>
-<li>Open the file in Emacs, and type <tt class="docutils literal">Alt+x <span class="pre">eval-buffer</span></tt>.</li>
+<li>Open the file in Emacs, and type <tt class="docutils literal"><span class="pre">Alt+x</span> <span class="pre">eval-buffer</span></tt>.</li>
 </ol>
 <p>That's it. Now open any one of your language file, you'll see a menu
 YASnippet. you can pull the menu to insert a template. Or, you can
-type the a <em>trigger key</em> then press <tt class="docutils literal">TAB</tt> to expand it.</p>
+type the a <em>trigger key</em> then press <tt class="docutils literal"><span class="pre">TAB</span></tt> to expand it.</p>
 <p>To have Emacs load YASnippet automatically when it starts, put the
 following in your <tt class="docutils literal"><span class="pre">~/.emacs</span></tt> file:</p>
 <blockquote>
-<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%">(<span style="color: #19177C">add-to-list</span> <span style="color: #19177C">&#39;load-path</span>
+<div class="highlight"><pre>(<span style="color: #19177C">add-to-list</span> <span style="color: #19177C">&#39;load-path</span>
               <span style="color: #BA2121">&quot;~/.emacs.d/plugins&quot;</span>)
 (<span style="color: #008000">require</span> <span style="color: #19177C">&#39;yasnippet-bundle</span>)
 </pre></div>
@@ -122,9 +122,9 @@ demonstrates this quick installation.</p>
 <p>To install YASnippet as a normal emacs package, download and unpack
 the latest <tt class="docutils literal"><span class="pre">yasnippet-x.y.z.tar.bz2</span></tt>. You'll get a directory named
 <tt class="docutils literal"><span class="pre">yasnippet-x.y.z</span></tt>, which you can put it in your
-<tt class="docutils literal"><span class="pre">~/.emacs.d/plugins</span></tt> and add the following in your <tt class="docutils literal">.emacs</tt> file:</p>
+<tt class="docutils literal"><span class="pre">~/.emacs.d/plugins</span></tt> and add the following in your <tt class="docutils literal"><span class="pre">.emacs</span></tt> file:</p>
 <blockquote>
-<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%">(<span style="color: #19177C">add-to-list</span> <span style="color: #19177C">&#39;load-path</span>
+<div class="highlight"><pre>(<span style="color: #19177C">add-to-list</span> <span style="color: #19177C">&#39;load-path</span>
               <span style="color: #BA2121">&quot;~/.emacs.d/plugins/yasnippet-x.y.z&quot;</span>)
 (<span style="color: #008000">require</span> <span style="color: #19177C">&#39;yasnippet</span>) <span style="color: #408080; font-style: italic">;; not yasnippet-bundle</span>
 (<span style="color: #19177C">yas/initialize</span>)
@@ -154,7 +154,7 @@ organize them at all and just use <tt class="docutils literal"><span class="pre"
 <p>Describes how YASnippet chooses snippets for expansion at point.</p>
 <p>Maybe, you'll want some snippets to be expanded in a particular
 mode, or only under certain conditions, or be prompted using
-<tt class="docutils literal">ido</tt>, etc...</p>
+<tt class="docutils literal"><span class="pre">ido</span></tt>, etc...</p>
 </blockquote>
 <ol class="arabic simple" start="3">
 <li><a class="reference external" href="snippet-development.html">Writing Snippets</a></li>

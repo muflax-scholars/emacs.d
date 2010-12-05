@@ -72,9 +72,9 @@
 	(setq confirm-kill-emacs 'y-or-n-p)
 
 ;; save location inside buffer
+	(require 'saveplace)
 	(setq save-place-file "~/.emacs.d/saveplace")
 	(setq-default save-place t)
-	(require 'saveplace)
 
 ;; optical stuff
 	(blink-cursor-mode -1)
@@ -185,8 +185,10 @@
 	  (setq ac-sources (append '(ac-source-yasnippet) ac-sources)))
 	(add-hook 'text-mode-hook 'ac-text-setup)
 	(add-hook 'markdown-mode-hook 'ac-text-setup)
+	(add-hook 'org-mode-hook 'ac-text-setup)
 	(add-to-list 'ac-modes 'text-mode)
 	(add-to-list 'ac-modes 'markdown-mode)
+	(add-to-list 'ac-modes 'org-mode)
 	(setq ac-comphist-file "~/.emacs.d/ac-comphist.dat")
 	(ac-config-default)
 ; smart tab
@@ -248,12 +250,6 @@
 		  (delete-indentation t)
 		(kill-line arg)))
 	(global-set-key "\C-k" 'kill-and-join-forward)
-; better delete keys
-	(global-set-key "\C-d" 'kill-whole-line)
-	(global-set-key "\M-d" 'kill-word)
-; also change delete for cc-mode
-	(require 'cc-mode)
-	(define-key c-mode-base-map "\C-d" 'kill-whole-line)
 ; if no mark is set, act on current line
     (defadvice kill-ring-save (around slick-copy activate)
       "When called interactively with no active region, copy a single line instead."
@@ -294,12 +290,12 @@
 	(auto-insert-mode)
 	(setq auto-insert-directory "~/.emacs.d/templates/")
 	(setq auto-insert-query nil)
-	(define-auto-insert "\.sh"  "sh")
-	(define-auto-insert "\.py"  "python")
-	(define-auto-insert "\.pl"  "perl")
-	(define-auto-insert "\.rb"  "ruby")
-	(define-auto-insert "\.c"   "c")
-	(define-auto-insert "\.cpp" "cpp")
+	(define-auto-insert "\\.sh$"  "sh")
+	(define-auto-insert "\\.py$"  "python")
+	(define-auto-insert "\\.pl$"  "perl")
+	(define-auto-insert "\\.rb$"  "ruby")
+	(define-auto-insert "\\.c$"   "c")
+	(define-auto-insert "\\.cpp$" "cpp")
 
 ;; spell checker
 	(setq-default ispell-program-name "aspell")
@@ -328,17 +324,50 @@
 	(require 'yaml-mode)
 	(add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode))
 
-
 ;; user data
 	(setq user-mail-address "mail@muflax.com")
 	(setq user-full-name "muflax")
 
+
+;; org-mode (use private version)
+; #FIXME (tab) for org-cycle is disabled directly in the library; this should
+; probably be some unset here.
+    (setq load-path (cons "~/.emacs.d/site-lisp/org-mode/lisp" load-path))
+	(require 'org-install)
+	(add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
+	;(add-to-list 'auto-mode-alist '("^/home/amon/spoiler/" . org-mode))
+; agenda
+	(global-set-key "\C-ca" 'org-agenda)
+; proper indentation / folding
+; loaded so that we can diminish it later
+	(require 'org-indent)
+	(setq org-startup-indented t)
+	(setq org-startup-folded nil)
+; dependencies
+	(setq org-enforce-todo-dependencies t)
+; make clock history persistent
+	(setq org-clock-persist 'history)
+	(org-clock-persistence-insinuate)
+; capture
+	(setq org-default-notes-file "~/spoiler/capture.org")
+	(global-set-key "\C-cc" 'org-capture)
+; agenda
+	(require 'find-lisp)
+	(setq org-agenda-files (find-lisp-find-files "~/spoiler" "\\.org$"))
+
+;; reload file when it changed (and the buffer has no changes)
+	(global-auto-revert-mode 1)
+
 ;; clean up modeline and hide standard minor modes
-(require 'diminish)
-(diminish 'undo-tree-mode)
-(diminish 'auto-fill-function "AF")
-(diminish 'fixme-mode)
-(diminish 'yas/minor-mode)
-(diminish 'highlight-parentheses-mode)
-(diminish 'volatile-highlights-mode)
-(diminish 'abbrev-mode)
+; should be last so all modes are already loaded
+	(require 'diminish)
+	(diminish 'auto-complete-mode "AC")
+	(diminish 'auto-fill-function "AF")
+	(diminish 'abbrev-mode)
+	(diminish 'auto-revert-mode)
+	(diminish 'fixme-mode)
+	(diminish 'highlight-parentheses-mode)
+	(diminish 'org-indent-mode)
+	(diminish 'undo-tree-mode)
+	(diminish 'volatile-highlights-mode)
+	(diminish 'yas/minor-mode)

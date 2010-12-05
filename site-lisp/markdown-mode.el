@@ -279,9 +279,6 @@
 ;; [Version 1.6]: http://jblevins.org/projects/markdown-mode/rev-1-6
 ;; [Version 1.7]: http://jblevins.org/projects/markdown-mode/rev-1-7
 
-
-
-
 ;;; Code:
 
 (require 'easymenu)
@@ -1058,12 +1055,6 @@ Arguments BEG and END specify the beginning and end of the region."
     (define-key markdown-mode-map "\C-c\C-ts" 'markdown-insert-section)
 	;; Indentation
 	(define-key markdown-mode-map "\C-m" 'markdown-enter-key)
-    ;; Visibility cycling
-    (define-key markdown-mode-map (kbd "<tab>") 'markdown-cycle)
-    (define-key markdown-mode-map (kbd "<S-iso-lefttab>") 'markdown-shifttab)
-    ;; Markdown functions
-    (define-key markdown-mode-map "\C-c\C-cm" 'markdown)
-    (define-key markdown-mode-map "\C-c\C-cp" 'markdown-preview)
     ;; References
     (define-key markdown-mode-map "\C-c\C-cc" 'markdown-check-refs)
     markdown-mode-map)
@@ -1074,13 +1065,6 @@ Arguments BEG and END specify the beginning and end of the region."
 (easy-menu-define markdown-mode-menu markdown-mode-map
   "Menu for Markdown mode"
   '("Markdown"
-    ("Show/Hide"
-     ["Cycle visibility" markdown-cycle (outline-on-heading-p)]
-     ["Cycle global visibility" markdown-shifttab])
-    "---"
-    ["Compile" markdown]
-    ["Preview" markdown-preview]
-    "---"
     ("Headers (setext)"
      ["Insert Title" markdown-insert-title]
      ["Insert Section" markdown-insert-section])
@@ -1362,46 +1346,6 @@ subtree.  Otherwise, insert a tab using `indent-relative'."
 Calls `markdown-cycle' with argument t."
   (interactive)
   (markdown-cycle t))
-
-;;; Commands ==================================================================
-
-(defun markdown ()
-  "Run markdown on the current buffer and preview the output in another buffer."
-  (interactive)
-  (if (and (boundp 'transient-mark-mode) transient-mark-mode mark-active)
-      (shell-command-on-region (region-beginning) (region-end) markdown-command
-                               "*markdown-output*" nil)
-    (shell-command-on-region (point-min) (point-max) markdown-command
-                             "*markdown-output*" nil))
-  (let (title)
-    (setq title (buffer-name))
-    (save-excursion
-      (set-buffer "*markdown-output*")
-      (goto-char (point-min))
-      (insert "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n"
-              "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\"\n"
-              "\t\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n\n"
-              "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n\n"
-              "<head>\n<title>")
-      (insert title)
-      (insert "</title>\n")
-      (if markdown-css-path
-          (insert "<link rel=\"stylesheet\" type=\"text/css\" media=\"all\" href=\""
-                  markdown-css-path
-                  "\"  />\n"))
-      (insert "</head>\n\n"
-              "<body>\n\n")
-      (goto-char (point-max))
-      (insert "\n"
-              "</body>\n"
-              "</html>\n"))))
-
-(defun markdown-preview ()
-  "Run markdown on the current buffer and preview the output in a browser."
-  (interactive)
-  (markdown)
-  (browse-url-of-buffer "*markdown-output*"))
-
 
 ;;; Miscellaneous =============================================================
 
