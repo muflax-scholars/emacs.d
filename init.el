@@ -335,7 +335,6 @@
     (setq load-path (cons "~/.emacs.d/site-lisp/org-mode/lisp" load-path))
 	(require 'org-install)
 	(add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
-	;(add-to-list 'auto-mode-alist '("^/home/amon/spoiler/" . org-mode))
 ; agenda
 	(global-set-key "\C-ca" 'org-agenda)
 ; proper indentation / folding
@@ -349,11 +348,15 @@
 	(setq org-clock-persist 'history)
 	(org-clock-persistence-insinuate)
 ; capture
-	(setq org-default-notes-file "~/capture.org")
 	(global-set-key "\C-cc" 'org-capture)
 ; agenda
 	(require 'find-lisp)
-	(setq org-agenda-files (find-lisp-find-files "~/spoiler" "\\.org$"))
+; spoiler files
+    (if (file-accessible-directory-p "~/spoiler") (progn
+        (setq org-default-notes-file "~/spoiler/capture.org")
+        (setq org-agenda-files (find-lisp-find-files "~/spoiler" "\\.org$"))
+	    ;(add-to-list 'auto-mode-alist '("^/home/amon/spoiler/" . org-mode))
+    ))
 
 ;; reload file when it changed (and the buffer has no changes)
 	(global-auto-revert-mode 1)
