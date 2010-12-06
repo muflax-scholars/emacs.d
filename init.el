@@ -349,7 +349,7 @@
 	(setq org-clock-persist 'history)
 	(org-clock-persistence-insinuate)
 ; capture
-	(setq org-default-notes-file "~/spoiler/capture.org")
+	(setq org-default-notes-file "~/capture.org")
 	(global-set-key "\C-cc" 'org-capture)
 ; agenda
 	(require 'find-lisp)
