@@ -301,6 +301,7 @@
 	(setq-default ispell-program-name "aspell")
 	(setq ispell-process-directory (expand-file-name "~/"))
 	(setq ispell-dictionary "english")
+    (setq ispell-silently-savep t)
 ; faster checking
 	(setq ispell-list-command "list")
 
