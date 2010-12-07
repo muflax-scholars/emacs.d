@@ -53,7 +53,7 @@
      (font-lock-warning-face ((t (:bold t :foreground "#FD5FF1"))))
      (highlight-80+ ((t (:background "#D62E00"))))
      (hl-line ((t (:background "#1A1A1A"))))
-     (region ((t (:background "#6DC5F1"))))
+     (region ((t (:background "#6DC5F1" :foreground "white"))))
      (ido-subdir ((t (:foreground "#F1266F"))))
      )
    )

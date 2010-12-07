@@ -358,6 +358,11 @@
         (setq org-agenda-files (find-lisp-find-files "~/spoiler" "\\.org$"))
 	    ;(add-to-list 'auto-mode-alist '("^/home/amon/spoiler/" . org-mode))
     ))
+; todo states
+    (setq org-todo-keywords
+        '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)")
+          (sequence "BUG(b)" "|" "FIXED(f)")))
+
 
 ;; reload file when it changed (and the buffer has no changes)
 	(global-auto-revert-mode 1)
