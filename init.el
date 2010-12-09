@@ -99,7 +99,7 @@
 	(add-hook 'after-make-window-system-frame-hooks 'set-window-fonts)
 
 ;; text stuff
-	(setq default-major-mode 'text-mode)
+	(setq default-major-mode 'markdown-mode)
 	(setq-default fill-column 80)
 	(setq-default auto-fill-function 'do-auto-fill)
 	(prefer-coding-system 'utf-8)
