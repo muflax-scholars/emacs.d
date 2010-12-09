@@ -305,11 +305,12 @@
 ; faster checking
 	(setq ispell-list-command "list")
 ; enable flyspell in certain modes
-    (defun turn-on-flyspell () 
-        (flyspell-mode 1))
-    (add-hook 'text-mode-hook 'turn-on-flyspell)
-    (add-hook 'markdown-mode-hook 'turn-on-flyspell)
-    (add-hook 'org-mode-hook 'turn-on-flyspell)
+; #FIXME disabled for speed issues
+    ;(defun turn-on-flyspell () 
+        ;(flyspell-mode 1))
+    ;(add-hook 'text-mode-hook 'turn-on-flyspell)
+    ;(add-hook 'markdown-mode-hook 'turn-on-flyspell)
+    ;(add-hook 'org-mode-hook 'turn-on-flyspell)
 
 ;; git
 	(require 'magit)
