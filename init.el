@@ -369,6 +369,8 @@
     (setq org-todo-keywords
         '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)")
           (sequence "BUG(b)" "|" "FIXED(f)")))
+; priorities
+    (setq org-default-priority 67) ;C
 
 
 ;; reload file when it changed (and the buffer has no changes)
