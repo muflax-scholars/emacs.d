@@ -369,6 +369,7 @@
     (setq org-todo-keywords
         '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)")
           (sequence "BUG(b)" "|" "FIXED(f)")))
+    (setq org-log-done 'note)
 ; priorities
     (setq org-default-priority 67) ;C
 
