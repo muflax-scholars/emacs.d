@@ -136,6 +136,7 @@
 	(global-set-key "\C-cn" 'next-error)	
 	(global-set-key "\C-cp" 'previous-error) 
 	(global-set-key "\C-cr" 'query-replace-regexp)
+	(global-set-key "\C-t"  'find-tag)
 ; because we navigate via cursor keys, we can put something more useful on the
 ; default navigational keys
 	(global-set-key "\C-p" 'undo-tree-undo)
