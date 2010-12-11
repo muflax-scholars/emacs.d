@@ -356,8 +356,6 @@
 ; make clock history persistent
 	(setq org-clock-persist 'history)
 	(org-clock-persistence-insinuate)
-; capture
-	(global-set-key "\C-cc" 'org-capture)
 ; agenda
 	(require 'find-lisp)
 ; spoiler files
