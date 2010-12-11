@@ -95,6 +95,11 @@
 			'japanese-jisx0208 '("Kochi Gothic" . "unicode-bmp"))
 		(set-fontset-font (frame-parameter nil 'font)
 			'japanese-jisx0212 '("Kochi Gothic" . "unicode-bmp"))
+; prevent using the Japanese fonts for European text
+        (set-fontset-font (frame-parameter nil 'font)
+            'latin-iso8859-1  '("Anonymous Pro" . "unicode-bmp"))
+        (set-fontset-font (frame-parameter nil 'font)
+            'latin-iso8859-15 '("Anonymous Pro" . "unicode-bmp"))
 	)
 	(add-hook 'after-make-window-system-frame-hooks 'set-window-fonts)
 
