@@ -1,0 +1,6 @@
+#name : malloc
+# --
+if ((${1:a} = malloc(sizeof(${2:int})$3)) == NULL) {
+    abort();
+}
+$0

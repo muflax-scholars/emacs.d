@@ -1,0 +1,6 @@
+#name : function
+# --
+${1:void} ${2:function}($3)
+{
+    $0
+}
