@@ -147,7 +147,6 @@
 	(global-set-key "\C-p" 'undo-tree-undo)
 	(global-set-key "\M-p" 'undo-tree-redo)
 	(global-set-key "\C-n" 'other-window)
-	(global-set-key "\M-n" 'comment-indent-new-line)
 	(global-set-key "\C-f" 'forward-word)
 	(global-set-key "\C-b" 'backward-word)
 	(global-set-key "\M-f" 'forward-sentence)
@@ -284,6 +283,7 @@
 ; c style (1TBS, but guess offsets for other files)
 	(setq c-default-style "k&r" c-basic-offset 4)
 	(require 'guess-offset)
+	(global-set-key (kbd "M-RET") 'c-indent-new-comment-line)
 
 ;; mark stuff like FIXME
 	(require 'fixme-mode)
