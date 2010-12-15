@@ -52,6 +52,12 @@
 	(require 'smooth-scrolling)
 	(setq scroll-margin 0)
 	(setq smooth-scroll-margin 5)
+    (setq mouse-wheel-progressive-speed nil)
+
+;; support for bookmarks
+    (require 'breadcrumb)
+    (global-set-key (kbd "S-SPC") 'bc-set)
+    (global-set-key (kbd "M-SPC") 'bc-previous)
 
 ;; show #colors in matching color
 	(require 'rainbow-mode)
@@ -167,7 +173,10 @@
 
 ;; save minibuffer history
 	(savehist-mode 1)
-	(setq savehist-additional-variables '(search-ring regexp-search-ring))
+	(setq savehist-additional-variables '(search-ring 
+                                           regexp-search-ring 
+                                           kill-ring 
+                                           compile-command))
 
 ;; ido and smex (ido for M-x)
 	(require 'ido)
@@ -280,7 +289,16 @@
         (save-excursion (insert "\n")))
       (insert string))
 
-; c style (1TBS, but guess offsets for other files)
+;; more useful kill-ring
+    (setq kill-ring-max 200)
+    (require 'kill-ring-search)
+    (global-set-key "\M-\C-y" 'kill-ring-search)
+    (defun yank-pop-reverse ()
+        (interactive)
+        (yank-pop -1))
+    (global-set-key "\M-Y" 'yank-pop-reverse)
+
+;; c style (1TBS, but guess offsets for other files)
 	(setq c-default-style "k&r" c-basic-offset 4)
 	(require 'guess-offset)
 	(global-set-key (kbd "M-RET") 'c-indent-new-comment-line)
