@@ -56,7 +56,7 @@
 
 ;; support for bookmarks
     (require 'breadcrumb)
-    (global-set-key (kbd "S-SPC") 'bc-set)
+    (global-set-key (kbd "C-j") 'bc-set)
     (global-set-key (kbd "M-SPC") 'bc-previous)
 
 ;; show #colors in matching color
