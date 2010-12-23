@@ -56,8 +56,10 @@
 
 ;; support for bookmarks
     (require 'breadcrumb)
-    (global-set-key (kbd "C-j") 'bc-set)
+    (global-set-key (kbd "C-c j") 'bc-set)
     (global-set-key (kbd "M-SPC") 'bc-previous)
+    (setq bc-bookmark-limit 50)
+    (setq bc-bookmark-file (expand-file-name "~/.emacs.d/breadcrumb"))
 
 ;; show #colors in matching color
 	(require 'rainbow-mode)
