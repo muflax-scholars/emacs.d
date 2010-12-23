@@ -414,3 +414,9 @@
 	(diminish 'undo-tree-mode)
 	(diminish 'volatile-highlights-mode)
 	(diminish 'yas/minor-mode)
+
+;; new python mode
+    ;(setq load-path (cons "~/.emacs.d/site-lisp/python-mode" load-path))
+    ;(require 'python-mode)
+    (autoload 'python-mode "python-mode" "Python Mode." t)
+    
