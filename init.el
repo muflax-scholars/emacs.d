@@ -256,6 +256,14 @@
 	  (call-interactively 'indent-region))
 	(global-set-key "\C-y" 'yank-and-indent)
 
+;; insert new line *after* the current one
+    (defun next-newline-and-indent ()
+      (interactive)
+      (end-of-line)
+      (newline-and-indent))
+    (global-set-key "\C-o" 'next-newline-and-indent)
+
+
 ;; deleting
 ; delete spaces when killing a line
 	(defun kill-and-join-forward (&optional arg)
