@@ -263,7 +263,6 @@
       (newline-and-indent))
     (global-set-key "\C-o" 'next-newline-and-indent)
 
-
 ;; deleting
 ; delete spaces when killing a line
 	(defun kill-and-join-forward (&optional arg)
@@ -427,4 +426,8 @@
     ;(setq load-path (cons "~/.emacs.d/site-lisp/python-mode" load-path))
     ;(require 'python-mode)
     (autoload 'python-mode "python-mode" "Python Mode." t)
+; FIXME stupid hack, should be fixed in python-mode.el
+    (defun set-newline-and-indent ()
+        (local-set-key (kbd "RET") 'reindent-then-newline-and-indent))
+    (add-hook 'python-mode-hook 'set-newline-and-indent)
     
