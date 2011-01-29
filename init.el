@@ -325,6 +325,7 @@
 	(setq auto-insert-query nil)
 	(define-auto-insert "\\.sh$"  "sh")
 	(define-auto-insert "\\.py$"  "python")
+	(define-auto-insert "\\.hs$"  "haskell")
 	(define-auto-insert "\\.pl$"  "perl")
 	(define-auto-insert "\\.rb$"  "ruby")
 	(define-auto-insert "\\.c$"   "c")
@@ -426,3 +427,9 @@
     ;(setq load-path (cons "~/.emacs.d/site-lisp/python-mode" load-path))
     ;(require 'python-mode)
     (autoload 'python-mode "python-mode" "Python Mode." t)
+
+;; haskell mode
+    (load "~/.emacs.d/site-lisp/haskell-mode/haskell-site-file")
+    (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
+    (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+
