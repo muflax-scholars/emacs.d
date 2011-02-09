@@ -1,0 +1,7 @@
+#name : for (...; ...; ...) { ... }
+# --
+\begin{frame}
+  \frametitle{${1:title}}
+  ${2:text}
+\end{frame}
+$0
