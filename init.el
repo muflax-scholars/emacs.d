@@ -195,21 +195,18 @@
 
 ;; text completion
 ; auto completion
-	(require 'auto-complete-config)
-	(add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
-	(defun ac-text-setup ()
-	  (setq ac-sources (append '(ac-source-yasnippet) ac-sources)))
-	(add-hook 'text-mode-hook 'ac-text-setup)
-	(add-hook 'markdown-mode-hook 'ac-text-setup)
-	(add-hook 'org-mode-hook 'ac-text-setup)
-	(add-to-list 'ac-modes 'text-mode)
-	(add-to-list 'ac-modes 'markdown-mode)
-	(add-to-list 'ac-modes 'org-mode)
-	(setq ac-comphist-file "~/.emacs.d/ac-comphist.dat")
-	(ac-config-default)
-; smart tab
-	;(require 'smart-tab)
-	;(global-smart-tab-mode 1)
+	;(require 'auto-complete-config)
+	;(add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
+	;(defun ac-text-setup ()
+	  ;(setq ac-sources (append '(ac-source-yasnippet) ac-sources)))
+	;(add-hook 'text-mode-hook 'ac-text-setup)
+	;(add-hook 'markdown-mode-hook 'ac-text-setup)
+	;(add-hook 'org-mode-hook 'ac-text-setup)
+	;(add-to-list 'ac-modes 'text-mode)
+	;(add-to-list 'ac-modes 'markdown-mode)
+	;(add-to-list 'ac-modes 'org-mode)
+	;(setq ac-comphist-file "~/.emacs.d/ac-comphist.dat")
+	;(ac-config-default)
 
 ;; just some saviors
 	(defun jesus ()
@@ -412,7 +409,7 @@
 ;; clean up modeline and hide standard minor modes
 ; should be last so all modes are already loaded
 	(require 'diminish)
-	(diminish 'auto-complete-mode "AC")
+	;(diminish 'auto-complete-mode "AC")
 	(diminish 'auto-fill-function "AF")
 	(diminish 'abbrev-mode)
 	(diminish 'auto-revert-mode)
@@ -432,3 +429,8 @@
     (load "~/.emacs.d/site-lisp/haskell-mode/haskell-site-file")
     (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
     (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
+
+;; ruby mode
+    (setq ruby-indent-level 4)
+    (add-hook 'ruby-mode-hook (lambda () (local-set-key "\r" 'newline-and-indent)))
+    
