@@ -434,3 +434,5 @@
     (setq ruby-indent-level 4)
     (add-hook 'ruby-mode-hook (lambda () (local-set-key "\r" 'newline-and-indent)))
     
+;; diff- mode (better colors)
+    (require 'diff-mode-)
