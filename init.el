@@ -159,6 +159,19 @@
 	(global-set-key "\C-b" 'backward-word)
 	(global-set-key "\M-f" 'forward-sentence)
 	(global-set-key "\M-b" 'backward-sentence)
+; move to beginning of text on line
+    (defun smart-beginning-of-line ()
+      "Move point to first non-whitespace character or beginning-of-line.
+
+      Move point to the first non-whitespace character on this line.
+      If point was already at that position, move point to beginning of line."
+      (interactive) ; Use (interactive "^") in Emacs 23 to make shift-select work
+      (let ((oldpos (point)))
+        (beginning-of-line-text)
+        (and (= oldpos (point))
+             (beginning-of-line))))
+
+    (global-set-key "\C-a" 'smart-beginning-of-line)
 
 ;; calendar
 	(setq calendar-week-start-day 1) ; monday
