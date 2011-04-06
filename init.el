@@ -446,6 +446,7 @@
     (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 
 ;; ruby mode
+    (require 'yari)
     (setq ruby-indent-level 2)
     (add-hook 'ruby-mode-hook (lambda () (local-set-key "\r" 'newline-and-indent)))
     
