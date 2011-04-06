@@ -256,7 +256,7 @@
 	(global-set-key (kbd "C-c *") 'my-isearch-word-at-point)
 
 ;; indentation
-	(setq tab-width 4)
+	(setq tab-width 2)
 	(setq-default indent-tabs-mode nil)
 ; automatically turn on indenting
 	(define-key global-map (kbd "RET") 'newline-and-indent)
@@ -320,7 +320,7 @@
     (global-set-key "\M-Y" 'yank-pop-reverse)
 
 ;; c style (1TBS, but guess offsets for other files)
-	(setq c-default-style "k&r" c-basic-offset 4)
+	(setq c-default-style "k&r" c-basic-offset 2)
 	(require 'guess-offset)
 	(global-set-key (kbd "M-RET") 'c-indent-new-comment-line)
 
@@ -446,7 +446,7 @@
     (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 
 ;; ruby mode
-    (setq ruby-indent-level 4)
+    (setq ruby-indent-level 2)
     (add-hook 'ruby-mode-hook (lambda () (local-set-key "\r" 'newline-and-indent)))
     
 ;; diff- mode (better colors)
