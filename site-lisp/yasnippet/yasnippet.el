@@ -3449,9 +3449,15 @@ considered when expanding the snippet."
                (setq snippet
                      (if expand-env
                          (eval `(let ,expand-env
-                                  (insert content)
+                                  ;(insert content)
+                                  (if (string= "\n" (substring content -1 nil))
+                                    (insert (substring content 0 -1))
+                                    (insert content))
                                   (yas/snippet-create (point-min) (point-max))))
-                       (insert content)
+                       ;(insert content)
+                       (if (string= "\n" (substring content -1 nil))
+                         (insert (substring content 0 -1))
+                         (insert content))
                        (yas/snippet-create (point-min) (point-max))))))
 
            ;; stacked-expansion: This checks for stacked expansion, save the
