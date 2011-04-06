@@ -114,7 +114,9 @@
 ;; text stuff
 	(setq default-major-mode 'org-mode)
 	(setq-default fill-column 80)
-	(setq-default auto-fill-function 'do-auto-fill)
+    (add-hook 'text-mode-hook 'turn-on-auto-fill)
+    (add-hook 'org-mode-hook 'turn-on-auto-fill)
+    (add-hook 'markdown-mode-hook 'turn-on-auto-fill)
 	(prefer-coding-system 'utf-8)
 	(setq undo-limit 1000000)
 	(setq sentence-end-double-space nil)
