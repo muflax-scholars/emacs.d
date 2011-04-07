@@ -209,20 +209,46 @@
 (require 'window-numbering)
 (window-numbering-mode 1)
 
+;; snippets
+(require 'yasnippet)
+(yas/initialize)
+(yas/load-directory "~/.emacs.d/snippets")
+
 ;; text completion
 ; auto completion
-;(require 'auto-complete-config)
-;(add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
+(require 'auto-complete-config)
+(add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
 ;(defun ac-text-setup ()
 ;(setq ac-sources (append '(ac-source-yasnippet) ac-sources)))
 ;(add-hook 'text-mode-hook 'ac-text-setup)
 ;(add-hook 'markdown-mode-hook 'ac-text-setup)
 ;(add-hook 'org-mode-hook 'ac-text-setup)
-;(add-to-list 'ac-modes 'text-mode)
-;(add-to-list 'ac-modes 'markdown-mode)
-;(add-to-list 'ac-modes 'org-mode)
-;(setq ac-comphist-file "~/.emacs.d/ac-comphist.dat")
-;(ac-config-default)
+(add-to-list 'ac-modes 'text-mode)
+(add-to-list 'ac-modes 'markdown-mode)
+(add-to-list 'ac-modes 'org-mode)
+(setq ac-comphist-file "~/.emacs.d/ac-comphist.dat")
+(setq ac-use-menu-map t)
+(setq ac-auto-show-menu nil) 
+(setq ac-ignore-case nil) 
+(ac-config-default)
+; disabling Yasnippet completion
+(defun epy-snips-from-table (table)
+  (with-no-warnings
+    (let ((hashtab (ac-yasnippet-table-hash table))
+          (parent (ac-yasnippet-table-parent table))
+          candidates)
+      (maphash (lambda (key value)
+                 (push key candidates))
+               hashtab)
+      (identity candidates)
+      )))
+(defun epy-get-all-snips ()
+  (let (candidates)
+    (maphash
+     (lambda (kk vv) (push (epy-snips-from-table vv) candidates)) yas/tables)
+    (apply 'append candidates))
+  )
+(setq ac-ignores (concatenate 'list ac-ignores (epy-get-all-snips)))
 
 ;; just some saviors
 (defun jesus ()
@@ -364,11 +390,6 @@
 (require 'gitsum)
 (require 'format-spec)
 (require 'git-blame)
-
-;; snippets
-(require 'yasnippet)
-(yas/initialize)
-(yas/load-directory "~/.emacs.d/snippets")
 
 ;; markdown
 (require 'markdown-mode)
