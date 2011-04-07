@@ -24,10 +24,10 @@
 ;; the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 ;; Boston, MA 02110-1301, USA.
 
-                                        ; Color theme support is required.
+; Color theme support is required.
 (require 'color-theme)
 
-                                        ; Code start.
+; Code start.
 (defun color-theme-almost-monokai ()
   (interactive)
   (color-theme-install
@@ -53,11 +53,14 @@
      (font-lock-warning-face ((t (:bold t :foreground "#FD5FF1"))))
      (highlight-80+ ((t (:background "#D62E00"))))
      (hl-line ((t (:background "#1A1A1A"))))
-     (region ((t (:background "#6DC5F1" :foreground "white"))))
+     (region ((t (:background "#31596d" :foreground "white"))))
      (ido-subdir ((t (:foreground "#F1266F"))))
+     (ecb-default-highlight-face((t (:background "#31596d"))))
+     (ecb-directory-face((t (:background "#31596d"))))
+     (ecb-source-face((t (:background "#204a87"))))
+     (ecb-method-face((t (:background "#204a87"))))
+     (ecb-tag-header-face((t (:background "cham3"))))
      )
    )
   )
 (provide 'color-theme-almost-monokai)
-                                        ;---------------
-                                        ; Code end.

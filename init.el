@@ -455,8 +455,8 @@
 (add-to-list 'auto-mode-alist '("Gemfile$" . ruby-mode))
 (add-to-list 'auto-mode-alist '("Capfile$" . ruby-mode))
 (add-to-list 'auto-mode-alist '("\\.builder$" . ruby-mode))
-
-
+; rinari
+(require 'rinari)
 
 ;; align
 (require 'align)
@@ -514,3 +514,24 @@
 
 ;; don't hide mouse
 (setq make-pointer-invisible nil)
+
+;; semantic (code parser)
+(require 'semantic)
+(semantic-mode 1)
+
+;; ecb (code browser)
+(require 'ecb)
+(custom-set-variables
+ '(ecb-options-version "2.40")
+ '(ecb-tree-indent 2)
+ '(ecb-primary-secondary-mouse-buttons 'mouse-1--mouse-2)
+ '(ecb-tree-buffer-style 'ascii-guides)
+ '(ecb-tip-of-the-day nil)
+ '(ecb-window-width 20)
+ '(ecb-fix-window-size 'auto)
+ '(ecb-layout-name "left15")
+ '(ecb-process-non-semantic-files t)
+)
+; get some parsing for ruby
+(require 'imenu)
+(setq imenu-auto-rescan t)
