@@ -389,8 +389,6 @@
 (setq load-path (cons "~/.emacs.d/site-lisp/org-mode/lisp" load-path))
 (require 'org-install)
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
-; agenda
-(global-set-key "\C-ca" 'org-agenda)
 ; proper indentation / folding
 ; loaded so that we can diminish it later
 (require 'org-indent)
@@ -401,9 +399,8 @@
 ; make clock history persistent
 (setq org-clock-persist 'history)
 (org-clock-persistence-insinuate)
-; agenda
-(require 'find-lisp)
 ; spoiler files
+(require 'find-lisp)
 (if (file-accessible-directory-p "~/spoiler") (progn
                                                 (setq org-default-notes-file "~/spoiler/capture.org")
                                                 (setq org-agenda-files (find-lisp-find-files "~/spoiler" "\\.org$"))
@@ -452,6 +449,30 @@
 (setq ruby-block-highlight-toggle t)
 (setq ruby-indent-level 2)
 (add-hook 'ruby-mode-hook (lambda () (local-set-key "\r" 'newline-and-indent)))
+
+;; align
+(require 'align)
+(add-to-list 'align-rules-list
+             '(ruby-comma-delimiter
+                (regexp . ",\\(\\s-*\\)[^# \t\n]")
+                (repeat . t)
+                (modes  . '(ruby-mode))))
+(add-to-list 'align-rules-list
+             '(ruby-hash-literal
+                (regexp . "\\(\\s-*\\)=>\\s-*[^# \t\n]")
+                (repeat . t)
+                (modes  . '(ruby-mode))))
+(add-to-list 'align-rules-list
+             '(ruby-assignment-literal
+                (regexp . "\\(\\s-*\\)=\\s-*[^# \t\n]")
+                (repeat . t)
+                (modes  . '(ruby-mode))))
+(add-to-list 'align-rules-list          ;TODO add to rcodetools.el
+             '(ruby-xmpfilter-mark
+                (regexp . "\\(\\s-*\\)# => [^#\t\n]")
+                (repeat . nil)
+                (modes  . '(ruby-mode))))
+(global-set-key "\C-ca" 'align-current)
 
 ;; diff- mode (better colors)
 (require 'diff-mode-)
