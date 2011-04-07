@@ -146,6 +146,8 @@
 ;; key bindings
 (mouse-wheel-mode t)   
 (global-set-key "\C-cg" 'goto-line)
+(global-set-key (kbd "C-c SPC") 'comment-dwim)
+(global-set-key (kbd "C-c C-SPC") 'comment-dwim)
 (global-set-key "\C-cc" 'comment-region)
 (global-set-key "\C-cu" 'uncomment-region)
 (global-set-key "\C-cn" 'next-error)  
@@ -312,30 +314,6 @@
     (delete-indentation t)
     (kill-line arg)))
 (global-set-key "\C-k" 'kill-and-join-forward)
-; if no mark is set, act on current line
-(defadvice kill-ring-save (around slick-copy activate)
-           "When called interactively with no active region, copy a single line instead."
-           (if (or (region-active-p) (not (called-interactively-p)))
-             ad-do-it
-             (kill-new (buffer-substring (line-beginning-position)
-                                         (line-beginning-position 2))
-                       nil '(yank-line))
-             (message "Copied line")))
-
-(defadvice kill-region (around slick-copy activate)
-           "When called interactively with no active region, kill a single line instead."
-           (if (or (region-active-p) (not (called-interactively-p)))
-             ad-do-it
-             (kill-new (filter-buffer-substring (line-beginning-position)
-                                                (line-beginning-position 2) t)
-                       nil '(yank-line))))
-
-(defun yank-line (string)
-  "Insert STRING above the current line."
-  (beginning-of-line)
-  (unless (= (elt string (1- (length string))) ?\n)
-    (save-excursion (insert "\n")))
-  (insert string))
 
 ;; more useful kill-ring
 (setq kill-ring-max 200)
@@ -440,20 +418,6 @@
 ;; reload file when it changed (and the buffer has no changes)
 (global-auto-revert-mode 1)
 
-;; clean up modeline and hide standard minor modes
-; should be last so all modes are already loaded
-(require 'diminish)
-;(diminish 'auto-complete-mode "AC")
-(diminish 'auto-fill-function "AF")
-(diminish 'abbrev-mode)
-(diminish 'auto-revert-mode)
-(diminish 'fixme-mode)
-(diminish 'highlight-parentheses-mode)
-(diminish 'org-indent-mode)
-(diminish 'undo-tree-mode)
-(diminish 'volatile-highlights-mode)
-(diminish 'yas/minor-mode)
-
 ;; new python mode
 ;(setq load-path (cons "~/.emacs.d/site-lisp/python-mode" load-path))
 (require 'python)
@@ -557,3 +521,31 @@
 ; get some parsing for ruby
 (require 'imenu)
 (setq imenu-auto-rescan t)
+
+;; if no region is active, act on current line
+(require 'whole-line-or-region)
+(setq whole-line-or-region-extensions-alist 
+  '((comment-dwim whole-line-or-region-comment-dwim-2 nil)
+    (copy-region-as-kill whole-line-or-region-copy-region-as-kill nil)
+    (kill-region whole-line-or-region-kill-region nil)
+    (kill-ring-save whole-line-or-region-kill-ring-save nil)
+    (yank whole-line-or-region-yank nil)
+  ))
+(whole-line-or-region-mode 1)
+
+;; clean up modeline and hide standard minor modes
+; should be last so all modes are already loaded
+(require 'diminish)
+;(diminish 'auto-complete-mode "AC")
+(diminish 'auto-fill-function "AF")
+(diminish 'abbrev-mode)
+(diminish 'auto-revert-mode)
+(diminish 'fixme-mode)
+(diminish 'highlight-parentheses-mode)
+(diminish 'org-indent-mode)
+(diminish 'undo-tree-mode)
+(diminish 'volatile-highlights-mode)
+(diminish 'yas/minor-mode)
+(diminish 'whole-line-or-region-mode)
+
+
