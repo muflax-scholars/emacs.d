@@ -448,7 +448,15 @@
 (ruby-block-mode t)
 (setq ruby-block-highlight-toggle t)
 (setq ruby-indent-level 2)
-(add-hook 'ruby-mode-hook (lambda () (local-set-key "\r" 'newline-and-indent)))
+(add-hook 'ruby-mode-hook (lambda () (local-set-key "\r" 'reindent-then-newline-and-indent)))
+; Rake files are Ruby, too
+(add-to-list 'auto-mode-alist '("\\.rake$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("Rakefile$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("Gemfile$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("Capfile$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.builder$" . ruby-mode))
+
+
 
 ;; align
 (require 'align)
