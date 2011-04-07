@@ -434,8 +434,7 @@
 
 ;; new python mode
 ;(setq load-path (cons "~/.emacs.d/site-lisp/python-mode" load-path))
-;(require 'python-mode)
-(autoload 'python-mode "python-mode" "Python Mode." t)
+(require 'python)
 
 ;; haskell mode
 (load "~/.emacs.d/site-lisp/haskell-mode/haskell-site-file")
