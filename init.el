@@ -539,6 +539,7 @@
 ;; semantic (code parser)
 (require 'semantic)
 (semantic-mode 1)
+(global-set-key "\C-cf" 'semantic-ia-show-summary)
 
 ;; ecb (code browser)
 (require 'ecb)
