@@ -447,6 +447,9 @@
 
 ;; ruby mode
 (require 'yari)
+(require 'ruby-block)
+(ruby-block-mode t)
+(setq ruby-block-highlight-toggle t)
 (setq ruby-indent-level 2)
 (add-hook 'ruby-mode-hook (lambda () (local-set-key "\r" 'newline-and-indent)))
 
@@ -475,3 +478,7 @@
         (isearch-forward regexp-p no-recursive-edit)))))
 
 (global-set-key (kbd "C-*") 'isearch-forward-at-point)
+
+;; unique buffer names
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'post-forward)
