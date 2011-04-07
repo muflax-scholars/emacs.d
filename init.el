@@ -44,10 +44,6 @@
 (load "preview-latex.el" nil t t)
 (add-hook 'LaTeX-mode-hook 'TeX-PDF-mode)
 
-;; icicles
-;(require 'icicles)
-;(icy-mode 1)
-
 ;; smooth scrolling with margin
 (require 'smooth-scrolling)
 (setq scroll-margin 0)
@@ -175,7 +171,6 @@
     (beginning-of-line-text)
     (and (= oldpos (point))
          (beginning-of-line))))
-
 (global-set-key "\C-a" 'smart-beginning-of-line)
 
 ;; calendar
@@ -221,7 +216,7 @@
 (require 'auto-complete-config)
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
 ;(defun ac-text-setup ()
-;(setq ac-sources (append '(ac-source-yasnippet) ac-sources)))
+  ;(setq ac-sources (append '(ac-source-yasnippet) ac-sources)))
 ;(add-hook 'text-mode-hook 'ac-text-setup)
 ;(add-hook 'markdown-mode-hook 'ac-text-setup)
 ;(add-hook 'org-mode-hook 'ac-text-setup)
@@ -401,11 +396,12 @@
 (org-clock-persistence-insinuate)
 ; spoiler files
 (require 'find-lisp)
-(if (file-accessible-directory-p "~/spoiler") (progn
-                                                (setq org-default-notes-file "~/spoiler/capture.org")
-                                                (setq org-agenda-files (find-lisp-find-files "~/spoiler" "\\.org$"))
-                                                ;(add-to-list 'auto-mode-alist '("^/home/amon/spoiler/" . org-mode))
-                                                ))
+(if (file-accessible-directory-p "~/spoiler") 
+  (progn
+    (setq org-default-notes-file "~/spoiler/capture.org")
+    (setq org-agenda-files (find-lisp-find-files "~/spoiler" "\\.org$"))
+    ;(add-to-list 'auto-mode-alist '("^/home/amon/spoiler/" . org-mode))
+    ))
 ; todo states
 (setq org-todo-keywords
       '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)")
@@ -536,7 +532,7 @@
 ;; clean up modeline and hide standard minor modes
 ; should be last so all modes are already loaded
 (require 'diminish)
-;(diminish 'auto-complete-mode "AC")
+(diminish 'auto-complete-mode "AC")
 (diminish 'auto-fill-function "AF")
 (diminish 'abbrev-mode)
 (diminish 'auto-revert-mode)
@@ -547,5 +543,3 @@
 (diminish 'volatile-highlights-mode)
 (diminish 'yas/minor-mode)
 (diminish 'whole-line-or-region-mode)
-
-
