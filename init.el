@@ -529,6 +529,10 @@
   ))
 (whole-line-or-region-mode 1)
 
+;; tramp (remote files)
+(setq tramp-default-method "ssh")
+(require 'tramp)
+
 ;; clean up modeline and hide standard minor modes
 ; should be last so all modes are already loaded
 (require 'diminish)
