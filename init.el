@@ -503,6 +503,8 @@
 
 ;; ecb (code browser)
 (require 'ecb)
+(defvar start-dir (getenv "PWD"))
+(defvar start-dir-name (car (last (split-string start-dir "/"))))
 (custom-set-variables
  '(ecb-options-version "2.40")
  '(ecb-tree-indent 2)
@@ -513,6 +515,7 @@
  '(ecb-fix-window-size 'auto)
  '(ecb-layout-name "left15")
  '(ecb-process-non-semantic-files t)
+ '(ecb-source-path (list (list start-dir start-dir-name)))
 )
 ; get some parsing for ruby
 (require 'imenu)
