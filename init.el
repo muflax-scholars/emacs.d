@@ -215,11 +215,6 @@
 ; auto completion
 (require 'auto-complete-config)
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
-;(defun ac-text-setup ()
-  ;(setq ac-sources (append '(ac-source-yasnippet) ac-sources)))
-;(add-hook 'text-mode-hook 'ac-text-setup)
-;(add-hook 'markdown-mode-hook 'ac-text-setup)
-;(add-hook 'org-mode-hook 'ac-text-setup)
 (add-to-list 'ac-modes 'text-mode)
 (add-to-list 'ac-modes 'markdown-mode)
 (add-to-list 'ac-modes 'org-mode)
@@ -377,7 +372,6 @@
 (setq user-mail-address "mail@muflax.com")
 (setq user-full-name "muflax")
 
-
 ;; org-mode (use private version)
 ; #FIXME (tab) for org-cycle is disabled directly in the library; this should
 ; probably be some unset here.
@@ -409,13 +403,15 @@
 (setq org-log-done 'note)
 ; priorities
 (setq org-default-priority 67) ;C
-
+; keybindings
+(global-set-key "\C-cs" 'org-store-link)
+; shortcut for C-u C-c C-l
+(global-set-key "\C-cl" (lambda () (interactive) (org-insert-link '(4))))
 
 ;; reload file when it changed (and the buffer has no changes)
 (global-auto-revert-mode 1)
 
 ;; new python mode
-;(setq load-path (cons "~/.emacs.d/site-lisp/python-mode" load-path))
 (require 'python)
 
 ;; haskell mode
