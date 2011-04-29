@@ -382,7 +382,8 @@
 ; loaded so that we can diminish it later
 (require 'org-indent)
 (setq org-startup-indented t)
-(setq org-startup-folded nil)
+(setq org-startup-folded 'content)
+(setq org-blank-before-new-entry nil)
 ; dependencies
 (setq org-enforce-todo-dependencies t)
 ; make clock history persistent
@@ -392,14 +393,14 @@
 (require 'find-lisp)
 (defadvice org-agenda (before org-agenda-reload ())
   "Scan for org files whenever agenda is loaded."
-  (setq org-agenda-files (find-lisp-find-files "~/spoiler" "\\.org$")))
+  (setq org-agenda-files (sort (find-lisp-find-files "~/spoiler" "\\.org$") 'string<)))
 
 (if (file-accessible-directory-p "~/spoiler") 
   (progn
     (setq org-default-notes-file "~/spoiler/capture.org")))
 ; todo states
 (setq org-todo-keywords
-      '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)")
+      '((sequence "TODO(t)" "|" "WAITING(w)" "DONE(d)")
         (sequence "BUG(b)" "|" "FIXED(f)")))
 (setq org-log-done 'note)
 ; priorities
