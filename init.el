@@ -390,12 +390,13 @@
 (org-clock-persistence-insinuate)
 ; spoiler files
 (require 'find-lisp)
+(defadvice org-agenda (before org-agenda-reload ())
+  "Scan for org files whenever agenda is loaded."
+  (setq org-agenda-files (find-lisp-find-files "~/spoiler" "\\.org$")))
+
 (if (file-accessible-directory-p "~/spoiler") 
   (progn
-    (setq org-default-notes-file "~/spoiler/capture.org")
-    (setq org-agenda-files (find-lisp-find-files "~/spoiler" "\\.org$"))
-    ;(add-to-list 'auto-mode-alist '("^/home/amon/spoiler/" . org-mode))
-    ))
+    (setq org-default-notes-file "~/spoiler/capture.org")))
 ; todo states
 (setq org-todo-keywords
       '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)")
