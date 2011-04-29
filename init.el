@@ -492,6 +492,16 @@
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward)
 
+;; better buffer switching
+(iswitchb-mode 1)
+(setq iswitchb-default-method 'samewindow)
+; ignores
+(add-to-list 'iswitchb-buffer-ignore "^ ")
+(add-to-list 'iswitchb-buffer-ignore "*Messages*")
+(add-to-list 'iswitchb-buffer-ignore "*ECB")
+(add-to-list 'iswitchb-buffer-ignore "*Buffer")
+(add-to-list 'iswitchb-buffer-ignore "*Completions")
+
 ;; don't hide mouse
 (setq make-pointer-invisible nil)
 
