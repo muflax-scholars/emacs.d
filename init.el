@@ -490,7 +490,7 @@
 
 ;; unique buffer names
 (require 'uniquify)
-(setq uniquify-buffer-name-style 'postforward)
+(setq uniquify-buffer-name-style 'post-forward)
 
 ;; don't hide mouse
 (setq make-pointer-invisible nil)
