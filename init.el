@@ -404,9 +404,10 @@
 ; priorities
 (setq org-default-priority 67) ;C
 ; keybindings
-(global-set-key "\C-cs" 'org-store-link)
+(define-key global-map "\C-ca" 'org-agenda)
+(define-key global-map "\C-cs" 'org-store-link)
 ; shortcut for C-u C-c C-l
-(global-set-key "\C-cl" (lambda () (interactive) (org-insert-link '(4))))
+(define-key global-map "\C-cl" (lambda () (interactive) (org-insert-link '(4))))
 
 ;; reload file when it changed (and the buffer has no changes)
 (global-auto-revert-mode 1)
@@ -457,7 +458,7 @@
                 (regexp . "\\(\\s-*\\)# => [^#\t\n]")
                 (repeat . nil)
                 (modes  . '(ruby-mode))))
-(global-set-key "\C-ca" 'align-current)
+(global-set-key "\C-c=" 'align-current)
 
 ;; diff- mode (better colors)
 (require 'diff-mode-)
