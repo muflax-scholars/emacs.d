@@ -511,7 +511,7 @@
 (global-set-key "\C-cf" 'semantic-ia-show-summary)
 
 ;; ecb (code browser)
-(require 'ecb)
+(require 'ecb-autoloads)
 (defvar start-dir (getenv "PWD"))
 (defvar start-dir-name (car (last (split-string start-dir "/"))))
 (custom-set-variables
