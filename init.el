@@ -410,6 +410,10 @@
 (define-key global-map "\C-cs" 'org-store-link)
 ; shortcut for C-u C-c C-l
 (define-key global-map "\C-cl" (lambda () (interactive) (org-insert-link '(4))))
+; apps
+(setq org-file-apps (append '(
+  ("\\.gnumeric\\'" . "gnumeric %s")
+  ) org-file-apps ))
 
 ;; reload file when it changed (and the buffer has no changes)
 (global-auto-revert-mode 1)
