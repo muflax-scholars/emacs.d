@@ -390,10 +390,14 @@
 (setq org-clock-persist 'history)
 (org-clock-persistence-insinuate)
 ; spoiler files
-(require 'find-lisp)
+;(require 'find-lisp)
 (defadvice org-agenda (before org-agenda-reload ())
   "Scan for org files whenever agenda is loaded."
-  (setq org-agenda-files (sort (find-lisp-find-files "~/spoiler" "\\.org$") 'string<)))
+  ;(setq org-agenda-files (sort (find-lisp-find-files "~/spoiler" "\\.org$") 'string<)))
+  ; 'find' is faster and has better control
+  (setq org-agenda-files (mapcar 'abbreviate-file-name (split-string
+    (shell-command-to-string "find ~/spoiler -type f -name \"*.org\" | sort")
+      "\n"))))
 ; format in agenda
 (setq org-agenda-prefix-format (quote (
   (agenda . " %i %-12:c%?-12t% s") 
