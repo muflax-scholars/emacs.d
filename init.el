@@ -410,6 +410,8 @@
 (define-key global-map "\C-cs" 'org-store-link)
 ; shortcut for C-u C-c C-l
 (define-key global-map "\C-cl" (lambda () (interactive) (org-insert-link '(4))))
+; go to spoiler index
+(define-key global-map "\C-c\C-s" (lambda () (interactive) (find-file "~/spoiler/index.org")))
 ; apps
 (setq org-file-apps (append '(
   ("\\.gnumeric\\'" . "gnumeric %s")
