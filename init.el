@@ -394,7 +394,19 @@
 (defadvice org-agenda (before org-agenda-reload ())
   "Scan for org files whenever agenda is loaded."
   (setq org-agenda-files (sort (find-lisp-find-files "~/spoiler" "\\.org$") 'string<)))
-
+; format in agenda
+(setq org-agenda-prefix-format (quote (
+  (agenda . " %i %-12:c%?-12t% s") 
+  (timeline . "  % s") 
+  (todo . "%-25:c") 
+  (tags . "%-25:c") 
+  (search . "%-25:c"))))
+(setq org-agenda-sorting-strategy (quote (
+  (agenda habit-down time-up priority-down category-keep) 
+  (todo category-up) 
+  (tags priority-down category-up) 
+  (search category-up))))
+; capture
 (if (file-accessible-directory-p "~/spoiler") 
   (progn
     (setq org-default-notes-file "~/spoiler/capture.org")))
@@ -521,17 +533,16 @@
 (defvar start-dir (getenv "PWD"))
 (defvar start-dir-name (car (last (split-string start-dir "/"))))
 (custom-set-variables
- '(ecb-options-version "2.40")
- '(ecb-tree-indent 2)
- '(ecb-primary-secondary-mouse-buttons 'mouse-1--mouse-2)
- '(ecb-tree-buffer-style 'ascii-guides)
- '(ecb-tip-of-the-day nil)
- '(ecb-window-width 20)
- '(ecb-fix-window-size 'auto)
+ '(ecb-fix-window-size (quote auto))
  '(ecb-layout-name "left15")
+ '(ecb-options-version "2.40")
+ '(ecb-primary-secondary-mouse-buttons (quote mouse-1--mouse-2))
  '(ecb-process-non-semantic-files t)
  '(ecb-source-path (list (list start-dir start-dir-name)))
-)
+ '(ecb-tip-of-the-day nil)
+ '(ecb-tree-buffer-style (quote ascii-guides))
+ '(ecb-tree-indent 2)
+ '(ecb-window-width 20))
 ; get some parsing for ruby
 (require 'imenu)
 (setq imenu-auto-rescan t)
