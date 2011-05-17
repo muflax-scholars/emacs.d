@@ -530,6 +530,8 @@
 ;; semantic (code parser)
 (require 'semantic)
 (semantic-mode 1)
+(global-semantic-idle-summary-mode 1)
+(global-semantic-idle-completions-mode 1)
 (global-set-key "\C-cf" 'semantic-ia-show-summary)
 
 ;; ecb (code browser)
@@ -565,6 +567,13 @@
 ;; tramp (remote files)
 (setq tramp-default-method "ssh")
 (require 'tramp)
+
+;; unset suspend-frame in X
+(when (eq window-system 'x)
+  (if (eq (key-binding "\C-x\C-z") 'suspend-frame)
+      (global-unset-key "\C-x\C-z"))
+  (if (eq (key-binding "\C-z") 'suspend-frame)
+      (global-unset-key "\C-z")))
 
 ;; clean up modeline and hide standard minor modes
 ; should be last so all modes are already loaded
