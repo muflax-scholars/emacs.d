@@ -423,6 +423,7 @@
 (setq org-default-priority 67) ;C
 ; keybindings
 (define-key global-map "\C-ca" 'org-agenda)
+(define-key global-map "\C-ct" 'org-todo-list)
 (define-key global-map "\C-cs" 'org-store-link)
 ; shortcut for C-u C-c C-l
 (define-key global-map "\C-cl" (lambda () (interactive) (org-insert-link '(4))))
