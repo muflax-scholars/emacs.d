@@ -576,6 +576,9 @@
   (if (eq (key-binding "\C-z") 'suspend-frame)
       (global-unset-key "\C-z")))
 
+;; shell stuff
+(setq sh-basic-offset 2)
+
 ;; clean up modeline and hide standard minor modes
 ; should be last so all modes are already loaded
 (require 'diminish)
