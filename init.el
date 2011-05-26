@@ -391,8 +391,8 @@
 (org-clock-persistence-insinuate)
 ; spoiler files
 ;(require 'find-lisp)
-(defadvice org-agenda (before org-agenda-reload ())
-  "Scan for org files whenever agenda is loaded."
+(defadvice org-todo-list (before org-todo-list-reload ())
+  "Scan for org files whenever todo list is loaded."
   ;(setq org-agenda-files (sort (find-lisp-find-files "~/spoiler" "\\.org$") 'string<)))
   ; 'find' is faster and has better control
   (setq org-agenda-files (mapcar 'abbreviate-file-name (split-string
