@@ -569,12 +569,16 @@
 (setq tramp-default-method "ssh")
 (require 'tramp)
 
-;; unset suspend-frame in X
+;; unset unwanted keys
 (when (eq window-system 'x)
   (if (eq (key-binding "\C-x\C-z") 'suspend-frame)
-      (global-unset-key "\C-x\C-z"))
+    (global-unset-key "\C-x\C-z"))
   (if (eq (key-binding "\C-z") 'suspend-frame)
-      (global-unset-key "\C-z")))
+    (global-unset-key "\C-z")))
+(if (eq (key-binding [(insert)]) 'overwrite-mode)
+  (global-unset-key [(insert)]))
+(if (eq (key-binding [(insertchar)]) 'overwrite-mode)
+  (global-unset-key [(insertchar)]))
 
 ;; shell stuff
 (setq sh-basic-offset 2)
