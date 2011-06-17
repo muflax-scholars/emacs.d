@@ -172,6 +172,7 @@
     (and (= oldpos (point))
          (beginning-of-line))))
 (global-set-key "\C-a" 'smart-beginning-of-line)
+(setq org-special-ctrl-a/e t)
 
 ;; calendar
 (setq calendar-week-start-day 1) ; monday
@@ -383,7 +384,9 @@
 (require 'org-indent)
 (setq org-startup-indented t)
 (setq org-startup-folded 'content)
-(setq org-blank-before-new-entry nil)
+(setq org-blank-before-new-entry '(
+  (heading . nil)
+  (plain-list-item . t)))
 ; dependencies
 (setq org-enforce-todo-dependencies t)
 ; make clock history persistent
