@@ -276,7 +276,7 @@
 (global-set-key (kbd "C-c *") 'my-isearch-word-at-point)
 
 ;; indentation
-(setq tab-width 2)
+(setq-default tab-width 2)
 (setq-default indent-tabs-mode nil)
 ; automatically turn on indenting
 (define-key global-map (kbd "RET") 'newline-and-indent)
@@ -316,7 +316,7 @@
 (global-set-key "\M-Y" 'yank-pop-reverse)
 
 ;; c style (1TBS, but guess offsets for other files)
-(setq c-default-style "k&r" c-basic-offset 2)
+(setq c-default-style "k&r" c-basic-offset tab-width)
 (require 'guess-offset)
 (global-set-key (kbd "M-RET") 'c-indent-new-comment-line)
 
@@ -453,7 +453,7 @@
 (require 'ruby-block)
 (ruby-block-mode t)
 (setq ruby-block-highlight-toggle t)
-(setq ruby-indent-level 2)
+(setq ruby-indent-level tab-width)
 (add-hook 'ruby-mode-hook (lambda () (local-set-key "\r" 'reindent-then-newline-and-indent)))
 ; Rake files are Ruby, too
 (add-to-list 'auto-mode-alist '("\\.rake$" . ruby-mode))
@@ -584,7 +584,10 @@
   (global-unset-key [(insertchar)]))
 
 ;; shell stuff
-(setq sh-basic-offset 2)
+(setq sh-basic-offset tab-width)
+
+;; nxml stuff
+(setq nxml-child-indent tab-width)
 
 ;; clean up modeline and hide standard minor modes
 ; should be last so all modes are already loaded
