@@ -386,7 +386,7 @@
 (setq org-startup-folded 'content)
 (setq org-blank-before-new-entry '(
   (heading . nil)
-  (plain-list-item . t)))
+  (plain-list-item . auto)))
 ; dependencies
 (setq org-enforce-todo-dependencies t)
 ; make clock history persistent
