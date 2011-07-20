@@ -321,8 +321,8 @@
 (global-set-key (kbd "M-RET") 'c-indent-new-comment-line)
 
 ;; mark stuff like FIXME
-(require 'fixme-mode)
-(fixme-mode 1)
+(require 'fic-mode)
+(global-fic-mode 1)
 
 ;; use automatic file headers
 ; #TODO recognize name automagically
@@ -596,7 +596,7 @@
 (diminish 'auto-fill-function "AF")
 (diminish 'abbrev-mode)
 (diminish 'auto-revert-mode)
-(diminish 'fixme-mode)
+(diminish 'fic-mode)
 (diminish 'highlight-parentheses-mode)
 (diminish 'org-indent-mode)
 (diminish 'undo-tree-mode)
