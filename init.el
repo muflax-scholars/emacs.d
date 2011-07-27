@@ -589,6 +589,12 @@
 ;; nxml stuff
 (setq nxml-child-indent tab-width)
 
+;; highlight current line
+(defface hl-line '((t (:background "Gray")))
+         "Face to use for `hl-line-face'." :group 'hl-line)
+(setq hl-line-face 'hl-line)
+(global-hl-line-mode t)
+
 ;; clean up modeline and hide standard minor modes
 ; should be last so all modes are already loaded
 (require 'diminish)
