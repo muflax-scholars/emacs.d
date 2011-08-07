@@ -553,7 +553,8 @@
  '(ecb-tip-of-the-day nil)
  '(ecb-tree-buffer-style (quote ascii-guides))
  '(ecb-tree-indent 2)
- '(ecb-window-width 20))
+ '(ecb-window-width 20)
+ '(safe-local-variable-values (quote ((eval set-input-method (quote latin-postfix)) (eval set-frame-font "Droid Serif 12") ))))
 ; get some parsing for ruby
 (require 'imenu)
 (setq imenu-auto-rescan t)
