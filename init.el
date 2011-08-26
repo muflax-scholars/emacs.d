@@ -597,6 +597,11 @@
 (setq hl-line-face 'hl-line)
 (global-hl-line-mode t)
 
+;; nyan nyan nyan
+(require 'nyan-mode)
+(nyan-mode t)
+(setq nyan-bar-length 15)
+
 ;; clean up modeline and hide standard minor modes
 ; should be last so all modes are already loaded
 (require 'diminish)
