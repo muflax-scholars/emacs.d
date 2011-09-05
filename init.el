@@ -602,12 +602,6 @@
 (nyan-mode t)
 (setq nyan-bar-length 15)
 
-;; nxhtml
-(load "~/.emacs.d/site-lisp/nxhtml/autostart.el")
-; avoid coloring submodes
-(setq mumamo-chunk-coloring 1000)
-(add-to-list 'auto-mode-alist '("\\.erb\\'" . eruby-nxhtml-mumamo))
-             
 ;; clean up modeline and hide standard minor modes
 ; should be last so all modes are already loaded
 (require 'diminish)
