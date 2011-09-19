@@ -609,17 +609,23 @@
 ;; input methods
 (load "custom-input-methods.el" nil t t)
 
+;; ibus (works exactly like normal ibus, but has better integration)
+(require 'ibus) 
+(add-hook 'after-init-hook 'ibus-mode-on)
+(global-set-key (kbd "<kanji>") 'ibus-toggle)
+
 ;; clean up modeline and hide standard minor modes
 ; should be last so all modes are already loaded
 (require 'diminish)
+(diminish 'abbrev-mode)
 (diminish 'auto-complete-mode "AC")
 (diminish 'auto-fill-function "AF")
-(diminish 'abbrev-mode)
 (diminish 'auto-revert-mode)
 (diminish 'fic-mode)
 (diminish 'highlight-parentheses-mode)
+(diminish 'ibus-mode)
 (diminish 'org-indent-mode)
 (diminish 'undo-tree-mode)
 (diminish 'volatile-highlights-mode)
-(diminish 'yas/minor-mode)
 (diminish 'whole-line-or-region-mode)
+(diminish 'yas/minor-mode)
