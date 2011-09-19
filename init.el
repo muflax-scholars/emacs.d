@@ -554,7 +554,11 @@
  '(ecb-tree-buffer-style (quote ascii-guides))
  '(ecb-tree-indent 2)
  '(ecb-window-width 20)
- '(safe-local-variable-values (quote ((eval set-input-method (quote latin-postfix)) (eval set-frame-font "Droid Serif 12") ))))
+ '(safe-local-variable-values (quote (
+    (eval set-input-method (quote muflax-latin)) 
+    (eval set-input-method (quote latin-postfix)) 
+    (eval set-frame-font "Droid Serif 12"))))
+ )
 ; get some parsing for ruby
 (require 'imenu)
 (setq imenu-auto-rescan t)
@@ -601,6 +605,9 @@
 (require 'nyan-mode)
 (nyan-mode t)
 (setq nyan-bar-length 15)
+
+;; input methods
+(load "custom-input-methods.el" nil t t)
 
 ;; clean up modeline and hide standard minor modes
 ; should be last so all modes are already loaded
