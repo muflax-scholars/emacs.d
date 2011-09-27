@@ -2424,7 +2424,7 @@ respectively."
 		 (integerp event)
 		 (memq 'shift (event-modifiers event)))
 	    ;; Reset the 25th bit corresponding to the shift key
-	    (setq event (logand event (lognot ?\x2000000))
+	    (setq event (logand event (lognot #x2000000))
 		  keybind (key-binding (vector event))))
 	(if ibus-keymap-overlay
 	    (overlay-put ibus-keymap-overlay 'keymap ibus-mode-preedit-map)))
