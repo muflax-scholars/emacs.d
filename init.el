@@ -1,5 +1,5 @@
 ;; load path 
-; site-lisp stores foreign packages, emacs.d only my own
+; site-lisp stores manually maintained packages
 (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
   (let* ((my-lisp-dir "~/.emacs.d/site-lisp/")
          (default-directory my-lisp-dir))
@@ -7,6 +7,12 @@
       (setq load-path (cons my-lisp-dir load-path))
       (normal-top-level-add-subdirs-to-load-path))))
 (setq load-path (cons (expand-file-name "~/.emacs.d") load-path))
+
+; elpa
+(require 'package)
+(add-to-list 'package-archives '("tromey" . "http://tromey.com/elpa/"))
+(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+(package-initialize)
 
 ;; color 
 (require 'color-theme)
@@ -40,8 +46,6 @@
 ;(add-hook 'after-make-console-frame-hooks 'color-theme-emacs-nw)
 
 ;; auctex
-(load "auctex.el" nil t t)
-(load "preview-latex.el" nil t t)
 (add-hook 'LaTeX-mode-hook 'TeX-PDF-mode)
 
 ;; smooth scrolling with margin
@@ -355,8 +359,6 @@
 ;(add-hook 'org-mode-hook 'turn-on-flyspell)
 
 ;; git
-(require 'magit)
-(require 'gitsum)
 (require 'format-spec)
 (require 'git-blame)
 
@@ -445,7 +447,6 @@
 (require 'python)
 
 ;; haskell mode
-(load "~/.emacs.d/site-lisp/haskell-mode/haskell-site-file")
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 

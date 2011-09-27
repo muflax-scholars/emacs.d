@@ -5,7 +5,7 @@
 ;; Author: Eric Schulte
 ;; Keywords: literate programming, reproducible research, comint
 ;; Homepage: http://orgmode.org
-;; Version: 7.3
+;; Version: 7.7
 
 ;; This file is part of GNU Emacs.
 
@@ -139,9 +139,9 @@ specifies the value of ERROR-BUFFER."
 	 (if error-buffer
 	     (make-temp-file
 	      (expand-file-name "scor"
-				(or (unless (featurep 'xemacs)
-				      small-temporary-file-directory)
-				    temporary-file-directory)))
+                                (if (featurep 'xemacs)
+                                    (temp-directory)
+                                  temporary-file-directory)))
 	   nil))
 	exit-status)
     (if (or replace
