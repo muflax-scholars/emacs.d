@@ -15,13 +15,11 @@
 (package-initialize)
 
 ;; color 
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 (require 'color-theme)
 ; only load used color theme
 (require 'color-theme-almost-monokai)
 ;(color-theme-initialize)
-
-; makes sure each frame has its own unique color
-(setq color-theme-is-global nil)
 
 ; use different color scheme depending on whether we run in X or a terminal
 (defvar after-make-console-frame-hooks '()
@@ -44,6 +42,21 @@
 
 (add-hook 'after-make-window-system-frame-hooks 'color-theme-almost-monokai)
 ;(add-hook 'after-make-console-frame-hooks 'color-theme-emacs-nw)
+
+;; fonts
+(defun set-window-fonts ()
+  (set-frame-font "Anonymous Pro-9")
+  (set-fontset-font (frame-parameter nil 'font)
+                    'japanese-jisx0208 '("Kochi Gothic" . "unicode-bmp"))
+  (set-fontset-font (frame-parameter nil 'font)
+                    'japanese-jisx0212 '("Kochi Gothic" . "unicode-bmp"))
+  ; prevent using the Japanese fonts for European text
+  (set-fontset-font (frame-parameter nil 'font)
+                    'latin-iso8859-1  '("Anonymous Pro" . "unicode-bmp"))
+  (set-fontset-font (frame-parameter nil 'font)
+                    'latin-iso8859-15 '("Anonymous Pro" . "unicode-bmp"))
+  )
+(add-hook 'after-make-window-system-frame-hooks 'set-window-fonts)
 
 ;; auctex
 (add-hook 'LaTeX-mode-hook 'TeX-PDF-mode)
@@ -95,21 +108,6 @@
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (setq scroll-preserve-screen-position t)
-
-;; fonts
-(defun set-window-fonts ()
-  (set-frame-font "Anonymous Pro-9")
-  (set-fontset-font (frame-parameter nil 'font)
-                    'japanese-jisx0208 '("Kochi Gothic" . "unicode-bmp"))
-  (set-fontset-font (frame-parameter nil 'font)
-                    'japanese-jisx0212 '("Kochi Gothic" . "unicode-bmp"))
-  ; prevent using the Japanese fonts for European text
-  (set-fontset-font (frame-parameter nil 'font)
-                    'latin-iso8859-1  '("Anonymous Pro" . "unicode-bmp"))
-  (set-fontset-font (frame-parameter nil 'font)
-                    'latin-iso8859-15 '("Anonymous Pro" . "unicode-bmp"))
-  )
-(add-hook 'after-make-window-system-frame-hooks 'set-window-fonts)
 
 ;; text stuff
 (setq default-major-mode 'org-mode)
