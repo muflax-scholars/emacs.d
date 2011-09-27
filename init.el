@@ -281,7 +281,7 @@
 (setq-default tab-width 2)
 (setq-default indent-tabs-mode nil)
 ; automatically turn on indenting
-(define-key global-map (kbd "RET") 'newline-and-indent)
+(electric-indent-mode 1)
 ; also when yanked
 (defun yank-and-indent ()
   "Yank and then indent the newly formed region according to mode."
@@ -454,7 +454,6 @@
 (ruby-block-mode t)
 (setq ruby-block-highlight-toggle t)
 (setq ruby-indent-level tab-width)
-(add-hook 'ruby-mode-hook (lambda () (local-set-key "\r" 'reindent-then-newline-and-indent)))
 ; Rake files are Ruby, too
 (add-to-list 'auto-mode-alist '("\\.rake$" . ruby-mode))
 (add-to-list 'auto-mode-alist '("Rakefile$" . ruby-mode))
