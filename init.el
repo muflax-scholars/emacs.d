@@ -530,8 +530,10 @@
 (add-to-list 'iswitchb-buffer-ignore "*Buffer")
 (add-to-list 'iswitchb-buffer-ignore "*Completions")
 
-;; don't hide mouse
+;; make mouse more usable
 (setq make-pointer-invisible nil)
+(mouse-avoidance-mode 'banish)
+(setq mouse-yank-at-point t)
 
 ;; semantic (code parser)
 (require 'semantic)
