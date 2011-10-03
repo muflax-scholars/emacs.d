@@ -111,15 +111,18 @@
 
 ;; text stuff
 (setq default-major-mode 'org-mode)
-(setq-default fill-column 80)
-(add-hook 'text-mode-hook 'turn-on-auto-fill)
-(add-hook 'org-mode-hook 'turn-on-auto-fill)
-(add-hook 'markdown-mode-hook 'turn-on-auto-fill)
 (prefer-coding-system 'utf-8)
 (setq undo-limit 1000000)
 (setq sentence-end-double-space nil)
 (column-number-mode t)
 (setq-default indicate-empty-lines t)
+; wrap nicely
+(setq-default fill-column 80)
+(add-hook 'text-mode-hook 'turn-on-auto-fill)
+(add-hook 'org-mode-hook 'turn-on-auto-fill)
+(add-hook 'markdown-mode-hook 'turn-on-auto-fill)
+(global-visual-line-mode 1)
+(setq visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
 
 ;; parentheses are connected and their content highlighted
 (show-paren-mode 1)
@@ -627,3 +630,5 @@
 (diminish 'volatile-highlights-mode)
 (diminish 'whole-line-or-region-mode)
 (diminish 'yas/minor-mode)
+(diminish 'visual-line-mode)
+(diminish 'global-visual-line-mode)
