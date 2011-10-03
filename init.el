@@ -531,8 +531,7 @@
 (add-to-list 'iswitchb-buffer-ignore "*Completions")
 
 ;; make mouse more usable
-(setq make-pointer-invisible nil)
-(mouse-avoidance-mode 'banish)
+(setq make-pointer-invisible t)
 (setq mouse-yank-at-point t)
 
 ;; semantic (code parser)
@@ -628,6 +627,11 @@
       (delete-file currentFile)
       (message (concat "Deleted file: " currentFile))
       )))
+
+;; semi-port of surround.vim
+(require 'surround)
+(global-set-key "\C-cd" 'surround-delete)
+(global-set-key "\C-cD" 'surround-change)
 
 ;; clean up modeline and hide standard minor modes
 ; should be last so all modes are already loaded
