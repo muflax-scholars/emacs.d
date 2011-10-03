@@ -631,7 +631,8 @@
 ;; semi-port of surround.vim
 (require 'surround)
 (global-set-key "\C-cd" 'surround-delete)
-(global-set-key "\C-cD" 'surround-change)
+(global-set-key "\C-cD" 'surround-delete-within)
+(global-set-key "\C-c\M-d" 'surround-change)
 
 ;; clean up modeline and hide standard minor modes
 ; should be last so all modes are already loaded

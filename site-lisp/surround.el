@@ -121,6 +121,24 @@ between these overlays is what is deleted."
         (when outer (delete-overlay outer))
         (when inner (delete-overlay inner)))))))
 
+(defun surround-delete-within (char &optional inner)
+  "Like `surround-delete', but deletes the content, not the
+delimiters."
+  (interactive "c")
+  (cond
+   (inner
+    (delete-region (overlay-start inner) (overlay-end inner))
+    (goto-char (overlay-start inner)))
+   (t
+    ;; no overlays specified: create them on the basis of CHAR
+    ;; and delete after use
+    (let* ((inner (surround-inner-overlay char)))
+      (unwind-protect
+          (when inner
+            (surround-delete-within char inner))
+        (when inner (delete-overlay inner)))))))
+
+
 (defun surround-change (char &optional outer inner)
   "Change the surrounding delimiters represented by CHAR.
 Alternatively, the text to delete can be represented with the
@@ -141,6 +159,7 @@ overlays OUTER and INNER, which are passed to `surround-delete'."
         (when outer (delete-overlay outer))
         (when inner (delete-overlay inner)))))))
 
+;; TODO make this interactive, too
 (defun surround-region (beg end type char &optional force-new-line)
   "Surround BEG and END with CHAR.
 
