@@ -617,6 +617,18 @@
 (add-hook 'after-init-hook 'ibus-mode-on)
 (global-set-key (kbd "<kanji>") 'ibus-toggle)
 
+;; analog to delete-file
+(defun delete-current-file ()
+  "Delete the file associated with the current buffer."
+  (interactive)
+  (let (currentFile)
+    (setq currentFile (buffer-file-name))
+    (when (y-or-n-p (concat "Delete file: " currentFile))
+      (kill-buffer (current-buffer))
+      (delete-file currentFile)
+      (message (concat "Deleted file: " currentFile))
+      )))
+
 ;; clean up modeline and hide standard minor modes
 ; should be last so all modes are already loaded
 (require 'diminish)
