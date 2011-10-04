@@ -61,11 +61,17 @@
 ;; auctex
 (add-hook 'LaTeX-mode-hook 'TeX-PDF-mode)
 
-;; smooth scrolling with margin
-(require 'smooth-scrolling)
-(setq scroll-margin 0)
-(setq smooth-scroll-margin 5)
+;; scrolling
+(setq scroll-preserve-screen-position t)
 (setq mouse-wheel-progressive-speed nil)
+; smooth scrolling with margin
+(require 'smooth-scrolling)
+(setq smooth-scroll-margin 5)
+(setq scroll-margin 0)
+(setq scroll-conservatively 10000)
+; necessary or scrolling is really slow
+(setq-default bidi-display-reordering  nil)
+(setq auto-window-vscroll nil)
 
 ;; support for bookmarks
 (require 'breadcrumb)
@@ -107,7 +113,6 @@
 (setq frame-title-format "%b - emacs")
 (menu-bar-mode -1)
 (tool-bar-mode -1)
-(setq scroll-preserve-screen-position t)
 
 ;; text stuff
 (setq default-major-mode 'org-mode)
