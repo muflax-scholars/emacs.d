@@ -543,6 +543,9 @@
 
 ;; ecb (code browser)
 (require 'ecb-autoloads)
+; fix for emacs 24
+(unless (boundp 'stack-trace-on-error)
+  (defvar stack-trace-on-error nil)) 
 (defvar start-dir (getenv "PWD"))
 (defvar start-dir-name (car (last (split-string start-dir "/"))))
 (custom-set-variables
@@ -556,14 +559,16 @@
  '(ecb-tree-buffer-style (quote ascii-guides))
  '(ecb-tree-indent 2)
  '(ecb-window-width 20)
- '(safe-local-variable-values (quote (
-    (eval set-input-method (quote muflax-latin)) 
-    (eval set-input-method (quote latin-postfix)) 
-    (eval set-frame-font "Droid Serif 12"))))
- )
+ '(safe-local-variable-values 
+    (quote ((eval set-input-method (quote muflax-latin)) 
+            (eval set-input-method (quote latin-postfix)) 
+            (eval set-frame-font "Droid Serif 12")))))
 ; get some parsing for ruby
 (require 'imenu)
 (setq imenu-auto-rescan t)
+
+;; speedbar
+(setq speedbar-use-images nil)
 
 ;; if no region is active, act on current line
 (require 'whole-line-or-region)
