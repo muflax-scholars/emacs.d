@@ -210,6 +210,8 @@
 (window-numbering-mode 1)
 
 ;; snippets
+(setq yas/next-field-key '("<backtab>" "<S-tab>"))
+(setq yas/prev-field-key '("<C-tab>"))
 (require 'yasnippet)
 (yas/initialize)
 (yas/load-directory "~/.emacs.d/snippets")
