@@ -1,4 +1,4 @@
-#name : struct ... { ... }
+#name : typedef struct ... { ... }
 # --
 typedef struct {
     $0

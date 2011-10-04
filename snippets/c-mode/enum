@@ -1,4 +1,4 @@
-#name : struct ... { ... }
+#name : enum
 # --
 typedef enum {
     $0
