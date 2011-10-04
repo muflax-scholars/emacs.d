@@ -362,6 +362,7 @@
 ;; git
 (require 'format-spec)
 (require 'git-blame)
+(require 'gitsum)
 
 ;; markdown
 (require 'markdown-mode)
