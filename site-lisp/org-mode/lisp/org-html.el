@@ -1,12 +1,10 @@
 ;;; org-html.el --- HTML export for Org-mode
 
-;; Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011
-;;   Free Software Foundation, Inc.
+;; Copyright (C) 2004-2011 Free Software Foundation, Inc.
 
 ;; Author: Carsten Dominik <carsten at orgmode dot org>
 ;; Keywords: outlines, hypermedia, calendar, wp
 ;; Homepage: http://orgmode.org
-;; Version: 7.7
 ;;
 ;; This file is part of GNU Emacs.
 ;;
@@ -35,7 +33,7 @@
 
 (declare-function org-id-find-id-file "org-id" (id))
 (declare-function htmlize-region "ext:htmlize" (beg end))
-(declare-function org-pop-to-buffer-same-window 
+(declare-function org-pop-to-buffer-same-window
 		  "org-compat" (&optional buffer-or-name norecord label))
 
 (defgroup org-export-html nil
@@ -158,6 +156,12 @@ not be modified."
   dt { font-weight: bold; }
   div.figure { padding: 0.5em; }
   div.figure p { text-align: center; }
+  div.inlinetask {
+    padding:10px;
+    border:2px solid gray;
+    margin:10px;
+    background: #ffffcc;
+  }
   textarea { overflow-x: auto; }
   .linenr { font-size:smaller }
   .code-highlighted {background-color:#ffff00;}
@@ -622,7 +626,10 @@ This variable is obsolete since Org version 7.7.
 Please set `org-export-html-divs' instead.")
 
 (defcustom org-export-html-divs '("preamble" "content" "postamble")
-  "The name of the main divs for HTML export."
+  "The name of the main divs for HTML export.
+This is a list of three strings, the first one for the preamble
+DIV, the second one for the content DIV and the third one for the
+postamble DIV."
   :group 'org-export-html
   :type '(list
 	  (string :tag " Div for the preamble:")
@@ -804,11 +811,11 @@ description.  See variables `org-export-html-inline-images' and
 			     may-inline-p)
    "Make an HTML link.
 OPT-PLIST is an options list.
-TYPE is the device-type of the link (THIS://foo.html)
-PATH is the path of the link (http://THIS#locationx)
-FRAGMENT is the fragment part of the link, if any (foo.html#THIS)
+TYPE is the device-type of the link (THIS://foo.html).
+PATH is the path of the link (http://THIS#location).
+FRAGMENT is the fragment part of the link, if any (foo.html#THIS).
 DESC is the link description, if any.
-ATTR is a string of other attributes of the a element.
+ATTR is a string of other attributes of the \"a\" element.
 MAY-INLINE-P allows inlining it as an image."
 
    (declare (special org-par-open))
@@ -899,7 +906,7 @@ OPT-PLIST is the export options list."
 			 (string-match "^\\.\\.?/" path)))
 		   "file")
 		  (t "internal")))
-      (setq path (org-extract-attributes (org-link-unescape path)))
+      (setq path (org-extract-attributes path))
       (setq attr (get-text-property 0 'org-attributes path))
       (setq desc1 (if (match-end 5) (match-string 5 line))
 	    desc2 (if (match-end 2) (concat type ":" path) path)
@@ -912,7 +919,7 @@ OPT-PLIST is the export options list."
 	  (if (string-match "^file:" desc)
 	      (setq desc (substring desc (match-end 0)))))
 	(setq desc (org-add-props
-		       (concat "<img src=\"" desc "\" alt=\"" 
+		       (concat "<img src=\"" desc "\" alt=\""
 			       (file-name-nondirectory desc) "\"/>")
 		       '(org-protected t))))
       (cond
@@ -1349,9 +1356,9 @@ lang=\"%s\" xml:lang=\"%s\">
 	    (insert "\n</div>\n")))
 
 	;; begin wrap around body
-	(insert (format "\n<div id=\"%s\">" 
+	(insert (format "\n<div id=\"%s\">"
 			;; FIXME org-export-html-content-div is obsolete since 7.7
-			(or org-export-html-content-div 
+			(or org-export-html-content-div
 			    (nth 1 org-export-html-divs)))
 		;; FIXME this should go in the preamble but is here so
 		;; that org-infojs can still find it
@@ -1368,7 +1375,7 @@ lang=\"%s\" xml:lang=\"%s\">
 	    (push "<div id=\"text-table-of-contents\">\n" thetoc)
 	    (push "<ul>\n<li>" thetoc)
 	    (setq lines
-		  (mapcar 
+		  (mapcar
 		   #'(lambda (line)
 		       (if (and (string-match org-todo-line-regexp line)
 				(not (get-text-property 0 'org-protected line)))
@@ -1394,7 +1401,7 @@ lang=\"%s\" xml:lang=\"%s\">
 					     line lines level))))
 			     (if (string-match
 				  (org-re "[ \t]+:\\([[:alnum:]_@:]+\\):[ \t]*$") txt)
-				 (setq txt (replace-match  
+				 (setq txt (replace-match
 					    "&nbsp;&nbsp;&nbsp;<span class=\"tag\"> \\1</span>" t nil txt)))
 			     (if (string-match quote-re0 txt)
 				 (setq txt (replace-match "" t t txt)))
@@ -1422,7 +1429,7 @@ lang=\"%s\" xml:lang=\"%s\">
 				   ;; Check for targets
 				   (while (string-match org-any-target-regexp line)
 				     (setq line (replace-match
-						 (concat "@<span class=\"target\">" 
+						 (concat "@<span class=\"target\">"
 							 (match-string 1 line) "@</span> ")
 						 t t line)))
 				   (while (string-match "&lt;\\(&lt;\\)+\\|&gt;\\(&gt;\\)+" txt)
@@ -1430,8 +1437,8 @@ lang=\"%s\" xml:lang=\"%s\">
 				   (setq href
 					 (replace-regexp-in-string
 					  "\\." "-" (format "sec-%s" snumber)))
-				   (setq href (org-solidify-link-text 
-					       (or (cdr (assoc href 
+				   (setq href (org-solidify-link-text
+					       (or (cdr (assoc href
 							       org-export-preferred-target-alist)) href)))
 				   (push
 				    (format
@@ -1439,7 +1446,7 @@ lang=\"%s\" xml:lang=\"%s\">
 					 "</li>\n<li><a href=\"#%s\"><span class=\"todo\">%s</span></a>"
 				       "</li>\n<li><a href=\"#%s\">%s</a>")
 				     href txt) thetoc)
-				   
+
 				   (setq org-last-level level)))))
 		       line)
 		   lines))
@@ -1448,15 +1455,15 @@ lang=\"%s\" xml:lang=\"%s\">
 	      (push "</li>\n</ul>\n" thetoc))
 	    (push "</div>\n" thetoc)
 	    (setq thetoc (if have-headings (nreverse thetoc) nil))))
-      
+
       (setq head-count 0)
       (org-init-section-numbers)
-      
+
       (org-open-par)
-      
+
       (while (setq line (pop lines) origline line)
 	(catch 'nextline
-	  
+
 	  ;; end of quote section?
 	  (when (and inquote (string-match org-outline-regexp-bol line))
 	    (insert "</pre>\n")
@@ -1811,7 +1818,7 @@ lang=\"%s\" xml:lang=\"%s\">
 			      (?d . ,date)   (?c . ,creator-info)
 			      (?v . ,html-validation-link))))))
 	    (insert "\n</div>"))))
-      
+
       ;; FIXME `org-export-html-with-timestamp' has been declared
       ;; obsolete since Org 7.7 -- don't forget to remove this.
       (if org-export-html-with-timestamp
@@ -1944,7 +1951,7 @@ NO-CSS is passed to the exporter."
   (if (string-match "^[ \t]*|" (car lines))
       ;; A normal org table
       (org-format-org-table-html lines nil no-css)
-    ;; Table made by table.el 
+    ;; Table made by table.el
     (or (org-format-table-table-html-using-table-generate-source
 	 olines (not org-export-prefer-native-exporter-for-tables))
 	;; We are here only when table.el table has NO col or row
@@ -2607,5 +2614,4 @@ the alist of previous items."
 
 (provide 'org-html)
 
-;; arch-tag: 8109d84d-eb8f-460b-b1a8-f45f3a6c7ea1
 ;;; org-html.el ends here

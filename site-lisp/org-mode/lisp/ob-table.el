@@ -1,11 +1,10 @@
 ;;; ob-table.el --- support for calling org-babel functions from tables
 
-;; Copyright (C) 2009, 2010  Free Software Foundation, Inc.
+;; Copyright (C) 2009-2011  Free Software Foundation, Inc.
 
 ;; Author: Eric Schulte
 ;; Keywords: literate programming, reproducible research
 ;; Homepage: http://orgmode.org
-;; Version: 7.7
 
 ;; This file is part of GNU Emacs.
 
@@ -118,9 +117,10 @@ example above."
            (org-babel-execute-src-block
             nil (list "emacs-lisp" "results" params) '((:results . "silent"))))
        ""))))
+(def-edebug-spec sbe (form form))
 
 (provide 'ob-table)
 
-;; arch-tag: 4234cc7c-4fc8-4e92-abb0-2892de1a493b
+
 
 ;;; ob-table.el ends here

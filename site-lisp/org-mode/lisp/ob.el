@@ -1,11 +1,11 @@
 ;;; ob.el --- working with code blocks in org-mode
 
-;; Copyright (C) 2009, 2010  Free Software Foundation, Inc.
+;; Copyright (C) 2009-2011  Free Software Foundation, Inc.
 
-;; Author: Eric Schulte, Dan Davison
+;; Author: Eric Schulte
+;;	Dan Davison
 ;; Keywords: literate programming, reproducible research
 ;; Homepage: http://orgmode.org
-;; Version: 7.7
 
 ;; This file is part of GNU Emacs.
 
@@ -137,13 +137,13 @@ remove code block execution from the C-c C-c keybinding."
    ;; (4) header arguments
    "\\([^\n]*\\)\n"
    ;; (5) body
-   "\\([^\000]*?\\)[ \t]*#\\+end_src")
+   "\\([^\000]*?\n\\)?[ \t]*#\\+end_src")
   "Regexp used to identify code blocks.")
 
 (defvar org-babel-inline-src-block-regexp
   (concat
    ;; (1) replacement target (2) lang
-   "[^-[:alnum:]]\\(src_\\([^ \f\t\n\r\v]+\\)"
+   "\\(?:^\\|[^-[:alnum:]]\\)\\(src_\\([^ \f\t\n\r\v]+\\)"
    ;; (3,4) (unused, headers)
    "\\(\\|\\[\\(.*?\\)\\]\\)"
    ;; (5) body
@@ -158,6 +158,39 @@ not match KEY should be returned."
 	(mapcar
 	 (lambda (p) (when (funcall (if others #'not #'identity) (eq (car p) key)) p))
 	 params)))
+
+(defun org-babel-get-inline-src-block-matches()
+  "Set match data if within body of an inline source block.
+Returns non-nil if match-data set"
+  (let ((src-at-0-p (save-excursion
+		      (beginning-of-line 1)
+		      (string= "src" (thing-at-point 'word))))
+	(first-line-p (= 1 (line-number-at-pos)))
+	(orig (point)))
+    (let ((search-for (cond ((and src-at-0-p first-line-p  "src_"))
+			    (first-line-p "[ \t]src_")
+			    (t "[ \f\t\n\r\v]src_")))
+	  (lower-limit (if first-line-p
+			   nil
+			 (- (point-at-bol) 1))))
+      (save-excursion
+	(when (or (and src-at-0-p (bobp))
+		  (and (re-search-forward "}" (point-at-eol) t)
+		       (re-search-backward search-for lower-limit t)
+		       (> orig (point))))
+	  (when (looking-at org-babel-inline-src-block-regexp)
+	    t ))))))
+
+(defun org-babel-get-lob-one-liner-matches()
+  "Set match data if on line of an lob one liner.
+Returns non-nil if match-data set"
+
+  (save-excursion
+    (unless (= (point) (point-at-bol)) ;; move before inline block
+      (re-search-backward "[ \f\t\n\r\v]" nil t))
+    (if (looking-at org-babel-inline-lob-one-liner-regexp)
+	t
+      nil)))
 
 (defun org-babel-get-src-block-info (&optional light)
   "Get information on the current source block.
@@ -187,12 +220,19 @@ Returns a list
 	    (when (match-string 6)
 	      (setf (nth 2 info) ;; merge functional-syntax vars and header-args
 		    (org-babel-merge-params
-		     (mapcar (lambda (ref) (cons :var ref))
-			     (org-babel-ref-split-args (match-string 6)))
+		     (mapcar
+		      (lambda (ref) (cons :var ref))
+		      (mapcar
+		       (lambda (var) ;; check that each variable is initialized
+			 (if (string-match ".+=.+" var)
+			     var
+			   (error
+			    "variable \"%s\"%s must be assigned a default value"
+			    var (if name (format " in block \"%s\"" name) ""))))
+		       (org-babel-ref-split-args (match-string 6))))
 		     (nth 2 info))))))
       ;; inline source block
-      (when (save-excursion (re-search-backward "[ \f\t\n\r\v]" nil t)
-			    (looking-at org-babel-inline-src-block-regexp))
+      (when (org-babel-get-inline-src-block-matches)
 	(setq info (org-babel-parse-inline-src-block-match))))
     ;; resolve variable references and add summary parameters
     (when (and info (not light))
@@ -518,6 +558,7 @@ arguments and pop open the results in a preview buffer."
   (interactive)
   ;; TODO: report malformed code block
   ;; TODO: report incompatible combinations of header arguments
+  ;; TODO: report uninitialized variables
   (let ((too-close 2)) ;; <- control closeness to report potential match
     (dolist (header (mapcar (lambda (arg) (substring (symbol-name (car arg)) 1))
 			    (and (org-babel-where-is-src-block-head)
@@ -624,6 +665,7 @@ Return t if a code block was found at point, nil otherwise."
 	 (if (org-bound-and-true-p org-edit-src-from-org-mode)
 	     (org-edit-src-exit)))
        t)))
+(def-edebug-spec org-babel-do-in-edit-buffer (body))
 
 (defun org-babel-do-key-sequence-in-edit-buffer (key)
   "Read key sequence and execute the command in edit buffer.
@@ -720,6 +762,7 @@ end-body --------- point at the end of the body"
 	     (goto-char end-block))))
        (unless visited-p (kill-buffer to-be-removed))
        (goto-char point))))
+(def-edebug-spec org-babel-map-src-blocks (form body))
 
 ;;;###autoload
 (defmacro org-babel-map-inline-src-blocks (file &rest body)
@@ -742,6 +785,7 @@ buffer."
 	   (goto-char (match-end 0))))
        (unless visited-p (kill-buffer to-be-removed))
        (goto-char point))))
+(def-edebug-spec org-babel-map-inline-src-blocks (form body))
 
 ;;;###autoload
 (defun org-babel-execute-buffer (&optional arg)
@@ -783,7 +827,7 @@ the current subtree."
 		 lst)
 	     (norm (arg)
 		   (let ((v (if (and (listp (cdr arg)) (null (cddr arg)))
-				(copy-seq (cdr arg))
+				(copy-sequence (cdr arg))
 			      (cdr arg))))
 		     (when (and v (not (and (sequencep v)
 					    (not (consp v))
@@ -946,9 +990,7 @@ may be specified in the properties of the current outline entry."
       (delq nil
 	    (mapcar
 	     (lambda (header-arg)
-	       (and (setq val
-			  (or (org-entry-get (point) header-arg t)
-			      (org-entry-get (point) (concat ":" header-arg) t)))
+	       (and (setq val (org-entry-get (point) header-arg t))
 		    (cons (intern (concat ":" header-arg))
 			  (org-babel-read val))))
 	     (mapcar
@@ -988,9 +1030,10 @@ may be specified in the current buffer."
          (body (org-babel-clean-text-properties
 		(let* ((body (match-string 5))
 		       (sub-length (- (length body) 1)))
-		  (if (string= "\n" (substring body sub-length))
+		  (if (and (> sub-length 0)
+			   (string= "\n" (substring body sub-length)))
 		      (substring body 0 sub-length)
-		    body))))
+		    (or body "")))))
 	 (preserve-indentation (or org-src-preserve-indentation
 				   (string-match "-i\\>" switches))))
     (list lang
@@ -1333,6 +1376,8 @@ is created.  In both cases if the region is demarcated and if the
 region is not active then the point is demarcated."
   (interactive "P")
   (let ((info (org-babel-get-src-block-info 'light))
+	(headers (progn (org-babel-where-is-src-block-head)
+			(match-string 4)))
 	(stars (concat (make-string (or (org-current-level) 1) ?*) " ")))
     (if info
         (mapc
@@ -1345,11 +1390,16 @@ region is not active then the point is demarcated."
 				   (buffer-substring (point-at-bol)
 						     (point-at-eol)))
 		 (delete-region (point-at-bol) (point-at-eol)))
-               (insert (concat (if (looking-at "^") "" "\n")
-                               indent "#+end_src\n"
-                               (if arg stars indent) "\n"
-                               indent "#+begin_src " lang
-                               (if (looking-at "[\n\r]") "" "\n")))))
+               (insert (concat
+			(if (looking-at "^") "" "\n")
+			indent "#+end_src\n"
+			(if arg stars indent) "\n"
+			indent "#+begin_src " lang
+			(if (> (length headers) 1)
+			    (concat " " headers) headers)
+			(if (looking-at "[\n\r]")
+			    ""
+			  (concat "\n" (make-string (current-column) ? )))))))
 	   (move-end-of-line 2))
          (sort (if (region-active-p) (list (mark) (point)) (list (point))) #'>))
       (let ((start (point))
@@ -1379,13 +1429,11 @@ following the source block."
     (let* ((on-lob-line (save-excursion
 			  (beginning-of-line 1)
 			  (looking-at org-babel-lob-one-liner-regexp)))
-	   (inlinep (save-excursion
-		      (re-search-backward "[ \f\t\n\r\v]" nil t)
-		      (when (looking-at org-babel-inline-src-block-regexp)
-			(match-end 0))))
+	   (inlinep (when (org-babel-get-inline-src-block-matches)
+			(match-end 0)))
 	   (name (if on-lob-line
 		     (nth 0 (org-babel-lob-get-info))
-		   (nth 4 (or info (org-babel-get-src-block-info)))))
+		   (nth 4 (or info (org-babel-get-src-block-info 'light)))))
 	   (head (unless on-lob-line (org-babel-where-is-src-block-head)))
 	   found beg end)
       (when head (goto-char head))
@@ -1570,10 +1618,8 @@ code ---- the results are extracted in the syntax of the source
     (save-excursion
       (let* ((inlinep
 	      (save-excursion
-		(or (= (point) (point-at-bol))
-		    (re-search-backward "[ \f\t\n\r\v]" nil t))
-		(when (or (looking-at org-babel-inline-src-block-regexp)
-			  (looking-at org-babel-inline-lob-one-liner-regexp))
+		(when (or (org-babel-get-inline-src-block-matches)
+			  (org-babel-get-lob-one-liner-matches))
 		  (goto-char (match-end 0))
 		  (insert (if (listp result) "\n" " "))
 		  (point))))
@@ -1631,6 +1677,7 @@ code ---- the results are extracted in the syntax of the source
 			   '(:fmt (lambda (cell) (format "%s" cell)))) "\n"))
 	  (goto-char beg) (when (org-at-table-p) (org-table-align)))
 	 ((member "file" result-params)
+	  (when inlinep (goto-char inlinep))
 	  (insert result))
 	 (t (goto-char beg) (insert result)))
 	(when (listp result) (goto-char (org-table-end)))
@@ -1676,8 +1723,9 @@ code ---- the results are extracted in the syntax of the source
   (interactive)
   (let ((location (org-babel-where-is-src-block-result nil info)) start)
     (when location
+      (setq start (- location 1))
       (save-excursion
-        (goto-char location) (setq start (point)) (forward-line 1)
+        (goto-char location) (forward-line 1)
         (delete-region start (org-babel-result-end))))))
 
 (defun org-babel-result-end ()
@@ -1756,8 +1804,8 @@ Later elements of PLISTS override the values of previous elements.
 This takes into account some special considerations for certain
 parameters when merging lists."
   (let ((results-exclusive-groups
-	 '(("file" "list" "vector" "table" "scalar" "verbatim" "raw" "org"
-            "html" "latex" "code" "pp" "wrap")
+	 '(("file" "list" "vector" "table" "scalar" "verbatim")
+	   ("raw" "org" "html" "latex" "code" "pp" "wrap")
 	   ("replace" "silent" "append" "prepend")
 	   ("output" "value")))
 	(exports-exclusive-groups
@@ -1805,12 +1853,16 @@ parameters when merging lists."
 				       vars))
 			      vars)
 			    (list (cons name pair))))
-		   ;; if no name is given, then assign to variables in order
-		   (prog1 (setf (cddr (nth variable-index vars))
-				(concat (symbol-name
-					 (car (nth variable-index vars)))
-					"=" (cdr pair)))
-		     (incf variable-index)))))
+		   ;; if no name is given and we already have named variables
+		   ;; then assign to named variables in order
+		   (if (and vars (nth variable-index vars))
+		       (prog1 (setf (cddr (nth variable-index vars))
+				    (concat (symbol-name
+					     (car (nth variable-index vars)))
+					    "=" (cdr pair)))
+			 (incf variable-index))
+		     (error "variable \"%s\" must be assigned a default value"
+			    (cdr pair))))))
 	      (:results
 	       (setq results (e-merge results-exclusive-groups
 				      results
@@ -2198,6 +2250,6 @@ of `org-babel-temporary-directory'."
 
 (provide 'ob)
 
-;; arch-tag: 01a7ebee-06c5-4ee4-a709-e660d28c0af1
+
 
 ;;; ob.el ends here
