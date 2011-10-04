@@ -84,9 +84,10 @@
 
 ;; support for bookmarks
 (require 'breadcrumb)
-(global-set-key (kbd "C-c j") 'bc-set)
-(global-set-key (kbd "M-SPC") 'bc-previous)
-(setq bc-bookmark-limit 50)
+(global-set-key (kbd "C-c m") 'bc-set)
+(global-set-key (kbd "C-SPC") 'bc-previous)
+(global-set-key (kbd "M-SPC") 'bc-next)
+(setq bc-bookmark-limit 1000)
 (setq bc-bookmark-file (expand-file-name "~/.emacs.d/breadcrumb"))
 
 ;; show #colors in matching color
@@ -546,6 +547,15 @@
         (isearch-forward regexp-p no-recursive-edit)))))
 
 (global-set-key (kbd "C-*") 'isearch-forward-at-point)
+
+;; wrap search
+(defadvice isearch-search (after isearch-no-fail activate)
+  (unless isearch-success
+    (ad-disable-advice 'isearch-search 'after 'isearch-no-fail)
+    (ad-activate 'isearch-search)
+    (isearch-repeat (if isearch-forward 'forward))
+    (ad-enable-advice 'isearch-search 'after 'isearch-no-fail)
+    (ad-activate 'isearch-search)))
 
 ;; unique buffer names
 (require 'uniquify)
