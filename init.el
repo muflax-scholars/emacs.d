@@ -44,19 +44,28 @@
 ;(add-hook 'after-make-console-frame-hooks 'color-theme-emacs-nw)
 
 ;; fonts
-(defun set-window-fonts ()
-  (set-frame-font "Anonymous Pro-9")
-  (set-fontset-font (frame-parameter nil 'font)
-                    'japanese-jisx0208 '("Kochi Gothic" . "unicode-bmp"))
-  (set-fontset-font (frame-parameter nil 'font)
-                    'japanese-jisx0212 '("Kochi Gothic" . "unicode-bmp"))
-  ; prevent using the Japanese fonts for European text
-  (set-fontset-font (frame-parameter nil 'font)
-                    'latin-iso8859-1  '("Anonymous Pro" . "unicode-bmp"))
-  (set-fontset-font (frame-parameter nil 'font)
-                    'latin-iso8859-15 '("Anonymous Pro" . "unicode-bmp"))
+(defvar use-small-font nil)
+(defun small-font () 
+  "sets a small-ish font"
+  (interactive)
+  (set-frame-font "6x13"))
+(defun big-font () 
+  "sets a big-ish font"
+  (interactive)
+  (set-frame-font "-gnu-unifont-*"))
+
+(defun set-window-font ()
+  (if use-small-font (small-font) (big-font)))
+(add-hook 'after-make-window-system-frame-hooks 'set-window-font)
+
+(defun toggle-fonts ()
+  "toggles between small-ish and big-ish font"
+  (interactive)
+  (if use-small-font
+    (progn (big-font) (setq use-small-font nil))
+    (progn (small-font) (setq use-small-font t)))
   )
-(add-hook 'after-make-window-system-frame-hooks 'set-window-fonts)
+(global-set-key "\C-c\C-f" 'toggle-fonts)
 
 ;; auctex
 (add-hook 'LaTeX-mode-hook 'TeX-PDF-mode)
