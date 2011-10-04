@@ -255,13 +255,14 @@
 (setq ido-save-directory-list-file "~/.emacs.d/ido.last")
 (setq ido-ignore-buffers
       '("\\` " "^\*Mess" "^\*Back" ".*Completion" "^\*Ido" "^\*trace"
-        "^\*compilation" "^\*GTAGS" "^session\.*" "^\*"))
+        "^\*compilation" "^\*GTAGS" "^session\.*" "^\*ECB" "^\*"))
 (setq ido-case-fold t) ; case insensitive
 (setq ido-enable-last-directory-history t)
 (setq ido-max-work-directory-list 30)
 (setq ido-max-work-file-list 100)
 (setq ido-create-new-buffer 'always)
 (setq ido-max-directory-size 1000000) ; load bigger dirs, too
+(setq confirm-nonexistent-file-or-buffer nil)
 (ido-mode 1)
 ; smex
 (require 'smex)
