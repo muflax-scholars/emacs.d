@@ -270,17 +270,6 @@
 (global-set-key "\M-x" 'smex)
 (global-set-key "\M-X" 'smex-major-mode-commands)
 
-;; better buffer switching
-;(iswitchb-mode 1)
-;(setq iswitchb-default-method 'samewindow)
-;;ignores
-;(add-to-list 'iswitchb-buffer-ignore "^ ")
-;(add-to-list 'iswitchb-buffer-ignore "*Messages*")
-;(add-to-list 'iswitchb-buffer-ignore "*ECB")
-;(add-to-list 'iswitchb-buffer-ignore "*Buffer")
-;(add-to-list 'iswitchb-buffer-ignore "*Completions")
-
-
 ;; just some saviors
 (defun jesus ()
   "Because Jesus saves."
