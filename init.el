@@ -558,27 +558,29 @@
 ; fix for emacs 24
 (unless (boundp 'stack-trace-on-error)
   (defvar stack-trace-on-error nil)) 
-(defvar start-dir (getenv "PWD"))
-(defvar start-dir-name (car (last (split-string start-dir "/"))))
 (custom-set-variables
  '(ecb-fix-window-size (quote auto))
  '(ecb-layout-name "left15")
- '(ecb-layout-window-sizes (quote (
-  ("left14" 
-    (ecb-speedbar-buffer-name 0.159 . 0.66) 
-    (ecb-history-buffer-name 0.159 . 0.34)) 
-  ("left15" 
-    (ecb-speedbar-buffer-name 0.159 . 0.5) 
-    (ecb-methods-buffer-name 0.159 . 0.5)))))
+ '(ecb-layout-window-sizes 
+    (quote 
+      (("left14" 
+        (ecb-speedbar-buffer-name 33 . 45) 
+        (ecb-history-buffer-name 33 . 23)) 
+       ("left15" 
+        (ecb-speedbar-buffer-name 33 . 34) 
+        (ecb-methods-buffer-name 33 . 34)))))
  '(ecb-options-version "2.40")
  '(ecb-primary-secondary-mouse-buttons (quote mouse-1--mouse-2))
  '(ecb-process-non-semantic-files t)
- '(ecb-source-path (list (list start-dir start-dir-name)))
  '(ecb-tip-of-the-day nil)
  '(ecb-toggle-layout-sequence (quote ("left14" "left15")))
  '(ecb-use-speedbar-instead-native-tree-buffer (quote dir))
- '(ecb-window-width 20)
- '(safe-local-variable-values (quote ((eval set-input-method (quote muflax-latin)) (eval set-input-method (quote latin-postfix)) (eval set-frame-font "Droid Serif 12")))))
+ '(ecb-window-width 33)
+ '(safe-local-variable-values 
+    (quote 
+      ((eval set-input-method (quote muflax-latin)) 
+       (eval set-input-method (quote latin-postfix)) 
+       (eval set-frame-font "Droid Serif 12")))))
 ; keys
 (global-set-key "\C-c\C-t" 'ecb-toggle-layout)
 (global-set-key "\C-ce" 'ecb-minor-mode)
