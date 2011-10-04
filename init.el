@@ -204,15 +204,6 @@
                                        kill-ring 
                                        compile-command))
 
-;; ido and smex (ido for M-x)
-(require 'ido)
-; fuzzy matching
-(setq ido-enable-flex-matching t)
-(require 'smex)
-(smex-initialize)
-(global-set-key "\M-x" 'smex)
-(global-set-key "\M-X" 'smex-major-mode-commands)
-
 ;; number windows, i.e. M-1 .. M-0 to jump to window
 (require 'window-numbering)
 (window-numbering-mode 1)
@@ -252,6 +243,41 @@
     (apply 'append candidates))
   )
 (setq ac-ignores (concatenate 'list ac-ignores (epy-get-all-snips)))
+
+;; ido and smex (ido for M-x)
+; ido
+(require 'ido)
+(setq ido-enable-flex-matching t) ; fuzzy matching
+(setq ido-everywhere t)
+(setq ido-use-filename-at-point 'guess)
+(setq ido-use-url-at-point nil)
+(setq ido-save-directory-list-file "~/.emacs.d/ido.last")
+(setq ido-ignore-buffers
+      '("\\` " "^\*Mess" "^\*Back" ".*Completion" "^\*Ido" "^\*trace"
+        "^\*compilation" "^\*GTAGS" "^session\.*" "^\*"))
+(setq ido-case-fold t) ; case insensitive
+(setq ido-enable-last-directory-history t)
+(setq ido-max-work-directory-list 30)
+(setq ido-max-work-file-list 100)
+(setq ido-create-new-buffer 'always)
+(setq ido-max-directory-size 1000000) ; load bigger dirs, too
+(ido-mode 1)
+; smex
+(require 'smex)
+(smex-initialize)
+(global-set-key "\M-x" 'smex)
+(global-set-key "\M-X" 'smex-major-mode-commands)
+
+;; better buffer switching
+;(iswitchb-mode 1)
+;(setq iswitchb-default-method 'samewindow)
+;;ignores
+;(add-to-list 'iswitchb-buffer-ignore "^ ")
+;(add-to-list 'iswitchb-buffer-ignore "*Messages*")
+;(add-to-list 'iswitchb-buffer-ignore "*ECB")
+;(add-to-list 'iswitchb-buffer-ignore "*Buffer")
+;(add-to-list 'iswitchb-buffer-ignore "*Completions")
+
 
 ;; just some saviors
 (defun jesus ()
@@ -525,16 +551,6 @@
 ;; unique buffer names
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward)
-
-;; better buffer switching
-(iswitchb-mode 1)
-(setq iswitchb-default-method 'samewindow)
-; ignores
-(add-to-list 'iswitchb-buffer-ignore "^ ")
-(add-to-list 'iswitchb-buffer-ignore "*Messages*")
-(add-to-list 'iswitchb-buffer-ignore "*ECB")
-(add-to-list 'iswitchb-buffer-ignore "*Buffer")
-(add-to-list 'iswitchb-buffer-ignore "*Completions")
 
 ;; make mouse more usable
 (setq make-pointer-invisible t)
