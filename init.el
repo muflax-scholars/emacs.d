@@ -422,11 +422,9 @@
 (setq org-clock-persist 'history)
 (org-clock-persistence-insinuate)
 ; spoiler files
-;(require 'find-lisp)
-(defadvice org-todo-list (before org-todo-list-reload ())
+(defadvice org-todo-list (before org-todo-list-reload activate compile)
   "Scan for org files whenever todo list is loaded."
-  ;(setq org-agenda-files (sort (find-lisp-find-files "~/spoiler" "\\.org$") 'string<)))
-  ; 'find' is faster and has better control
+  ; 'find' is faster and has better control than lisp
   (setq org-agenda-files (mapcar 'abbreviate-file-name (split-string
     (shell-command-to-string "find ~/spoiler -type f -name \"*.org\" | sort")
       "\n"))))
@@ -450,7 +448,6 @@
 (setq org-todo-keywords
       '((sequence "TODO(t)" "|" "WAITING(w)" "DONE(d)")
         (sequence "BUG(b)" "|" "FIXED(f)")))
-(setq org-log-done 'note)
 ; priorities
 (setq org-default-priority 67) ;C
 ; keybindings
