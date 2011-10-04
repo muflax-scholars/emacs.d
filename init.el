@@ -166,6 +166,7 @@
 (global-set-key "\C-p" 'undo-tree-undo)
 (global-set-key "\M-p" 'undo-tree-redo)
 (global-set-key "\C-n" 'other-window)
+(global-set-key "\M-n" (lambda () (interactive) (other-window -1)))
 (global-set-key "\C-f" 'forward-word)
 (global-set-key "\C-b" 'backward-word)
 (global-set-key "\M-f" 'forward-sentence)
@@ -660,6 +661,17 @@
 (global-set-key "\C-cd" 'surround-delete)
 (global-set-key "\C-cD" 'surround-delete-within)
 (global-set-key "\C-c\M-d" 'surround-change)
+
+;; move buffers
+(require 'buffer-move)
+(global-set-key (kbd "<C-S-up>")    'buf-move-up)
+(global-set-key (kbd "<C-S-down>")  'buf-move-down)
+(global-set-key (kbd "<C-S-left>")  'buf-move-left)
+(global-set-key (kbd "<C-S-right>") 'buf-move-right)
+
+;; undo window changes
+(require 'winner)
+(winner-mode 1)
 
 ;; clean up modeline and hide standard minor modes
 ; should be last so all modes are already loaded
