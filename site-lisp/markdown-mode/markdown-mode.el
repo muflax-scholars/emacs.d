@@ -1,4 +1,3 @@
-
 ;;; markdown-mode.el --- Emacs Major mode for Markdown-formatted text files
 
 ;; Copyright (C) 2007-2011 Jason R. Blevins <jrblevin@sdf.org>
@@ -15,6 +14,8 @@
 ;; Copyright (C) 2011 Eric Merritt <ericbmerritt@gmail.com>
 ;; Copyright (C) 2011 Philippe Ivaldi <pivaldi@sfr.fr>
 ;; Copyright (C) 2011 Jeremiah Dodds <jeremiah.dodds@gmail.com>
+;; Copyright (C) 2011 Christopher J. Madsen <cjm@cjmweb.net>
+;; Copyright (C) 2011 Shigeru Fukaya <shigeru.fukaya@gmail.com>
 
 ;; Author: Jason R. Blevins <jrblevin@sdf.org>
 ;; Maintainer: Jason R. Blevins <jrblevin@sdf.org>
@@ -184,10 +185,12 @@
 ;;
 ;;   * Anchors: `C-c C-a`
 ;;
-;;     `C-c C-a l` inserts inline links of the form `[text](url)`.  If
-;;     there is an active region, text in the region is used for the
-;;     link text.  `C-c C-a w` acts similarly for wiki links of the
-;;     form `[[WikiLink]]`.
+;;     `C-c C-a l` inserts inline links of the form `[text](url)`.
+;;     `C-c C-a r` inserts reference links of the form `[text][label]`.
+;;     The label definition will be placed at the end of the current
+;;     block. `C-c C-a w` acts similarly for wiki links of the form
+;;     `[[WikiLink]]`. In all cases, if there is an active region, the
+;;     text in the region is used as the link text.
 ;;
 ;;   * Commands: `C-c C-c`
 ;;
@@ -323,7 +326,8 @@
 ;; mode, `gfm-mode', is also available.  The GitHub implementation of
 ;; differs slightly from standard Markdown.  Most importantly, newlines are
 ;; significant and trigger hard line breaks.  As such, `gfm-mode' turns off
-;; `auto-fill-mode' and turns on `longlines-mode'.
+;; `auto-fill-mode' and turns on `visual-line-mode' (or `longlines-mode' if
+;; `visual-line-mode' is not available).
 
 ;;; Acknowledgments:
 
@@ -363,6 +367,10 @@
 ;;     substitution character for mapping wiki links to filenames.
 ;;   * Marcin Kasperski <marcin.kasperski@mekk.waw.pl> for a patch to
 ;;     escape shell commands.
+;;   * Christopher J. Madsen <cjm@cjmweb.net> for patches to fix a match
+;;     data bug and to prefer `visual-line-mode' in `gfm-mode'.
+;;   * Shigeru Fukaya <shigeru.fukaya@gmail.com> for better adherence to
+;;     Emacs Lisp coding conventions.
 
 ;;; Bugs:
 
@@ -400,7 +408,7 @@
 
 (require 'easymenu)
 (require 'outline)
-(require 'cl)
+(eval-when-compile (require 'cl))
 
 ;;; Constants =================================================================
 
@@ -413,7 +421,7 @@
 ;;; Customizable variables ====================================================
 
 (defvar markdown-mode-hook nil
-  "Hook runs when Markdown mode is loaded.")
+  "Hook run when entering Markdown mode.")
 
 (defgroup markdown nil
   "Major mode for editing text files in Markdown format."
@@ -785,6 +793,7 @@ text.")
 (defvar markdown-mode-font-lock-keywords-basic
   (list
    '(markdown-match-pre-blocks 0 markdown-pre-face t t)
+   '(markdown-match-fenced-code-blocks 0 markdown-pre-face t t)
    (cons markdown-regex-blockquote 'markdown-blockquote-face)
    (cons markdown-regex-header-1-setext 'markdown-header-face-1)
    (cons markdown-regex-header-2-setext 'markdown-header-face-2)
@@ -1007,6 +1016,19 @@ indentation."
         (setq stop (equal cur-begin cur-end))))
     match))
 
+(defun markdown-match-fenced-code-blocks (last)
+  "Match fenced code blocks from the point to LAST."
+  (cond ((search-forward-regexp "^\\([~]\\{3,\\}\\)" last t)
+         (beginning-of-line)
+         (let ((beg (point)))
+           (forward-line)
+           (cond ((search-forward-regexp
+                   (concat "^" (match-string 1) "~*") last t)
+                  (set-match-data (list beg (point)))
+                  t)
+                 (t nil))))
+        (t nil)))
+
 (defun markdown-font-lock-extend-region ()
   "Extend the search region to include an entire block of text.
 This helps improve font locking for block constructs such as pre blocks."
@@ -1097,6 +1119,48 @@ as the link text."
   (markdown-wrap-or-insert "[" "]")
   (insert "()")
   (backward-char 1))
+
+(defun markdown-insert-reference-link-dwim ()
+  "Insert a reference link of the form [text][label] at point.
+If Transient Mark mode is on and a region is active, the region
+is used as the link text. Otherwise, the link text will be read
+from the minibuffer. The link URL, label, and title will be read
+from the minibuffer. The link label definition is placed at the
+end of the current paragraph."
+  (interactive)
+  (if (and transient-mark-mode mark-active)
+      (call-interactively 'markdown-insert-reference-link-region)
+    (call-interactively 'markdown-insert-reference-link)))
+
+(defun markdown-insert-reference-link-region (url label title)
+  "Insert a reference link at point using the region as the link text."
+  (interactive "sLink URL: \nsLink Label (optional): \nsLink Title (optional): ")
+  (let ((text (buffer-substring (region-beginning) (region-end))))
+    (delete-region (region-beginning) (region-end))
+    (markdown-insert-reference-link text url label title)))
+
+(defun markdown-insert-reference-link (text url label title)
+  "Insert a reference link at point.
+The link label definition is placed at the end of the current
+paragraph."
+  (interactive "sLink Text: \nsLink URL: \nsLink Label (optional): \nsLink Title (optional): ")
+  (let (end)
+    (insert (concat "[" text "][" label "]"))
+    (setq end (point))
+    (forward-paragraph)
+    (insert "\n[")
+    (if (> (length label) 0)
+        (insert label)
+      (insert text))
+    (insert (concat "]: " url))
+    (unless (> (length url) 0)
+        (setq end (point)))
+    (when (> (length title) 0)
+      (insert (concat " \"" title "\"")))
+    (insert "\n")
+    (unless (looking-at "\n")
+      (insert "\n"))
+    (goto-char end)))
 
 (defun markdown-insert-wiki-link ()
   "Insert a wiki link of the form [[WikiLink]].
@@ -1310,8 +1374,9 @@ default indentation level."
 
     ;; Previous non-list-marker indent
     (setq pos (markdown-prev-non-list-indent))
-    (if pos
-        (setq positions (cons pos positions)))
+    (when pos
+        (setq positions (cons pos positions))
+        (setq positions (cons (+ pos tab-width) positions)))
 
     ;; Indentation of the previous line + tab-width
     (cond
@@ -1362,55 +1427,17 @@ it in the usual way."
 
 
 
-;;; Keymap ====================================================================
+;;; Keymap ================================================================
 
 (defvar markdown-mode-map
   (let ((map (make-keymap)))
     ;; Element insertion
-    (define-key map "\C-c\C-al" 'markdown-insert-link)
-    (define-key map "\C-c\C-aw" 'markdown-insert-wiki-link)
-    (define-key map "\C-c\C-ii" 'markdown-insert-image)
-    (define-key map "\C-c\C-t1" 'markdown-insert-header-1)
-    (define-key map "\C-c\C-t2" 'markdown-insert-header-2)
-    (define-key map "\C-c\C-t3" 'markdown-insert-header-3)
-    (define-key map "\C-c\C-t4" 'markdown-insert-header-4)
-    (define-key map "\C-c\C-t5" 'markdown-insert-header-5)
-    (define-key map "\C-c\C-t6" 'markdown-insert-header-6)
-    (define-key map "\C-c\C-pb" 'markdown-insert-bold)
-    (define-key map "\C-c\C-ss" 'markdown-insert-bold)
-    (define-key map "\C-c\C-pi" 'markdown-insert-italic)
-    (define-key map "\C-c\C-se" 'markdown-insert-italic)
-    (define-key map "\C-c\C-pf" 'markdown-insert-code)
-    (define-key map "\C-c\C-sc" 'markdown-insert-code)
-    (define-key map "\C-c\C-sb" 'markdown-insert-blockquote)
-    (define-key map "\C-c\C-s\C-b" 'markdown-blockquote-region)
-    (define-key map "\C-c\C-sp" 'markdown-insert-pre)
-    (define-key map "\C-c\C-s\C-p" 'markdown-pre-region)
-    (define-key map "\C-c-" 'markdown-insert-hr)
-    (define-key map "\C-c\C-tt" 'markdown-insert-title)
-    (define-key map "\C-c\C-ts" 'markdown-insert-section)
-    ;; WikiLink Following
-    (define-key map "\C-c\C-f" 'markdown-follow-wiki-link-at-point)
-    (define-key map "\M-n" 'markdown-next-wiki-link)
-    (define-key map "\M-p" 'markdown-previous-wiki-link)
-    ;; Indentation
-    (define-key map "\C-m" 'markdown-enter-key)
-    ;; Visibility cycling
-    (define-key map (kbd "<tab>") 'markdown-cycle)
-    (define-key map (kbd "<S-iso-lefttab>") 'markdown-shifttab)
     ;; Header navigation
     (define-key map (kbd "C-M-n") 'outline-next-visible-heading)
     (define-key map (kbd "C-M-p") 'outline-previous-visible-heading)
     (define-key map (kbd "C-M-f") 'outline-forward-same-level)
     (define-key map (kbd "C-M-b") 'outline-backward-same-level)
     (define-key map (kbd "C-M-u") 'outline-up-heading)
-    ;; Markdown functions
-    (define-key map "\C-c\C-cm" 'markdown)
-    (define-key map "\C-c\C-cp" 'markdown-preview)
-    (define-key map "\C-c\C-ce" 'markdown-export)
-    (define-key map "\C-c\C-cv" 'markdown-export-and-view)
-    ;; References
-    (define-key map "\C-c\C-cc" 'markdown-check-refs)
     map)
   "Keymap for Markdown major mode.")
 
@@ -1446,6 +1473,7 @@ it in the usual way."
     ["Code" markdown-insert-code]
     "---"
     ["Insert inline link" markdown-insert-link]
+    ["Insert reference link" markdown-insert-reference-link-dwim]
     ["Insert image" markdown-insert-image]
     ["Insert horizontal rule" markdown-insert-hr]
     "---"
@@ -1710,6 +1738,13 @@ Calls `markdown-cycle' with argument t."
   (interactive)
   (markdown-cycle t))
 
+(defun markdown-outline-level ()
+  "Return the depth to which a statement is nested in the outline."
+  (cond
+   ((match-end 1) 1)
+   ((match-end 2) 2)
+   ((- (match-end 0) (match-beginning 0)))))
+
 ;;; Commands ==================================================================
 
 (defun markdown (&optional output-buffer-name)
@@ -1926,8 +1961,7 @@ Designed to be used with the `after-change-functions' hook.
 CHANGE is the number of bytes of pre-change text replaced by the
 given range."
   (interactive "nfrom: \nnto: \nnchange: ")
-  (let* ((inhibit-point-motion-hooks t)
-	 (inhibit-quit t)
+  (let* ((inhibit-quit t)
 	 (modified (buffer-modified-p))
 	 (buffer-undo-list t)
 	 (inhibit-read-only t)
@@ -1936,20 +1970,21 @@ given range."
 	 (current-point (point))
 	 deactivate-mark)
     (unwind-protect
-	(save-restriction
-	  ;; Extend the region to fontify so that it starts
-	  ;; and ends at safe places.
-	  (multiple-value-bind (new-from new-to)
-	      (markdown-extend-changed-region from to)
-	    ;; Unfontify existing fontification (start from scratch)
-	    (markdown-unfontify-region-wiki-links new-from new-to)
-	    ;; Now do the fontification.
-	    (markdown-fontify-region-wiki-links new-from new-to)))
-      (unless modified
-	(if (fboundp 'restore-buffer-modified-p)
-            (restore-buffer-modified-p nil)
-          (set-buffer-modified-p nil))))
-    (goto-char current-point)))
+        (save-match-data
+          (save-restriction
+            ;; Extend the region to fontify so that it starts
+            ;; and ends at safe places.
+            (multiple-value-bind (new-from new-to)
+                (markdown-extend-changed-region from to)
+              ;; Unfontify existing fontification (start from scratch)
+              (markdown-unfontify-region-wiki-links new-from new-to)
+              ;; Now do the fontification.
+              (markdown-fontify-region-wiki-links new-from new-to)))
+          (unless modified
+            (if (fboundp 'restore-buffer-modified-p)
+                (restore-buffer-modified-p nil)
+              (set-buffer-modified-p nil))))
+      (goto-char current-point))))
 
 (defun markdown-fontify-buffer-wiki-links ()
   "Refontify all wiki links in the buffer."
@@ -2009,7 +2044,10 @@ This is an exact copy of `line-number-at-pos' for use in emacs21."
        "\f\\|[ \t]*$\\|^[ \t]*[*+-] \\|^[ \t*][0-9]+\\.\\|^[ \t]*: ")
   ;; Outline mode
   (make-local-variable 'outline-regexp)
-  (setq outline-regexp "#+")
+  (setq outline-regexp
+        "#+\\|\\S-.*\n\\(?:\\(===+\\)\\|\\(---+\\)\\)$")
+  (make-local-variable 'outline-level)
+  (setq outline-level 'markdown-outline-level)
   ;; Cause use of ellipses for invisible text.
   (add-to-invisibility-spec '(outline . t))
   ;; Indentation and filling
@@ -2046,7 +2084,10 @@ This is an exact copy of `line-number-at-pos' for use in emacs21."
 (define-derived-mode gfm-mode markdown-mode "GFM"
   "Major mode for editing GitHub Flavored Markdown files."
   (auto-fill-mode 0)
-  (longlines-mode 1))
+  ;; Use visual-line-mode if available, fall back to longlines-mode:
+  (if (fboundp 'visual-line-mode)
+      (visual-line-mode 1)
+    (longlines-mode 1)))
 
 (provide 'markdown-mode)
 
