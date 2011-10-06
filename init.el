@@ -260,10 +260,12 @@
 ;; ido and smex (ido for M-x)
 ; ido
 (require 'ido)
+(require 'ido-ubiquitous)
 (setq ido-enable-flex-matching t) ; fuzzy matching
 (setq ido-everywhere t)
 (setq ido-use-filename-at-point 'guess)
 (setq ido-use-url-at-point nil)
+(setq ido-use-virtual-buffers t)
 (setq ido-save-directory-list-file "~/.emacs.d/ido.last")
 (setq ido-ignore-buffers
       '("\\` " "^\*Mess" "^\*Back" ".*Completion" "^\*Ido" "^\*trace"
