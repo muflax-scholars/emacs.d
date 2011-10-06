@@ -602,9 +602,7 @@
  '(ecb-window-width 33)
  '(safe-local-variable-values 
     (quote 
-      ((eval set-input-method (quote muflax-latin)) 
-       (eval set-input-method (quote latin-postfix)) 
-       (eval set-frame-font "Droid Serif 12")))))
+      ((eval set-input-method (quote muflax-latin))))))
 ; keys
 (global-set-key "\C-c\C-t" 'ecb-toggle-layout)
 (global-set-key "\C-ce" 'ecb-minor-mode)
