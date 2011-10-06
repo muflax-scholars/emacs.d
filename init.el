@@ -497,6 +497,9 @@
 (add-to-list 'auto-mode-alist '("\\.builder$" . ruby-mode))
 ; rinari
 (require 'rinari)
+; erb
+(require 'rhtml-mode)
+(add-to-list 'auto-mode-alist '("\\.erb$" . rhtml-mode))
 
 ;; align
 (require 'align)
