@@ -467,7 +467,8 @@
 (define-key global-map "\C-ct" 'org-todo-list)
 (define-key global-map "\C-cs" 'org-store-link)
 ; shortcut for C-u C-c C-l
-(define-key global-map "\C-cl" (lambda () (interactive) (org-insert-link '(4))))
+(defun org-insert-file-link () (interactive) (org-insert-link '(4)))
+(define-key global-map "\C-cl" 'org-insert-file-link)
 ; go to spoiler index
 (define-key global-map "\C-c\C-s" (lambda () (interactive) (find-file "~/spoiler/notes/index.org")))
 ; apps
