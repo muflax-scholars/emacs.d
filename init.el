@@ -88,7 +88,9 @@
 (global-set-key (kbd "M-SPC") 'bc-previous)
 (global-set-key (kbd "M-S-SPC") 'bc-next)
 (setq bc-bookmark-limit 1000)
-(setq bc-bookmark-file (expand-file-name "~/.emacs.d/breadcrumb"))
+(setq bc-bookmark-file (expand-file-name "~/.emacs.d/cache/breadcrumb"))
+; normal bookmarks
+(setq bookmark-default-file "~/.emacs.d/cache/bookmarks")
 
 ;; show #colors in matching color
 (require 'rainbow-mode)
@@ -103,14 +105,15 @@
 
 ;; safety
 (setq make-backup-files nil)
-(defvar autosave-dir (expand-file-name "~/.emacs.d/autosave-dir/"))
+(defvar autosave-dir (expand-file-name "~/.emacs.d/cache/autosave-dir/"))
+(setq auto-save-list-file-prefix "~/.emacs-saves/cache/auto-save-list/.saves-")
 (setq auto-save-list-file-prefix autosave-dir)
 (setq auto-save-file-name-transforms `((".*" ,autosave-dir t)))
 (setq confirm-kill-emacs 'y-or-n-p)
 
 ;; save location inside buffer
 (require 'saveplace)
-(setq save-place-file "~/.emacs.d/saveplace")
+(setq save-place-file "~/.emacs.d/cache/saveplace")
 (setq-default save-place t)
 
 ;; optical stuff
@@ -210,6 +213,7 @@
 
 ;; save minibuffer history
 (savehist-mode 1)
+(setq savehist-file "~/.emacs.d/cache/history")
 (setq savehist-additional-variables '(search-ring 
                                        regexp-search-ring 
                                        kill-ring 
@@ -233,7 +237,7 @@
 (add-to-list 'ac-modes 'text-mode)
 (add-to-list 'ac-modes 'markdown-mode)
 (add-to-list 'ac-modes 'org-mode)
-(setq ac-comphist-file "~/.emacs.d/ac-comphist.dat")
+(setq ac-comphist-file "~/.emacs.d/cache/ac-comphist.dat")
 (setq ac-use-menu-map t)
 (setq ac-auto-show-menu nil) 
 (setq ac-ignore-case nil) 
@@ -266,7 +270,7 @@
 (setq ido-use-filename-at-point 'guess)
 (setq ido-use-url-at-point nil)
 (setq ido-use-virtual-buffers t)
-(setq ido-save-directory-list-file "~/.emacs.d/ido.last")
+(setq ido-save-directory-list-file "~/.emacs.d/cache/ido.last")
 (setq ido-ignore-buffers
       '("\\` " "^\*Mess" "^\*Back" ".*Completion" "^\*Ido" "^\*trace"
         "^\*compilation" "^\*GTAGS" "^session\.*" "^\*ECB" "^\*"))
@@ -283,6 +287,20 @@
 (smex-initialize)
 (global-set-key "\M-x" 'smex)
 (global-set-key "\M-X" 'smex-major-mode-commands)
+
+;; recent files
+(require 'recentf)
+(setq recentf-max-saved-items 50)
+(setq recentf-save-file "~/.emacs.d/cache/recentf")
+(recentf-mode 1)
+; file completion
+(defun recentf-ido-find-file ()
+  "Find a recent file using Ido."
+  (interactive)
+  (let ((file (ido-completing-read "Choose recent file: " recentf-list nil t)))
+    (when file
+      (find-file file))))
+(global-set-key "\C-x\C-r" 'recentf-ido-find-file)
 
 ;; just some saviors
 (defun jesus ()
@@ -432,6 +450,7 @@
 (setq org-enforce-todo-dependencies t)
 ; make clock history persistent
 (setq org-clock-persist 'history)
+(setq org-clock-persist-file "~/.emacs.d/cache/org-clock-save.el")
 (org-clock-persistence-insinuate)
 ; spoiler files
 (defadvice org-todo-list (before org-todo-list-reload activate compile)
@@ -573,6 +592,7 @@
 
 ;; semantic (code parser)
 (require 'semantic)
+(setq semanticdb-default-save-directory "~/.emacs.d/cache/semanticdb")
 (semantic-mode 1)
 (global-semantic-idle-summary-mode 1)
 (global-semantic-idle-completions-mode 1)
@@ -628,6 +648,7 @@
 ;; tramp (remote files)
 (setq tramp-default-method "ssh")
 (require 'tramp)
+(setq tramp-persistency-file-name "~/.emacs.d/cache/tramp")
 
 ;; unset unwanted keys
 (when (eq window-system 'x)
@@ -693,6 +714,9 @@
 ;; undo window changes
 (require 'winner)
 (winner-mode 1)
+
+;; cookies
+(setq url-cookie-file "~/.emacs.d/cache/url/cookies")
 
 ;; clean up modeline and hide standard minor modes
 ; should be last so all modes are already loaded
