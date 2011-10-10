@@ -85,8 +85,8 @@
 ;; support for bookmarks
 (require 'breadcrumb)
 (global-set-key (kbd "C-c m") 'bc-set)
-(global-set-key (kbd "C-SPC") 'bc-previous)
-(global-set-key (kbd "M-SPC") 'bc-next)
+(global-set-key (kbd "M-SPC") 'bc-previous)
+(global-set-key (kbd "M-S-SPC") 'bc-next)
 (setq bc-bookmark-limit 1000)
 (setq bc-bookmark-file (expand-file-name "~/.emacs.d/breadcrumb"))
 
