@@ -742,6 +742,12 @@ The following commands are available.
       (bc-set))
   )
 
+(defadvice recentf-ido-find-file (before bc-find activate compile)
+  "Intercept find-file to save a breadcrumb bookmark before doing the replacement."
+  (if bc-bookmark-hook-enabled
+      (bc-set))
+  )
+
 (defadvice ido-switch-buffer (before bc-find activate compile)
   "Intercept find-file to save a breadcrumb bookmark before doing the replacement."
   (if bc-bookmark-hook-enabled
