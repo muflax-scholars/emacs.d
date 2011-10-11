@@ -4950,7 +4950,7 @@ The following commands are available:
 (when org-mouse-1-follows-link
   (org-defkey org-mouse-map [follow-link] 'mouse-face))
 (when org-tab-follows-link
-  (org-defkey org-mouse-map [(tab)] 'org-open-at-point)
+  ;(org-defkey org-mouse-map [(tab)] 'org-open-at-point)
   (org-defkey org-mouse-map "\C-i" 'org-open-at-point))
 
 (require 'font-lock)
@@ -16807,16 +16807,17 @@ BEG and END default to the buffer boundaries."
 
 ;; TAB key with modifiers
 (org-defkey org-mode-map "\C-i"       'org-cycle)
-(org-defkey org-mode-map [(tab)]      'org-cycle)
-(org-defkey org-mode-map [(control tab)] 'org-force-cycle-archived)
-(org-defkey org-mode-map [(meta tab)] 'pcomplete)
-(org-defkey org-mode-map "\M-\t" 'pcomplete)
-(org-defkey org-mode-map "\M-\C-i"      'pcomplete)
+;(org-defkey org-mode-map [(tab)]      'org-cycle)
+;(org-defkey org-mode-map [(control tab)] 'org-force-cycle-archived)
+;(org-defkey org-mode-map [(meta tab)] 'pcomplete)
+;(org-defkey org-mode-map "\M-\t" 'pcomplete)
+;(org-defkey org-mode-map "\M-\C-i"      'pcomplete)
 ;; The following line is necessary under Suse GNU/Linux
-(unless (featurep 'xemacs)
-  (org-defkey org-mode-map [S-iso-lefttab]  'org-shifttab))
-(org-defkey org-mode-map [(shift tab)]    'org-shifttab)
-(define-key org-mode-map [backtab] 'org-shifttab)
+;(unless (featurep 'xemacs)
+  ;(org-defkey org-mode-map [S-iso-lefttab]  'org-shifttab))
+;(org-defkey org-mode-map [(shift tab)]    'org-shifttab)
+;(define-key org-mode-map [backtab] 'org-shifttab)
+(define-key org-mode-map "\M-i" 'org-shifttab)
 
 (org-defkey org-mode-map [(shift return)]   'org-table-copy-down)
 (org-defkey org-mode-map [(meta shift return)] 'org-insert-todo-heading)
@@ -16878,7 +16879,7 @@ BEG and END default to the buffer boundaries."
   (org-defkey org-mode-map [?\C-c (right)] 'org-shiftright)
   (org-defkey org-mode-map [?\C-c ?\C-x (right)] 'org-shiftcontrolright)
   (org-defkey org-mode-map [?\C-c ?\C-x (left)] 'org-shiftcontrolleft)
-  (org-defkey org-mode-map [?\e (tab)] 'pcomplete)
+  ;(org-defkey org-mode-map [?\e (tab)] 'pcomplete)
   (org-defkey org-mode-map [?\e (shift return)] 'org-insert-todo-heading)
   (org-defkey org-mode-map [?\e (shift left)]   'org-shiftmetaleft)
   (org-defkey org-mode-map [?\e (shift right)]  'org-shiftmetaright)

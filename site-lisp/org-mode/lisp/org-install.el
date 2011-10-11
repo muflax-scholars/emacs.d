@@ -4,8 +4,8 @@
 ;;;;;;  org-map-entries org-open-link-from-string org-open-at-point-global
 ;;;;;;  org-insert-link-global org-store-link org-run-like-in-org-mode
 ;;;;;;  turn-on-orgstruct++ turn-on-orgstruct orgstruct-mode org-global-cycle
-;;;;;;  org-mode org-babel-do-load-languages) "org" "org.el" (20107
-;;;;;;  2802))
+;;;;;;  org-mode org-babel-do-load-languages) "org" "org.el" (20116
+;;;;;;  30150))
 ;;; Generated autoloads from org.el
 
 (autoload 'org-babel-do-load-languages "org" "\
