@@ -292,6 +292,9 @@
 (require 'recentf)
 (setq recentf-max-saved-items 50)
 (setq recentf-save-file "~/.emacs.d/cache/recentf")
+(setq recentf-exclude (append recentf-exclude 
+  '("\.emacs\.d/cache" 
+    "\.emacs\.d/elpa")))
 (recentf-mode 1)
 ; file completion
 (defun recentf-ido-find-file ()
