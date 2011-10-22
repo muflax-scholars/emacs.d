@@ -749,6 +749,9 @@
 ;; cookies
 (setq url-cookie-file "~/.emacs.d/cache/url/cookies")
 
+;; lua
+(setq lua-indent-level 2)
+
 ;; clean up modeline and hide standard minor modes
 ; should be last so all modes are already loaded
 (require 'diminish)
