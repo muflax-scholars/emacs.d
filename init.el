@@ -41,7 +41,7 @@
             (run-after-make-frame-hooks (selected-frame))))
 
 (add-hook 'after-make-window-system-frame-hooks 'color-theme-almost-monokai)
-;(add-hook 'after-make-console-frame-hooks 'color-theme-emacs-nw)
+(add-hook 'after-make-console-frame-hooks 'color-theme-almost-monokai)
 
 ;; fonts
 (defvar use-small-font nil)
