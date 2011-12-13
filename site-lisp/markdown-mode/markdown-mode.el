@@ -16,6 +16,7 @@
 ;; Copyright (C) 2011 Jeremiah Dodds <jeremiah.dodds@gmail.com>
 ;; Copyright (C) 2011 Christopher J. Madsen <cjm@cjmweb.net>
 ;; Copyright (C) 2011 Shigeru Fukaya <shigeru.fukaya@gmail.com>
+;; Copyright (C) 2011 Joost Kremers <joostkremers@fastmail.fm>
 
 ;; Author: Jason R. Blevins <jrblevin@sdf.org>
 ;; Maintainer: Jason R. Blevins <jrblevin@sdf.org>
@@ -148,6 +149,10 @@
 ;;     cursor is an wiki link
 ;;     (default: `t')
 ;;
+;;   * `markdown-wiki-link-alias-first' - set to a non-nil value to
+;;     treat aliased wiki links like `[[link text|PageName]]`.
+;;     When set to nil, they will be treated as `[[PageName|link text]]'.
+;;
 ;;   * `markdown-uri-types' - a list of protocols for URIs that
 ;;     `markdown-mode' should highlight.
 ;;
@@ -240,6 +245,13 @@
 ;;     (mnemonic: title) and for a second-level underline-style header
 ;;     press `C-c C-t s` (mnemonic: section).
 ;;
+;;   * Footnotes: `C-c C-f`
+;;
+;;     To create a new footnote at the point, press `C-c C-f n`.
+;;     Press `C-c C-f g` with the point at a footnote to jump to the
+;;     location where the footnote text is defined.  Then, press
+;;     `C-c C-f b` to return to the footnote marker in the main text.
+;;
 ;;   * Other elements:
 ;;
 ;;     `C-c -` inserts a horizontal rule.
@@ -296,12 +308,14 @@
 ;; Besides supporting the basic Markdown syntax, markdown-mode also
 ;; includes syntax highlighting for `[[Wiki Links]]` by default. Wiki
 ;; links may be followed automatically by hitting the enter key when
-;; your curser is on a wiki link or by hitting `C-c C-f`. The
+;; your curser is on a wiki link or by hitting `C-c C-w`. The
 ;; autofollowing on enter key may be controlled with the
 ;; `markdown-follow-wiki-link-on-enter' customization.  Use `M-p` and
 ;; `M-n` to quickly jump to the previous and next wiki links,
 ;; respectively.  Aliased or piped wiki links of the form
-;; `[[PageName|link text]]` are also supported.
+;; `[[link text|PageName]]` are also supported.  Since some wikis
+;; reverse these components, set `markdown-wiki-link-alias-first'
+;; to nil to treat them as `[[PageName|link text]]`.
 ;;
 ;; [SmartyPants][] support is possible by customizing `markdown-command'.
 ;; If you install `SmartyPants.pl` at, say, `/usr/local/bin/smartypants`,
@@ -327,7 +341,11 @@
 ;; differs slightly from standard Markdown.  Most importantly, newlines are
 ;; significant and trigger hard line breaks.  As such, `gfm-mode' turns off
 ;; `auto-fill-mode' and turns on `visual-line-mode' (or `longlines-mode' if
-;; `visual-line-mode' is not available).
+;; `visual-line-mode' is not available).  Wiki links in this mode will be
+;; treated as on GitHub, with hyphens replacing spaces in filenames and
+;; where the first letter of the filename capitalized.  For example,
+;; `[[wiki link]]' will map to a file named `Wiki-link` with the same
+;; extension as the current file.
 
 ;;; Acknowledgments:
 
@@ -371,6 +389,8 @@
 ;;     data bug and to prefer `visual-line-mode' in `gfm-mode'.
 ;;   * Shigeru Fukaya <shigeru.fukaya@gmail.com> for better adherence to
 ;;     Emacs Lisp coding conventions.
+;;   * Donald Curtis <dcurtis@coe.edu> for fixing the `paragraph-fill' regexp.
+;;   * Kevin Porter <kportertx@gmail.com> for wiki link handling in `gfm-mode'.
 
 ;;; Bugs:
 
@@ -472,6 +492,12 @@ buffers which are visiting a file."
   :group 'markdown
   :type 'boolean)
 
+(defcustom markdown-wiki-link-alias-first t
+  "When non-nil, treat aliased wiki links like [[alias text|PageName]].
+Otherwise, they will be treated as [[PageName|alias text]]."
+  :group 'markdown
+  :type 'boolean)
+
 (defcustom markdown-uri-types
   '("acap" "cid" "data" "dav" "fax" "file" "ftp" "gopher" "http" "https"
     "imap" "ldap" "mailto" "mid" "modem" "news" "nfs" "nntp" "pop" "prospero"
@@ -507,6 +533,13 @@ This will not take effect until Emacs is restarted."
   "Character to use instead of spaces when mapping wiki links to filenames."
   :group 'markdown
   :type 'string)
+
+(defcustom markdown-footnote-location 'end
+  "Position where new footnotes are inserted in the document."
+  :group 'markdown
+  :type '(choice (const :tag "At the end of the document" end)
+		 (const :tag "Immediately after the paragraph" immediately)
+		 (const :tag "Before next header" header)))
 
 ;;; Font lock =================================================================
 
@@ -559,6 +592,9 @@ This will not take effect until Emacs is restarted."
 
 (defvar markdown-reference-face 'markdown-reference-face
   "Face name to use for reference.")
+
+(defvar markdown-footnote-face 'markdown-footnote-face
+  "Face name to use for footnote identifiers.")
 
 (defvar markdown-url-face 'markdown-url-face
   "Face name to use for URLs.")
@@ -657,6 +693,11 @@ This will not take effect until Emacs is restarted."
   "Face for link references."
   :group 'markdown-faces)
 
+(defface markdown-footnote-face
+  '((t (:inherit font-lock-keyword-face)))
+  "Face for footnote markers."
+  :group 'markdown-faces)
+
 (defface markdown-url-face
   '((t (:inherit font-lock-string-face)))
   "Face for URLs."
@@ -686,8 +727,16 @@ This will not take effect until Emacs is restarted."
   "Regular expression for a reference link [text][id].")
 
 (defconst markdown-regex-reference-definition
-  "^ \\{0,3\\}\\(\\[.+?\\]\\):\\s *\\(.*?\\)\\s *\\( \"[^\"]*\"$\\|$\\)"
+  "^ \\{0,3\\}\\(\\[[^^]+?\\]\\):\\s *\\(.*?\\)\\s *\\( \"[^\"]*\"$\\|$\\)"
   "Regular expression for a link definition [id]: ...")
+
+(defconst markdown-regex-footnote
+  "\\(\\[\\^.+?\\]\\)"
+  "Regular expression for a footnote marker [^fn].")
+
+(defconst markdown-regex-header
+  "#+\\|\\S-.*\n\\(?:\\(===+\\)\\|\\(---+\\)\\)$"
+  "Regexp identifying Markdown headers.")
 
 (defconst markdown-regex-header-1-atx
   "^\\(# \\)\\(.*?\\)\\($\\| #+$\\)"
@@ -820,6 +869,7 @@ text.")
          '((1 markdown-reference-face t)
            (2 markdown-url-face t)
            (3 markdown-link-title-face t)))
+   (cons markdown-regex-footnote 'markdown-footnote-face)
    (cons markdown-regex-bold '(2 markdown-bold-face))
    (cons markdown-regex-italic '(2 markdown-italic-face))
    )
@@ -843,6 +893,15 @@ text.")
        markdown-mode-font-lock-keywords-latex)
    markdown-mode-font-lock-keywords-basic)
   "Default highlighting expressions for Markdown mode.")
+
+;; Footnotes
+(defvar markdown-footnote-counter 0
+  "Counter for footnote numbers.")
+(make-variable-buffer-local 'markdown-footnote-counter)
+
+(defconst markdown-footnote-chars
+  "[[:alnum:]-]"
+  "Regular expression maching any character that is allowed in a footnote identifier.")
 
 
 
@@ -874,6 +933,15 @@ If we are at the first line, then consider the previous line to be blank."
       (forward-line -1)
       (markdown-cur-line-blank-p))))
 
+(defun markdown-next-line-blank-p ()
+  "Return t if the next line is blank and nil otherwise.
+If we are at the last line, then consider the next line to be blank."
+  (save-excursion
+    (if (= (point-at-bol) (point-max))
+        t
+      (forward-line 1)
+      (markdown-cur-line-blank-p))))
+
 (defun markdown-prev-line-indent-p ()
   "Return t if the previous line is indented and nil otherwise."
   (save-excursion
@@ -892,6 +960,12 @@ If we are at the first line, then consider the previous line to be blank."
   "Return the number of leading whitespace characters in the previous line."
   (save-excursion
     (forward-line -1)
+    (markdown-cur-line-indent)))
+
+(defun markdown-next-line-indent ()
+  "Return the number of leading whitespace characters in the next line."
+  (save-excursion
+    (forward-line 1)
     (markdown-cur-line-indent)))
 
 (defun markdown-cur-non-list-indent ()
@@ -1336,6 +1410,97 @@ Arguments BEG and END specify the beginning and end of the region."
   (interactive "*r")
   (markdown-block-region beg end "    "))
 
+;;; Footnotes ======================================================================
+
+(defun markdown-footnote-counter-inc ()
+  "Increment markdown-footnote-counter and return the new value."
+  (when (= markdown-footnote-counter 0) ; hasn't been updated in this buffer yet.
+    (save-excursion
+      (goto-char (point-min))
+      (while (re-search-forward (concat "^\\[\\^\\(" markdown-footnote-chars "*?\\)\\]:")
+				(point-max) t)
+	(let ((fn (string-to-number (match-string 1))))
+	  (when (> fn markdown-footnote-counter)
+	    (setq markdown-footnote-counter fn))))))
+  (incf markdown-footnote-counter))
+
+(defun markdown-footnote-new ()
+  "Insert a footnote with a new number and jump to a position to enter the
+footnote text."
+  (interactive)
+  (let ((fn (markdown-footnote-counter-inc)))
+    (insert (format "[^%d]" fn))
+    (markdown-footnote-text-find-new-location)
+    (insert (format "[^%d]: " fn))))
+
+(defun markdown-footnote-text-find-new-location ()
+  "Position the cursor at the proper location for a new footnote text."
+  (cond
+   ((eq markdown-footnote-location 'end) (goto-char (point-max)))
+   ((eq markdown-footnote-location 'immediately) (forward-paragraph))
+   ((eq markdown-footnote-location 'header)
+    ;; search for a header. if none is found, go to the end of the document.
+    (catch 'eof
+      (while (progn
+	       (forward-paragraph)
+	       (unless (re-search-forward markdown-regex-header nil t)
+		 (throw 'eof nil))
+	       (backward-paragraph)
+	       (not (looking-at (concat "\n" markdown-regex-header))))))))
+  ;; make sure we're on an empty line:
+  (unless (markdown-cur-line-blank-p)
+    (insert "\n"))
+  ;; and make sure the previous line is empty:
+  (unless (markdown-prev-line-blank-p)
+    (insert "\n"))
+  ;; then make sure there's an empty line following the footnote:
+  (unless (markdown-next-line-blank-p)
+    (insert "\n")
+    (forward-line -1)))
+
+(defun markdown-footnote-goto-text ()
+  "Jump to the text of the footnote under the cursor."
+  (interactive)
+  ;; first make sure we're at a footnote marker
+  (unless (or (looking-back (concat "\\[\\^" markdown-footnote-chars "*\\]?") (point-at-bol))
+	      (looking-at (concat "\\[?\\^" markdown-footnote-chars "*?\\]")))
+    (error "Not at a footnote"))
+  (let* ((fn nil)
+	 (new-pos (save-excursion
+		    ;; move point between [ and ^:
+		    (if (looking-at "\\[")
+			(forward-char 1)
+		      (skip-chars-backward "^["))
+		    (looking-at (concat "\\(\\^" markdown-footnote-chars "*?\\)\\]"))
+		    (setq fn (match-string 1))
+		    (goto-char (point-min))
+		    (re-search-forward (concat "^\\[" fn "\\]:") nil t))))
+    (unless new-pos
+      (error "No definition found for footnote `%s'" fn))
+    (goto-char new-pos)
+    (skip-chars-forward "[:space:]")))
+
+(defun markdown-footnote-return ()
+  "Return from a footnote to its footnote number in the main text."
+  (interactive)
+  (let ((fn (save-excursion
+	      (backward-paragraph)
+	      ;; if we're in a multiparagraph footnote, we need to back up further
+	      (while (>= (markdown-next-line-indent) 4)
+		(backward-paragraph))
+	      (forward-line)
+	      (if (looking-at (concat "^\\[\\(\\^" markdown-footnote-chars "*?\\)\\]:"))
+		  (match-string 1)))))
+    (unless fn
+      (error "Not in a footnote"))
+    (let ((new-pos (save-excursion
+		     (goto-char (point-min))
+		     (re-search-forward (concat "\\[" fn "\\]\\([^:]\\|\\'\\)") nil t))))
+      (unless new-pos
+	(error "Footnote `%s' not found" fn))
+      (goto-char new-pos)
+      (skip-chars-backward "^]"))))
+
 ;;; Indentation ====================================================================
 
 (defun markdown-indent-find-next-position (cur-pos positions)
@@ -1427,17 +1592,53 @@ it in the usual way."
 
 
 
-;;; Keymap ================================================================
+;;; Keymap ====================================================================
 
 (defvar markdown-mode-map
   (let ((map (make-keymap)))
     ;; Element insertion
+    ;(define-key map "\C-c\C-al" 'markdown-insert-link)
+    ;(define-key map "\C-c\C-ar" 'markdown-insert-reference-link-dwim)
+    ;(define-key map "\C-c\C-aw" 'markdown-insert-wiki-link)
+    ;(define-key map "\C-c\C-ii" 'markdown-insert-image)
+    ;(define-key map "\C-c\C-t1" 'markdown-insert-header-1)
+    ;(define-key map "\C-c\C-t2" 'markdown-insert-header-2)
+    ;(define-key map "\C-c\C-t3" 'markdown-insert-header-3)
+    ;(define-key map "\C-c\C-t4" 'markdown-insert-header-4)
+    ;(define-key map "\C-c\C-t5" 'markdown-insert-header-5)
+    ;(define-key map "\C-c\C-t6" 'markdown-insert-header-6)
+    ;(define-key map "\C-c\C-pb" 'markdown-insert-bold)
+    ;(define-key map "\C-c\C-ss" 'markdown-insert-bold)
+    ;(define-key map "\C-c\C-pi" 'markdown-insert-italic)
+    ;(define-key map "\C-c\C-se" 'markdown-insert-italic)
+    ;(define-key map "\C-c\C-pf" 'markdown-insert-code)
+    ;(define-key map "\C-c\C-sc" 'markdown-insert-code)
+    ;(define-key map "\C-c\C-sb" 'markdown-insert-blockquote)
+    ;(define-key map "\C-c\C-s\C-b" 'markdown-blockquote-region)
+    ;(define-key map "\C-c\C-sp" 'markdown-insert-pre)
+    ;(define-key map "\C-c\C-s\C-p" 'markdown-pre-region)
+    ;(define-key map "\C-c-" 'markdown-insert-hr)
+    ;(define-key map "\C-c\C-tt" 'markdown-insert-title)
+    ;(define-key map "\C-c\C-ts" 'markdown-insert-section)
+    ;;; Footnotes
+    ;(define-key map "\C-c\C-fn" 'markdown-footnote-new)
+    ;(define-key map "\C-c\C-fg" 'markdown-footnote-goto-text)
+    ;(define-key map "\C-c\C-fb" 'markdown-footnote-return)
+    ;;; WikiLink Following
+    ;(define-key map "\C-c\C-w" 'markdown-follow-wiki-link-at-point)
+    ;(define-key map "\M-n" 'markdown-next-wiki-link)
+    ;(define-key map "\M-p" 'markdown-previous-wiki-link)
+    ;; Indentation
+    (define-key map "\C-m" 'markdown-enter-key)
+    ;; Visibility cycling
+    (define-key map "\C-i" 'markdown-cycle)
+    (define-key map "\M-i" 'markdown-shifttab)
     ;; Header navigation
-    (define-key map (kbd "C-M-n") 'outline-next-visible-heading)
-    (define-key map (kbd "C-M-p") 'outline-previous-visible-heading)
-    (define-key map (kbd "C-M-f") 'outline-forward-same-level)
-    (define-key map (kbd "C-M-b") 'outline-backward-same-level)
-    (define-key map (kbd "C-M-u") 'outline-up-heading)
+    ;(define-key map (kbd "C-M-n") 'outline-next-visible-heading)
+    ;(define-key map (kbd "C-M-p") 'outline-previous-visible-heading)
+    ;(define-key map (kbd "C-M-f") 'outline-forward-same-level)
+    ;(define-key map (kbd "C-M-b") 'outline-backward-same-level)
+    ;(define-key map (kbd "C-M-u") 'outline-up-heading)
     map)
   "Keymap for Markdown major mode.")
 
@@ -1476,6 +1677,11 @@ it in the usual way."
     ["Insert reference link" markdown-insert-reference-link-dwim]
     ["Insert image" markdown-insert-image]
     ["Insert horizontal rule" markdown-insert-hr]
+    "---"
+    ("Footnotes"
+     ["Insert footnote" markdown-footnote-new]
+     ["Jump to footnote text" markdown-footnote-goto-text]
+     ["Return from footnote" markdown-footnote-return])
     "---"
     ["Check references" markdown-check-refs]
     "---"
@@ -1863,15 +2069,28 @@ be available via `match-string'."
 	 (or (not buffer-file-name)
 	     (not (string-equal (buffer-file-name)
 				(markdown-convert-wiki-link-to-filename
-				 (match-string 1)))))
+                                 (markdown-wiki-link-link)))))
 	 (not (save-match-data
 		(save-excursion))))))
 
+(defun markdown-wiki-link-link ()
+  "Return the link part of the wiki link using current match data.
+The location of the link component depends on the value of
+`markdown-wiki-link-alias-first'."
+  (if markdown-wiki-link-alias-first
+      (or (match-string 3) (match-string 1))
+    (match-string 1)))
+
 (defun markdown-convert-wiki-link-to-filename (name)
   "Generate a filename from the wiki link NAME.
-Spaces in NAME are replaced with `markdown-link-space-sub-char'."
+Spaces in NAME are replaced with `markdown-link-space-sub-char'.
+When in `gfm-mode', follow GitHub's conventions where [[Test Test]]
+and [[test test]] both map to Test-test.ext."
   (let ((basename (markdown-replace-regexp-in-string
                    "[[:space:]\n]" markdown-link-space-sub-char name)))
+    (when (eq major-mode 'gfm-mode)
+      (setq basename (concat (upcase (substring basename 0 1))
+                             (downcase (substring basename 1 nil)))))
     (concat basename
             (if (buffer-file-name)
                 (concat "."
@@ -1890,7 +2109,7 @@ the new buffer remains in `markdown-mode'."
 See `markdown-wiki-link-p' and `markdown-follow-wiki-link'."
   (interactive)
   (if (markdown-wiki-link-p)
-      (markdown-follow-wiki-link (match-string 1))
+      (markdown-follow-wiki-link (markdown-wiki-link-link))
     (error "Point is not at a Wiki Link")))
 
 (defun markdown-next-wiki-link ()
@@ -1930,7 +2149,8 @@ and highlight accordingly."
     (let ((highlight-beginning (match-beginning 0))
 	  (highlight-end (match-end 0))
 	  (file-name
-	   (markdown-convert-wiki-link-to-filename (match-string 1))))
+	   (markdown-convert-wiki-link-to-filename
+            (markdown-wiki-link-link))))
       (if (file-exists-p file-name)
 	  (markdown-highlight-wiki-link
 	   highlight-beginning highlight-end markdown-link-face)
@@ -2041,11 +2261,10 @@ This is an exact copy of `line-number-at-pos' for use in emacs21."
   (easy-menu-add markdown-mode-menu markdown-mode-map)
   ;; Make filling work with lists (unordered, ordered, and definition)
   (set (make-local-variable 'paragraph-start)
-       "\f\\|[ \t]*$\\|^[ \t]*[*+-] \\|^[ \t*][0-9]+\\.\\|^[ \t]*: ")
+       "\f\\|[ \t]*$\\|^[ \t]*[*+-] \\|^[ \t]*[0-9]+\\.\\|^[ \t]*: ")
   ;; Outline mode
   (make-local-variable 'outline-regexp)
-  (setq outline-regexp
-        "#+\\|\\S-.*\n\\(?:\\(===+\\)\\|\\(---+\\)\\)$")
+  (setq outline-regexp markdown-regex-header)
   (make-local-variable 'outline-level)
   (setq outline-level 'markdown-outline-level)
   ;; Cause use of ellipses for invisible text.
@@ -2083,11 +2302,15 @@ This is an exact copy of `line-number-at-pos' for use in emacs21."
 
 (define-derived-mode gfm-mode markdown-mode "GFM"
   "Major mode for editing GitHub Flavored Markdown files."
+  (setq markdown-link-space-sub-char "-")
   (auto-fill-mode 0)
   ;; Use visual-line-mode if available, fall back to longlines-mode:
   (if (fboundp 'visual-line-mode)
       (visual-line-mode 1)
-    (longlines-mode 1)))
+    (longlines-mode 1))
+  ;; do the initial link fontification
+  (markdown-fontify-buffer-wiki-links))
+
 
 (provide 'markdown-mode)
 
