@@ -735,7 +735,6 @@
 (global-set-key (kbd "M-<up>")   'move-line-up)
 (global-set-key (kbd "M-<down>") 'move-line-down)
 
-
 ;; move buffers
 (require 'buffer-move)
 (global-set-key (kbd "<C-S-up>")    'buf-move-up)
