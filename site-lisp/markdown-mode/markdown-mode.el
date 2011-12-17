@@ -2270,8 +2270,8 @@ This is an exact copy of `line-number-at-pos' for use in emacs21."
   ;; Cause use of ellipses for invisible text.
   (add-to-invisibility-spec '(outline . t))
   ;; Indentation and filling
-  (make-local-variable 'fill-nobreak-predicate)
-  (add-hook 'fill-nobreak-predicate 'markdown-nobreak-p)
+  ;; (make-local-variable 'fill-nobreak-predicate)
+  ;; (add-hook 'fill-nobreak-predicate 'markdown-nobreak-p)
   (setq indent-line-function markdown-indent-function)
 
   ;; Prepare hooks for XEmacs compatibility
