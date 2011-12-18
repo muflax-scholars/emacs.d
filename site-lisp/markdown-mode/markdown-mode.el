@@ -534,9 +534,12 @@ If we are at the last line, then consider the next line to be blank."
     (current-column)))
 
 (defun markdown-prev-line-indent ()
-  "Return the number of leading whitespace characters in the previous line."
+  "Return the number of leading whitespace characters in the previous line.
+If the previous line is empty, check the line before that one instead."
   (save-excursion
     (forward-line -1)
+    (when (markdown-cur-line-blank-p)
+      (forward-line -1))
     (markdown-cur-line-indent)))
 
 (defun markdown-next-line-indent ()
