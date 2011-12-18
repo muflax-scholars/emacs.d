@@ -134,13 +134,12 @@
 (setq sentence-end-double-space nil)
 (column-number-mode t)
 (setq-default indicate-empty-lines t)
-; wrap nicely
+; don't hard-wrap text, but use nice virtual wrapping
 (setq-default fill-column 80)
-(add-hook 'text-mode-hook 'turn-on-auto-fill)
-(add-hook 'org-mode-hook 'turn-on-auto-fill)
-(add-hook 'markdown-mode-hook 'turn-on-auto-fill)
 (global-visual-line-mode 1)
-(setq visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
+(require 'adaptive-wrap-prefix)
+(global-adaptive-wrap-prefix-mode 1)
+(setq visual-line-fringe-indicators '(nil right-curly-arrow))
 
 ;; parentheses are connected and their content highlighted
 (show-paren-mode 1)

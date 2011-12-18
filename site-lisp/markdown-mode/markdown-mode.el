@@ -387,14 +387,6 @@ This will not take effect until Emacs is restarted."
   "  $"
   "Regular expression for matching line breaks.")
 
-(defconst markdown-regex-wiki-link
-  "\\[\\[\\([^]|]+\\)\\(|\\([^]]+\\)\\)?\\]\\]"
-  "Regular expression for matching wiki links.
-This matches typical bracketed [[WikiLinks]] as well as 'aliased'
-wiki links of the form [[PageName|link text]].  In this regular
-expression, #1 matches the page name and #3 matches the link
-text.")
-
 (defconst markdown-regex-uri
   (concat
    "\\(" (mapconcat 'identity markdown-uri-types "\\|")
@@ -561,9 +553,12 @@ If we are at the last line, then consider the next line to be blank."
       (current-column))))
 
 (defun markdown-prev-non-list-indent ()
-  "Return position of the first non-list-marker on the previous line."
+  "Return position of the first non-list-marker on the previous line.
+If the previous line is empty, check the line before that one, too."
   (save-excursion
     (forward-line -1)
+    (when (markdown-cur-line-blank-p)
+       (forward-line -1))
     (markdown-cur-non-list-indent)))
 
 (defun markdown--next-block ()
@@ -857,8 +852,6 @@ default indentation level."
     map)
   "Keymap for Markdown major mode.")
 
-;;; References ================================================================
-
 ;;; Outline ===================================================================
 
 ;; The following visibility cycling code was taken from org-mode
@@ -1127,9 +1120,9 @@ This is an exact copy of `line-number-at-pos' for use in emacs21."
   (set (make-local-variable 'font-lock-defaults)
        '(markdown-mode-font-lock-keywords))
   (set (make-local-variable 'font-lock-multiline) t)
-  ;; Make filling work with lists (unordered, ordered, and definition)
+  ;; Make filling work with lists (unordered, ordered, and definition) and quotes.
   (set (make-local-variable 'paragraph-start)
-       "\f\\|[ \t]*$\\|^[ \t]*[*+-] \\|^[ \t]*[0-9]+\\.\\|^[ \t]*: ")
+       "\f\\|[ \t]*$\\|^[ \t]*[*+-] \\|^[ \t]*[0-9]+\\.\\|^[ \t]*: \\|^[ \t]*> ")
   ;; Outline mode
   (make-local-variable 'outline-regexp)
   (setq outline-regexp markdown-regex-header)
@@ -1138,8 +1131,8 @@ This is an exact copy of `line-number-at-pos' for use in emacs21."
   ;; Cause use of ellipses for invisible text.
   (add-to-invisibility-spec '(outline . t))
   ;; Indentation and filling
-  ;; (make-local-variable 'fill-nobreak-predicate)
-  ;; (add-hook 'fill-nobreak-predicate 'markdown-nobreak-p)
+  (make-local-variable 'fill-nobreak-predicate)
+  (add-hook 'fill-nobreak-predicate 'markdown-nobreak-p)
   (setq indent-line-function markdown-indent-function)
 
   ;; Prepare hooks for XEmacs compatibility
