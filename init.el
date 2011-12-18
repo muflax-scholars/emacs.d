@@ -341,6 +341,10 @@
 (setq-default indent-tabs-mode nil)
 ; automatically turn on indenting
 (electric-indent-mode 1)
+; markdown and indent don't work well together, so disable it
+(defun no-electric-indent-hook () (electric-indent-mode -1))
+(add-hook 'markdown-mode-hook 'no-electric-indent-hook)
+
 ; also when yanked
 (defun yank-and-indent ()
   "Yank and then indent the newly formed region according to mode."
