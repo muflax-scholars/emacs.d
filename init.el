@@ -183,18 +183,40 @@
 (global-set-key "\C-b" 'backward-word)
 (global-set-key "\M-f" 'forward-sentence)
 (global-set-key "\M-b" 'backward-sentence)
-; move to beginning of text on line
+
+;; move to beginning of text on line
 (defun smart-beginning-of-line ()
   "Move point to first non-whitespace character or beginning-of-line.
 
-  Move point to the first non-whitespace character on this line.
-  If point was already at that position, move point to beginning of line."
+Move point to the first non-whitespace character on this line. If point was
+already at that position, move point to beginning of line.
+
+If visual-line-mode is on, then also jump to beginning of real line."
+  (interactive) ; Use (interactive "^") in Emacs 23 to make shift-select work
+  (let ((oldpos (point))
+        (vispos (point)))
+        
+        (beginning-of-visual-line)
+        (setq vispos (point))
+        (beginning-of-line-text)
+
+        (if (and (> vispos (point))
+                 (not (= oldpos vispos)))
+            (goto-char vispos)
+          (when (= oldpos (point))
+             (beginning-of-line)))))
+(global-set-key "\C-a" 'smart-beginning-of-line)
+
+(defun smart-end-of-line ()
+  "Move point to end of visual line or, if already there, to end of logical line."
   (interactive) ; Use (interactive "^") in Emacs 23 to make shift-select work
   (let ((oldpos (point)))
-    (beginning-of-line-text)
-    (and (= oldpos (point))
-         (beginning-of-line))))
-(global-set-key "\C-a" 'smart-beginning-of-line)
+        
+        (end-of-visual-line)
+        (when (= oldpos (point))
+          (end-of-line))))
+(global-set-key "\C-e" 'smart-end-of-line)
+
 (setq org-special-ctrl-a/e t)
 
 ;; calendar
@@ -341,10 +363,6 @@
 (setq-default indent-tabs-mode nil)
 ; automatically turn on indenting
 (electric-indent-mode 1)
-; markdown and indent don't work well together, so disable it
-(defun no-electric-indent-hook () (electric-indent-mode -1))
-(add-hook 'markdown-mode-hook 'no-electric-indent-hook)
-
 ; also when yanked
 (defun yank-and-indent ()
   "Yank and then indent the newly formed region according to mode."
@@ -352,6 +370,14 @@
   (yank)
   (call-interactively 'indent-region))
 (global-set-key "\C-y" 'yank-and-indent)
+
+;; undo hardwrapped markdown
+(defun unfill-region (begin end)
+  "Remove all line breaks in a region but leave paragraphs, 
+  indented text (quotes, code) and lists intakt."
+  (interactive "r")
+  (replace-regexp "\\([^\n]\\)\n\\([^ *\\>-\n]\\)" "\\1 \\2" nil begin end))
+(global-set-key "\M-Q" 'unfill-region)
 
 ;; insert new line *after* the current one
 (defun next-newline-and-indent ()

@@ -1138,7 +1138,7 @@ This is an exact copy of `line-number-at-pos' for use in emacs21."
   ;; Indentation and filling
   (make-local-variable 'fill-nobreak-predicate)
   (add-hook 'fill-nobreak-predicate 'markdown-nobreak-p)
-  (setq indent-line-function markdown-indent-function)
+  ;; (setq indent-line-function markdown-indent-function)
 
   ;; Prepare hooks for XEmacs compatibility
   (when (featurep 'xemacs)
