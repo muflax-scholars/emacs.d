@@ -380,7 +380,7 @@ This will not take effect until Emacs is restarted."
   "Regular expression for matching italic text.")
 
 (defconst markdown-regex-blockquote
-  "^>.*$"
+  "^\\s-*>.*$"
   "Regular expression for matching blockquote lines.")
 
 (defconst markdown-regex-line-break
@@ -418,7 +418,9 @@ This will not take effect until Emacs is restarted."
 
 (defvar markdown-mode-font-lock-keywords-basic
   (list
-   '(markdown-match-pre-blocks 0 markdown-pre-face t t)
+   ;; we don't mark normal pre blocks 'cause we don't use them and it interferes
+   ;; with footnotes
+   ;; '(markdown-match-pre-blocks 0 markdown-pre-face t t)
    '(markdown-match-fenced-code-blocks 0 markdown-pre-face t t)
    (cons markdown-regex-blockquote 'markdown-blockquote-face)
    (cons markdown-regex-header-1-setext 'markdown-header-face-1)
