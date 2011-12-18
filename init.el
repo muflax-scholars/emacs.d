@@ -423,6 +423,7 @@
 
 ;; markdown
 (require 'markdown-mode)
+(setq markdown-command "kramdown")
 (add-to-list 'auto-mode-alist '("\\.pdc$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.mkd$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
