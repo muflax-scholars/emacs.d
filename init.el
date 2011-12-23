@@ -783,6 +783,10 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (require 'lua-mode)
 (setq lua-indent-level 2)
 
+;; (s)css
+(setq scss-compile-at-save nil)
+(setq css-indent-level 2)
+
 ;; clean up modeline and hide standard minor modes
 ; should be last so all modes are already loaded
 (require 'diminish)
