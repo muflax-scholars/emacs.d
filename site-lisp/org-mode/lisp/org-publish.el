@@ -1,5 +1,5 @@
 ;;; org-publish.el --- publish related org-mode files as a website
-;; Copyright (C) 2006-2011 Free Software Foundation, Inc.
+;; Copyright (C) 2006-2012 Free Software Foundation, Inc.
 
 ;; Author: David O'Toole <dto@gnu.org>
 ;; Maintainer: Carsten Dominik <carsten DOT dominik AT gmail DOT com>
@@ -277,12 +277,12 @@ in the sitemap."
   :type 'string)
 
 (defcustom org-publish-sitemap-file-entry-format "%t"
-  "How a sitemap file entry is formated.
+  "How a sitemap file entry is formatted.
 You could use brackets to delimit on what part the link will be.
 
 %t is the title.
 %a is the author.
-%d is the date formated using `org-publish-sitemap-date-format'."
+%d is the date formatted using `org-publish-sitemap-date-format'."
   :group 'org-publish
   :type 'string)
 
@@ -368,7 +368,7 @@ This is a compatibility function for Emacsen without `delete-dups'."
 
 (declare-function org-publish-delete-dups "org-publish" (list))
 (declare-function find-lisp-find-files "find-lisp" (directory regexp))
-(declare-function org-pop-to-buffer-same-window 
+(declare-function org-pop-to-buffer-same-window
 		  "org-compat" (&optional buffer-or-name norecord label))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -684,7 +684,7 @@ See `org-publish-projects'."
 	 (pub-dir
 	  (file-name-as-directory
 	   (file-truename
-	    (or (plist-get project-plist :publishing-directory)
+	    (or (eval (plist-get project-plist :publishing-directory))
 		(error "Project %s does not have :publishing-directory defined"
 		       (car project))))))
 	 tmp-pub-dir)
@@ -717,7 +717,7 @@ If :auto-sitemap is set, publish the sitemap too.
 If :makeindex is set, also produce a file theindex.org."
   (mapc
    (lambda (project)
-     ;; Each project uses it's own cache file:
+     ;; Each project uses its own cache file:
      (org-publish-initialize-cache (car project))
      (let*
 	 ((project-plist (cdr project))
@@ -984,7 +984,9 @@ the project."
 	 main last-main letter last-letter file sub link tgext)
     ;; `files' contains the list of relative file names
     (dolist (file files)
-      (setq origfile (substring file 1 -1))
+      (setq origfile
+	    (concat (file-name-directory file)
+		    (substring (file-name-nondirectory file) 1 -1)))
       (setq buf (find-file-noselect file))
       (with-current-buffer buf
 	(goto-char (point-min))
@@ -995,7 +997,7 @@ the project."
       (kill-buffer buf))
     (setq index (sort index (lambda (a b) (string< (downcase (car a))
 						   (downcase (car b))))))
-    (setq ibuffer (find-file-noselect (expand-file-name "theindex.org" directory)))
+    (setq ibuffer (find-file-noselect (expand-file-name "theindex.inc" directory)))
     (with-current-buffer ibuffer
       (erase-buffer)
       (insert "* Index\n")
@@ -1022,7 +1024,16 @@ the project."
 	    (insert "     - " link "\n")
 	  (insert "   - " link "\n")))
       (save-buffer))
-    (kill-buffer ibuffer)))
+    (kill-buffer ibuffer)
+    ;; Create theindex.org if it doesn't exist already
+    (let ((index-file (expand-file-name "theindex.org" directory)))
+      (unless (file-exists-p index-file)
+       (setq ibuffer (find-file-noselect index-file))
+       (with-current-buffer ibuffer
+         (erase-buffer)
+         (insert "\n\n#+INCLUDE: \"theindex.inc\"\n\n")
+         (save-buffer))
+       (kill-buffer ibuffer)))))
 
 ;; Caching functions:
 
@@ -1105,7 +1116,7 @@ so that the file including them will be republished as well."
       (setq buf (find-file (expand-file-name filename)))
       (with-current-buffer buf
 	(goto-char (point-min))
-	(while (re-search-forward "^#\\+INCLUDE:[ \t]+\"?\\([^ \t\"]*\\)\"?[ \t]*.*$" nil t)
+	(while (re-search-forward "^#\\+INCLUDE:[ \t]+\"?\\([^ \t\n\r\"]*\\)\"?[ \t]*.*$" nil t)
 	  (let* ((included-file (expand-file-name (match-string 1))))
 	    (add-to-list 'included-files-ctime
 			 (org-publish-cache-ctime-of-src included-file) t))))
@@ -1116,7 +1127,7 @@ so that the file including them will be republished as well."
       (let ((ctime (org-publish-cache-ctime-of-src filename)))
 	(or (< pstamp ctime)
 	    (when included-files-ctime
-	      (not (null (delq nil (mapcar (lambda(ct) (< ctime ct)) 
+	      (not (null (delq nil (mapcar (lambda(ct) (< ctime ct))
 					   included-files-ctime))))))))))
 
 (defun org-publish-cache-set-file-property (filename property value &optional project-name)

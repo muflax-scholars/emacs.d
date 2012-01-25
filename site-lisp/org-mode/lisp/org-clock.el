@@ -1,6 +1,6 @@
 ;;; org-clock.el --- The time clocking code for Org-mode
 
-;; Copyright (C) 2004-2011 Free Software Foundation, Inc.
+;; Copyright (C) 2004-2012 Free Software Foundation, Inc.
 
 ;; Author: Carsten Dominik <carsten at orgmode dot org>
 ;; Keywords: outlines, hypermedia, calendar, wp
@@ -658,7 +658,7 @@ Use alsa's aplay tool if available."
 
 (defun org-program-exists (program-name)
   "Checks whenever we can locate program and launch it."
-  (if (eq system-type 'gnu/linux)
+  (if (member system-type '(gnu/linux darwin))
       (= 0 (call-process "which" nil nil nil program-name))))
 
 (defvar org-clock-mode-line-entry nil
@@ -1066,7 +1066,7 @@ the clocking selection, associated with the letter `d'."
 
       ;; Clock in at which position?
       (setq target-pos
-	    (if (and (eobp) (not (org-on-heading-p)))
+	    (if (and (eobp) (not (org-at-heading-p)))
 		(point-at-bol 0)
 	      (point)))
       (run-hooks 'org-clock-in-prepare-hook)
@@ -1115,9 +1115,9 @@ the clocking selection, associated with the letter `d'."
 	    (cond
 	     ((and org-clock-in-resume
 		   (looking-at
-		    (concat "^[ \t]* " org-clock-string
+		    (concat "^[ \t]*" org-clock-string
 			    " \\[\\([0-9]\\{4\\}-[0-9]\\{2\\}-[0-9]\\{2\\}"
-			    " +\\sw+\.? +[012][0-9]:[0-5][0-9]\\)\\][ \t]*$")))
+			    " *\\sw+\.? +[012][0-9]:[0-5][0-9]\\)\\][ \t]*$")))
 	      (message "Matched %s" (match-string 1))
 	      (setq ts (concat "[" (match-string 1) "]"))
 	      (goto-char (match-end 1))
@@ -1247,9 +1247,9 @@ line and position cursor in that line."
       (goto-char beg)
       (when (and find-unclosed
 		 (re-search-forward
-		  (concat "^[ \t]* " org-clock-string
+		  (concat "^[ \t]*" org-clock-string
 			  " \\[\\([0-9]\\{4\\}-[0-9]\\{2\\}-[0-9]\\{2\\}"
-			  " +\\sw+ +[012][0-9]:[0-5][0-9]\\)\\][ \t]*$")
+			  " *\\sw+ +[012][0-9]:[0-5][0-9]\\)\\][ \t]*$")
 		  end t))
 	(beginning-of-line 1)
 	(throw 'exit t))
@@ -1696,7 +1696,9 @@ from the `before-change-functions' in the current buffer."
   "Clock out if the current entry contains the running clock.
 This is used to stop the clock after a TODO entry is marked DONE,
 and is only done if the variable `org-clock-out-when-done' is not nil."
-  (when (and org-clock-out-when-done
+  (when (and (org-clocking-p)
+	     org-clock-out-when-done
+	     (marker-buffer org-clock-marker)
 	     (or (and (eq t org-clock-out-when-done)
 		      (member state org-done-keywords))
 		 (and (listp org-clock-out-when-done)
@@ -1919,7 +1921,7 @@ the returned times will be formatted strings."
                shiftedm (- 13 (* 3 (nth 1 tmp)))
                shiftedq (- 5 (nth 1 tmp))))
        (setq d 1 h 0 m 0 d1 1 month shiftedm month1 (+ 3 shiftedm) h1 0 m1 0 y shiftedy))
-       ((> (+ q shift) 0) ; shift is whitin this year
+       ((> (+ q shift) 0) ; shift is within this year
        (setq shiftedq (+ q shift))
        (setq shiftedy y)
        (setq d 1 h 0 m 0 d1 1 month (+ 1 (* 3 (- (+ q shift) 1))) month1 (+ 4 (* 3 (- (+ q shift) 1))) h1 0 m1 0))))
@@ -1998,7 +2000,7 @@ the currently selected interval size."
                         (encode-time 0 0 0 (+ d n) m y))))
           ((and wp (string-match "w\\|W" wp) mw (> (length wp) 0))
            (require 'cal-iso)
-           (setq date (calendar-gregorian-from-absolute 
+           (setq date (calendar-gregorian-from-absolute
 		       (calendar-absolute-from-iso (list (+ mw n) 1 y))))
            (setq ins (format-time-string
                       "%G-W%V"
@@ -2015,7 +2017,7 @@ the currently selected interval size."
                (setq mw 5
                      y (- y 1))
              ())
-           (setq date (calendar-gregorian-from-absolute 
+           (setq date (calendar-gregorian-from-absolute
 		       (calendar-absolute-from-iso (org-quarter-to-date (+ mw n) y))))
            (setq ins (format-time-string
                       (concatenate 'string (number-to-string y) "-Q" (number-to-string (+ mw n)))
@@ -2126,7 +2128,7 @@ the currently selected interval size."
   "Write out a clock table at position IPOS in the current buffer.
 TABLES is a list of tables with clocking data as produced by
 `org-clock-get-table-data'.  PARAMS is the parameter property list obtained
-from the dynamic block defintion."
+from the dynamic block definition."
   ;; This function looks quite complicated, mainly because there are a
   ;; lot of options which can add or remove columns.  I have massively
   ;; commented this function, the I hope it is understandable.  If
@@ -2640,4 +2642,3 @@ The details of what will be saved are regulated by the variable
 (provide 'org-clock)
 
 ;;; org-clock.el ends here
-

@@ -1,6 +1,6 @@
 ;;; org-colview.el --- Column View in Org-mode
 
-;; Copyright (C) 2004-2011 Free Software Foundation, Inc.
+;; Copyright (C) 2004-2012 Free Software Foundation, Inc.
 
 ;; Author: Carsten Dominik <carsten at orgmode dot org>
 ;; Keywords: outlines, hypermedia, calendar, wp
@@ -186,7 +186,7 @@ This is the compiled version of the format.")
 		    (cons "ITEM"
 			  ;; When in a buffer, get the whole line,
 			  ;; we'll clean it later…
-			  (if (org-mode-p)
+			  (if (eq major-mode 'org-mode)
 			      (save-match-data
 				(org-no-properties
 				 (org-remove-tabs
@@ -477,7 +477,7 @@ Where possible, use the standard interface for changing this line."
        ((equal major-mode 'org-agenda-mode)
 	(org-columns-eval eval)
 	;; The following let preserves the current format, and makes sure
-	;; that in only a single file things need to be upated.
+	;; that in only a single file things need to be updated.
 	(let* ((org-agenda-overriding-columns-format org-columns-current-fmt)
 	       (buffer (marker-buffer pom))
 	       (org-agenda-contributing-files
@@ -497,7 +497,7 @@ Where possible, use the standard interface for changing this line."
 		(org-columns-eval eval))
 	    (org-columns-display-here)))
 	(org-move-to-column col)
-	(if (and (org-mode-p)
+	(if (and (eq major-mode 'org-mode)
 		 (nth 3 (assoc key org-columns-current-fmt-compiled)))
 	    (org-columns-update key)))))))
 
@@ -547,7 +547,7 @@ Where possible, use the standard interface for changing this line."
       (beginning-of-line 1)
       ;; `next-line' is needed here, because it skips invisible line.
       (condition-case nil (org-no-warnings (next-line 1)) (error nil))
-      (setq hidep (org-on-heading-p 1)))
+      (setq hidep (org-at-heading-p 1)))
     (eval form)
     (and hidep (hide-entry))))
 
@@ -608,7 +608,7 @@ an integer, select that value."
      ((equal major-mode 'org-agenda-mode)
       (org-columns-eval '(org-entry-put pom key nval))
       ;; The following let preserves the current format, and makes sure
-      ;; that in only a single file things need to be upated.
+      ;; that in only a single file things need to be updated.
       (let* ((org-agenda-overriding-columns-format org-columns-current-fmt)
 	     (buffer (marker-buffer pom))
 	     (org-agenda-contributing-files
@@ -875,7 +875,7 @@ display, or in the #+COLUMNS line of the current buffer."
 	      (replace-match (concat "#+COLUMNS: " fmt) t t))
 	    (unless (> cnt 0)
 	      (goto-char (point-min))
-	      (or (org-on-heading-p t) (outline-next-heading))
+	      (or (org-at-heading-p t) (outline-next-heading))
 	      (let ((inhibit-read-only t))
 		(insert-before-markers "#+COLUMNS: " fmt "\n")))
 	    (org-set-local 'org-columns-default-format fmt))))))
@@ -1003,7 +1003,7 @@ Don't set this, this is meant for dynamic scoping.")
       (if (marker-position org-columns-begin-marker)
 	  (goto-char org-columns-begin-marker))
       (org-columns-remove-overlays)
-      (if (org-mode-p)
+      (if (eq major-mode 'org-mode)
 	  (call-interactively 'org-columns)
 	(org-agenda-redo)
 	(call-interactively 'org-agenda-columns)))
@@ -1142,6 +1142,8 @@ calc         function to get values from base elements"
 
 ;;; Dynamic block for Column view
 
+(defvar org-heading-regexp) ; defined in org.el
+(defvar org-heading-keyword-regexp-format) ; defined in org.el
 (defun org-columns-capture-view (&optional maxlevel skip-empty-rows)
   "Get the column view of the current buffer or subtree.
 The first optional argument MAXLEVEL sets the level limit.  A
@@ -1152,11 +1154,12 @@ containing the title row and all other rows.  Each row is a list
 of fields."
   (save-excursion
     (let* ((title (mapcar 'cadr org-columns-current-fmt-compiled))
-	   (re-comment (concat "\\*+[ \t]+" org-comment-string "\\>"))
+	   (re-comment (format org-heading-keyword-regexp-format
+			       org-comment-string))
 	   (re-archive (concat ".*:" org-archive-tag ":"))
 	   (n (length title)) row tbl)
       (goto-char (point-min))
-      (while (re-search-forward "^\\(\\*+\\) " nil t)
+      (while (re-search-forward org-heading-regexp nil t)
 	(catch 'next
 	  (when (and (or (null maxlevel)
 			 (>= maxlevel

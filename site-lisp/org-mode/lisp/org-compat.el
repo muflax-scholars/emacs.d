@@ -1,6 +1,6 @@
 ;;; org-compat.el --- Compatibility code for Org-mode
 
-;; Copyright (C) 2004-2011 Free Software Foundation, Inc.
+;; Copyright (C) 2004-2012 Free Software Foundation, Inc.
 
 ;; Author: Carsten Dominik <carsten at orgmode dot org>
 ;; Keywords: outlines, hypermedia, calendar, wp
@@ -251,8 +251,12 @@ Works on both Emacs and XEmacs."
   (defun org-activate-mark ()
     (when (mark t)
       (setq mark-active t)
-      (unless transient-mark-mode
-	(setq transient-mark-mode 'lambda)))))
+      (when (and (boundp 'transient-mark-mode)
+		 (not transient-mark-mode))
+	(setq transient-mark-mode 'lambda))
+      (when (boundp 'zmacs-regions)
+	(setq zmacs-regions t)))))
+
 
 ;; Invisibility compatibility
 
@@ -271,7 +275,7 @@ Works on both Emacs and XEmacs."
     nil))
 
 (defmacro org-xemacs-without-invisibility (&rest body)
-  "Turn off exents with invisibility while executing BODY."
+  "Turn off extents with invisibility while executing BODY."
   `(let ((ext-inv (extent-list nil (point-at-bol) (point-at-eol)
 			       'all-extents-closed-open 'invisible))
 	 ext-inv-specs)

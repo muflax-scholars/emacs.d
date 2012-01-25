@@ -1,6 +1,6 @@
 ;;; ob-tangle.el --- extract source code from org-mode files
 
-;; Copyright (C) 2009-2011  Free Software Foundation, Inc.
+;; Copyright (C) 2009-2012  Free Software Foundation, Inc.
 
 ;; Author: Eric Schulte
 ;; Keywords: literate programming, reproducible research
@@ -342,11 +342,7 @@ code blocks by language."
 			     body params
 			     (and (fboundp assignments-cmd)
 				  (funcall assignments-cmd params))))))
-		      (if (and (cdr (assoc :noweb params)) ;; expand noweb refs
-			       (let ((nowebs (split-string
-					      (cdr (assoc :noweb params)))))
-				 (or (member "yes" nowebs)
-				     (member "tangle" nowebs))))
+		      (if (org-babel-noweb-p params :tangle)
 			  (org-babel-expand-noweb-references info)
 			(nth 1 info)))))
 		   (comment

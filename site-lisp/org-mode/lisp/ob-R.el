@@ -1,6 +1,6 @@
 ;;; ob-R.el --- org-babel functions for R code evaluation
 
-;; Copyright (C) 2009-2011  Free Software Foundation, Inc.
+;; Copyright (C) 2009-2012  Free Software Foundation, Inc.
 
 ;; Author: Eric Schulte
 ;;	Dan Davison
@@ -197,6 +197,7 @@ current code buffer."
 	 '((:bmp . "bmp")
 	   (:jpg . "jpeg")
 	   (:jpeg . "jpeg")
+	   (:tex . "tikz")
 	   (:tiff . "tiff")
 	   (:png . "png")
 	   (:svg . "svg")
@@ -214,7 +215,7 @@ current code buffer."
     (setq device (or (and device (cdr (assq (intern (concat ":" device))
 					    devices))) "png"))
     (setq filearg
-	  (if (member device '("pdf" "postscript" "svg")) "file" "filename"))
+	  (if (member device '("pdf" "postscript" "svg" "tikz")) "file" "filename"))
     (setq args (mapconcat
 		(lambda (pair)
 		  (if (member (car pair) allowed-args)

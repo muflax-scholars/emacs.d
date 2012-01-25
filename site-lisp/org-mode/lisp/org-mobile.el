@@ -1,5 +1,5 @@
 ;;; org-mobile.el --- Code for asymmetric sync with a mobile device
-;; Copyright (C) 2009-2011 Free Software Foundation, Inc.
+;; Copyright (C) 2009-2012 Free Software Foundation, Inc.
 ;;
 ;; Author: Carsten Dominik <carsten at orgmode dot org>
 ;; Keywords: outlines, hypermedia, calendar, wp
@@ -37,7 +37,7 @@
 
 (eval-when-compile (require 'cl))
 
-(declare-function org-pop-to-buffer-same-window 
+(declare-function org-pop-to-buffer-same-window
 		  "org-compat" (&optional buffer-or-name norecord label))
 
 (defgroup org-mobile nil
@@ -272,7 +272,7 @@ Also exclude files matching `org-mobile-files-exclude-regexp'."
 		     (t nil)))
 		  org-mobile-files)))
 	 (files (delete
-		 nil 
+		 nil
 		 (mapcar (lambda (f)
 			   (unless (and (not (string= org-mobile-files-exclude-regexp ""))
 					(string-match org-mobile-files-exclude-regexp f))
@@ -303,7 +303,7 @@ create all custom agenda views, for upload to the mobile phone."
   (interactive)
   (let ((a-buffer (get-buffer org-agenda-buffer-name)))
     (let ((org-agenda-buffer-name "*SUMO*")
-	  (org-agenda-filter org-agenda-filter)
+	  (org-agenda-tag-filter org-agenda-tag-filter)
 	  (org-agenda-redo-command org-agenda-redo-command))
       (save-excursion
 	(save-window-excursion
@@ -499,7 +499,7 @@ agenda view showing the flagged items."
 				 org-mobile-directory))
     (save-excursion
       (setq buf (find-file file))
-      (when (and (= (point-min) (point-max))) 
+      (when (and (= (point-min) (point-max)))
 	(insert "\n")
 	(save-buffer)
 	(when org-mobile-use-encryption
@@ -1099,4 +1099,3 @@ A and B must be strings or nil."
 (provide 'org-mobile)
 
 ;;; org-mobile.el ends here
-

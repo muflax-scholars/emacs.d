@@ -1,6 +1,6 @@
 ;;; org-table.el --- The table editor for Org-mode
 
-;; Copyright (C) 2004-2011 Free Software Foundation, Inc.
+;; Copyright (C) 2004-2012 Free Software Foundation, Inc.
 
 ;; Author: Carsten Dominik <carsten at orgmode dot org>
 ;; Keywords: outlines, hypermedia, calendar, wp
@@ -50,7 +50,7 @@
 (defvar orgtbl-after-send-table-hook nil
   "Hook for functions attaching to `C-c C-c', if the table is sent.
 This can be used to add additional functionality after the table is sent
-to the receiver position, othewise, if table is not sent, the functions
+to the receiver position, otherwise, if table is not sent, the functions
 are not run.")
 
 (defcustom orgtbl-optimized (eq org-enable-table-editor 'optimized)
@@ -240,6 +240,14 @@ days."
 		 (symbol :tag "Minutes" 'minutes)
 		 (symbol :tag "Hours  " 'hours)
 		 (symbol :tag "Days   " 'days)))
+
+(defcustom org-table-formula-field-format "%s"
+  "Format for fields which contain the result of a formula.
+For example, using \"~%s~\" will display the result within tilde
+characters.  Beware that modifying the display can prevent the
+field from being used in another formula."
+  :group 'org-table-settings
+  :type 'string)
 
 (defcustom org-table-formula-evaluate-inline t
   "Non-nil means TAB and RET evaluate a formula in current table field.
@@ -821,7 +829,7 @@ When nil, simply write \"#ERROR\" in corrupted fields.")
     (delete-region (point) end)
     (move-marker end nil)
     (move-marker org-table-aligned-end-marker (point))
-    (when (and orgtbl-mode (not (org-mode-p)))
+    (when (and orgtbl-mode (not (eq major-mode 'org-mode)))
       (goto-char org-table-aligned-begin-marker)
       (while (org-hide-wide-columns org-table-aligned-end-marker)))
     ;; Try to move to the old location
@@ -1291,7 +1299,7 @@ However, when FORCE is non-nil, create new columns if necessary."
 (defun org-table-line-to-dline (line &optional above)
   "Turn a buffer line number into a data line number.
 If there is no data line in this line, return nil.
-If there is no matchin dline (most likely te refrence was a hline), the
+If there is no matching dline (most likely te reference was a hline), the
 first dline below it is used.  When ABOVE is non-nil, the one above is used."
   (catch 'exit
     (let ((ll (length org-table-dlines))
@@ -1717,6 +1725,34 @@ blindly applies a recipe that works for simple tables."
 	  (while (re-search-forward "-|[ \t]*$" end t)
 	    (replace-match "-+"))
 	  (goto-char beg)))))
+
+(defun org-table-transpose-table-at-point ()
+  "Transpose orgmode table at point and eliminate hlines.
+So a table like
+
+| 1 | 2 | 4 | 5 |
+|---+---+---+---|
+| a | b | c | d |
+| e | f | g | h |
+
+will be transposed as
+
+| 1 | a | e |
+| 2 | b | f |
+| 4 | c | g |
+| 5 | d | h |
+
+Note that horizontal lines disappeared."
+  (interactive)
+  (let ((contents
+         (apply #'mapcar* #'list
+                ;; remove 'hline from list
+		(delq nil (mapcar (lambda (x) (when (listp x) x))
+				  (org-table-to-lisp))))))
+    (delete-region (org-table-begin) (org-table-end))
+    (insert (mapconcat (lambda(x) (concat "| " (mapconcat 'identity x " | " ) "  |\n" ))
+                       contents ""))
+    (org-table-align)))
 
 (defun org-table-wrap-region (arg)
   "Wrap several fields in a column like a paragraph.
@@ -2400,7 +2436,7 @@ not overwrite the stored one."
 	   (modes (copy-sequence org-calc-default-modes))
 	   (numbers nil) ; was a variable, now fixed default
 	   (keep-empty nil)
-	   n form form0 formrpl formrg bw fmt x ev orig c lispp literal 
+	   n form form0 formrpl formrg bw fmt x ev orig c lispp literal
 	   duration duration-output-format)
       ;; Parse the format string.  Since we have a lot of modes, this is
       ;; a lot of work.  However, I think calc still uses most of the time.
@@ -2425,7 +2461,7 @@ not overwrite the stored one."
 		      duration-output-format nil
 		      fmt (replace-match "" t t fmt)))
 	    (if (string-match "t" fmt)
-		(setq duration t 
+		(setq duration t
 		      duration-output-format org-table-duration-custom-format
 		      numbers t
 		      fmt (replace-match "" t t fmt)))
@@ -2493,7 +2529,7 @@ not overwrite the stored one."
 	;; Insert complex ranges
 	(while (and (string-match org-table-range-regexp form)
 		    (> (length (match-string 0 form)) 1))
-	  (setq formrg (save-match-data 
+	  (setq formrg (save-match-data
 			 (org-table-get-range (match-string 0 form) nil n0)))
 	  (setq formrpl
 		(save-match-data
@@ -2572,7 +2608,8 @@ $1->    %s\n" orig formula form0 form))
 	    (message "")))
 	(if (listp ev) (setq fmt nil ev "#ERROR"))
 	(org-table-justify-field-maybe
-	 (if fmt (format fmt (string-to-number ev)) ev))
+	 (format org-table-formula-field-format
+		 (if fmt (format fmt (string-to-number ev)) ev)))
 	(if (and down (> ndown 0) (looking-at ".*\n[ \t]*|[^-]"))
 	    (call-interactively 'org-return)
 	  (setq ndown 0)))
@@ -2634,7 +2671,7 @@ in the buffer and column1 and column2 are table column numbers."
 	    (prog1 (org-trim (org-table-get-field c1))
 	      (if highlight (org-table-highlight-rectangle (point) (point)))))
 	;; A range, return a vector
-	;; First sort the numbers to get a regular ractangle
+	;; First sort the numbers to get a regular rectangle
 	(if (< r2 r1) (setq tmp r1 r1 r2 r2 tmp))
 	(if (< c2 c1) (setq tmp c1 c1 c2 c2 tmp))
 	(if corners-only
@@ -2894,7 +2931,7 @@ known that the table will be realigned a little later anyway."
 
 (defun org-table-iterate (&optional arg)
   "Recalculate the table until it does not change anymore.
-The maximun number of iterations is 10, but you can chose a different value
+The maximun number of iterations is 10, but you can choose a different value
 with the prefix ARG."
   (interactive "P")
   (let ((imax (if arg (prefix-numeric-value arg) 10))
@@ -2982,24 +3019,28 @@ them to individual field equations for each field."
 So @< and $< will always be replaced with @1 and $1, respectively.
 The advantage of these special markers are that structure editing of
 the table will not change them, while @1 and $1 will be modified
-when a line/row is swaped out of that privileged position.  So for
+when a line/row is swapped out of that privileged position.  So for
 formulas that use a range of rows or columns, it may often be better
 to anchor the formula with \"I\" row markers, or to offset from the
 borders of the table using the @< @> $< $> makers."
-  (let (n nmax len char)
-    (while (string-match "\\([@$]\\)\\(<+\\|>+\\)" s)
-      (setq nmax (if (equal (match-string 1 s) "@")
-		     (1- (length org-table-dlines))
-		   org-table-current-ncol)
-	    len (- (match-end 2) (match-beginning 2))
-	    char (string-to-char (match-string 2 s))
-	    n (if (= char ?<)
-		  len
-		(- nmax len -1)))
-      (if (or (< n 1) (> n nmax))
-	  (error "Reference \"%s\" in expression \"%s\" points outside table"
-		 (match-string 0 s) s))
-      (setq s (replace-match (format "%s%d" (match-string 1 s) n) t t s))))
+  (let (n nmax len char (start 0))
+    (while (string-match "\\([@$]\\)\\(<+\\|>+\\)\\|\\(remote([^\)]+)\\)"
+			 s start)
+      (if (match-end 3)
+	  (setq start (match-end 3))
+	(setq nmax (if (equal (match-string 1 s) "@")
+		       (1- (length org-table-dlines))
+		     org-table-current-ncol)
+	      len (- (match-end 2) (match-beginning 2))
+	      char (string-to-char (match-string 2 s))
+	      n (if (= char ?<)
+		    len
+		  (- nmax len -1)))
+	(if (or (< n 1) (> n nmax))
+	    (error "Reference \"%s\" in expression \"%s\" points outside table"
+		   (match-string 0 s) s))
+	(setq start (match-beginning 0))
+	(setq s (replace-match (format "%s%d" (match-string 1 s) n) t t s)))))
   s)
 
 (defun org-table-formula-substitute-names (f)
@@ -3799,7 +3840,7 @@ Use COMMAND to do the motion, repeat if necessary to end up in a data line."
   :lighter " OrgTbl" :keymap orgtbl-mode-map
   (org-load-modules-maybe)
   (cond
-   ((org-mode-p)
+   ((eq major-mode 'org-mode)
     ;; Exit without error, in case some hook functions calls this
     ;; by accident in org-mode.
     (message "Orgtbl-mode is not useful in org-mode, command ignored"))
@@ -3894,6 +3935,7 @@ to execute outside of tables."
 	   ("\C-c\C-w"		 org-table-cut-region)
 	   ("\C-c\M-w"		 org-table-copy-region)
 	   ("\C-c\C-y"		 org-table-paste-rectangle)
+	   ("\C-c\C-w"           org-table-wrap-region)
 	   ("\C-c-"		 org-table-insert-hline)
 	   ("\C-c}"		 org-table-toggle-coordinate-overlays)
 	   ("\C-c{"		 org-table-toggle-formula-debugger)
@@ -4668,6 +4710,8 @@ The return value is either a single string for a single field, or a
 list of the fields in the rectangle ."
   (save-match-data
     (let ((id-loc nil)
+	  ;; Protect a bunch of variables from being overwritten
+	  ;; by the context of the remote table
 	  org-table-column-names org-table-column-name-regexp
 	  org-table-local-parameters org-table-named-field-locations
 	  org-table-current-line-types org-table-current-begin-line
@@ -4704,7 +4748,8 @@ list of the fields in the rectangle ."
 		  (error "Cannot find a table at NAME or ID %s" name-or-id))
 		(setq tbeg (point-at-bol))
 		(org-table-get-specials)
-		(setq form (org-table-formula-substitute-names form))
+		(setq form (org-table-formula-substitute-names
+			    (org-table-formula-handle-first/last-rc form)))
 		(if (and (string-match org-table-range-regexp form)
 			 (> (length (match-string 0 form)) 1))
 		    (save-match-data
@@ -4714,4 +4759,3 @@ list of the fields in the rectangle ."
 (provide 'org-table)
 
 ;;; org-table.el ends here
-

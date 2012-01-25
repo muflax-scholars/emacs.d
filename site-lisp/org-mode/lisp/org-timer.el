@@ -1,6 +1,6 @@
 ;;; org-timer.el --- The relative timer code for Org-mode
 
-;; Copyright (C) 2008-2011 Free Software Foundation, Inc.
+;; Copyright (C) 2008-2012 Free Software Foundation, Inc.
 
 ;; Author: Carsten Dominik <carsten at orgmode dot org>
 ;; Keywords: outlines, hypermedia, calendar, wp
@@ -372,7 +372,7 @@ replace any running timer."
 		     (org-show-entry)
 		     (or (ignore-errors (org-get-heading))
 			 (concat "File:" (file-name-nondirectory (buffer-file-name)))))))
-		((org-mode-p)
+		((eq major-mode 'org-mode)
 		 (or (ignore-errors (org-get-heading))
 		     (concat "File:" (file-name-nondirectory (buffer-file-name)))))
 		(t (error "Not in an Org buffer"))))

@@ -1,6 +1,6 @@
 ;;; org-taskjuggler.el --- TaskJuggler exporter for org-mode
 ;;
-;; Copyright (C) 2007-2011 Free Software Foundation, Inc.
+;; Copyright (C) 2007-2012 Free Software Foundation, Inc.
 ;;
 ;; Emacs Lisp Archive Entry
 ;; Filename: org-taskjuggler.el
@@ -69,7 +69,7 @@
 ;; "taskjuggler_project" (or whatever you customized
 ;; `org-export-taskjuggler-project-tag' to). You are now ready to
 ;; export the project plan with `org-export-as-taskjuggler-and-open'
-;; which will export the project plan and open a gant chart in
+;; which will export the project plan and open a Gantt chart in
 ;; TaskJugglerUI.
 ;;
 ;; * Resources
@@ -355,8 +355,8 @@ information, all the properties, etc."
   (let* ((props (org-entry-properties))
 	 (components (org-heading-components))
 	 (level (nth 1 components))
-	 (headline 
-	  (replace-regexp-in-string 
+	 (headline
+	  (replace-regexp-in-string
 	   "\"" "\\\"" (nth 4 components) t t)) ; quote double quotes in headlines
 	 (parent-ordered (org-taskjuggler-parent-is-ordered-p)))
     (push (cons "level" level) props)
@@ -406,10 +406,10 @@ deeper), then it's not a leaf."
 	    (successor (car (cdr tasks))))
 	(cond
 	 ;; if a task has no successors it is a leaf
-	 ((null successor) 
+	 ((null successor)
 	  (push (cons (cons "leaf-node" t) task) new-list))
 	 ;; if the successor has a lower level than task it is a leaf
-	 ((<= (cdr (assoc "level" successor)) (cdr (assoc "level" task))) 
+	 ((<= (cdr (assoc "level" successor)) (cdr (assoc "level" task)))
 	  (push (cons (cons "leaf-node" t) task) new-list))
 	 ;; otherwise examine the rest of the tasks
 	 (t (push task new-list))))
@@ -572,7 +572,7 @@ with separator \"\n\"."
     (and filtered-items (mapconcat 'identity filtered-items "\n"))))
 
 (defun org-taskjuggler-get-attributes (item attributes)
-  "Return all attribute as a single formated string. ITEM is an
+  "Return all attribute as a single formatted string. ITEM is an
 alist representing either a resource or a task. ATTRIBUTES is a
 list of symbols. Only entries from ITEM are considered that are
 listed in ATTRIBUTES."

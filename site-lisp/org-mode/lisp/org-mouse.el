@@ -1,13 +1,12 @@
 ;;; org-mouse.el --- Better mouse support for org-mode
 
-;; Copyright (C) 2006-2011 Free Software Foundation
-;;
+;; Copyright (C) 2006-2012 Free Software Foundation, Inc.
+
 ;; Author: Piotr Zielinski <piotr dot zielinski at gmail dot com>
 ;; Maintainer: Carsten Dominik <carsten at orgmode dot org>
 
-;;
 ;; This file is part of GNU Emacs.
-;;
+
 ;; GNU Emacs is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
 ;; the Free Software Foundation, either version 3 of the License, or
@@ -20,8 +19,7 @@
 
 ;; You should have received a copy of the GNU General Public License
 ;; along with GNU Emacs.  If not, see <http://www.gnu.org/licenses/>.
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
+
 ;;; Commentary:
 ;;
 ;; Org-mouse provides mouse support for org-mode.
@@ -328,7 +326,6 @@ nor a function, elements of KEYWORDS are used directly."
     (goto-char (match-end (or subexp 0)))
     (just-one-space)))
 
-
 (defun org-mouse-keyword-replace-menu (keywords &optional group itemformat
 						nosurround)
   "A helper function.
@@ -394,15 +391,6 @@ DEFAULT is returned if no priority is given in the headline."
 	(match-string 1)
       (when default (char-to-string org-default-priority)))))
 
-;; (defun org-mouse-at-link ()
-;;   (and (eq (get-text-property (point) 'face) 'org-link)
-;;        (save-excursion
-;;          (goto-char (previous-single-property-change (point) 'face))
-;;          (or (looking-at org-bracket-link-regexp)
-;;              (looking-at org-angle-link-re)
-;;              (looking-at org-plain-link-re)))))
-
-
 (defun org-mouse-delete-timestamp ()
   "Deletes the current timestamp as well as the preceding keyword.
 SCHEDULED: or DEADLINE: or ANYTHINGLIKETHIS:"
@@ -453,7 +441,6 @@ SCHEDULED: or DEADLINE: or ANYTHINGLIKETHIS:"
      ["Align Tags in Buffer" (org-set-tags t t) t]
      ["Set Tags ..." (org-set-tags) t])))
 
-
 (defun org-mouse-set-tags (tags)
   (save-excursion
     ;; remove existing tags first
@@ -483,7 +470,6 @@ SCHEDULED: or DEADLINE: or ANYTHINGLIKETHIS:"
    ('todo-tree "TODO tree: ")
    ('occur-tree "Occur tree: ")
    (t "Agenda command ???")))
-
 
 (defun org-mouse-list-options-menu (alloptions &optional function)
   (let ((options (save-match-data
@@ -570,7 +556,6 @@ SCHEDULED: or DEADLINE: or ANYTHINGLIKETHIS:"
      ["Plain List to Outline" org-mouse-transform-to-outline
       :visible (org-at-item-p)])))
 
-
 (defun org-mouse-get-context (contextlist context)
   (let ((contextdata (assq context contextlist)))
     (when contextdata
@@ -598,29 +583,26 @@ This means, between the beginning of line and the point."
      (open-line 1)
      (org-indent-to-column (- (match-end 0) (match-beginning 0)))
      (insert "+ "))
-
     (:middle			; insert after
      (end-of-line)
      (newline t)
      (indent-relative)
      (insert "+ "))
-
     (:end				; insert text here
      (skip-chars-backward " \t")
      (kill-region (point) (point-at-eol))
      (unless (org-looking-back org-mouse-punctuation)
        (insert (concat org-mouse-punctuation " ")))))
-
   (insert text)
   (beginning-of-line))
 
 (defadvice dnd-insert-text (around org-mouse-dnd-insert-text activate)
-  (if (org-mode-p)
+  (if (eq major-mode 'org-mode)
       (org-mouse-insert-item text)
     ad-do-it))
 
 (defadvice dnd-open-file (around org-mouse-dnd-open-file activate)
-  (if (org-mode-p)
+  (if (eq major-mode 'org-mode)
       (org-mouse-insert-item uri)
     ad-do-it))
 
@@ -630,13 +612,6 @@ This means, between the beginning of line and the point."
       (save-match-data
 	(set-match-data ',match)
 	(apply ',function rest)))))
-
-(defun org-mouse-match-todo-keyword ()
-  (save-excursion
-    (org-back-to-heading)
-    (if (looking-at org-outline-regexp) (goto-char (match-end 0)))
-    (or (looking-at (concat " +" org-todo-regexp " *"))
-	(looking-at " \\( *\\)"))))
 
 (defun org-mouse-yank-link (click)
   (interactive "e")
@@ -667,7 +642,6 @@ This means, between the beginning of line and the point."
 	  (progn (save-excursion (goto-char (region-beginning)) (insert "[["))
 		 (save-excursion (goto-char (region-end)) (insert "]]")))]
 	 ["Insert Link Here" (org-mouse-yank-link ',event)]))))
-
    ((save-excursion (beginning-of-line) (looking-at "#\\+STARTUP: \\(.*\\)"))
     (popup-menu
      `(nil
@@ -877,18 +851,6 @@ This means, between the beginning of line and the point."
 	 ))))
    (t
     (org-mouse-popup-global-menu))))))
-
-;; (defun org-mouse-at-regexp (regexp)
-;;   (save-excursion
-;;     (let ((point (point))
-;;	  (bol (progn (beginning-of-line) (point)))
-;;	  (eol (progn (end-of-line) (point))))
-;;	 (goto-char point)
-;;	 (re-search-backward regexp bol 1)
-;;	 (and (not (eolp))
-;;	   (progn (forward-char)
-;;		  (re-search-forward regexp eol t))
-;;	   (<= (match-beginning 0) point)))))
 
 (defun org-mouse-mark-active ()
   (and mark-active transient-mark-mode))

@@ -1,6 +1,6 @@
 ;;; ob-lisp.el --- org-babel functions for common lisp evaluation
 
-;; Copyright (C) 2009-2011  Free Software Foundation, Inc.
+;; Copyright (C) 2009-2012  Free Software Foundation, Inc.
 
 ;; Author: Joel Boehland
 ;;	Eric Schulte
@@ -78,7 +78,7 @@ current directory string."
       (if (member "output" (cdr (assoc :result-params params)))
 	  (car result)
 	(condition-case nil
-	    (read (org-bable-lisp-vector-to-list (cadr result)))
+	    (read (org-babel-lisp-vector-to-list (cadr result)))
 	  (error (cadr result)))))
     (with-temp-buffer
       (insert (org-babel-expand-body:lisp body params))
@@ -96,7 +96,7 @@ current directory string."
    (org-babel-pick-name (cdr (assoc :rowname-names params))
 			(cdr (assoc :rownames params)))))
 
-(defun org-bable-lisp-vector-to-list (results)
+(defun org-babel-lisp-vector-to-list (results)
   ;; TODO: better would be to replace #(...) with [...]
   (replace-regexp-in-string "#(" "(" results))
 
