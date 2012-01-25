@@ -51,7 +51,10 @@
         (remove-text-properties (point-min) (point-max) '(wrap-prefix nil))))))
 
 (defun turn-on-adaptive-wrap-prefix-mode ()
-  (adaptive-wrap-prefix-mode 1))
+  ;; disable it in org-mode 'cause they already do something like that
+  (unless (memq major-mode
+                (list 'org-mode))
+    (adaptive-wrap-prefix-mode 1)))
 
 (define-globalized-minor-mode global-adaptive-wrap-prefix-mode
   adaptive-wrap-prefix-mode turn-on-adaptive-wrap-prefix-mode
