@@ -1,5 +1,5 @@
 ;; load path 
-; site-lisp stores manually maintained packages
+;; site-lisp stores manually maintained packages
 (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
   (let* ((my-lisp-dir "~/.emacs.d/site-lisp/")
          (default-directory my-lisp-dir))
@@ -8,7 +8,7 @@
       (normal-top-level-add-subdirs-to-load-path))))
 (setq load-path (cons (expand-file-name "~/.emacs.d") load-path))
 
-; elpa
+;; elpa
 (require 'package)
 (add-to-list 'package-archives '("tromey" . "http://tromey.com/elpa/"))
 (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
@@ -17,11 +17,11 @@
 ;; color 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 (require 'color-theme)
-; only load used color theme
+;; only load used color theme
 (require 'color-theme-almost-monokai)
 ;(color-theme-initialize)
 
-; use different color scheme depending on whether we run in X or a terminal
+;; use different color scheme depending on whether we run in X or a terminal
 (defvar after-make-console-frame-hooks '()
   "Hooks to run after creating a new TTY frame")
 (defvar after-make-window-system-frame-hooks '()
@@ -73,12 +73,12 @@
 ;; scrolling
 (setq scroll-preserve-screen-position t)
 (setq mouse-wheel-progressive-speed nil)
-; smooth scrolling with margin
+;; smooth scrolling with margin
 (require 'smooth-scrolling)
 (setq smooth-scroll-margin 5)
 (setq scroll-margin 0)
 (setq scroll-conservatively 10000)
-; necessary or scrolling is really slow
+;; necessary or scrolling is really slow
 (setq-default bidi-display-reordering  nil)
 (setq auto-window-vscroll nil)
 
@@ -89,7 +89,7 @@
 (global-set-key (kbd "M-S-SPC") 'bc-next)
 (setq bc-bookmark-limit 1000)
 (setq bc-bookmark-file (expand-file-name "~/.emacs.d/cache/breadcrumb"))
-; normal bookmarks
+;; normal bookmarks
 (setq bookmark-default-file "~/.emacs.d/cache/bookmarks")
 
 ;; show #colors in matching color
@@ -119,7 +119,7 @@
 ;; optical stuff
 (blink-cursor-mode -1)
 (setq inhibit-splash-screen t)
-; shows current selected region
+;; shows current selected region
 (setq-default transient-mark-mode t)
 (global-font-lock-mode t)
 (set-scroll-bar-mode 'right)
@@ -134,7 +134,7 @@
 (setq sentence-end-double-space nil)
 (column-number-mode t)
 (setq-default indicate-empty-lines t)
-; don't hard-wrap text, but use nice virtual wrapping
+;; don't hard-wrap text, but use nice virtual wrapping
 (setq-default fill-column 80)
 (global-visual-line-mode 1)
 (require 'adaptive-wrap-prefix)
@@ -173,8 +173,8 @@
 (global-set-key "\C-cr" 'query-replace-regexp)
 (global-set-key "\C-t"  'find-tag)
 (global-set-key "\C-ci" 'indent-region)
-; because we navigate via cursor keys, we can put something more useful on the
-; default navigational keys
+;; because we navigate via cursor keys, we can put something more useful on the
+;; default navigational keys
 (global-set-key "\C-p" 'undo-tree-undo)
 (global-set-key "\M-p" 'undo-tree-redo)
 (global-set-key "\C-n" 'other-window)
@@ -252,7 +252,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (yas/load-directory "~/.emacs.d/snippets")
 
 ;; text completion
-; auto completion
+;; auto completion
 (require 'auto-complete-config)
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
 (add-to-list 'ac-modes 'text-mode)
@@ -263,7 +263,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (setq ac-auto-show-menu nil) 
 (setq ac-ignore-case nil) 
 (ac-config-default)
-; disabling Yasnippet completion
+;; disabling Yasnippet completion
 (defun epy-snips-from-table (table)
   (with-no-warnings
     (let ((hashtab (ac-yasnippet-table-hash table))
@@ -283,7 +283,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (setq ac-ignores (concatenate 'list ac-ignores (epy-get-all-snips)))
 
 ;; ido and smex (ido for M-x)
-; ido
+;; ido
 (require 'ido)
 (require 'ido-ubiquitous)
 (setq ido-enable-flex-matching t) ; fuzzy matching
@@ -303,7 +303,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (setq ido-max-directory-size 1000000) ; load bigger dirs, too
 (setq confirm-nonexistent-file-or-buffer nil)
 (ido-mode 1)
-; smex
+;; smex
 (require 'smex)
 (smex-initialize)
 (global-set-key "\M-x" 'smex)
@@ -317,7 +317,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
   '("\.emacs\.d/cache" 
     "\.emacs\.d/elpa")))
 (recentf-mode 1)
-; file completion
+;; file completion
 (defun recentf-ido-find-file ()
   "Find a recent file using Ido."
   (interactive)
@@ -361,9 +361,9 @@ If visual-line-mode is on, then also jump to beginning of real line."
 ;; indentation
 (setq-default tab-width 2)
 (setq-default indent-tabs-mode nil)
-; automatically turn on indenting
+;; automatically turn on indenting
 (electric-indent-mode 1)
-; also when yanked
+;; also when yanked
 (defun yank-and-indent ()
   "Yank and then indent the newly formed region according to mode."
   (interactive)
@@ -387,7 +387,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (global-set-key "\C-o" 'next-newline-and-indent)
 
 ;; deleting
-; delete spaces when killing a line
+;; delete spaces when killing a line
 (defun kill-and-join-forward (&optional arg)
   "If at end of line, join with following; otherwise kill line. 
   Deletes whitespace at join."
@@ -416,8 +416,8 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (global-fic-mode 1)
 
 ;; use automatic file headers
-; #TODO recognize name automagically
-; #TODO add end-of-buffer
+;; #TODO recognize name automagically
+;; #TODO add end-of-buffer
 (require 'autoinsert)
 (auto-insert-mode)
 (setq auto-insert-directory "~/.emacs.d/templates/")
@@ -435,10 +435,10 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (setq ispell-process-directory (expand-file-name "~/"))
 (setq ispell-dictionary "english")
 (setq ispell-silently-savep t)
-; faster checking
+;; faster checking
 (setq ispell-list-command "list")
-; enable flyspell in certain modes
-; #FIXME disabled for speed issues
+;; enable flyspell in certain modes
+;; #FIXME disabled for speed issues
 ;(defun turn-on-flyspell () 
 ;(flyspell-mode 1))
 ;(add-hook 'text-mode-hook 'turn-on-flyspell)
@@ -467,33 +467,33 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (setq user-full-name "muflax")
 
 ;; org-mode (use private version)
-; #FIXME (tab) for org-cycle is disabled directly in the library; this should
-; probably be some unset here.
+;; #FIXME (tab) for org-cycle is disabled directly in the library; this should
+;; probably be some unset here.
 (setq load-path (cons "~/.emacs.d/site-lisp/org-mode/lisp" load-path))
 (require 'org-install)
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
-; proper indentation / folding
-; loaded so that we can diminish it later
+;; proper indentation / folding
+;; loaded so that we can diminish it later
 (require 'org-indent)
 (setq org-startup-indented t)
 (setq org-startup-folded 'content)
 (setq org-blank-before-new-entry '(
   (heading . nil)
   (plain-list-item . auto)))
-; dependencies
+;; dependencies
 (setq org-enforce-todo-dependencies t)
-; make clock history persistent
+;; make clock history persistent
 (setq org-clock-persist 'history)
 (setq org-clock-persist-file "~/.emacs.d/cache/org-clock-save.el")
 (org-clock-persistence-insinuate)
-; spoiler files
+;; spoiler files
 (defadvice org-todo-list (before org-todo-list-reload activate compile)
   "Scan for org files whenever todo list is loaded."
   ; 'find' is faster and has better control than lisp
   (setq org-agenda-files (mapcar 'abbreviate-file-name (split-string
     (shell-command-to-string "find ~/spoiler -type f -name \"*.org\" | sort")
       "\n"))))
-; format in agenda
+;; format in agenda
 (setq org-agenda-prefix-format (quote (
   (agenda . " %i %-12:c%?-12t% s") 
   (timeline . "  % s") 
@@ -505,26 +505,26 @@ If visual-line-mode is on, then also jump to beginning of real line."
   (todo category-up) 
   (tags priority-down category-up) 
   (search category-up))))
-; capture
+;; capture
 (if (file-accessible-directory-p "~/spoiler") 
   (progn
     (setq org-default-notes-file "~/spoiler/capture.org")))
-; todo states
+;; todo states
 (setq org-todo-keywords
       '((sequence "TODO(t)" "|" "WAITING(w)" "DONE(d)")
         (sequence "BUG(b)" "|" "FIXED(f)")))
-; priorities
+;; priorities
 (setq org-default-priority 67) ;C
-; keybindings
+;; keybindings
 (define-key global-map "\C-ca" 'org-agenda)
 (define-key global-map "\C-ct" 'org-todo-list)
 (define-key global-map "\C-cs" 'org-store-link)
-; shortcut for C-u C-c C-l
+;; shortcut for C-u C-c C-l
 (defun org-insert-file-link () (interactive) (org-insert-link '(4)))
 (define-key global-map "\C-cl" 'org-insert-file-link)
-; go to spoiler index
+;; go to spoiler index
 (define-key global-map "\C-c\C-s" (lambda () (interactive) (find-file "~/spoiler/notes/index.org")))
-; apps
+;; apps
 (setq org-file-apps (append '(
   ("\\.gnumeric\\'" . "gnumeric %s")
   ) org-file-apps ))
@@ -545,17 +545,20 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (ruby-block-mode t)
 (setq ruby-block-highlight-toggle t)
 (setq ruby-indent-level tab-width)
-; Rake files are Ruby, too
+;; Rake files are Ruby, too
 (add-to-list 'auto-mode-alist '("\\.rake$" . ruby-mode))
 (add-to-list 'auto-mode-alist '("Rakefile$" . ruby-mode))
 (add-to-list 'auto-mode-alist '("Gemfile$" . ruby-mode))
 (add-to-list 'auto-mode-alist '("Capfile$" . ruby-mode))
 (add-to-list 'auto-mode-alist '("\\.builder$" . ruby-mode))
-; rinari
+;; rinari
 (require 'rinari)
-; erb
+;; erb
 (require 'rhtml-mode)
 (add-to-list 'auto-mode-alist '("\\.erb$" . rhtml-mode))
+;; rvm
+(require 'rvm)
+(rvm-use-default)
 
 ;; align
 (require 'align)
@@ -634,7 +637,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
 
 ;; ecb (code browser)
 (require 'ecb-autoloads)
-; fix for emacs 24
+;; fix for emacs 24
 (unless (boundp 'stack-trace-on-error)
   (defvar stack-trace-on-error nil)) 
 (custom-set-variables
@@ -658,13 +661,13 @@ If visual-line-mode is on, then also jump to beginning of real line."
  '(safe-local-variable-values 
     (quote 
       ((eval set-input-method (quote muflax-latin))))))
-; keys
+;; keys
 (global-set-key "\C-c\C-t" 'ecb-toggle-layout)
 (global-set-key "\C-ce" 'ecb-minor-mode)
-; speedbar
+;; speedbar
 (setq speedbar-use-images nil)
 (setq speedbar-show-unknown-files t)
-; get some parsing for ruby
+;; get some parsing for ruby
 (require 'imenu)
 (setq imenu-auto-rescan t)
 
@@ -788,7 +791,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (setq css-indent-level 2)
 
 ;; clean up modeline and hide standard minor modes
-; should be last so all modes are already loaded
+;; should be last so all modes are already loaded
 (require 'diminish)
 (diminish 'abbrev-mode)
 (diminish 'auto-complete-mode "AC")
