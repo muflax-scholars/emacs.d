@@ -790,6 +790,34 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (setq scss-compile-at-save nil)
 (setq css-indent-level 2)
 
+;; expand-region
+(require 'expand-region)
+(global-set-key (kbd "<C-next>") 'er/expand-region)
+(global-set-key (kbd "<C-prior>") 'er/contract-region)
+
+;; better handling than M-| / M-!
+(defun generalized-shell-command (command arg)
+  "Unifies `shell-command' and `shell-command-on-region'. 
+You have: 
+- (no arg) run command and place output
+- (C-u)    run command
+- (region) replace region with output from command
+- (C-u region) ... and output to different buffer"
+  (interactive (list (read-from-minibuffer "Shell command: " nil nil nil 'shell-command-history)
+                     current-prefix-arg))
+  (let ((p (if mark-active (region-beginning) 0))
+        (m (if mark-active (region-end) 0)))
+    (if (= p m)
+        ;; No active region
+        (if (eq arg nil)
+            (shell-command command t)
+          (shell-command command))
+      ;; Active region
+      (if (eq arg nil)
+          (shell-command-on-region p m command t t)
+        (shell-command-on-region p m command)))))
+(global-set-key (kbd "C-|") 'generalized-shell-command)
+
 ;; clean up modeline and hide standard minor modes
 ;; should be last so all modes are already loaded
 (require 'diminish)
