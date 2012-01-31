@@ -817,6 +817,7 @@ You have:
           (shell-command-on-region p m command t t)
         (shell-command-on-region p m command)))))
 (global-set-key (kbd "C-|") 'generalized-shell-command)
+(global-set-key (kbd "C-\\") 'generalized-shell-command) ;; terminal bug
 
 ;; clean up modeline and hide standard minor modes
 ;; should be last so all modes are already loaded
