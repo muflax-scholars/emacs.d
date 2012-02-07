@@ -3,7 +3,7 @@
 ---
 title: ${1:Title}
 date: ${2:`(format-time-string "%Y-%m-%d")`}
-techne: ${3::rough}
+techne: ${3::wip}
 episteme: ${4::believed}
 ---
 
