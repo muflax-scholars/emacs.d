@@ -819,6 +819,9 @@ You have:
 (global-set-key (kbd "C-|") 'generalized-shell-command)
 (global-set-key (kbd "C-\\") 'generalized-shell-command) ;; terminal bug
 
+;; use y/n instead of yes/no
+(defalias 'yes-or-no-p 'y-or-n-p)
+
 ;; clean up modeline and hide standard minor modes
 ;; should be last so all modes are already loaded
 (require 'diminish)
