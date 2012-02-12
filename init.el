@@ -822,6 +822,15 @@ You have:
 ;; use y/n instead of yes/no
 (defalias 'yes-or-no-p 'y-or-n-p)
 
+;; scratchpad buffers
+(require 'scratch)
+;; don't want to remember which key I used
+(global-set-key (kbd "C-c b")   'scratch)
+(global-set-key (kbd "C-c C-b") 'scratch) 
+;; don't start in lisp
+(setq initial-major-mode 'org-mode)
+(setq initial-scratch-message nil)
+
 ;; clean up modeline and hide standard minor modes
 ;; should be last so all modes are already loaded
 (require 'diminish)
