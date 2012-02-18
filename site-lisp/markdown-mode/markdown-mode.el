@@ -98,7 +98,7 @@ buffers which are visiting a file."
   :group 'markdown
   :type 'list)
 
-(defcustom markdown-enable-math nil
+(defcustom markdown-enable-math t
   "Syntax highlighting for inline LaTeX expressions.
 This will not take effect until Emacs is restarted."
   :group 'markdown
