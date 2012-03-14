@@ -461,6 +461,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
 ;; yaml
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode))
+(add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 
 ;; user data
 (setq user-mail-address "mail@muflax.com")
