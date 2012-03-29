@@ -1,4 +1,4 @@
 #name : Image
 #contributor: Peng Deng <dengpeng@gmail.com>
 # --
-![${1:Alt Text}](${2:URL}) $0
+<%= image("${1:name.jpg}", "${2:title}") %>$0

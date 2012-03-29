@@ -1,0 +1,4 @@
+#name : Youtube
+#contributor: Peng Deng <dengpeng@gmail.com>
+# --
+<%= youtube("${1:url}") %>$0
