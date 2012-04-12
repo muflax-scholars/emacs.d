@@ -1,0 +1,10 @@
+#name : nanoc log template
+# --
+---
+title: ${1:Title}
+date: ${2:`(format-time-string "%Y-%m-%d")`}
+techne: ${3::done}
+episteme: ${4::log}
+---
+
+$0
