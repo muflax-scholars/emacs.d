@@ -1,0 +1,3 @@
+#name : today's date
+# --
+${1:$$(yas/choose-value '(":believed" ":broken" ":discredited" ":fiction" ":speculation" ":personal" ":emotional" ":log"))}
