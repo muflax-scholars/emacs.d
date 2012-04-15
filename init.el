@@ -44,7 +44,7 @@
 (add-hook 'after-make-console-frame-hooks 'color-theme-almost-monokai)
 
 ;; fonts
-(defvar use-small-font nil)
+(defvar use-small-font t)
 (defun small-font () 
   "sets a small-ish font"
   (interactive)
