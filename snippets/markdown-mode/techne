@@ -1,0 +1,3 @@
+#name : techne
+# --
+${1:$$(yas/choose-value '(":wip" ":rough" ":done"))}
