@@ -431,19 +431,55 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (define-auto-insert "\\.cpp$" "cpp")
 
 ;; spell checker
-(setq-default ispell-program-name "aspell")
-(setq ispell-process-directory (expand-file-name "~/"))
-(setq ispell-dictionary "english")
-(setq ispell-silently-savep t)
-;; faster checking
-(setq ispell-list-command "list")
-;; enable flyspell in certain modes
-;; #FIXME disabled for speed issues
-;(defun turn-on-flyspell () 
-;(flyspell-mode 1))
-;(add-hook 'text-mode-hook 'turn-on-flyspell)
-;(add-hook 'markdown-mode-hook 'turn-on-flyspell)
-;(add-hook 'org-mode-hook 'turn-on-flyspell)
+(require 'wcheck-mode)
+(setq ispell-really-hunspell t)
+(setq  wcheck-timer-idle .1)
+(define-key global-map "\C-cs" 'wcheck-actions)
+(setq-default
+ wcheck-language "English"
+ wcheck-language-data '(("English"
+                         (program . "/usr/bin/enchant")
+                         (args . ("-l" "-d" "en"))
+                         (action-program . "/usr/bin/enchant")
+                         (action-args "-a" "-d" "en")
+                            (action-parser . enchant-suggestions-menu))
+                        ("German"
+                         (program . "/usr/bin/enchant")
+                         (args . ("-l" "-d" "de"))
+                         (action-program . "/usr/bin/enchant")
+                         (action-args "-a" "-d" "de")
+                            (action-parser . enchant-suggestions-menu))
+                        ))
+;; add to dictionary functionality
+(defun enchant-suggestions-menu (marked-text)
+  (cons (cons "[Add]" 'enchant-add-to-dictionary)
+                  (wcheck-parser-ispell-suggestions)))
+
+(defvar enchant-dictionaries-dir "~/.config/enchant")
+
+(defun enchant-add-to-dictionary (marked-text)
+  (let* ((word (aref marked-text 0))
+         (language (aref marked-text 4))
+         (file (let ((code (nth 1 (member "-d" (wcheck-query-language-data
+                                                language 'action-args)))))
+                 (when (stringp code)
+                   (concat (file-name-as-directory enchant-dictionaries-dir)
+                           code ".dic")))))
+
+    (when (and file (file-writable-p file))
+      (with-temp-buffer
+        (insert word) (newline)
+        (append-to-file (point-min) (point-max) file)
+        (message "Added word \"%s\" to the %s dictionary"
+                 word language)))))
+
+
+;; enable spell-check in certain modes
+(defun turn-on-spell-check () 
+  (wcheck-mode 1))
+(add-hook 'text-mode-hook 'turn-on-spell-check)
+(add-hook 'markdown-mode-hook 'turn-on-spell-check)
+(add-hook 'org-mode-hook 'turn-on-spell-check)
 
 ;; git
 (require 'format-spec)
@@ -519,7 +555,6 @@ If visual-line-mode is on, then also jump to beginning of real line."
 ;; keybindings
 (define-key global-map "\C-ca" 'org-agenda)
 (define-key global-map "\C-ct" 'org-todo-list)
-(define-key global-map "\C-cs" 'org-store-link)
 ;; shortcut for C-u C-c C-l
 (defun org-insert-file-link () (interactive) (org-insert-link '(4)))
 (define-key global-map "\C-cl" 'org-insert-file-link)
