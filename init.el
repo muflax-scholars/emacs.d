@@ -433,7 +433,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
 ;; spell checker
 (require 'wcheck-mode)
 (setq ispell-really-hunspell t)
-(setq  wcheck-timer-idle .1)
+(setq  wcheck-timer-idle .2)
 (define-key global-map "\C-cs" 'wcheck-actions)
 (setq-default
  wcheck-language "English"
