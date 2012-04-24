@@ -867,6 +867,13 @@ You have:
 (setq initial-major-mode 'org-mode)
 (setq initial-scratch-message nil)
 
+;; sync lines between buffers
+(defun sync-lines ()
+  (interactive)
+  (goto-line (line-number-at-pos) (window-buffer (next-window)))
+  (goto-line (line-number-at-pos) (window-buffer (next-window))))
+(global-set-key (kbd "C-c C-l") 'sync-lines)
+
 ;; clean up modeline and hide standard minor modes
 ;; should be last so all modes are already loaded
 (require 'diminish)
