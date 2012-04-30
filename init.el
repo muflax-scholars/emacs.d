@@ -311,7 +311,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
 
 ;; recent files
 (require 'recentf)
-(setq recentf-max-saved-items 50)
+(setq recentf-max-saved-items 100)
 (setq recentf-save-file "~/.emacs.d/cache/recentf")
 (setq recentf-exclude (append recentf-exclude 
   '("\.emacs\.d/cache" 
