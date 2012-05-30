@@ -288,7 +288,8 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (require 'ido-ubiquitous)
 (setq ido-enable-flex-matching t) ; fuzzy matching
 (setq ido-everywhere t)
-(setq ido-use-filename-at-point 'guess)
+(setq ido-use-filename-at-point nil)
+(global-set-key "\C-x\M-f" 'find-file-at-point)
 (setq ido-use-url-at-point nil)
 (setq ido-use-virtual-buffers t)
 (setq ido-save-directory-list-file "~/.emacs.d/cache/ido.last")
