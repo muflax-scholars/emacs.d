@@ -193,6 +193,9 @@ This will not take effect until Emacs is restarted."
 (defvar markdown-math-face 'markdown-math-face
   "Face name to use for LaTeX expressions.")
 
+(defvar markdown-erb-face 'markdown-erb-face
+  "Face name to use for ERB templates.")
+
 (defgroup markdown-faces nil
   "Faces used in Markdown Mode"
   :group 'markdown
@@ -302,6 +305,12 @@ This will not take effect until Emacs is restarted."
   '((t (:inherit font-lock-string-face)))
   "Face for LaTeX expressions."
   :group 'markdown-faces)
+
+(defface markdown-erb-face
+  '((t (:inherit font-lock-string-face)))
+  "Face for ERB templates."
+  :group 'markdown-faces)
+
 
 (defconst markdown-regex-link-inline
   "\\(!?\\[[^]]*?\\]\\)\\(([^\\)]*)\\)"
@@ -416,6 +425,10 @@ This will not take effect until Emacs is restarted."
   "^\\(\\s *\\)\\([0-9]+\\.\\|[\\*\\+-]\\)\\(\\s +\\)"
   "Regular expression for matching indentation of list items.")
 
+(defconst markdown-regex-erb
+  "\\(<%.+?%>\\)"
+  "Regular expression for an ERB template <% %>.")
+
 (defvar markdown-mode-font-lock-keywords-basic
   (list
    ;; we don't mark normal pre blocks 'cause we don't use them and it interferes
@@ -451,6 +464,7 @@ This will not take effect until Emacs is restarted."
    (cons markdown-regex-footnote 'markdown-footnote-face)
    (cons markdown-regex-bold '(2 markdown-bold-face))
    (cons markdown-regex-italic '(2 markdown-italic-face))
+   (cons markdown-regex-erb 'markdown-erb-face)
    )
   "Syntax highlighting for Markdown files.")
 
