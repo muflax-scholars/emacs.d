@@ -593,9 +593,6 @@ If visual-line-mode is on, then also jump to beginning of real line."
 ;; erb
 (require 'rhtml-mode)
 (add-to-list 'auto-mode-alist '("\\.erb$" . rhtml-mode))
-;; rvm
-(require 'rvm)
-(rvm-use-default)
 
 ;; align
 (require 'align)
