@@ -440,16 +440,22 @@ If visual-line-mode is on, then also jump to beginning of real line."
  wcheck-language "English"
  wcheck-language-data '(("English"
                          (program . "/usr/bin/enchant")
-                         (args . ("-l" "-d" "en"))
+                         (args . ("-l" "-d" "en_US"))
                          (action-program . "/usr/bin/enchant")
-                         (action-args "-a" "-d" "en")
-                            (action-parser . enchant-suggestions-menu))
+                         (action-args "-a" "-d" "en_US")
+                         (action-parser . enchant-suggestions-menu))
                         ("German"
                          (program . "/usr/bin/enchant")
                          (args . ("-l" "-d" "de"))
                          (action-program . "/usr/bin/enchant")
                          (action-args "-a" "-d" "de")
-                            (action-parser . enchant-suggestions-menu))
+                         (action-parser . enchant-suggestions-menu))
+                        ("French"
+                         (program . "/usr/bin/enchant")
+                         (args . ("-l" "-d" "fr"))
+                         (action-program . "/usr/bin/enchant")
+                         (action-args "-a" "-d" "fr")
+                         (action-parser . enchant-suggestions-menu))
                         ))
 ;; add to dictionary functionality
 (defun enchant-suggestions-menu (marked-text)
