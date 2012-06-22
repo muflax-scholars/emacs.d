@@ -878,6 +878,9 @@ You have:
   (goto-line (line-number-at-pos) (window-buffer (next-window))))
 (global-set-key (kbd "C-c C-l") 'sync-lines)
 
+;; handle camelcase better
+(global-subword-mode 1)
+
 ;; clean up modeline and hide standard minor modes
 ;; should be last so all modes are already loaded
 (require 'diminish)
