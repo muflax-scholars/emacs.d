@@ -595,6 +595,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (add-to-list 'auto-mode-alist '("Gemfile$" . ruby-mode))
 (add-to-list 'auto-mode-alist '("Capfile$" . ruby-mode))
 (add-to-list 'auto-mode-alist '("\\.builder$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.gemspec$" . ruby-mode))
 ;; rinari
 (require 'rinari)
 ;; erb
