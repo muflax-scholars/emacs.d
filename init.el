@@ -700,9 +700,9 @@ If visual-line-mode is on, then also jump to beginning of real line."
  '(ecb-toggle-layout-sequence (quote ("left14" "left15")))
  '(ecb-use-speedbar-instead-native-tree-buffer (quote dir))
  '(ecb-window-width 33)
- '(safe-local-variable-values 
-    (quote 
-      ((eval set-input-method (quote muflax-latin))))))
+ '(safe-local-variable-values
+   (quote ((encoding . utf-8)
+           (eval set-input-method (quote muflax-latin))))))
 ;; keys
 (global-set-key "\C-c\C-t" 'ecb-toggle-layout)
 (global-set-key "\C-ce" 'ecb-minor-mode)
