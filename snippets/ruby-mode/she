@@ -1,3 +1,5 @@
+#name : shebang
+# --
 #!/usr/bin/env ruby
 # -*- encoding: utf-8 -*-
 # Copyright muflax <mail@muflax.com>, 2012
