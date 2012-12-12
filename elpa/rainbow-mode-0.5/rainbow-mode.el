@@ -4,7 +4,7 @@
 
 ;; Author: Julien Danjou <julien@danjou.info>
 ;; Keywords: faces
-;; Version: 0.4
+;; Version: 0.5
 
 ;; This file is part of GNU Emacs.
 
@@ -51,8 +51,8 @@
      (0 (rainbow-colorize-itself)))
     ("[Rr][Gg][Bb][Ii]:[0-9.]+/[0-9.]+/[0-9.]+"
      (0 (rainbow-colorize-itself)))
-    ("\\(?:[Cc][Ii][Ee]\\(?:[Xx][Yy][Zz]\\|[Uu][Vv][Yy]\\|[Xx][Yy][Yy]\\|[Ll][Aa][Bb]\\|[Ll][Uu][Vv]\\)\\|[Tt][Ee][Kk][Hh][Vv][Cc]\\):[+-]?[0-9.]+\\(?:[Ee][+-]?[0-9]+\\)?/[+-]?[0-9.]+\\(?:[Ee][+-]?[0-9]+\\)?/[+-]?[0-9.]+\\(?:[Ee][+-]?[0-9]+\\)?")
-    (0 (rainbow-colorize-itself)))
+    ("\\(?:[Cc][Ii][Ee]\\(?:[Xx][Yy][Zz]\\|[Uu][Vv][Yy]\\|[Xx][Yy][Yy]\\|[Ll][Aa][Bb]\\|[Ll][Uu][Vv]\\)\\|[Tt][Ee][Kk][Hh][Vv][Cc]\\):[+-]?[0-9.]+\\(?:[Ee][+-]?[0-9]+\\)?/[+-]?[0-9.]+\\(?:[Ee][+-]?[0-9]+\\)?/[+-]?[0-9.]+\\(?:[Ee][+-]?[0-9]+\\)?"
+     (0 (rainbow-colorize-itself))))
   "Font-lock keywords to add for hexadecimal colors.")
 
 ;; rgb() colors
@@ -266,18 +266,18 @@ will be enabled if a major mode has been detected from the
      (0 (rainbow-colorize-rgb)))
     ("{HTML}{\\([0-9A-Fa-f]\\{6\\}\\)}"
      (0 (rainbow-colorize-hexadecimal-without-sharp))))
-  "Font-lock keywords to add for X colors.")
+  "Font-lock keywords to add for LaTeX colors.")
 
 (defcustom rainbow-latex-colors-major-mode-list
   '(latex-mode)
-  "List of major mode where X colors are enabled when
+  "List of major mode where LaTeX colors are enabled when
 `rainbow-x-colors' is set to auto."
   :group 'rainbow)
 
 (defcustom rainbow-latex-colors 'auto
   "When to enable LaTeX colors.
 If set to t, the LaTeX colors will be enabled. If set to nil, the
-X colors will not be enabled.  If set to auto, the LaTeX colors
+LaTeX colors will not be enabled.  If set to auto, the LaTeX colors
 will be enabled if a major mode has been detected from the
 `rainbow-latex-colors-major-mode-list'."
   :group 'rainbow)
@@ -402,6 +402,48 @@ This will fontify with colors the string like \"#aabbcc\" or \"blue\"."
       (rainbow-turn-off))
     ;; Turn on font lock
     (font-lock-mode 1)))
+
+;;;; ChangeLog:
+
+;; 2012-11-26  Julien Danjou  <julien@danjou.info>
+;; 
+;; 	rainbow-mode: fix some LaTex docstrings
+;; 
+;; 2012-11-14  Julien Danjou  <julien@danjou.info>
+;; 
+;; 	rainbow-mode: version 0.5
+;; 	
+;; 	* rainbow-mode.el: fix syntax error on
+;; 	`rainbow-hexadecimal-colors-font-lock-keywords'.
+;; 
+;; 2012-11-09  Julien Danjou  <julien@danjou.info>
+;; 
+;; 	rainbow-mode: version 0.4
+;; 	
+;; 	* rainbow-mode.el: Use functions from color package to colorize HSL rather
+;; 	than our own copy.
+;; 
+;; 2012-11-09  Julien Danjou  <julien@danjou.info>
+;; 
+;; 	rainbow-mode 0.3
+;; 	
+;; 	* rainbow-mode.el: avoid colorizing HTML entities
+;; 
+;; 2011-09-23  Julien Danjou  <julien@danjou.info>
+;; 
+;; 	Update rainbow-mode to version 0.2
+;; 
+;; 2011-07-01  Chong Yidong  <cyd@stupidchicken.com>
+;; 
+;; 	Reorganize repository layout, allowing site installation.
+;; 	
+;; 	A Makefile with "site", "archive" and "archive-full" rules can now be
+;; 	used for site-installation, partial archive deployment, and full
+;; 	archive deployment respectively.
+;; 	
+;; 	Rewrite the admin/archive-contents.el script to handle these changes.
+;; 
+
 
 (provide 'rainbow-mode)
 

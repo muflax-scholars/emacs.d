@@ -5,11 +5,11 @@
 
 ;; Author: Phil Hagelberg, Eric Schulte
 ;; URL: https://github.com/eschulte/rinari
-;; Version: 2.9
+;; Version: 2.10
 ;; Created: 2006-11-10
 ;; Keywords: ruby, rails, project, convenience, web
 ;; EmacsWiki: Rinari
-;; Package-Requires: ((ruby-mode "1.1") (inf-ruby "2.2.1") (ruby-compilation "0.8") (jump "2.0"))
+;; Package-Requires: ((ruby-mode "1.0") (inf-ruby "2.2.1") (ruby-compilation "0.8") (jump "2.0"))
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -65,16 +65,12 @@
 ;;; Code:
 ;;;###begin-elpa-ignore
 (let* ((this-dir (file-name-directory (or load-file-name buffer-file-name)))
-       (util-dir (file-name-as-directory
-                  (expand-file-name "util" this-dir)))
-       (inf-ruby-dir (file-name-as-directory
-                      (expand-file-name "inf-ruby" util-dir)))
-       (jump-dir (file-name-as-directory
-                  (expand-file-name "jump" util-dir))))
-  (add-to-list 'load-path this-dir)
-  (add-to-list 'load-path util-dir)
-  (add-to-list 'load-path inf-ruby-dir)
-  (add-to-list 'load-path jump-dir))
+       (util-dir (file-name-as-directory (expand-file-name "util" this-dir)))
+       (inf-ruby-dir (file-name-as-directory (expand-file-name "inf-ruby" util-dir)))
+       (jump-dir (file-name-as-directory (expand-file-name "jump" util-dir))))
+  (dolist (dir (list util-dir inf-ruby-dir jump-dir))
+    (when (file-exists-p dir)
+      (add-to-list 'load-path dir))))
 ;;;###end-elpa-ignore
 (require 'ruby-mode)
 (require 'inf-ruby)
@@ -98,6 +94,51 @@
   "TAGS"
   "Path to your TAGS file inside of your rails project.  See `tags-file-name'."
   :group 'rinari)
+
+(defcustom rinari-fontify-rails-keywords t
+  "When non-nil, fontify keywords such as 'before_filter', 'url_for'.")
+
+(defcustom rinari-controller-keywords
+  '("logger" "polymorphic_path" "polymorphic_url" "mail" "render" "attachments"
+    "default" "helper" "helper_attr" "helper_method" "layout" "url_for"
+    "serialize" "exempt_from_layout" "filter_parameter_logging" "hide_action"
+    "cache_sweeper" "protect_from_forgery" "caches_page" "cache_page"
+    "caches_action" "expire_page" "expire_action" "rescue_from" "params"
+    "request" "response" "session" "flash" "head" "redirect_to"
+    "render_to_string" "respond_with" "before_filter" "append_before_filter"
+    "prepend_before_filter" "after_filter" "append_after_filter"
+    "prepend_after_filter" "around_filter" "append_around_filter"
+    "prepend_around_filter" "skip_before_filter" "skip_after_filter" "skip_filter")
+  "List of keywords to highlight for controllers"
+  :group 'rinari
+  :type '(repeat string))
+
+(defcustom rinari-migration-keywords
+  '("create_table" "change_table" "drop_table" "rename_table" "add_column"
+    "rename_column" "change_column" "change_column_default" "remove_column"
+    "add_index" "remove_index" "rename_index" "execute")
+  "List of keywords to highlight for migrations"
+  :group 'rinari
+  :type '(repeat string))
+
+(defcustom rinari-model-keywords
+  '("default_scope" "named_scope" "scope" "serialize" "belongs_to" "has_one"
+    "has_many" "has_and_belongs_to_many" "composed_of" "accepts_nested_attributes_for"
+    "before_create" "before_destroy" "before_save" "before_update" "before_validation"
+    "before_validation_on_create" "before_validation_on_update" "after_create"
+    "after_destroy" "after_save" "after_update" "after_validation"
+    "after_validation_on_create" "after_validation_on_update" "around_create"
+    "around_destroy" "around_save" "around_update" "after_commit" "after_find"
+    "after_initialize" "after_rollback" "after_touch" "attr_accessible"
+    "attr_protected" "attr_readonly" "validates" "validate" "validate_on_create"
+    "validate_on_update" "validates_acceptance_of" "validates_associated"
+    "validates_confirmation_of" "validates_each" "validates_exclusion_of"
+    "validates_format_of" "validates_inclusion_of" "validates_length_of"
+    "validates_numericality_of" "validates_presence_of" "validates_size_of"
+    "validates_uniqueness_of" "validates_with")
+  "List of keywords to highlight for models"
+  :group 'rinari
+  :type '(repeat string))
 
 (defvar rinari-minor-mode-hook nil
   "*Hook for customising Rinari.")
@@ -151,49 +192,60 @@ leave this to the environment variables outside of Emacs.")
 (defun rinari-root (&optional dir home)
   "Return the root directory of the project within which DIR is found.
 Optional argument HOME is ignored."
-  (or dir (setq dir default-directory))
-  (if (file-exists-p (expand-file-name
-                      "environment.rb" (expand-file-name "config" dir)))
-      dir
-    (let ((new-dir (expand-file-name (file-name-as-directory "..") dir)))
+  (let ((default-directory (or dir default-directory)))
+    (if (file-exists-p (expand-file-name "environment.rb" (expand-file-name "config")))
+        default-directory
       ;; regexp to match windows roots, tramp roots, or regular posix roots
-      (unless (string-match "\\(^[[:alpha:]]:/$\\|^/[^\/]+:/?$\\|^/$\\)" dir)
-        (rinari-root new-dir)))))
+      (unless (string-match "\\(^[[:alpha:]]:/$\\|^/[^\/]+:/?$\\|^/$\\)" default-directory)
+        (rinari-root (expand-file-name (file-name-as-directory "..")))))))
+
+(defun rinari-highlight-keywords (keywords)
+  "Highlight the passed KEYWORDS in current buffer.
+Use `font-lock-add-keywords' in case of `ruby-mode' or
+`ruby-extra-keywords' in case of Enhanced Ruby Mode."
+  (if (boundp 'ruby-extra-keywords)
+      (progn
+	(setq ruby-extra-keywords (append ruby-extra-keywords keywords))
+	(ruby-local-enable-extra-keywords))
+    (font-lock-add-keywords
+     nil
+     (list (list
+            (concat "\\(^\\|[^_:.@$]\\|\\.\\.\\)\\b"
+		    (regexp-opt keywords t)
+		    ruby-keyword-end-re)
+            (list 2 font-lock-keyword-face))))))
+
+(defun rinari-apply-keywords-for-file-type ()
+  "Apply extra font lock keywords specific to models, controllers etc."
+  (when (and rinari-fontify-rails-keywords (buffer-file-name))
+    (loop for (re keywords) in `(("_controller\\.rb$"   ,rinari-controller-keywords)
+                                 ("app/models/.+\\.rb$" ,rinari-model-keywords)
+                                 ("db/migrate/.+\\.rb$" ,rinari-migration-keywords))
+          do (when (string-match-p re (buffer-file-name))
+               (rinari-highlight-keywords keywords)))))
+
+(add-hook 'rinari-minor-mode-hook 'rinari-apply-keywords-for-file-type)
 
 ;;--------------------------------------------------------------------------------
 ;; user functions
 
 (defun rinari-rake (&optional task edit-cmd-args)
-  "Select and run a rake TASK.
-Rake output is dumped to a compilation buffer allowing jumping
-between errors and source code.
-Optional prefix argument EDIT-CMD-ARGS lets the user edit the
-rake command arguments."
+  "Select and run a rake TASK using `ruby-compilation-rake'."
   (interactive "P")
   (ruby-compilation-rake task edit-cmd-args
                          (if rinari-rails-env (list (cons "RAILS_ENV" rinari-rails-env)))))
 
 (defun rinari-cap (&optional task edit-cmd-args)
-  "Select and run a capistrano TASK.
-Cap output is dumped to a compilation buffer allowing jumping
-between errors and source code.
-Optional prefix argument EDIT-CMD-ARGS lets the user edit the
-cap command arguments."
+  "Select and run a capistrano TASK using `ruby-compilation-cap'."
   (interactive "P")
   (ruby-compilation-cap task edit-cmd-args
                         (if rinari-rails-env (list (cons "RAILS_ENV" rinari-rails-env)))))
 
-(defun rinari-discover-rails-commands ()
+(defun rinari--discover-rails-commands ()
   "Return a list of commands supported by the main rails script."
-  (let ((root (rinari-root))
-        (commands nil))
-    (if (file-executable-p (concat root "script/rails"))
-        (let ((s (shell-command-to-string (concat root "script/rails")))
-              (start 0))
-          (save-excursion
-            (loop while (string-match "^ \\([a-z]+\\)[[:space:]].*$" s start)
-                  do (setq start (match-end 0))
-                  collecting (substring-no-properties (match-string 1 s))))))))
+  (let ((rails-script (rinari--rails-path)))
+    (when rails-script
+      (ruby-compilation-extract-output-matches rails-script "^ \\([a-z]+\\)[[:space:]].*$"))))
 
 (defvar rinari-rails-commands-cache nil
   "Cached values for commands that can be used with 'script/rails' in Rails 3.")
@@ -201,25 +253,21 @@ cap command arguments."
 (defun rinari-get-rails-commands ()
   "Return a cached list of commands supported by the main rails script."
   (if (null rinari-rails-commands-cache)
-      (setq rinari-rails-commands-cache (rinari-discover-rails-commands)))
+      (setq rinari-rails-commands-cache (rinari--discover-rails-commands)))
   rinari-rails-commands-cache)
 
 (defun rinari-script (&optional script)
   "Select and run SCRIPT from the script/ directory of the rails application."
   (interactive)
-  (let* ((root (rinari-root))
-         (rails3 (file-executable-p (concat root "script/rails")))
-         (completions (append (directory-files (concat root "script") nil "^[^.]")
+  (let* ((completions (append (directory-files (rinari-script-path) nil "^[^.]")
                               (rinari-get-rails-commands)))
          (script (or script (jump-completing-read "Script: " completions)))
          (ruby-compilation-error-regexp-alist ;; for jumping to newly created files
           (if (equal script "generate")
               '(("^ +\\(exists\\|create\\) +\\([^[:space:]]+\\.rb\\)" 2 3))
             ruby-compilation-error-regexp-alist))
-         (script (if (file-executable-p (concat root "script/" script))
-                     (concat "script/" script " ")
-                   (concat "script/rails " script " "))))
-    (ruby-compilation-run (concat root script (read-from-minibuffer script)))))
+         (script (concat (rinari--wrap-rails-command script) " ")))
+    (ruby-compilation-run (concat script (read-from-minibuffer script)))))
 
 (defun rinari-test (&optional edit-cmd-args)
   "Run the current ruby function as a test, or run the corresponding test.
@@ -260,6 +308,22 @@ arguments."
             (if (string-match "^test" name)
               name))))))
 
+(defun rinari--rails-path ()
+  "Return the path of the 'rails' command, or nil if not found."
+  (let* ((script (rinari-script-path))
+         (rails-script (expand-file-name "rails" script)))
+    (if (file-exists-p rails-script)
+        rails-script
+      (executable-find "rails"))))
+
+(defun rinari--wrap-rails-command (command)
+  "Given a COMMAND such as 'console', return a suitable command line."
+  (let* ((default-directory (rinari-root))
+         (script (rinari-script-path))
+         (script-command (expand-file-name command script)))
+    (if (file-exists-p script-command)
+        script-command
+      (concat (rinari--rails-path) " " command))))
 
 (defun rinari-console (&optional edit-cmd-args)
   "Run a Rails console in a compilation buffer.
@@ -268,28 +332,19 @@ and source code.  Optional prefix argument EDIT-CMD-ARGS lets the
 user edit the console command arguments."
   (interactive "P")
   (let* ((default-directory (rinari-root))
-         (script (rinari-script-path))
-         (command
-          (expand-file-name
-           (if (file-exists-p (expand-file-name "console" script))
-               "console"
-             "rails console")
-           script)))
+         (command (rinari--wrap-rails-command "console")))
 
     ;; Start console in correct environment.
-    (if rinari-rails-env
-        (setq command (concat command " " rinari-rails-env)))
+    (when rinari-rails-env
+      (setq command (concat command " " rinari-rails-env)))
 
     ;; For customization of the console command with prefix arg.
     (setq command (if edit-cmd-args
                       (read-string "Run Ruby: " (concat command " "))
                     command))
-
-    (run-ruby command)
-    (with-current-buffer "*ruby*"
-      (set (make-local-variable 'inf-ruby-prompt-pattern)
-           rinari-inf-ruby-prompt-pattern)
-      (set (make-local-variable 'inf-ruby-first-prompt-pattern) inf-ruby-prompt-pattern)
+    (with-current-buffer (run-ruby command)
+      (dolist (var '(inf-ruby-prompt-pattern inf-ruby-first-prompt-pattern))
+        (set (make-local-variable var) rinari-inf-ruby-prompt-pattern))
       (rinari-launch))))
 
 (defun rinari-sql-buffer-name (env)
@@ -341,18 +396,11 @@ errors and source code.  Optional prefix argument EDIT-CMD-ARGS
 lets the user edit the server command arguments."
   (interactive "P")
   (let* ((default-directory (rinari-root))
-         (script (rinari-script-path))
-         (command
-          (expand-file-name
-           (if (file-exists-p (expand-file-name "server" script))
-               "server"
-             "rails server")
-           script)))
+         (command (rinari--wrap-rails-command "server")))
 
     ;; Start web server in correct environment.
-    ;; NOTE: Rails 3 has a bug and does not start in any environment but development for now.
-    (if rinari-rails-env
-        (setq command (concat command " -e " rinari-rails-env)))
+    (when rinari-rails-env
+      (setq command (concat command " -e " rinari-rails-env)))
 
     ;; For customization of the web server command with prefix arg.
     (setq command (if edit-cmd-args
@@ -459,13 +507,7 @@ With optional prefix argument ARG, just run `rgrep'."
 (defun rinari-generate (type name)
   "Run the generate command to generate a TYPE called NAME."
   (let* ((default-directory (rinari-root))
-         (script (rinari-script-path))
-         (command
-          (expand-file-name
-           (if (file-exists-p (expand-file-name "generate" script))
-               "generate"
-             "rails generate")
-           script)))
+         (command (rinari--wrap-rails-command "generate")))
     (message (shell-command-to-string (concat command " " type " " (read-from-minibuffer (format "create %s: " type) name))))))
 
 (defvar rinari-ruby-hash-regexp
@@ -529,8 +571,7 @@ and redirects."
       ;; no controller entry so return
       (list controller action))))
 
-(setf
- rinari-jump-schema
+(defvar rinari-jump-schema
  '((model
     "m"
     (("app/controllers/\\1_controller.rb#\\2$" . "app/models/\\1.rb#\\2")
@@ -714,7 +755,8 @@ and redirects."
             (when (re-search-forward "<%=[ \n\r]*render(? *" nil t)
               (setf cv (rinari-ruby-values-from-render (car cv) (cdr cv)))
               (list (car cv) (cdr cv))))))
-      . "app/views/\\1/\\2.*")))))
+      . "app/views/\\1/\\2.*"))))
+ "Jump schema for rinari.")
 
 (defun rinari-apply-jump-schema (schema)
   "Define the rinari-find-* functions by passing each element SCHEMA to `defjump'."
@@ -775,7 +817,7 @@ Otherwise, disable that minor mode if currently enabled."
                     (and (file-exists-p r-tags-path) r-tags-path))
                (run-hooks 'rinari-minor-mode-hook)
                (rinari-minor-mode t))
-      (if (and (fboundp rinari-minor-mode) rinari-minor-mode) (rinari-minor-mode)))))
+      (if (and (fboundp 'rinari-minor-mode) rinari-minor-mode) (rinari-minor-mode)))))
 
 ;;;###autoload
 (defvar rinari-major-modes
@@ -804,6 +846,7 @@ into and out of rails project directories."
 
 ;; Local Variables:
 ;; coding: utf-8
+;; byte-compile-warnings: (not cl-functions)
 ;; eval: (checkdoc-minor-mode 1)
 ;; End:
 
