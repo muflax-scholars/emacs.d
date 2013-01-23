@@ -556,8 +556,8 @@ If visual-line-mode is on, then also jump to beginning of real line."
     (setq org-default-notes-file "~/spoiler/capture.org")))
 ;; todo states
 (setq org-todo-keywords
-      '((sequence "TODO(t)" "|" "WAITING(w)" "DONE(d)")
-        (sequence "BUG(b)" "|" "FIXED(f)")))
+      '((sequence "UNTESTED(u)" "BROKEN(b)" "|" "OK(o)")
+        (sequence "TODO(t)" "|" "WAITING(w)" "DONE(d)")))
 ;; priorities
 (setq org-default-priority 67) ;C
 ;; keybindings
