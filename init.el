@@ -247,9 +247,9 @@ If visual-line-mode is on, then also jump to beginning of real line."
 ;; snippets
 (setq yas/next-field-key '("<backtab>" "<S-tab>"))
 (setq yas/prev-field-key '("<C-tab>"))
+(setq yas/snippet-dirs "~/.emacs.d/snippets")
 (require 'yasnippet)
 (yas/initialize)
-(yas/load-directory "~/.emacs.d/snippets")
 
 ;; text completion
 ;; auto completion
