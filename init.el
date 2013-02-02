@@ -577,6 +577,10 @@ If visual-line-mode is on, then also jump to beginning of real line."
 
 ;; new python mode
 (require 'python)
+(defun better-indent-in-python () 
+  (electric-indent-mode -1)
+  (define-key python-mode-map [(return)] 'newline-and-indent))
+(add-hook 'python-mode-hook 'better-indent-in-python)
 
 ;; haskell mode
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
