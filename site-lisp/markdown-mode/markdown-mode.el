@@ -40,8 +40,7 @@
 ;;
 ;;     (autoload 'markdown-mode "markdown-mode"
 ;;        "Major mode for editing Markdown files" t)
-;;     (setq auto-mode-alist
-;;        (cons '("\\.text" . markdown-mode) auto-mode-alist))
+;;     (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
 ;;
 ;; There is no consensus on an official file extension so change `.text` to
 ;; `.mdwn`, `.md`, `.mdt`, or whatever you call your markdown files.
@@ -55,7 +54,7 @@
 ;;; Constants =================================================================
 
 ;; tracks official version
-(defconst markdown-mode-version "1.8.1"
+(defconst markdown-mode-version "1.9"
   "Markdown mode version number.")
 
 (defconst markdown-output-buffer-name "*markdown-output*"
@@ -79,9 +78,24 @@
 
 (defcustom markdown-command-needs-filename nil
   "Set to non-nil if `markdown-command' does not accept input from stdin.
-Instead, it will be passed a filename as the final command-line
+Instead, it will be passed a filename as the final command line
 option.  As a result, you will only be able to run Markdown from
 buffers which are visiting a file."
+  :group 'markdown
+  :type 'boolean)
+
+(defcustom markdown-hr-string "* * * * *"
+  "String to use for horizonal rules."
+  :group 'markdown
+  :type 'string)
+
+(defcustom markdown-bold-underscore nil
+  "Use two underscores for bold instead of two asterisks."
+  :group 'markdown
+  :type 'boolean)
+
+(defcustom markdown-italic-underscore nil
+  "Use underscores for italic instead of asterisks."
   :group 'markdown
   :type 'boolean)
 
@@ -98,7 +112,7 @@ buffers which are visiting a file."
   :group 'markdown
   :type 'list)
 
-(defcustom markdown-enable-math t
+(defcustom markdown-enable-math nil
   "Syntax highlighting for inline LaTeX expressions.
 This will not take effect until Emacs is restarted."
   :group 'markdown
@@ -135,6 +149,12 @@ This will not take effect until Emacs is restarted."
 
 (defvar markdown-bold-face 'markdown-bold-face
   "Face name to use for bold text.")
+
+(defvar markdown-header-delimiter-face 'markdown-header-delimiter-face
+  "Face name to use as a base for header delimiters.")
+
+(defvar markdown-header-rule-face 'markdown-header-rule-face
+  "Face name to use as a base for header rules.")
 
 (defvar markdown-header-face 'markdown-header-face
   "Face name to use as a base for headers.")
@@ -209,6 +229,16 @@ This will not take effect until Emacs is restarted."
 (defface markdown-bold-face
   '((t (:inherit font-lock-variable-name-face :weight bold)))
   "Face for bold text."
+  :group 'markdown-faces)
+
+(defface markdown-header-rule-face
+  '((t (:inherit font-lock-function-name-face :weight bold)))
+  "Base face for headers rules."
+  :group 'markdown-faces)
+
+(defface markdown-header-delimiter-face
+  '((t (:inherit font-lock-function-name-face :weight bold)))
+  "Base face for headers hash delimiter."
   :group 'markdown-faces)
 
 (defface markdown-header-face
@@ -321,7 +351,7 @@ This will not take effect until Emacs is restarted."
   "Regular expression for a reference link [text][id].")
 
 (defconst markdown-regex-reference-definition
-  "^ \\{0,3\\}\\(\\[[^^]+?\\]\\):\\s *\\(.*?\\)\\s *\\( \"[^\"]*\"$\\|$\\)"
+  "^ \\{0,3\\}\\(\\[[^\n]+?\\]\\):\\s *\\(.*?\\)\\s *\\( \"[^\"]*\"$\\|$\\)"
   "Regular expression for a link definition [id]: ...")
 
 (defconst markdown-regex-footnote
@@ -329,7 +359,7 @@ This will not take effect until Emacs is restarted."
   "Regular expression for a footnote marker [^fn].")
 
 (defconst markdown-regex-header
-  "#+\\|\\S-.*\n\\(?:\\(===+\\)\\|\\(---+\\)\\)$"
+  "^\\(?:\\(.+\\)\n\\(===+\\)\\|\\(.+\\)\n\\(---+\\)\\|\\(#+\\)\\s-*\\(.*?\\)\\s-*?\\(#*\\)\\)$"
   "Regexp identifying Markdown headers.")
 
 (defconst markdown-regex-header-1-atx
@@ -369,16 +399,20 @@ This will not take effect until Emacs is restarted."
   "Regular expression for matching Markdown horizontal rules.")
 
 (defconst markdown-regex-code
-  "\\(^\\|[^\\]\\)\\(\\(`\\{1,2\\}\\)\\([^ \\]\\|[^ ]\\(.\\|\n[^\n]\\)*?[^ \\]\\)\\3\\)"
-  "Regular expression for matching inline code fragments.")
+  "\\(^\\|[^\\]\\)\\(\\(`+\\)\\(\\(.\\|\n[^\n]\\)*?[^`]\\)\\3\\)"
+  "Regular expression for matching inline code fragments.
+
+The first group ensures that the leading backquote character
+is not escaped.  The group \\(.\\|\n[^\n]\\) matches any
+character, including newlines, but not two newlines in a row.")
 
 (defconst markdown-regex-pre
   "^\\(    \\|\t\\).*$"
   "Regular expression for matching preformatted text sections.")
 
 (defconst markdown-regex-list
-  "^[ \t]*\\([0-9]+\\.\\|[\\*\\+-]\\) "
-  "Regular expression for matching list markers.")
+  "^\\([ \t]*\\)\\([0-9]+\\.\\|[\\*\\+-]\\)\\([ \t]+\\)"
+  "Regular expression for matching list items.")
 
 (defconst markdown-regex-bold
   "\\(^\\|[^\\]\\)\\(\\([*_]\\{2\\}\\)\\(.\\|\n[^\n]\\)*?[^\\ ]\\3\\)"
@@ -389,7 +423,7 @@ This will not take effect until Emacs is restarted."
   "Regular expression for matching italic text.")
 
 (defconst markdown-regex-blockquote
-  "^\\s-*>.*$"
+  "^[ \t]*\\(>\\).*$"
   "Regular expression for matching blockquote lines.")
 
 (defconst markdown-regex-line-break
@@ -404,9 +438,9 @@ This will not take effect until Emacs is restarted."
 
 (defconst markdown-regex-angle-uri
   (concat
-   "\\(<\\)\\("
+   "\\(<\\)\\(\\(?:"
    (mapconcat 'identity markdown-uri-types "\\|")
-   "\\):[^]\t\n\r<>,;()]+\\(>\\)")
+   "\\):[^]\t\n\r<>,;()]+\\)\\(>\\)")
   "Regular expression for matching inline URIs in angle brackets.")
 
 (defconst markdown-regex-email
@@ -418,7 +452,7 @@ This will not take effect until Emacs is restarted."
   "Regular expression for itex $..$ or $$..$$ math mode expressions.")
 
 (defconst markdown-regex-latex-display
-    "^\\\\\\[\\(.\\|\n\\)*?\\\\\\]$"
+  "^\\\\\\[\\(.\\|\n\\)*?\\\\\\]$"
   "Regular expression for itex \[..\] display mode expressions.")
 
 (defconst markdown-regex-list-indent
@@ -433,34 +467,45 @@ This will not take effect until Emacs is restarted."
   (list
    ;; we don't mark normal pre blocks 'cause we don't use them and it interferes
    ;; with footnotes
-   ;; '(markdown-match-pre-blocks 0 markdown-pre-face t t)
-   '(markdown-match-fenced-code-blocks 0 markdown-pre-face t t)
+   ;; (cons 'markdown-match-pre-blocks '((0 markdown-pre-face)))
+   (cons 'markdown-match-fenced-code-blocks '((0 markdown-pre-face)))
    (cons markdown-regex-blockquote 'markdown-blockquote-face)
-   (cons markdown-regex-header-1-setext 'markdown-header-face-1)
-   (cons markdown-regex-header-2-setext 'markdown-header-face-2)
-   (cons markdown-regex-header-1-atx 'markdown-header-face-1)
-   (cons markdown-regex-header-2-atx 'markdown-header-face-2)
-   (cons markdown-regex-header-3-atx 'markdown-header-face-3)
-   (cons markdown-regex-header-4-atx 'markdown-header-face-4)
-   (cons markdown-regex-header-5-atx 'markdown-header-face-5)
-   (cons markdown-regex-header-6-atx 'markdown-header-face-6)
+   (cons markdown-regex-header-1-setext '((1 markdown-header-face-1)
+                                          (2 markdown-header-rule-face)))
+   (cons markdown-regex-header-2-setext '((1 markdown-header-face-2)
+                                          (2 markdown-header-rule-face)))
+   (cons markdown-regex-header-1-atx '((1 markdown-header-delimiter-face)
+                                       (2 markdown-header-face-1)
+                                       (3 markdown-header-delimiter-face)))
+   (cons markdown-regex-header-2-atx '((1 markdown-header-delimiter-face)
+                                       (2 markdown-header-face-2)
+                                       (3 markdown-header-delimiter-face)))
+   (cons markdown-regex-header-3-atx '((1 markdown-header-delimiter-face)
+                                       (2 markdown-header-face-3)
+                                       (3 markdown-header-delimiter-face)))
+   (cons markdown-regex-header-4-atx '((1 markdown-header-delimiter-face)
+                                       (2 markdown-header-face-4)
+                                       (3 markdown-header-delimiter-face)))
+   (cons markdown-regex-header-5-atx '((1 markdown-header-delimiter-face)
+                                       (2 markdown-header-face-5)
+                                       (3 markdown-header-delimiter-face)))
+   (cons markdown-regex-header-6-atx '((1 markdown-header-delimiter-face)
+                                       (2 markdown-header-face-6)
+                                       (3 markdown-header-delimiter-face)))
    (cons markdown-regex-hr 'markdown-header-face)
-   '(markdown-match-comments 0 markdown-comment-face t t)
+   (cons 'markdown-match-comments '((0 markdown-comment-face t t)))
    (cons markdown-regex-code '(2 markdown-inline-code-face))
    (cons markdown-regex-angle-uri 'markdown-link-face)
    (cons markdown-regex-uri 'markdown-link-face)
    (cons markdown-regex-email 'markdown-link-face)
-   (cons markdown-regex-list 'markdown-list-face)
-   (cons markdown-regex-link-inline
-         '((1 markdown-link-face t)
-           (2 markdown-url-face t)))
-   (cons markdown-regex-link-reference
-         '((1 markdown-link-face t)
-           (2 markdown-reference-face t)))
-   (cons markdown-regex-reference-definition
-         '((1 markdown-reference-face t)
-           (2 markdown-url-face t)
-           (3 markdown-link-title-face t)))
+   (cons markdown-regex-list '(2 markdown-list-face))
+   (cons markdown-regex-link-inline '((1 markdown-link-face t)
+                                      (2 markdown-url-face t)))
+   (cons markdown-regex-link-reference '((1 markdown-link-face t)
+                                         (2 markdown-reference-face t)))
+   (cons markdown-regex-reference-definition '((1 markdown-reference-face t)
+                                               (2 markdown-url-face t)
+                                               (3 markdown-link-title-face t)))
    (cons markdown-regex-footnote 'markdown-footnote-face)
    (cons markdown-regex-bold '(2 markdown-bold-face))
    (cons markdown-regex-italic '(2 markdown-italic-face))
@@ -502,7 +547,8 @@ This will not take effect until Emacs is restarted."
 
 ;; Handle replace-regexp-in-string in XEmacs 21
 (defun markdown-replace-regexp-in-string (regexp rep string)
-  "Compatibility wrapper to provide `replace-regexp-in-string'."
+  "Compatibility wrapper to provide `replace-regexp-in-string'.
+Replace all matches for REGEXP with REP in STRING."
   (if (featurep 'xemacs)
       (replace-in-string string regexp rep)
     (replace-regexp-in-string regexp rep string)))
@@ -550,8 +596,7 @@ If we are at the last line, then consider the next line to be blank."
     (current-column)))
 
 (defun markdown-prev-line-indent ()
-  "Return the number of leading whitespace characters in the previous line.
-If the previous line is empty, check the line before that one instead."
+  "Return the number of leading whitespace characters in the previous line."
   (save-excursion
     (forward-line -1)
     (when (markdown-cur-line-blank-p)
@@ -568,7 +613,7 @@ If the previous line is empty, check the line before that one instead."
   "Return the number of leading whitespace characters in the current line."
   (save-excursion
     (beginning-of-line)
-    (when (re-search-forward markdown-regex-list-indent (point-at-eol) t)
+    (when (re-search-forward markdown-regex-list (point-at-eol) t)
       (current-column))))
 
 (defun markdown-prev-non-list-indent ()
@@ -603,7 +648,158 @@ If the previous line is empty, check the line before that one, too."
       (forward-line -1)
       (end-of-line))))
 
-; From html-helper-mode
+(defun markdown-prev-list-item (level)
+  "Search backward from point for a list item with indentation LEVEL.
+Set point to the beginning of the item, and return point, or nil
+upon failure."
+  (let (bounds indent prev)
+    (setq prev (point))
+    (forward-line -1)
+    (setq indent (markdown-cur-line-indent))
+    (while
+        (cond
+         ;; Stop at beginning of buffer
+         ((bobp) (setq prev nil))
+         ;; Continue if current line is blank
+         ((markdown-cur-line-blank-p) t)
+         ;; List item
+         ((and (looking-at markdown-regex-list)
+               (setq bounds (markdown-cur-list-item-bounds)))
+          (cond
+           ;; Continue at item with greater indentation
+           ((> (nth 3 bounds) level) t)
+           ;; Stop and return point at item of equal indentation
+           ((= (nth 3 bounds) level)
+            (setq prev (point))
+            nil)
+           ;; Stop and return nil at item with lesser indentation
+           ((< (nth 3 bounds) level)
+            (setq prev nil)
+            nil)))
+         ;; Continue while indentation is the same or greater
+         ((>= indent level) t)
+         ;; Stop if current indentation is less than list item
+         ;; and the next is blank
+         ((and (< indent level)
+               (markdown-next-line-blank-p))
+          (setq prev nil))
+         ;; Stop at a header
+         ((looking-at markdown-regex-header) (setq prev nil))
+         ;; Stop at a horizontal rule
+         ((looking-at markdown-regex-hr) (setq prev nil))
+         ;; Otherwise, continue.
+         (t t))
+      (forward-line -1)
+      (setq indent (markdown-cur-line-indent)))
+    prev))
+
+(defun markdown-next-list-item (level)
+  "Search forward from point for the next list item with indentation LEVEL.
+Set point to the beginning of the item, and return point, or nil
+upon failure."
+  (let (bounds indent next)
+    (setq next (point))
+    (forward-line)
+    (setq indent (markdown-cur-line-indent))
+    (while
+        (cond
+         ;; Stop at end of the buffer.
+         ((eobp) (setq prev nil))
+         ;; Continue if the current line is blank
+         ((markdown-cur-line-blank-p) t)
+         ;; List item
+         ((and (looking-at markdown-regex-list)
+               (setq bounds (markdown-cur-list-item-bounds)))
+          (cond
+           ;; Continue at item with greater indentation
+           ((> (nth 3 bounds) level) t)
+           ;; Stop and return point at item of equal indentation
+           ((= (nth 3 bounds) level)
+            (setq next (point))
+            nil)
+           ;; Stop and return nil at item with lesser indentation
+           ((< (nth 3 bounds) level)
+            (setq next nil)
+            nil)))
+         ;; Continue while indentation is the same or greater
+         ((>= indent level) t)
+         ;; Stop if current indentation is less than list item
+         ;; and the previous line was blank.
+         ((and (< indent level)
+               (markdown-prev-line-blank-p))
+          (setq next nil))
+         ;; Stop at a header
+         ((looking-at markdown-regex-header) (setq next nil))
+         ;; Stop at a horizontal rule
+         ((looking-at markdown-regex-hr) (setq next nil))
+         ;; Otherwise, continue.
+         (t t))
+      (forward-line)
+      (setq indent (markdown-cur-line-indent)))
+    next))
+
+(defun markdown-cur-list-item-end (level)
+  "Move to the end of the current list item with nonlist indentation LEVEL.
+If the point is not in a list item, do nothing."
+  (let (indent)
+    (forward-line)
+    (setq indent (markdown-cur-line-indent))
+    (while
+        (cond
+         ;; Stop at end of the buffer.
+         ((eobp) nil)
+         ;; Continue if the current line is blank
+         ((markdown-cur-line-blank-p) t)
+         ;; Continue while indentation is the same or greater
+         ((>= indent level) t)
+         ;; Stop if current indentation is less than list item
+         ;; and the previous line was blank.
+         ((and (< indent level)
+               (markdown-prev-line-blank-p))
+          nil)
+         ;; Stop at a new list item of the same or lesser indentation
+         ((looking-at markdown-regex-list) nil)
+         ;; Stop at a header
+         ((looking-at markdown-regex-header) nil)
+         ;; Stop at a horizontal rule
+         ((looking-at markdown-regex-hr) nil)
+         ;; Otherwise, continue.
+         (t t))
+      (forward-line)
+      (setq indent (markdown-cur-line-indent)))
+    ;; Don't skip over whitespace for empty list items (marker and
+    ;; whitespace only), just move to end of whitespace.
+    (if (looking-back (concat markdown-regex-list "\\s-*"))
+          (goto-char (match-end 3))
+      (skip-syntax-backward "-"))))
+
+(defun markdown-cur-list-item-bounds ()
+  "Return bounds and indentation of the current list item.
+Return a list of the form (begin end indent nonlist-indent).
+If the point is not inside a list item, return nil.
+Leave match data intact for `markdown-regex-list'."
+  (let (cur prev-begin prev-end indent nonlist-indent)
+    ;; Store current location
+    (setq cur (point))
+    ;; Verify that cur is between beginning and end of item
+    (save-excursion
+      (if (looking-at markdown-regex-list)
+          (beginning-of-line)
+        (end-of-line)
+        (re-search-backward markdown-regex-list nil t))
+      (save-match-data
+        (setq prev-begin (point))
+        (setq indent (markdown-cur-line-indent))
+        (setq nonlist-indent (markdown-cur-non-list-indent))
+        (markdown-cur-list-item-end nonlist-indent)
+        (setq prev-end (point)))
+      (if (and (>= cur prev-begin)
+               (<= cur prev-end)
+               nonlist-indent)
+          (list prev-begin prev-end indent nonlist-indent)
+        nil))))
+
+;; From html-helper-mode
 (defun markdown-match-comments (last)
   "Match HTML comments from the point to LAST."
   (cond ((search-forward "<!--" last t)
@@ -723,57 +919,12 @@ This helps improve font locking for block constructs such as pre blocks."
 ;;; Syntax Table ==============================================================
 
 (defvar markdown-mode-syntax-table
-  (let ((markdown-mode-syntax-table (make-syntax-table)))
-    (modify-syntax-entry ?\" "w" markdown-mode-syntax-table)
-    markdown-mode-syntax-table)
+  (let ((tab (make-syntax-table text-mode-syntax-table)))
+    (modify-syntax-entry ?\" "." tab)
+    tab)
   "Syntax table for `markdown-mode'.")
 
 
-
-;;; Footnotes ======================================================================
-
-(defun markdown-footnote-goto-text ()
-  "Jump to the text of the footnote under the cursor."
-  (interactive)
-  ;; first make sure we're at a footnote marker
-  (unless (or (looking-back (concat "\\[\\^" markdown-footnote-chars "*\\]?") (point-at-bol))
-	      (looking-at (concat "\\[?\\^" markdown-footnote-chars "*?\\]")))
-    (error "Not at a footnote"))
-  (let* ((fn nil)
-	 (new-pos (save-excursion
-		    ;; move point between [ and ^:
-		    (if (looking-at "\\[")
-			(forward-char 1)
-		      (skip-chars-backward "^["))
-		    (looking-at (concat "\\(\\^" markdown-footnote-chars "*?\\)\\]"))
-		    (setq fn (match-string 1))
-		    (goto-char (point-min))
-		    (re-search-forward (concat "^\\[" fn "\\]:") nil t))))
-    (unless new-pos
-      (error "No definition found for footnote `%s'" fn))
-    (goto-char new-pos)
-    (skip-chars-forward "[:space:]")))
-
-(defun markdown-footnote-return ()
-  "Return from a footnote to its footnote number in the main text."
-  (interactive)
-  (let ((fn (save-excursion
-	      (backward-paragraph)
-	      ;; if we're in a multiparagraph footnote, we need to back up further
-	      (while (>= (markdown-next-line-indent) 4)
-		(backward-paragraph))
-	      (forward-line)
-	      (if (looking-at (concat "^\\[\\(\\^" markdown-footnote-chars "*?\\)\\]:"))
-		  (match-string 1)))))
-    (unless fn
-      (error "Not in a footnote"))
-    (let ((new-pos (save-excursion
-		     (goto-char (point-min))
-		     (re-search-forward (concat "\\[" fn "\\]\\([^:]\\|\\'\\)") nil t))))
-      (unless new-pos
-	(error "Footnote `%s' not found" fn))
-      (goto-char new-pos)
-      (skip-chars-backward "^]"))))
 
 ;;; Indentation ====================================================================
 
@@ -814,8 +965,8 @@ default indentation level."
     ;; Previous non-list-marker indent
     (setq pos (markdown-prev-non-list-indent))
     (when pos
-        (setq positions (cons pos positions))
-        (setq positions (cons (+ pos tab-width) positions)))
+      (setq positions (cons pos positions))
+      (setq positions (cons (+ pos tab-width) positions)))
 
     ;; Indentation of the previous line + tab-width
     (cond
@@ -837,7 +988,7 @@ default indentation level."
               (while (not (equal (point) (point-min)))
                 (forward-line -1)
                 (goto-char (point-at-bol))
-                (when (re-search-forward markdown-regex-list-indent (point-at-eol) t)
+                (when (re-search-forward markdown-regex-list (point-at-eol) t)
                   (throw 'break (length (match-string 1)))))
               nil)))
     (if (and pos (not (eq pos prev-line-pos)))
@@ -848,28 +999,219 @@ default indentation level."
 
     (reverse positions)))
 
+(defun markdown-dedent-or-delete (arg)
+  "Handle BACKSPACE by cycling through indentation points.
+When BACKSPACE is pressed, if there is only whitespace
+before the current point, then dedent the line one level.
+Otherwise, do normal delete by repeating
+`backward-delete-char-untabify' ARG times."
+  (interactive "*p")
+  (let ((cur-pos (current-column))
+        (start-of-indention (save-excursion
+                              (back-to-indentation)
+                              (current-column))))
+    (if (and (> cur-pos 0) (= cur-pos start-of-indention))
+        (let ((result 0))
+          (dolist (i (markdown-calc-indents))
+            (when (< i cur-pos)
+              (setq result (max result i))))
+          (indent-line-to result))
+      (backward-delete-char-untabify arg))))
+
 
 
 ;;; Keymap ====================================================================
 
 (defvar markdown-mode-map
   (let ((map (make-keymap)))
-    ;;; Footnotes
-    ; TODO make it behave like C-c C-c in org-mode
-    ;(define-key map "\C-c\C-fg" 'markdown-footnote-goto-text)
-    ;(define-key map "\C-c\C-fb" 'markdown-footnote-return)
+    ;; Indentation
+    (define-key map (kbd "<backspace>") 'markdown-dedent-or-delete)
     ;; Visibility cycling
     (define-key map "\C-i" 'markdown-cycle)
     (define-key map "\M-i" 'markdown-shifttab)
-    ;; Header navigation
-    ; TODO find better defaults
-    ;(define-key map (kbd "C-M-n") 'outline-next-visible-heading)
-    ;(define-key map (kbd "C-M-p") 'outline-previous-visible-heading)
-    ;(define-key map (kbd "C-M-f") 'outline-forward-same-level)
-    ;(define-key map (kbd "C-M-b") 'outline-backward-same-level)
-    ;(define-key map (kbd "C-M-u") 'outline-up-heading)
+    ;; Lists
+    (define-key map "\C-c\C-cn" 'markdown-cleanup-list-numbers)
+    (define-key map (kbd "M-<up>") 'markdown-metaup)
+    (define-key map (kbd "M-<down>") 'markdown-metadown)
+    (define-key map (kbd "M-<left>") 'markdown-metaleft)
+    (define-key map (kbd "M-<right>") 'markdown-metaright)
+    (define-key map (kbd "M-<return>") 'markdown-insert-list-item)
     map)
   "Keymap for Markdown major mode.")
+
+;;; Lists =====================================================================
+
+(defun markdown-insert-list-item (&optional arg)
+  "Insert a new list item.
+If the point is inside unordered list, insert a bullet mark.  If
+the point is inside ordered list, insert the next number followed
+by a period.  Use the previous list item to determine the amount
+of whitespace to place before and after list markers.
+
+With a \\[universal-argument] prefix (i.e., when ARG is 4),
+decrease the indentation by one level.
+
+With two \\[universal-argument] prefixes (i.e., when ARG is 16),
+increase the indentation by one level."
+  (interactive "p")
+  (let (bounds item-indent marker indent new-indent end)
+    (save-match-data
+      (setq bounds (markdown-cur-list-item-bounds))
+      (if (not bounds)
+          ;; When not in a list, start a new unordered one
+          (progn
+            (unless (markdown-cur-line-blank-p)
+              (insert "\n"))
+            (insert "* "))
+        ;; Compute indentation for a new list item
+        (setq item-indent (nth 2 bounds))
+        (setq marker (concat (match-string 2) (match-string 3)))
+        (setq indent (cond
+                      ((= arg 4) (max (- item-indent 4) 0))
+                      ((= arg 16) (+ item-indent 4))
+                      (t item-indent)))
+        (setq new-indent (make-string indent 32))
+        (goto-char (nth 1 bounds))
+        (newline)
+        (cond
+         ;; Ordered list
+         ((string-match "[0-9]" marker)
+          (if (= arg 16) ;; starting a new column indented one more level
+              (insert (concat new-indent "1. "))
+            ;; travel up to the last item and pick the correct number.  If
+            ;; the argument was nil, "new-indent = item-indent" is the same,
+            ;; so we don't need special treatment. Neat.
+            (save-excursion
+              (while (not (looking-at (concat new-indent "\\([0-9]+\\)\\.")))
+                (forward-line -1)))
+            (insert (concat new-indent
+                            (int-to-string (1+ (string-to-number (match-string 1))))
+                            ". "))))
+         ;; Unordered list
+         ((string-match "[\\*\\+-]" marker)
+          (insert (concat new-indent marker))))))))
+
+(defun markdown-move-list-item-up ()
+  "Move the current list item up in the list when possible."
+  (interactive)
+  (let (cur prev old)
+    (when (setq cur (markdown-cur-list-item-bounds))
+      (setq old (point))
+      (goto-char (nth 0 cur))
+      (if (markdown-prev-list-item (nth 3 cur))
+          (progn
+            (setq prev (markdown-cur-list-item-bounds))
+            (condition-case nil
+                (progn
+                  (transpose-regions (nth 0 prev) (nth 1 prev)
+                                     (nth 0 cur) (nth 1 cur) t)
+                  (goto-char (+ (nth 0 prev) (- old (nth 0 cur)))))
+              ;; Catch error in case regions overlap.
+              (error (goto-char old))))
+        (goto-char old)))))
+
+(defun markdown-move-list-item-down ()
+  "Move the current list item down in the list when possible."
+  (interactive)
+  (let (cur next old)
+    (when (setq cur (markdown-cur-list-item-bounds))
+      (setq old (point))
+      (if (markdown-next-list-item (nth 3 cur))
+          (progn
+            (setq next (markdown-cur-list-item-bounds))
+            (condition-case nil
+                (progn
+                  (transpose-regions (nth 0 cur) (nth 1 cur)
+                                     (nth 0 next) (nth 1 next) nil)
+                  (goto-char (+ old (- (nth 1 next) (nth 1 cur)))))
+              ;; Catch error in case regions overlap.
+              (error (goto-char old))))
+        (goto-char old)))))
+
+(defun markdown-promote-list-item ()
+  "Indent the current list item."
+  (interactive)
+  (let ((bounds (markdown-cur-list-item-bounds))
+        (ins 0))
+    (when bounds
+      (save-excursion
+        (save-match-data
+          (goto-char (nth 0 bounds))
+          (while (< (point) (+ (nth 1 bounds) ins))
+            (unless (markdown-cur-line-blank-p)
+              (insert "    ")
+              (setq ins (+ ins 4)))
+            (forward-line)))))))
+
+(defun markdown-demote-list-item ()
+  "Unindent the current list item."
+  (interactive)
+  (let (bounds num del regexp)
+    (when (setq bounds (markdown-cur-list-item-bounds))
+      (save-excursion
+        (save-match-data
+          (goto-char (nth 0 bounds))
+          (setq del 0)
+          (when (looking-at "^[ ]\\{1,4\\}")
+            (setq num (- (match-end 0) (match-beginning 0)))
+            (setq regexp (format "^[ ]\\{1,%d\\}" num))
+            (while (re-search-forward regexp (- (nth 1 bounds) del) t)
+              (replace-match "" nil nil)
+              (setq num (- (match-end 0) (match-beginning 0)))
+              (setq del (+ del num))
+              (forward-line))))))))
+
+(defun markdown--cleanup-list-numbers-level (&optional pfx)
+  "Update the numbering for level PFX (as a string of spaces).
+
+Assume that the previously found match was for a numbered item in
+a list."
+  (let ((cpfx pfx)
+        (idx 0)
+        (continue t)
+        (step t)
+        (sep nil))
+    (while (and continue (not (eobp)))
+      (setq step t)
+      (cond
+       ((looking-at "^\\([\s-]*\\)[0-9]+\\. ")
+        (setq cpfx (match-string-no-properties 1))
+        (cond
+         ((string= cpfx pfx)
+          (replace-match
+           (concat pfx (number-to-string  (setq idx (1+ idx))) ". "))
+          (setq sep nil))
+         ;; indented a level
+         ((string< pfx cpfx)
+          (setq sep (markdown--cleanup-list-numbers-level cpfx))
+          (setq step nil))
+         ;; exit the loop
+         (t
+          (setq step nil)
+          (setq continue nil))))
+
+       ((looking-at "^\\([\s-]*\\)[^ \t\n\r].*$")
+        (setq cpfx (match-string-no-properties 1))
+        (cond
+         ;; reset if separated before
+         ((string= cpfx pfx) (when sep (setq idx 0)))
+         ((string< cpfx pfx)
+          (setq step nil)
+          (setq continue nil))))
+       (t (setq sep t)))
+
+      (when step
+        (beginning-of-line)
+        (setq continue (= (forward-line) 0))))
+    sep))
+
+(defun markdown-cleanup-list-numbers ()
+  "Update the numbering of ordered lists."
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (markdown--cleanup-list-numbers-level "")))
+
 
 ;;; Outline ===================================================================
 
@@ -910,71 +1252,71 @@ at an atx-style header, cycle visibility of the corresponding
 subtree.  Otherwise, insert a tab using `indent-relative'."
   (interactive "P")
   (cond
-     ((eq arg t) ;; Global cycling
-      (cond
-       ((and (eq last-command this-command)
-             (eq markdown-cycle-global-status 2))
-        ;; Move from overview to contents
-        (hide-sublevels 1)
-        (message "CONTENTS")
-        (setq markdown-cycle-global-status 3))
+   ((eq arg t) ;; Global cycling
+    (cond
+     ((and (eq last-command this-command)
+           (eq markdown-cycle-global-status 2))
+      ;; Move from overview to contents
+      (hide-sublevels 1)
+      (message "CONTENTS")
+      (setq markdown-cycle-global-status 3))
 
-       ((and (eq last-command this-command)
-             (eq markdown-cycle-global-status 3))
-        ;; Move from contents to all
-        (show-all)
-        (message "SHOW ALL")
-        (setq markdown-cycle-global-status 1))
-
-       (t
-        ;; Defaults to overview
-        (hide-body)
-        (message "OVERVIEW")
-        (setq markdown-cycle-global-status 2))))
-
-     ((save-excursion (beginning-of-line 1) (looking-at outline-regexp))
-      ;; At a heading: rotate between three different views
-      (outline-back-to-heading)
-      (let ((goal-column 0) eoh eol eos)
-        ;; Determine boundaries
-        (save-excursion
-          (outline-back-to-heading)
-          (save-excursion
-            (beginning-of-line 2)
-            (while (and (not (eobp)) ;; this is like `next-line'
-                        (get-char-property (1- (point)) 'invisible))
-              (beginning-of-line 2)) (setq eol (point)))
-          (outline-end-of-heading)   (setq eoh (point))
-          (markdown-end-of-subtree t)
-          (skip-chars-forward " \t\n")
-          (beginning-of-line 1) ; in case this is an item
-          (setq eos (1- (point))))
-        ;; Find out what to do next and set `this-command'
-      (cond
-         ((= eos eoh)
-          ;; Nothing is hidden behind this heading
-          (message "EMPTY ENTRY")
-          (setq markdown-cycle-subtree-status nil))
-         ((>= eol eos)
-          ;; Entire subtree is hidden in one line: open it
-          (show-entry)
-          (show-children)
-          (message "CHILDREN")
-          (setq markdown-cycle-subtree-status 'children))
-         ((and (eq last-command this-command)
-               (eq markdown-cycle-subtree-status 'children))
-          ;; We just showed the children, now show everything.
-          (show-subtree)
-          (message "SUBTREE")
-          (setq markdown-cycle-subtree-status 'subtree))
-         (t
-          ;; Default action: hide the subtree.
-          (hide-subtree)
-          (message "FOLDED")
-          (setq markdown-cycle-subtree-status 'folded)))))
+     ((and (eq last-command this-command)
+           (eq markdown-cycle-global-status 3))
+      ;; Move from contents to all
+      (show-all)
+      (message "SHOW ALL")
+      (setq markdown-cycle-global-status 1))
 
      (t
-      (indent-for-tab-command))))
+      ;; Defaults to overview
+      (hide-body)
+      (message "OVERVIEW")
+      (setq markdown-cycle-global-status 2))))
+
+   ((save-excursion (beginning-of-line 1) (looking-at outline-regexp))
+    ;; At a heading: rotate between three different views
+    (outline-back-to-heading)
+    (let ((goal-column 0) eoh eol eos)
+      ;; Determine boundaries
+      (save-excursion
+        (outline-back-to-heading)
+        (save-excursion
+          (beginning-of-line 2)
+          (while (and (not (eobp)) ;; this is like `next-line'
+                      (get-char-property (1- (point)) 'invisible))
+            (beginning-of-line 2)) (setq eol (point)))
+        (outline-end-of-heading)   (setq eoh (point))
+        (markdown-end-of-subtree t)
+        (skip-chars-forward " \t\n")
+        (beginning-of-line 1) ; in case this is an item
+        (setq eos (1- (point))))
+      ;; Find out what to do next and set `this-command'
+      (cond
+       ((= eos eoh)
+        ;; Nothing is hidden behind this heading
+        (message "EMPTY ENTRY")
+        (setq markdown-cycle-subtree-status nil))
+       ((>= eol eos)
+        ;; Entire subtree is hidden in one line: open it
+        (show-entry)
+        (show-children)
+        (message "CHILDREN")
+        (setq markdown-cycle-subtree-status 'children))
+       ((and (eq last-command this-command)
+             (eq markdown-cycle-subtree-status 'children))
+        ;; We just showed the children, now show everything.
+        (show-subtree)
+        (message "SUBTREE")
+        (setq markdown-cycle-subtree-status 'subtree))
+       (t
+        ;; Default action: hide the subtree.
+        (hide-subtree)
+        (message "FOLDED")
+        (setq markdown-cycle-subtree-status 'folded)))))
+
+   (t
+    (indent-for-tab-command))))
 
 ;; Based on org-shifttab from org.el.
 (defun markdown-shifttab ()
@@ -990,108 +1332,32 @@ Calls `markdown-cycle' with argument t."
    ((match-end 2) 2)
    ((- (match-end 0) (match-beginning 0)))))
 
-;;; Commands ==================================================================
+;;; Structure Editing =========================================================
 
-(defun markdown (&optional output-buffer-name)
-  "Run `markdown' on current buffer and insert output in buffer BUFFER-OUTPUT."
+(defun markdown-metaup ()
+  "Move list item up.
+Calls `markdown-move-list-item-up'."
   (interactive)
-  (let ((title (buffer-name))
-        (begin-region)
-        (end-region))
-    (if (and (boundp 'transient-mark-mode) transient-mark-mode mark-active)
-        (setq begin-region (region-beginning)
-              end-region (region-end))
-      (setq begin-region (point-min)
-            end-region (point-max)))
+  (markdown-move-list-item-up))
 
-    (unless output-buffer-name
-      (setq output-buffer-name markdown-output-buffer-name))
-
-    (if markdown-command-needs-filename
-        ;; Handle case when `markdown-command' does not read from stdin
-        (if (not buffer-file-name)
-            (error "Must be visiting a file")
-          (shell-command (concat markdown-command " "
-                                 (shell-quote-argument buffer-file-name))
-                         output-buffer-name))
-      ;; Pass region to `markdown-command' via stdin
-      (shell-command-on-region begin-region end-region markdown-command
-                               output-buffer-name))
-
-    ;; Add header and footer and switch to html-mode.
-    (save-current-buffer
-      (set-buffer output-buffer-name)
-      (goto-char (point-min))
-      (unless (markdown-output-standalone-p)
-        (markdown-add-xhtml-header-and-footer title))
-      (html-mode))
-
-    ;; Ensure buffer gets raised, even with short command output
-    (switch-to-buffer-other-window output-buffer-name)))
-
-(defun markdown-output-standalone-p ()
-  "Determine whether `markdown-command' output is standalone XHTML.
-Standalone XHTML output is identified by an occurrence of
-`markdown-xhtml-standalone-regexp' in the first five lines of output."
-  (re-search-forward
-   markdown-xhtml-standalone-regexp
-   (save-excursion (goto-char (point-min)) (forward-line 4) (point))
-   t))
-
-(defun markdown-add-xhtml-header-and-footer (title)
-  "Wrap XHTML header and footer with given TITLE around current buffer."
-  (insert "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n"
-          "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\"\n"
-          "\t\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n\n"
-          "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n\n"
-          "<head>\n<title>")
-  (insert title)
-  (insert "</title>\n")
-  (if (> (length markdown-css-path) 0)
-      (insert "<link rel=\"stylesheet\" type=\"text/css\" media=\"all\" href=\""
-              markdown-css-path
-              "\"  />\n"))
-  (when (> (length markdown-xhtml-header-content) 0)
-    (insert markdown-xhtml-header-content))
-  (insert "\n</head>\n\n"
-          "<body>\n\n")
-  (goto-char (point-max))
-  (insert "\n"
-          "</body>\n"
-          "</html>\n"))
-
-(defun markdown-preview ()
-  "Run `markdown' on the current buffer and preview the output in a browser."
+(defun markdown-metadown ()
+  "Move list item down.
+Calls `markdown-move-list-item-down'."
   (interactive)
-  (markdown markdown-output-buffer-name)
-  (browse-url-of-buffer markdown-output-buffer-name))
+  (markdown-move-list-item-down))
 
-(defun markdown-export-file-name ()
-  "Attempt to generate a filename for Markdown output.
-If the current buffer is visiting a file, we construct a new
-output filename based on that filename.  Otherwise, return nil."
-  (when (buffer-file-name)
-    (concat (file-name-sans-extension (buffer-file-name)) ".html")))
-
-(defun markdown-export ()
-  "Run Markdown on the current buffer, save to a file, and return the filename.
-The resulting filename will be constructed using the current filename, but
-with the extension removed and replaced with .html."
+(defun markdown-metaleft ()
+  "Unindent list item.
+Calls `markdown-demote-list-item'."
   (interactive)
-  (let ((output-file (markdown-export-file-name))
-        (output-buffer-name))
-    (when output-file
-      (setq output-buffer-name (buffer-name (find-file-noselect output-file)))
-      (markdown output-buffer-name)
-      (with-current-buffer output-buffer-name
-        (save-buffer)
-        (kill-buffer-and-window))
-      output-file)))
+  (markdown-demote-list-item))
 
-(defun markdown-export-and-view ()
-  "Export to XHTML using `markdown-export' and browse the resulting file."
+(defun markdown-metaright ()
+  "Indent list item.
+Calls `markdown-promote-list-item'."
   (interactive)
-  (browse-url (markdown-export)))
+  (markdown-promote-list-item))
+
 
 ;;; Miscellaneous =============================================================
 
@@ -1154,11 +1420,6 @@ This is an exact copy of `line-number-at-pos' for use in emacs21."
   (add-hook 'fill-nobreak-predicate 'markdown-nobreak-p)
   ;; (setq indent-line-function markdown-indent-function)
 
-  ;; Prepare hooks for XEmacs compatibility
-  (when (featurep 'xemacs)
-      (make-local-hook 'after-change-functions)
-      (make-local-hook 'font-lock-extend-region-functions)
-      (make-local-hook 'window-configuration-change-hook))
 
   ;; Multiline font lock
   (add-hook 'font-lock-extend-region-functions
