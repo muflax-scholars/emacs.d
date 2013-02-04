@@ -351,7 +351,7 @@ This will not take effect until Emacs is restarted."
   "Regular expression for a reference link [text][id].")
 
 (defconst markdown-regex-reference-definition
-  "^ \\{0,3\\}\\(\\[[^\n]+?\\]\\):\\s *\\(.*?\\)\\s *\\( \"[^\"]*\"$\\|$\\)"
+  "^ \\{0,3\\}\\(\\[[^^]+?\\]\\):\\s *\\(.*?\\)\\s *\\( \"[^\"]*\"$\\|$\\)"
   "Regular expression for a link definition [id]: ...")
 
 (defconst markdown-regex-footnote
