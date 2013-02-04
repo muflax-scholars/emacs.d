@@ -515,7 +515,6 @@ If visual-line-mode is on, then also jump to beginning of real line."
 ;; #FIXME (tab) for org-cycle is disabled directly in the library; this should
 ;; probably be some unset here.
 (setq load-path (cons "~/.emacs.d/site-lisp/org-mode/lisp" load-path))
-(require 'org-install)
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
 ;; proper indentation / folding
 ;; loaded so that we can diminish it later
