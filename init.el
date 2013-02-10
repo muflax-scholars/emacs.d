@@ -10,7 +10,7 @@
 
 ;; elpa
 (require 'package)
-(add-to-list 'package-archives '("tromey" . "http://tromey.com/elpa/"))
+(add-to-list 'package-archives '("tromey"    . "http://tromey.com/elpa/"))
 (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
 (package-initialize)
 
@@ -426,10 +426,6 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (require 'guess-offset)
 (global-set-key (kbd "M-RET") 'c-indent-new-comment-line)
 
-;; mark stuff like FIXME
-(require 'fic-mode)
-(global-fic-mode 1)
-
 ;; use automatic file headers
 ;; #TODO recognize name automagically
 ;; #TODO add end-of-buffer
@@ -601,6 +597,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
 
 ;; ruby mode
 ;; enhanced ruby mode
+(setq load-path (cons "~/.emacs.d/site-lisp/enh-ruby-mode" load-path))
 (setq enh-ruby-program "ruby")
 (autoload 'enh-ruby-mode "enh-ruby-mode" "Major mode for ruby files" t)
 (add-to-list 'auto-mode-alist '("\\.rb$"      . enh-ruby-mode))
@@ -917,6 +914,13 @@ You have:
 
 ;; handle camelcase better
 (global-subword-mode 1)
+
+;; mark stuff like FIXME
+(require 'fic-mode)
+(add-hook 'prog-mode-hook 'fic-mode)
+;; misbehaving modes
+(add-hook 'enh-ruby-mode-hook 'fic-mode)
+(add-hook 'js2-mode-hook 'fic-mode)
 
 ;; clean up modeline and hide standard minor modes
 ;; should be last so all modes are already loaded
