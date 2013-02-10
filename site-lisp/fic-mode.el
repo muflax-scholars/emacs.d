@@ -41,8 +41,8 @@
   "Font foreground colour"
   :group 'fic-mode)
 
-(defcustom fic-background-color  "Yellow"
-  "Font background color"
+(defcustom fic-background-color nil
+  "FONT BACKGROUND COLOR"
   :group 'fic-mode)
 
 (defcustom font-lock-fic-face 'font-lock-fic-face

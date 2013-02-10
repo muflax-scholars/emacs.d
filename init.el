@@ -153,7 +153,7 @@
 (add-hook 'java-mode-hook 'turn-on-highlight-parentheses)
 (add-hook 'python-mode-hook 'turn-on-highlight-parentheses)
 (add-hook 'c-mode-hook 'turn-on-highlight-parentheses)
-(add-hook 'ruby-mode-hook 'turn-on-highlight-parentheses)
+(add-hook 'enh-ruby-mode-hook 'turn-on-highlight-parentheses)
 (add-hook 'haskell-mode-hook 'turn-on-highlight-parentheses)
 (add-hook 'text-mode-hook 'turn-on-highlight-parentheses)
 
@@ -183,6 +183,20 @@
 (global-set-key "\C-b" 'backward-word)
 (global-set-key "\M-f" 'forward-sentence)
 (global-set-key "\M-b" 'backward-sentence)
+
+;; copy end of line, like C-k
+(defun copy-line ()
+  (interactive)
+  (set 'this-command 'copy-to-kill)
+  (save-excursion
+    (set-mark (point))
+    (if (= (point) (line-end-position))
+        (forward-line)
+      (goto-char (line-end-position)))
+    (if (eq last-command 'copy-to-kill)
+        (append-next-kill))
+    (kill-ring-save (mark) (point))))
+(global-set-key "\M-k" 'copy-line)
 
 ;; move to beginning of text on line
 (defun smart-beginning-of-line ()
@@ -229,8 +243,8 @@ If visual-line-mode is on, then also jump to beginning of real line."
 ;; associate non-standardish interpreters with modes
 (add-to-list 'interpreter-mode-alist '("python2" . python-mode))
 (add-to-list 'interpreter-mode-alist '("python3" . python-mode))
-(add-to-list 'interpreter-mode-alist '("ruby18" . ruby-mode))
-(add-to-list 'interpreter-mode-alist '("ruby19" . ruby-mode))
+(add-to-list 'interpreter-mode-alist '("ruby18" .  enh-ruby-mode))
+(add-to-list 'interpreter-mode-alist '("ruby19" .  enh-ruby-mode))
 
 ;; save minibuffer history
 (savehist-mode 1)
@@ -586,23 +600,42 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 
 ;; ruby mode
-(require 'yari)
-(require 'ruby-block)
+;; enhanced ruby mode
+(setq enh-ruby-program "ruby")
+(autoload 'enh-ruby-mode "enh-ruby-mode" "Major mode for ruby files" t)
+(add-to-list 'auto-mode-alist '("\\.rb$"      . enh-ruby-mode))
+(add-to-list 'interpreter-mode-alist '("ruby" . enh-ruby-mode))
+;; misc stuff
+(require 'yari)        ; ri documentation tool
+(require 'ruby-block)  ; show what block an end belongs to (FIXME doesn't work with enh-ruby-mode)
+(require 'inf-ruby)    ; run ruby in emacs buffer
+(require 'robe)        ; better code navigation and inf-ruby extensions
+(require 'rinari)      ; rails
 (ruby-block-mode t)
 (setq ruby-block-highlight-toggle t)
 (setq ruby-indent-level tab-width)
 ;; Rake files are Ruby, too
-(add-to-list 'auto-mode-alist '("\\.rake$" . ruby-mode))
-(add-to-list 'auto-mode-alist '("Rakefile$" . ruby-mode))
-(add-to-list 'auto-mode-alist '("Gemfile$" . ruby-mode))
-(add-to-list 'auto-mode-alist '("Capfile$" . ruby-mode))
-(add-to-list 'auto-mode-alist '("\\.builder$" . ruby-mode))
-(add-to-list 'auto-mode-alist '("\\.gemspec$" . ruby-mode))
-;; rinari
-(require 'rinari)
+(add-to-list 'auto-mode-alist '("\\.rake$"    . enh-ruby-mode))
+(add-to-list 'auto-mode-alist '("Rakefile$"   . enh-ruby-mode))
+(add-to-list 'auto-mode-alist '("Gemfile$"    . enh-ruby-mode))
+(add-to-list 'auto-mode-alist '("Capfile$"    . enh-ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.builder$" . enh-ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.gemspec$" . enh-ruby-mode))
 ;; erb
 (require 'rhtml-mode)
-(add-to-list 'auto-mode-alist '("\\.erb$" . rhtml-mode))
+(add-to-list 'auto-mode-alist '("\\.erb$"     . rhtml-mode))
+
+;; javascript
+(require 'js2-mode)
+(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+
+;; highlight current symbol at point in buffer (like Eclipse)
+(require 'auto-highlight-symbol)
+(global-auto-highlight-symbol-mode 0) ; don't activate by default
+
+;; edit symbol in multiple places simultaneously
+(require 'iedit)
+(global-set-key "\C-ce" 'iedit-mode)
 
 ;; align
 (require 'align)
@@ -610,22 +643,22 @@ If visual-line-mode is on, then also jump to beginning of real line."
              '(ruby-comma-delimiter
                 (regexp . ",\\(\\s-*\\)[^# \t\n]")
                 (repeat . t)
-                (modes  . '(ruby-mode))))
+                (modes  . '(enh-ruby-mode))))
 (add-to-list 'align-rules-list
              '(ruby-hash-literal
                 (regexp . "\\(\\s-*\\)=>\\s-*[^# \t\n]")
                 (repeat . t)
-                (modes  . '(ruby-mode))))
+                (modes  . '(enh-ruby-mode))))
 (add-to-list 'align-rules-list
              '(ruby-assignment-literal
                 (regexp . "\\(\\s-*\\)=\\s-*[^# \t\n]")
                 (repeat . t)
-                (modes  . '(ruby-mode))))
+                (modes  . '(enh-ruby-mode))))
 (add-to-list 'align-rules-list          ;TODO add to rcodetools.el
              '(ruby-xmpfilter-mark
                 (regexp . "\\(\\s-*\\)# => [^#\t\n]")
                 (repeat . nil)
-                (modes  . '(ruby-mode))))
+                (modes  . '(enh-ruby-mode))))
 (global-set-key "\C-c=" 'align-current)
 
 ;; diff- mode (better colors)
@@ -707,7 +740,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
            (eval set-input-method (quote muflax-latin))))))
 ;; keys
 (global-set-key "\C-c\C-t" 'ecb-toggle-layout)
-(global-set-key "\C-ce" 'ecb-minor-mode)
+(global-set-key "\C-c;" 'ecb-minor-mode)
 ;; speedbar
 (setq speedbar-use-images nil)
 (setq speedbar-show-unknown-files t)
