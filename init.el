@@ -516,6 +516,10 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode))
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
+(defun no-electric-indent-yaml ()
+  (electric-indent-mode -1)
+  (define-key yaml-mode-map [(return)] 'newline-and-indent))
+(add-hook 'yaml-mode-hook 'no-electric-indent-yaml)
 
 ;; user data
 (setq user-mail-address "mail@muflax.com")
@@ -586,10 +590,11 @@ If visual-line-mode is on, then also jump to beginning of real line."
 
 ;; new python mode
 (require 'python)
-(defun better-indent-in-python () 
+(defun no-electric-indent-python ()
+  ;; TODO should be a generic macro or something
   (electric-indent-mode -1)
   (define-key python-mode-map [(return)] 'newline-and-indent))
-(add-hook 'python-mode-hook 'better-indent-in-python)
+(add-hook 'python-mode-hook 'no-electric-indent-python)
 
 ;; haskell mode
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
