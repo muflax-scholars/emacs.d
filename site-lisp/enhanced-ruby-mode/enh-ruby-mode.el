@@ -163,12 +163,12 @@ the value changes.
   :group 'enh-ruby)
 
 (defface erm-syn-errline
-  '((t (:box (:line-width 1 :color "red"))))
+  '((t (:underline "red")))
   "Face used for marking error lines."
   :group 'enh-ruby)
 
 (defface erm-syn-warnline
-  '((t (:box (:line-width 1 :color "orange"))))
+  '((t (:underline "orange")))
   "Face used for marking warning lines."
   :group 'enh-ruby)
 
