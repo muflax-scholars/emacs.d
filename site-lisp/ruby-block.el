@@ -1,10 +1,8 @@
-
 ;;; ruby-block.el --- highlight matching block
 
 ;; Copyright (C) 2007-2011  khiker
 
 ;; Author: khiker <khiker.mail+elisp@gmail.com>
-;; Version: 0.0.11
 ;; Keywords: languages, faces, ruby
 
 ;; This file is free software; you can redistribute it and/or modify
@@ -51,7 +49,7 @@
 
 ;;; Code:
 
-(require 'ruby-mode)
+(require 'enh-ruby-mode)
 
 ;; Variables:
 
@@ -131,7 +129,7 @@ to END keyword. this is Minor mode for ruby-mode only."
 
 (defun ruby-block-hook ()
   "When Major-mode is ruby-mode, this package is running."
-  (if (eq major-mode 'ruby-mode)
+  (if (eq major-mode 'enh-ruby-mode)
       (condition-case err
 	  (ruby-block-function)
 	(error
@@ -254,9 +252,5 @@ to END keyword. this is Minor mode for ruby-mode only."
     (setq ruby-block-highlight-toggle t)))
 
 (provide 'ruby-block)
-
-;; Local Variables:
-;; Coding: utf-8
-;; End:
 
 ;;; ruby-block.el ends here
