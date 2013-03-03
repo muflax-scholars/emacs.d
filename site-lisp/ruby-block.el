@@ -49,7 +49,7 @@
 
 ;;; Code:
 
-(require 'enh-ruby-mode)
+;; (require 'enh-ruby-mode)
 
 ;; Variables:
 
@@ -63,7 +63,7 @@
 
 (defconst ruby-block-keyword-regex
   "\\(end\\|for\\|while\\|until\\|if\\|class\\|module\\|case\\|unless\\|def\\|begin\\|do\\)"
-  "Rregular expression to look for correspondence.")
+  "Regular expression to look for correspondence.")
 
 (defgroup ruby-block nil
   "Ruby block"
@@ -82,7 +82,7 @@
 
 (defcustom ruby-block-highlight-toggle 'minibuffer
   "*How do you display corresponding line.
-Default is minibuffer. display to minibuffer.
+Default is display to minibuffer.
 
 The possible choice is as follows.
 
@@ -99,7 +99,6 @@ t	   => minibuffer and overlay"
 (defvar ruby-block-timer nil)
 
 (defvar ruby-block-highlight-overlay nil)
-
 
 ;; Functions:
 

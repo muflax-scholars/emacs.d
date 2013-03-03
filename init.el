@@ -609,7 +609,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (add-to-list 'interpreter-mode-alist '("ruby" . enh-ruby-mode))
 ;; misc stuff
 (require 'yari)        ; ri documentation tool
-(require 'ruby-block)  ; show what block an end belongs to (FIXME doesn't work with enh-ruby-mode)
+(require 'ruby-block)  ; show what block an end belongs to
 (require 'inf-ruby)    ; run ruby in emacs buffer
 (require 'robe)        ; better code navigation and inf-ruby extensions
 (require 'rinari)      ; rails
