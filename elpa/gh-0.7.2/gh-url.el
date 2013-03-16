@@ -63,14 +63,14 @@
     (oset resp :data-received t)))
 
 (defmethod gh-url-response-run-callbacks ((resp gh-url-response))
-  (flet ((gh-url-copy-list (list)
-                           (if (consp list)
-                               (let ((res nil))
-                                 (while (consp list) (push (pop list) res))
-                                 (prog1 (nreverse res) (setcdr res list)))
-                             (car list))))
+  (let ((copy-list (lambda (list)
+                     (if (consp list)
+                         (let ((res nil))
+                           (while (consp list) (push (pop list) res))
+                           (prog1 (nreverse res) (setcdr res list)))
+                       (car list)))))
     (let ((data (oref resp :data)))
-      (dolist (cb (gh-url-copy-list (oref resp :callbacks)))
+      (dolist (cb (funcall copy-list (oref resp :callbacks)))
         (if (or (functionp cb) (symbolp cb))
             (funcall cb data)
           (apply (car cb) data (cdr cb)))
@@ -128,6 +128,7 @@
   resp)
 
 (defun gh-url-set-response (status req-resp)
+  (set-buffer-multibyte t)
   (destructuring-bind (req resp) req-resp
     (condition-case err
         (progn

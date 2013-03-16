@@ -5,7 +5,7 @@
 
 ;;;### (autoloads (gist-fetch gist-list gist-region-or-buffer-private
 ;;;;;;  gist-region-or-buffer gist-buffer-private gist-buffer gist-region-private
-;;;;;;  gist-region) "gist" "gist.el" (20711 43018))
+;;;;;;  gist-region) "gist" "gist.el" (20805 345 174937 121000))
 ;;; Generated autoloads from gist.el
 
 (autoload 'gist-region "gist" "\
@@ -53,7 +53,7 @@ Copies the URL into the kill ring.
 (autoload 'gist-list "gist" "\
 Displays a list of all of the current user's gists in a new buffer.
 
-\(fn &optional FORCE-RELOAD)" t nil)
+\(fn &optional FORCE-RELOAD BACKGROUND)" t nil)
 
 (autoload 'gist-fetch "gist" "\
 
@@ -62,7 +62,7 @@ Displays a list of all of the current user's gists in a new buffer.
 
 ;;;***
 
-;;;### (autoloads nil nil ("gist-pkg.el") (20711 43019 138592))
+;;;### (autoloads nil nil ("gist-pkg.el") (20805 345 418606 870000))
 
 ;;;***
 
