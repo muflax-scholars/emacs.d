@@ -1,4 +1,0 @@
-#name : Footnote
-#contributor: Peng Deng <dengpeng@gmail.com>
-# --
-[^${1:Footnate Name}]$0
