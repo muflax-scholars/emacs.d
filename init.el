@@ -501,7 +501,6 @@ If visual-line-mode is on, then also jump to beginning of real line."
 ;; git
 (require 'format-spec)
 (require 'git-blame)
-(require 'gitsum)
 
 ;; markdown
 (require 'markdown-mode)
