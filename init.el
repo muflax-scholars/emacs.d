@@ -259,11 +259,11 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (window-numbering-mode 1)
 
 ;; snippets
-(setq yas/next-field-key '("<backtab>" "<S-tab>"))
-(setq yas/prev-field-key '("<C-tab>"))
-(setq yas/snippet-dirs "~/.emacs.d/snippets")
+(setq yas-next-field-key '("<backtab>" "<S-tab>"))
+(setq yas-prev-field-key '("<C-tab>"))
+(setq yas-snippet-dirs "~/.emacs.d/snippets")
 (require 'yasnippet)
-(yas/initialize)
+(yas-global-mode 1)
 
 ;; text completion
 ;; auto completion
@@ -291,7 +291,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (defun epy-get-all-snips ()
   (let (candidates)
     (maphash
-     (lambda (kk vv) (push (epy-snips-from-table vv) candidates)) yas/tables)
+     (lambda (kk vv) (push (epy-snips-from-table vv) candidates)) yas--tables)
     (apply 'append candidates))
   )
 (setq ac-ignores (concatenate 'list ac-ignores (epy-get-all-snips)))
@@ -943,4 +943,4 @@ You have:
 (diminish 'visual-line-mode)
 (diminish 'volatile-highlights-mode)
 (diminish 'whole-line-or-region-mode)
-(diminish 'yas/minor-mode)
+(diminish 'yas-minor-mode)
