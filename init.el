@@ -259,10 +259,11 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (window-numbering-mode 1)
 
 ;; snippets
-(setq yas-next-field-key '("<backtab>" "<S-tab>"))
-(setq yas-prev-field-key '("<C-tab>"))
 (setq yas-snippet-dirs "~/.emacs.d/snippets")
 (require 'yasnippet)
+(define-key yas-minor-mode-map [backtab] 'yas-next-field)
+(define-key yas-minor-mode-map [(shift tab)] 'yas-next-field)
+(define-key yas-minor-mode-map [(control tab)] 'yas-prev-field)
 (yas-global-mode 1)
 
 ;; text completion
