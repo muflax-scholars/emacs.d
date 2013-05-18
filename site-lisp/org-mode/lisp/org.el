@@ -7477,6 +7477,14 @@ Works for outline headings and for plain lists alike."
    ((org-at-heading-p) (org-do-demote))
    ((org-at-item-p) (org-indent-item))))
 
+(defun org-insert-subheading-respect-content ()
+  (interactive)
+  (let ((org-insert-heading-respect-content t))
+    (org-insert-heading t)
+    (cond
+     ((org-at-heading-p) (org-do-demote))
+     ((org-at-item-p) (org-indent-item)))))
+
 (defun org-insert-todo-subheading (arg)
   "Insert a new subheading with TODO keyword or checkbox and demote it.
 Works for outline headings and for plain lists alike."
@@ -18358,7 +18366,7 @@ BEG and END default to the buffer boundaries."
 
 (org-defkey org-mode-map [(shift return)]   'org-table-copy-down)
 (org-defkey org-mode-map [(meta shift return)] 'org-insert-todo-heading)
-(org-defkey org-mode-map [(meta return)]       'org-meta-return)
+(org-defkey org-mode-map [(meta return)]       'org-insert-subheading-respect-content)
 
 ;; Cursor keys with modifiers
 (org-defkey org-mode-map [(meta left)]  'org-metaleft)
