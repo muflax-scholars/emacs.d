@@ -2475,7 +2475,7 @@ replace any running timer.
 ;;;***
 
 ;;;### (autoloads (org-git-version org-release) "org-version" "org-version.el"
-;;;;;;  (20887 26413 591523 984000))
+;;;;;;  (20887 26843 926751 804000))
 ;;; Generated autoloads from org-version.el
 
 (autoload 'org-release "org-version" "\
@@ -2513,7 +2513,7 @@ The XOXO buffer is named *xoxo-<source buffer name>*
 ;;;;;;  org-run-like-in-org-mode turn-on-orgstruct++ turn-on-orgstruct
 ;;;;;;  orgstruct-mode org-global-cycle org-cycle org-mode org-clock-persistence-insinuate
 ;;;;;;  turn-on-orgtbl org-version org-babel-do-load-languages) "org"
-;;;;;;  "org.el" (20887 26411 180489 103000))
+;;;;;;  "org.el" (20887 26840 170697 428000))
 ;;; Generated autoloads from org.el
 
 (autoload 'org-babel-do-load-languages "org" "\

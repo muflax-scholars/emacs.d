@@ -7494,6 +7494,14 @@ Works for outline headings and for plain lists alike."
    ((org-at-heading-p) (org-do-demote))
    ((org-at-item-p) (org-indent-item))))
 
+(defun org-insert-todo-subheading-respect-content ()
+  (interactive)
+  (let ((org-insert-heading-respect-content t))
+    (org-insert-todo-heading t)
+    (cond
+     ((org-at-heading-p) (org-do-demote))
+     ((org-at-item-p) (org-indent-item)))))
+
 ;;; Promotion and Demotion
 
 (defvar org-after-demote-entry-hook nil
@@ -18364,9 +18372,12 @@ BEG and END default to the buffer boundaries."
 ;(define-key org-mode-map [backtab] 'org-shifttab)
 (define-key org-mode-map "\M-i" 'org-shifttab)
 
-(org-defkey org-mode-map [(shift return)]   'org-table-copy-down)
-(org-defkey org-mode-map [(meta shift return)] 'org-insert-todo-heading)
-(org-defkey org-mode-map [(meta return)]       'org-insert-subheading-respect-content)
+(org-defkey org-mode-map [(shift return)]         'org-table-copy-down)
+; meta creates subheadings, control stays on the same level, shift sets TODO
+(org-defkey org-mode-map [(meta return)]          'org-insert-subheading-respect-content)
+(org-defkey org-mode-map [(meta shift return)]    'org-insert-todo-subheading-respect-content)
+(org-defkey org-mode-map [(control return)]       'org-insert-heading-respect-content)
+(org-defkey org-mode-map [(shift control return)] 'org-insert-todo-heading-respect-content)
 
 ;; Cursor keys with modifiers
 (org-defkey org-mode-map [(meta left)]  'org-metaleft)
@@ -18472,8 +18483,6 @@ BEG and END default to the buffer boundaries."
 (org-defkey org-mode-map "\M-\C-m"  'org-insert-heading)
 (org-defkey org-mode-map "\C-c\C-xc" 'org-clone-subtree-with-time-shift)
 (org-defkey org-mode-map "\C-c\C-xv" 'org-copy-visible)
-(org-defkey org-mode-map [(control return)] 'org-insert-heading-respect-content)
-(org-defkey org-mode-map [(shift control return)] 'org-insert-todo-heading-respect-content)
 (org-defkey org-mode-map "\C-c\C-x\C-n" 'org-next-link)
 (org-defkey org-mode-map "\C-c\C-x\C-p" 'org-previous-link)
 (org-defkey org-mode-map "\C-c\C-l" 'org-insert-link)
