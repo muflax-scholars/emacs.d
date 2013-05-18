@@ -641,26 +641,32 @@ If visual-line-mode is on, then also jump to beginning of real line."
 
 ;; align
 (require 'align)
-(add-to-list 'align-rules-list
-             '(ruby-comma-delimiter
-                (regexp . ",\\(\\s-*\\)[^# \t\n]")
-                (repeat . t)
-                (modes  . '(enh-ruby-mode))))
-(add-to-list 'align-rules-list
-             '(ruby-hash-literal
-                (regexp . "\\(\\s-*\\)=>\\s-*[^# \t\n]")
-                (repeat . t)
-                (modes  . '(enh-ruby-mode))))
-(add-to-list 'align-rules-list
-             '(ruby-assignment-literal
-                (regexp . "\\(\\s-*\\)=\\s-*[^# \t\n]")
-                (repeat . t)
-                (modes  . '(enh-ruby-mode))))
-(add-to-list 'align-rules-list          ;TODO add to rcodetools.el
-             '(ruby-xmpfilter-mark
-                (regexp . "\\(\\s-*\\)# => [^#\t\n]")
-                (repeat . nil)
-                (modes  . '(enh-ruby-mode))))
+;; definitions for ruby code
+;; fixes the most egregious mistake in detecting regions (hashes), but should be properly generalized at some point
+(setq align-region-separate "\\(^\\s-*[{}]?\\s-*$\\)\\|\\(=\\s-*[][{}()]\\s-*$\\)")
+(defconst align-ruby-modes '(enh-ruby-mode)
+  "align-perl-modes is a variable defined in `align.el'.")
+(defconst ruby-align-rules-list
+  '((ruby-comma-delimiter
+     (regexp . ",\\(\\s-*\\)[^/ \t\n]")
+     (modes . '(enh-ruby-mode))
+     (repeat . t))
+    (ruby-string-after-func
+     (regexp . "^\\s-*[a-zA-Z0-9.:?_]+\\(\\s-+\\)['\"]\\w+['\"]")
+     (modes . '(enh-ruby-mode))
+     (repeat . t))
+    (ruby-symbol-after-func
+     (regexp . "^\\s-*[a-zA-Z0-9.:?_]+\\(\\s-+\\):\\w+")
+     (modes . '(enh-ruby-mode))))
+  "Alignment rules specific to the ruby mode.
+See the variable `align-rules-list' for more details.")
+(add-to-list 'align-perl-modes 'enh-ruby-mode)
+(add-to-list 'align-dq-string-modes 'enh-ruby-mode)
+(add-to-list 'align-sq-string-modes 'enh-ruby-mode)
+(add-to-list 'align-open-comment-modes 'enh-ruby-mode)
+(dolist (it ruby-align-rules-list)
+  (add-to-list 'align-rules-list it))
+;; align current region
 (global-set-key "\C-c=" 'align-current)
 
 ;; diff- mode (better colors)

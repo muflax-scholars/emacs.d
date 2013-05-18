@@ -6,7 +6,7 @@
 ;;;### (autoloads (wcheck-actions wcheck-jump-backward wcheck-jump-forward
 ;;;;;;  wcheck-mode wcheck-change-language wcheck-language wcheck-language-data-defaults
 ;;;;;;  wcheck-language-data wcheck) "wcheck-mode" "wcheck-mode.el"
-;;;;;;  (20863 28295 565225 848000))
+;;;;;;  (20886 59309 83964 900000))
 ;;; Generated autoloads from wcheck-mode.el
 
 (let ((loads (get 'wcheck 'custom-loads))) (if (member '"wcheck-mode" loads) nil (put 'wcheck 'custom-loads (cons '"wcheck-mode" loads))))
@@ -315,7 +315,7 @@ action-parser
 
     The `action-parser' function should examine the buffer for
     interesting information (such as spelling suggestions) and
-    return them the in the format that is described below.
+    return them in the format that is described below.
 
     For the most common cases there are three parser functions
     already implemented:
@@ -371,7 +371,7 @@ any kind of useful actions by calling custom functions. There are
 a lot of possibilities.
 
 
-For configuration examples, see the README.org file in URL
+For configuration examples, see the README file in URL
 `https://github.com/tlikonen/wcheck-mode'.")
 
 (custom-autoload 'wcheck-language-data "wcheck-mode" t)
@@ -511,8 +511,8 @@ any kind of actions, though.
 
 ;;;***
 
-;;;### (autoloads nil nil ("wcheck-mode-pkg.el") (20863 28296 355853
-;;;;;;  912000))
+;;;### (autoloads nil nil ("wcheck-mode-pkg.el") (20886 59309 503013
+;;;;;;  149000))
 
 ;;;***
 

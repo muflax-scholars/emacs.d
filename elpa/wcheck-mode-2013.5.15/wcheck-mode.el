@@ -514,7 +514,7 @@ action-parser
 
     The `action-parser' function should examine the buffer for
     interesting information (such as spelling suggestions) and
-    return them the in the format that is described below.
+    return them in the format that is described below.
 
     For the most common cases there are three parser functions
     already implemented:
@@ -570,7 +570,7 @@ any kind of useful actions by calling custom functions. There are
 a lot of possibilities.
 
 
-For configuration examples, see the README.org file in URL
+For configuration examples, see the README file in URL
 `https://github.com/tlikonen/wcheck-mode'."
 
   :group 'wcheck
