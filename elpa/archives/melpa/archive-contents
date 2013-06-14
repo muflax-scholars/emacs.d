@@ -773,7 +773,7 @@
 		 [(20121007 1837)
 		  nil "Provide fast switching between shell buffers [github]" tar])
  (shell-pop .
-	    [(20130613 1845)
+	    [(20130614 1145)
 	     nil "helps you to use shell easily on Emacs. Only one key action to work. [github]" single])
  (shell-history .
 		[(20100504 850)
@@ -781,9 +781,6 @@
  (shell-here .
 	     [(20120807 1913)
 	      nil "Open a shell relative to the working directory [github]" single])
- (shell-command .
-		[(20090621 1332)
-		 nil "enables tab-completion for `shell-command' [wiki]" single])
  (session .
 	  [(20120511 0)
 	   nil "use variables, registers and buffer places across sessions [github]" single])
@@ -793,9 +790,6 @@
  (scss-mode .
 	    [(20121203 127)
 	     nil "Major mode for editing SCSS files [github]" single])
- (screenshot .
-	     [(20120509 1105)
-	      nil "Take a screenshot in Emacs [wiki]" single])
  (scratch-pop .
 	      [(20130511 1324)
 	       nil "popup scratch [github]" single])
@@ -1070,7 +1064,7 @@
 		[(20130521 932)
 		 nil "Project oriented automatic builder and error highlighter, flymake for projects [github]" tar])
  (projectile .
-	     [(20130612 1356)
+	     [(20130614 1027)
 	      ((s
 		(1 0 0))
 	       (dash
@@ -1672,7 +1666,7 @@
 		[(20130611 1046)
 		 nil "Emacs Major mode for Markdown-formatted text files [git]" single])
  (mark-tools .
-	     [(20130315 1228)
+	     [(20130614 1125)
 	      nil "Some simple tools to access the mark-ring in Emacs [github]" single])
  (mark-multiple .
 		[(20121118 1654)
@@ -3958,5 +3952,11 @@
 	    nil "Python TDD minor mode [github]" single])
  (abc-mode .
 	   [(20130607 917)
-	    nil "Major mode for editing abc music files [github]" single]))
+	    nil "Major mode for editing abc music files [github]" single])
+ (shell-command .
+		[(20090621 1332)
+		 nil "enables tab-completion for `shell-command' [wiki]" single])
+ (screenshot .
+	     [(20120509 1105)
+	      nil "Take a screenshot in Emacs [wiki]" single]))
 
