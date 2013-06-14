@@ -12,6 +12,7 @@
 (require 'package)
 (add-to-list 'package-archives '("tromey"    . "http://tromey.com/elpa/"))
 (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+(add-to-list 'package-archives '("melpa"     . "http://melpa.milkbox.net/packages/"))
 (package-initialize)
 
 ;; color 
@@ -530,9 +531,9 @@ If visual-line-mode is on, then also jump to beginning of real line."
 ;; probably be some unset here.
 (setq load-path (cons "~/.emacs.d/site-lisp/org-mode/lisp" load-path))
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
-;; proper indentation / folding
 ;; loaded so that we can diminish it later
 (require 'org-indent)
+;; proper indentation / folding
 (setq org-startup-indented t)
 (setq org-startup-folded 'content)
 (setq org-blank-before-new-entry '(
@@ -549,31 +550,14 @@ If visual-line-mode is on, then also jump to beginning of real line."
   "Scan for org files whenever todo list is loaded."
   ; 'find' is faster and has better control than lisp
   (setq org-agenda-files (mapcar 'abbreviate-file-name (split-string
-    (shell-command-to-string "find ~/spoiler -type f -name \"*.org\" | sort")
+    (shell-command-to-string "find ~/spoiler/projects -type f -name \"*.org\" | sort")
       "\n"))))
-;; format in agenda
-(setq org-agenda-prefix-format (quote (
-  (agenda . " %i %-12:c%?-12t% s") 
-  (timeline . "  % s") 
-  (todo . "%-25:c") 
-  (tags . "%-25:c") 
-  (search . "%-25:c"))))
-(setq org-agenda-sorting-strategy (quote (
-  (agenda habit-down time-up priority-down category-keep) 
-  (todo category-up) 
-  (tags priority-down category-up) 
-  (search category-up))))
-;; capture
-(if (file-accessible-directory-p "~/spoiler") 
-  (progn
-    (setq org-default-notes-file "~/spoiler/capture.org")))
 ;; todo states
 (setq org-todo-keywords
       '((sequence "TODO(t)" "|" "WAITING(w)" "DONE(d)")))
 ;; priorities
 (setq org-default-priority 67) ;C
 ;; keybindings
-(define-key global-map "\C-ca" 'org-agenda)
 (define-key global-map "\C-ct" 'org-todo-list)
 (org-defkey org-mode-map "\C-c\C-t" (lambda () (interactive) (org-todo "TODO")))
 (org-defkey org-mode-map "\C-c\C-w" (lambda () (interactive) (org-todo "WAITING")))
@@ -584,10 +568,6 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (define-key global-map "\C-cl" 'org-insert-file-link)
 ;; go to spoiler index
 (define-key global-map "\C-c\C-s" (lambda () (interactive) (find-file "~/spoiler/notes/index.org")))
-;; apps
-(setq org-file-apps (append '(
-  ("\\.gnumeric\\'" . "gnumeric %s")
-  ) org-file-apps ))
 
 ;; reload file when it changed (and the buffer has no changes)
 (global-auto-revert-mode 1)
@@ -608,9 +588,9 @@ If visual-line-mode is on, then also jump to beginning of real line."
 ;; enhanced ruby mode
 (setq load-path (cons "~/.emacs.d/site-lisp/enh-ruby-mode" load-path))
 (setq enh-ruby-program "ruby")
-(autoload 'enh-ruby-mode "enh-ruby-mode" "Major mode for ruby files" t)
-(add-to-list 'auto-mode-alist '("\\.rb$"      . enh-ruby-mode))
 (add-to-list 'interpreter-mode-alist '("ruby" . enh-ruby-mode))
+;; replace normal ruby mode
+(defalias 'ruby-mode 'enh-ruby-mode)
 ;; misc stuff
 (require 'yari)        ; ri documentation tool
 (require 'ruby-block)  ; show what block an end belongs to
