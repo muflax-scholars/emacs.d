@@ -194,12 +194,15 @@ class Frame(object):
             return True
         # Fallback
         atom = display.get_atom("_NET_ACTIVE_WINDOW", True)
-        focus_id = tree.root.get_property(atom, Xlib.Xatom.WINDOW, 0, 1).value[0]
-        focus = display.create_resource_object("window", focus_id)
-        if focus != self.focus or sync:
-            print form % focus_id
-            focus.change_attributes(event_mask=Xlib.X.FocusChangeMask)
-            self.focus = focus
+        try:
+            focus_id = tree.root.get_property(atom, Xlib.Xatom.WINDOW, 0, 1).value[0]
+            focus = display.create_resource_object("window", focus_id)
+            if focus != self.focus or sync:
+                print form % focus_id
+                focus.change_attributes(event_mask=Xlib.X.FocusChangeMask)
+                self.focus = focus
+        except AttributeError:
+            pass
         return True
 
     def stop_focus_observation(self):
