@@ -591,6 +591,15 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (add-to-list 'interpreter-mode-alist '("ruby" . enh-ruby-mode))
 ;; replace normal ruby mode
 (defalias 'ruby-mode 'enh-ruby-mode)
+;; better colors for warnings
+(defface erm-syn-warnline
+  '((t (:underline "orange")))
+  "Face used for marking warning lines."
+  :group 'enh-ruby)
+(defface erm-syn-errline
+  '((t (:underline "red")))
+  "Face used for marking error lines."
+  :group 'enh-ruby) 
 ;; misc stuff
 (require 'yari)        ; ri documentation tool
 (require 'ruby-block)  ; show what block an end belongs to
