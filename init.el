@@ -586,7 +586,6 @@ If visual-line-mode is on, then also jump to beginning of real line."
 
 ;; ruby mode
 ;; enhanced ruby mode
-(setq load-path (cons "~/.emacs.d/site-lisp/enh-ruby-mode" load-path))
 (setq enh-ruby-program "ruby")
 (add-to-list 'interpreter-mode-alist '("ruby" . enh-ruby-mode))
 ;; replace normal ruby mode
