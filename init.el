@@ -618,6 +618,12 @@ If visual-line-mode is on, then also jump to beginning of real line."
 ;; erb
 (require 'rhtml-mode)
 (add-to-list 'auto-mode-alist '("\\.erb$"     . rhtml-mode))
+;; pry
+(require 'pry)
+;; optional suggestions
+(global-set-key [S-f9] 'pry-intercept)
+(global-set-key [f9] 'pry-intercept-rerun)
+
 
 ;; javascript
 (require 'js2-mode)
