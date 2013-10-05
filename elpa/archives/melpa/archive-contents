@@ -2325,6 +2325,9 @@
  (linphone .
 	   [(20130524 1306)
 	    nil "Emacs interface to Linphone [github]" tar])
+ (link .
+       [(20131005 1021)
+	nil "Hypertext links in text buffers [github]" single])
  (lib-requires .
 	       [(20130723 2338)
 		nil "Commands to list Emacs Lisp library dependencies. [wiki]" single])
@@ -2995,7 +2998,7 @@
 	    (20120509)))
 	  "helm-sources and some utilities for GNU R. [github]" single])
  (helm .
-       [(20131003 844)
+       [(20131005 1214)
 	nil "Helm is an Emacs incremental and narrowing framework [github]" tar])
  (header2 .
 	  [(20130723 2321)
@@ -4255,6 +4258,13 @@
 	   ((cl-lib
 	     (0 2)))
 	   "Highlight uncommitted changes [github]" tar])
+ (dictionary .
+	     [(20131005 1021)
+	      ((connection
+		(1 10))
+	       (link
+		(1 10)))
+	      "Client for rfc2229 dictionary servers [github]" single])
  (dic-lookup-w3m .
 		 [(20121101 1233)
 		  ((w3m
@@ -4375,6 +4385,9 @@
  (cperl-mode .
 	     [(20130716 858)
 	      nil "Perl code editing commands for Emacs [github]" single])
+ (connection .
+	     [(20131005 1021)
+	      nil "TCP-based client connection [github]" single])
  (confluence .
 	     [(20130814 735)
 	      ((xml-rpc
@@ -4882,6 +4895,9 @@
  (alert .
 	[(20130510 912)
 	 nil "Growl-style notification system for Emacs [github]" single])
+ (alect-themes .
+	       [(20131004 1245)
+		nil "2 color themes (light and dark) for Emacs 24 [github]" tar])
  (airplay .
 	  [(20130212 2126)
 	   ((request
@@ -4925,7 +4941,7 @@
 		     (1 0)))
 		   "fast buffer switching extension to `ace-jump-mode' [github]" single])
  (ac-slime .
-	   [(20131004 1922)
+	   [(20131005 1126)
 	    nil "An auto-complete source using slime completions [github]" single])
  (ac-nrepl .
 	   [(20131002 1659)
