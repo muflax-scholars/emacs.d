@@ -284,6 +284,10 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (define-key yas-minor-mode-map [(shift tab)] 'yas-next-field)
 (define-key yas-minor-mode-map [(control tab)] 'yas-prev-field)
 (yas-global-mode 1)
+; auto-yasnippet
+(require 'auto-yasnippet)
+(global-set-key (kbd "C-c ~")   'aya-create)
+(global-set-key (kbd "C-c C-~") 'aya-expand)
 
 ;; text completion
 ;; auto completion
