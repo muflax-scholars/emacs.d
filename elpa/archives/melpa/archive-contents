@@ -1097,7 +1097,7 @@
 	[(20130721 2305)
 	 nil "Buffer rings. Like tabs, but better. [github]" single])
  (rinari .
-	 [(20130901 1830)
+	 [(20131006 1006)
 	  ((ruby-mode
 	    (1 0))
 	   (inf-ruby
@@ -2011,11 +2011,11 @@
 	     [(20130602 1448)
 	      nil "Show icons for modes [git]" tar])
  (mocker .
-	 [(20130418 2343)
+	 [(20131006 858)
 	  ((eieio
 	    (1 3))
 	   (el-x
-	    (0 2 2)))
+	    (0 2 3)))
 	  "mocking framework for emacs [github]" single])
  (mo-vi-ment-mode .
 		  [(20130607 1642)
@@ -2117,7 +2117,7 @@
 		    (20111229)))
 		  "extra functions for markdown-mode [github]" tar])
  (markdown-mode .
-		[(20130726 2142)
+		[(20131005 1155)
 		 nil "Emacs Major mode for Markdown-formatted text files [git]" single])
  (mark-tools .
 	     [(20130614 1125)
@@ -2206,7 +2206,7 @@
 			       [(20130730 1032)
 				nil "Advice for magit-log-edit-commit [github]" single])
  (magit .
-	[(20131005 119)
+	[(20131006 322)
 	 ((cl-lib
 	   (0 3))
 	  (git-commit-mode
@@ -2467,6 +2467,13 @@
 	 (inflections
 	  (1 1)))
 	"build functions which contextually jump between files [github]" single])
+ (jumblr .
+	 [(20131005 1810)
+	  ((s
+	    (1 8 0))
+	   (dash
+	    (2 2 0)))
+	  "an anagram game for emacs [github]" tar])
  (jtags .
 	[(20111208 1922)
 	 nil "enhanced tags functionality for Java development [git]" tar])
@@ -2623,7 +2630,7 @@
 	      [(20121016 957)
 	       nil "convert english words between singular and plural [github]" single])
  (inf-ruby .
-	   [(20130920 421)
+	   [(20131006 1010)
 	    nil "Run a ruby process in a buffer [github]" single])
  (inf-php .
 	  [(20130414 1621)
@@ -2998,7 +3005,7 @@
 	    (20120509)))
 	  "helm-sources and some utilities for GNU R. [github]" single])
  (helm .
-       [(20131005 1214)
+       [(20131006 1607)
 	nil "Helm is an Emacs incremental and narrowing framework [github]" tar])
  (header2 .
 	  [(20130723 2321)
@@ -3064,7 +3071,7 @@
        [(20110806 1658)
 	nil "run grin and grind (python replacements for grep and find) putting hits in a grep buffer [hg]" single])
  (grep-a-lot .
-	     [(20120703 1059)
+	     [(20131006 1547)
 	      nil "manages multiple search results buffers for grep.el [github]" single])
  (grapnel .
 	  [(20131001 1134)
@@ -3805,7 +3812,7 @@
 	 [(20130827 1016)
 	  nil "Erlang major mode [github]" tar])
  (ergoemacs-mode .
-		 [(20131005 34)
+		 [(20131006 0)
 		  nil "Emacs mode based on common modern software interface and ergonomics. [github]" tar])
  (erefactor .
 	    [(20130521 1838)
@@ -4020,9 +4027,6 @@
  (el-spec .
 	  [(20121018 304)
 	   nil "ruby's rspec like syntax test frame work [github]" single])
- (el-mock .
-	  [(20130806 2248)
-	   nil "Tiny Mock and Stub framework in Emacs Lisp [github]" single])
  (el-autoyas .
 	     [(20120918 817)
 	      nil "Automatically create Emacs-Lisp Yasnippets [github]" tar])
@@ -4044,11 +4048,6 @@
  (egg .
       [(20130702 925)
        nil "Emacs Got Git - Emacs interface to Git [github]" tar])
- (efire .
-	[(20130812 49)
-	 ((circe
-	   (1 2)))
-	 "Use campfire from Emacs [github]" single])
  (editorconfig .
 	       [(20130802 1542)
 		nil "EditorConfig Emacs extension [github]" single])
@@ -4206,6 +4205,18 @@
  (dna-mode .
 	   [(20130821 1105)
 	    nil "a major mode for editing dna sequences [github]" tar])
+ (dkmisc .
+	 [(20130928 1056)
+	  ((emacs
+	    (24 1)))
+	  "Miscellaneous functions required by dk* packages. [github]" tar])
+ (dkdo .
+       [(20131006 906)
+	((dkmisc
+	  (0 5))
+	 (emacs
+	  (24 1)))
+	"Do List major mode based on org-mode. [github]" tar])
  (django-theme .
 	       [(20130309 1841)
 		nil "Custom face theme for Emacs [github]" single])
@@ -4725,7 +4736,7 @@
 	 [(20130917 1848)
 	  nil "Run AWK interactively on region! [wiki]" single])
  (autopair .
-	   [(20121123 1829)
+	   [(20131006 1224)
 	    nil "Automagically pair braces and quotes like TextMate [github]" single])
  (automargin .
 	     [(20130910 40)
@@ -4848,7 +4859,7 @@
 	   [(20130606 946)
 	    nil "open anything / QuickSilver-like candidate-selection framework [git]" tar])
  (anti-zenburn-theme .
-		     [(20130928 204)
+		     [(20131006 14)
 		      nil "Low-contrast Zenburn-inverted theme [github]" single])
  (ansi .
        [(20130827 1653)
@@ -4896,7 +4907,7 @@
 	[(20130510 912)
 	 nil "Growl-style notification system for Emacs [github]" single])
  (alect-themes .
-	       [(20131004 1245)
+	       [(20131005 2255)
 		nil "2 color themes (light and dark) for Emacs 24 [github]" tar])
  (airplay .
 	  [(20130212 2126)
@@ -4998,6 +5009,14 @@
 	     (request
 	      (0 2 0)))
 	    "Open and evaluate 4clojure.com questions [github]" single])
+ (el-mock .
+	  [(20130806 2248)
+	   nil "Tiny Mock and Stub framework in Emacs Lisp [github]" single])
+ (efire .
+	[(20130812 49)
+	 ((circe
+	   (1 2)))
+	 "Use campfire from Emacs [github]" single])
  (helm-c-moccur .
 		[(20130216 1417)
 		 nil "helm source for color-moccur.el [github]" single]))

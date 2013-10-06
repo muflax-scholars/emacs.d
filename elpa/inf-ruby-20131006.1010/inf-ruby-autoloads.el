@@ -6,8 +6,14 @@
 ;;;### (autoloads (inf-ruby-console-default inf-ruby-console-gem
 ;;;;;;  inf-ruby-console-rails inf-ruby-console-auto inf-ruby-switch-setup
 ;;;;;;  run-ruby inf-ruby inf-ruby-minor-mode inf-ruby-setup-keybindings)
-;;;;;;  "inf-ruby" "inf-ruby.el" (21072 8895 713927 910000))
+;;;;;;  "inf-ruby" "inf-ruby.el" (21073 46228 448357 301000))
 ;;; Generated autoloads from inf-ruby.el
+
+(defvar ruby-source-modes '(ruby-mode enh-ruby-mode) "\
+Used to determine if a buffer contains Ruby source code.
+If it's loaded into a buffer that is in one of these major modes, it's
+considered a ruby source file by `ruby-load-file'.
+Used by these commands to determine defaults.")
 
 (autoload 'inf-ruby-setup-keybindings "inf-ruby" "\
 Hook up `inf-ruby-minor-mode' to each of `ruby-source-modes'.
@@ -66,12 +72,12 @@ Gemfile, it should use the `gemspec' instruction.
 Run racksh, custom console.rb, or just IRB, in DIR.
 
 \(fn DIR)" t nil)
- (inf-ruby-setup-keybindings)
+ (dolist (mode ruby-source-modes) (add-hook (intern (format "%s-hook" mode)) 'inf-ruby-minor-mode))
 
 ;;;***
 
-;;;### (autoloads nil nil ("inf-ruby-pkg.el") (21072 8895 728597
-;;;;;;  883000))
+;;;### (autoloads nil nil ("inf-ruby-pkg.el") (21073 46228 496946
+;;;;;;  354000))
 
 ;;;***
 
