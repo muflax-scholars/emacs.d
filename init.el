@@ -783,6 +783,10 @@ See the variable `align-rules-list' for more details.")
   ))
 (whole-line-or-region-mode 1)
 
+;; better rectangle functionality
+(require 'phi-rectangle)
+(phi-rectangle-mode)
+
 ;; tramp (remote files)
 (setq tramp-default-method "ssh")
 (require 'tramp)

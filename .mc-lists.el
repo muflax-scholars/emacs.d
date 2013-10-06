@@ -3,13 +3,14 @@
 
 (setq mc/cmds-to-run-for-all
       '(
+        phi-rectangle-next-line
         ))
 
 (setq mc/cmds-to-run-once
       '(
-        bc-set
-        repeat
         align-current
+        bc-set
         ibus-handle-event
+        repeat
         smex
         ))
