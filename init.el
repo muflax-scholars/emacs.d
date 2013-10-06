@@ -89,6 +89,18 @@
 (setq automargin-target-width 120)
 (automargin-mode)
 
+;; multiple cursors
+(require 'multiple-cursors)
+(global-set-key (kbd "C-c k") 'mc/edit-lines)
+(global-set-key (kbd "C-c >")   'mc/mark-next-like-this)
+(global-set-key (kbd "C-c <")   'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-k") 'mc/mark-all-like-this)
+(require 'phi-search)
+(require 'phi-search-mc)
+(define-key phi-search-mode-map (kbd "C-c >") 'phi-search-mc/mark-next)
+(define-key phi-search-mode-map (kbd "C-c <") 'phi-search-mc/mark-previous)
+(define-key phi-search-mode-map (kbd "C-c C-k") 'phi-search-mc/mark-all)
+
 ;; support for bookmarks
 (require 'breadcrumb)
 (global-set-key (kbd "C-c m") 'bc-set)
