@@ -84,6 +84,11 @@
 (setq-default bidi-display-reordering  nil)
 (setq auto-window-vscroll nil)
 
+;; try to keep windows within a max margin
+(require 'automargin)
+(setq automargin-target-width 120)
+(automargin-mode)
+
 ;; support for bookmarks
 (require 'breadcrumb)
 (global-set-key (kbd "C-c m") 'bc-set)
