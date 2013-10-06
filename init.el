@@ -579,6 +579,21 @@ If visual-line-mode is on, then also jump to beginning of real line."
       '((sequence "TODO(t)" "|" "WAITING(w)" "DONE(d)")))
 ;; priorities
 (setq org-default-priority 67) ;C
+;; code block
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((emacs-lisp . t)
+   (sh         . t)
+   (ruby       . t)
+   (python     . t)
+   (haskell    . t)))
+(add-to-list 'org-src-lang-modes '("ruby" . enh-ruby))
+(add-to-list 'org-src-lang-modes '("r"    . enh-ruby))
+(add-to-list 'org-src-lang-modes '("h"    . haskell))
+(add-to-list 'org-src-lang-modes '("s"    . sh))
+(add-to-list 'org-src-lang-modes '("p"    . python))
+(setq org-src-fontify-natively t)
+(setq org-confirm-babel-evaluate nil)
 ;; keybindings
 (define-key global-map "\C-ct" 'org-todo-list)
 (org-defkey org-mode-map "\C-c\C-t" (lambda () (interactive) (org-todo "TODO")))
