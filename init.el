@@ -189,7 +189,6 @@
 (global-set-key "\C-cu" 'uncomment-region)
 (global-set-key "\C-cn" 'next-error)  
 (global-set-key "\C-cp" 'previous-error) 
-(global-set-key "\C-cr" 'query-replace-regexp)
 (global-set-key "\M-t"  'find-tag)
 (global-set-key "\C-ci" 'indent-region)
 ;; because we navigate via cursor keys, we can put something more useful on the
@@ -202,6 +201,11 @@
 (global-set-key "\C-b" 'backward-word)
 (global-set-key "\M-f" 'forward-sentence)
 (global-set-key "\M-b" 'backward-sentence)
+
+;; better search/replace
+(require 'visual-regexp)
+(require 'visual-regexp-steroids)
+(global-set-key "\C-cr" 'vr/query-replace)
 
 ;; copy end of line, like C-k
 (defun copy-line ()
