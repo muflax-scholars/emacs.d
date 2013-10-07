@@ -903,6 +903,10 @@ See the variable `align-rules-list' for more details.")
 (require 'winner)
 (winner-mode 1)
 
+;; ace-jump (hint-style navigation)
+(require 'ace-jump-mode)
+(global-set-key (kbd "C-c j")  'ace-jump-mode)
+
 ;; cookies
 (setq url-cookie-file "~/.emacs.d/cache/url/cookies")
 
