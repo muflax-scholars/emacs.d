@@ -816,9 +816,6 @@
  (smart-tab .
 	    [(20130317 1157)
 	     nil "Intelligent tab completion and indentation. [github]" single])
- (smart-operator .
-		 [(20051013 1756)
-		  nil "Beautify the operators in codes [wiki]" single])
  (smart-mode-line .
 		  [(20131002 1140)
 		   nil "A color coded smart mode-line. [github]" single])
@@ -875,9 +872,6 @@
  (simple-call-tree+ .
 		    [(20131002 311)
 		     nil "Extensions to simple-call-tree [wiki]" single])
- (simple-call-tree .
-		   [(20130330 940)
-		    nil "analyze source code based on font-lock text-properties [wiki]" single])
  (simp .
        [(20130602 1301)
 	nil "Simple project definition, chiefly for file finding, and grepping [github]" tar])
@@ -1003,9 +997,6 @@
  (save-sexp .
 	    [(20130106 1542)
 	     nil "save variables in files using setter forms like `setq' [github]" tar])
- (save-load-path .
-		 [(20130130 2150)
-		  nil "save load-path and reuse it to test [wiki]" single])
  (sauron .
 	 [(20130818 2134)
 	  nil "Track (erc/org/dbus/...) events and react to them. [github]" tar])
@@ -1110,9 +1101,6 @@
  (rhtml-mode .
 	     [(20130421 1008)
 	      nil "major mode for editing RHTML files [github]" tar])
- (rfringe .
-	  [(20110405 1520)
-	   nil "display the relative location of the region, in the fringe. [wiki]" single])
  (revive .
 	 [(20121022 1311)
 	  nil "Resume Emacs [github]" single])
@@ -1750,9 +1738,6 @@
  (openstack-cgit-browse-file .
 			     [(20130819 1127)
 			      nil "Browse the current file in OpenStack cgit [github]" single])
- (open-junk-file .
-		 [(20130131 720)
-		  nil "Open a junk (memo) file to try-and-error [wiki]" single])
  (on-screen .
 	    [(20130927 1818)
 	     nil "guide your eyes while scrolling [github]" single])
@@ -2064,9 +2049,6 @@
 	       (clojure-mode
 		(1 0)))
 	      "Minor mode for running Midje tests in emacs, see: https://github.com/dnaumov/midje-mode [github]" tar])
- (mic-paren .
-	    [(20120716 1647)
-	     nil "advanced highlighting of matching parentheses [wiki]" single])
  (mew .
       [(20130814 1255)
        nil "Messaging in the Emacs World [github]" tar])
@@ -2211,7 +2193,7 @@
 			       [(20130730 1032)
 				nil "Advice for magit-log-edit-commit [github]" single])
  (magit .
-	[(20131006 322)
+	[(20131007 255)
 	 ((cl-lib
 	   (0 3))
 	  (git-commit-mode
@@ -2252,9 +2234,6 @@
  (loop .
        [(20130309 1605)
 	nil "friendly imperative loop structures [github]" single])
- (look-mode .
-	    [(20091023 521)
-	     nil "quick file viewer for image and text file browsing [wiki]" single])
  (look-dired .
 	     [(20130512 24)
 	      ((look-mode
@@ -2521,9 +2500,6 @@
  (jknav .
 	[(20121006 1325)
 	 nil "Automatically enable j/k keys for line-based navigation [github]" single])
- (jira .
-       [(20091012 2123)
-	nil "Connect to JIRA issue tracking software [wiki]" single])
  (jinja2-mode .
 	      [(20120827 1103)
 	       nil "A major mode for jinja2 [github]" single])
@@ -2813,15 +2789,9 @@
  (highlight-escape-sequences .
 			     [(20130601 212)
 			      nil "Highlight escape sequences [github]" single])
- (highlight-current-line .
-			 [(20051013 1756)
-			  nil "highlight line where the cursor is. [wiki]" single])
  (highlight-cl .
 	       [(20091012 1730)
 		nil "Highlighting `cl' functions. [wiki]" single])
- (highlight .
-	    [(20130915 1816)
-	     nil "Highlighting commands. [wiki]" single])
  (hide-lines .
 	     [(20130623 1605)
 	      nil "Commands for hiding lines based on a regexp [wiki]" single])
@@ -3062,7 +3032,7 @@
 	       (0 3 0)))
 	     "Guide the following key bindings automatically and dynamically [github]" single])
  (gruber-darker-theme .
-		      [(20131001 1351)
+		      [(20131007 1016)
 		       nil "Gruber Darker color theme for Emacs 24. [github]" single])
  (groovy-mode .
 	      [(20130506 1025)
@@ -3367,9 +3337,6 @@
  (fringe-helper .
 		[(20130519 1641)
 		 nil "helper functions for fringe bitmaps [github]" tar])
- (framemove .
-	    [(20130328 1133)
-	     nil "directional frame selection routines [wiki]" single])
  (frame-tag .
 	    [(20120527 1636)
 	     nil "Minor mode that assigns a unique number to each frame for easy switching [github]" single])
@@ -3568,7 +3535,7 @@
 	 (0 3)))
        "fuzzy matching with good sorting [github]" single])
  (floobits .
-	   [(20130923 2249)
+	   [(20131006 2147)
 	    ((json
 	      (1 2))
 	     (highlight
@@ -3817,7 +3784,7 @@
 	 [(20130827 1016)
 	  nil "Erlang major mode [github]" tar])
  (ergoemacs-mode .
-		 [(20131006 1050)
+		 [(20131006 2307)
 		  nil "Emacs mode based on common modern software interface and ergonomics. [github]" tar])
  (erefactor .
 	    [(20130521 1838)
@@ -4219,12 +4186,12 @@
 	   [(20130821 1105)
 	    nil "a major mode for editing dna sequences [github]" tar])
  (dkmisc .
-	 [(20130928 1056)
+	 [(20131006 2231)
 	  ((emacs
 	    (24 1)))
 	  "Miscellaneous functions required by dk* packages. [github]" tar])
  (dkdo .
-       [(20131006 906)
+       [(20131006 2231)
 	((dkmisc
 	  (0 5))
 	 (emacs
@@ -4278,7 +4245,7 @@
 	       [(20130927 12)
 		nil "dim complete autoload cookie lines [github]" single])
  (diff-hl .
-	  [(20130927 259)
+	  [(20131006 2342)
 	   ((cl-lib
 	     (0 2)))
 	   "Highlight uncommitted changes [github]" tar])
@@ -4749,7 +4716,7 @@
 	 [(20130917 1848)
 	  nil "Run AWK interactively on region! [wiki]" single])
  (autopair .
-	   [(20131006 1224)
+	   [(20131007 150)
 	    nil "Automagically pair braces and quotes like TextMate [github]" single])
  (automargin .
 	     [(20130910 40)
@@ -4822,7 +4789,7 @@
 	     [(20130818 1420)
 	      nil "Lua editing support for AUCTeX [github]" single])
  (auctex-latexmk .
-		 [(20131003 434)
+		 [(20131007 815)
 		  ((auctex
 		    (11 87)))
 		  "Add LatexMk support to AUCTeX [github]" single])
@@ -4920,7 +4887,7 @@
 	[(20130510 912)
 	 nil "Growl-style notification system for Emacs [github]" single])
  (alect-themes .
-	       [(20131005 2255)
+	       [(20131006 2335)
 		nil "2 color themes (light and dark) for Emacs 24 [github]" tar])
  (airplay .
 	  [(20130212 2126)
@@ -5022,6 +4989,39 @@
 	     (request
 	      (0 2 0)))
 	    "Open and evaluate 4clojure.com questions [github]" single])
+ (smart-operator .
+		 [(20051013 1756)
+		  nil "Beautify the operators in codes [wiki]" single])
+ (simple-call-tree .
+		   [(20130330 940)
+		    nil "analyze source code based on font-lock text-properties [wiki]" single])
+ (save-load-path .
+		 [(20130130 2150)
+		  nil "save load-path and reuse it to test [wiki]" single])
+ (rfringe .
+	  [(20110405 1520)
+	   nil "display the relative location of the region, in the fringe. [wiki]" single])
+ (open-junk-file .
+		 [(20130131 720)
+		  nil "Open a junk (memo) file to try-and-error [wiki]" single])
+ (mic-paren .
+	    [(20120716 1647)
+	     nil "advanced highlighting of matching parentheses [wiki]" single])
+ (look-mode .
+	    [(20091023 521)
+	     nil "quick file viewer for image and text file browsing [wiki]" single])
+ (jira .
+       [(20091012 2123)
+	nil "Connect to JIRA issue tracking software [wiki]" single])
+ (highlight-current-line .
+			 [(20051013 1756)
+			  nil "highlight line where the cursor is. [wiki]" single])
+ (highlight .
+	    [(20130915 1816)
+	     nil "Highlighting commands. [wiki]" single])
+ (framemove .
+	    [(20130328 1133)
+	     nil "directional frame selection routines [wiki]" single])
  (helm-c-moccur .
 		[(20130216 1417)
 		 nil "helm source for color-moccur.el [github]" single]))
