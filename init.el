@@ -365,7 +365,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
       (find-file file))))
 (global-set-key "\C-x\C-r" 'recentf-ido-find-file)
 
-;; just some saviors
+;; yet another savior
 (defun jesus ()
   "Because Jesus saves."
   (interactive)
@@ -976,7 +976,12 @@ You have:
 (add-hook 'enh-ruby-mode-hook 'fic-mode)
 (add-hook 'js2-mode-hook 'fic-mode)
 
-;; clean up modeline and hide standard minor modes
+;; perspectives / workspaces (has to be loaded late)
+(require 'persp-mode)
+(setq persp-save-dir (expand-file-name "~/.emacs.d/cache/persp-confs"))
+(persp-mode t)
+
+  ;; clean up modeline and hide standard minor modes
 ;; should be last so all modes are already loaded
 (require 'diminish)
 (diminish 'abbrev-mode)
