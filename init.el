@@ -54,7 +54,7 @@
   ;; (set-frame-font "Ricty 9"))
 (defun big-font () 
   "sets a big-ish font"
-  interactive)
+  (interactive)
   (set-frame-font "-gnu-unifont-*"))
   ;; (set-frame-font "Ricty 12"))
 
