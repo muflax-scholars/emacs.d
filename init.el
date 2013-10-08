@@ -51,10 +51,12 @@
   "sets a small-ish font"
   (interactive)
   (set-frame-font "6x13"))
+  ;; (set-frame-font "Ricty 9"))
 (defun big-font () 
   "sets a big-ish font"
-  (interactive)
+  interactive)
   (set-frame-font "-gnu-unifont-*"))
+  ;; (set-frame-font "Ricty 12"))
 
 (defun set-window-font ()
   (if use-small-font (small-font) (big-font)))
