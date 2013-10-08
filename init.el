@@ -119,9 +119,9 @@
 (global-set-key (kbd "C-c C-k") 'mc/mark-all-like-this)
 (require 'phi-search)
 (require 'phi-search-mc)
-(define-key phi-search-mode-map (kbd "C-c >") 'phi-search-mc/mark-next)
-(define-key phi-search-mode-map (kbd "C-c <") 'phi-search-mc/mark-previous)
-(define-key phi-search-mode-map (kbd "C-c C-k") 'phi-search-mc/mark-all)
+(define-key phi-search-default-map (kbd "C-c >") 'phi-search-mc/mark-next)
+(define-key phi-search-default-map (kbd "C-c <") 'phi-search-mc/mark-previous)
+(define-key phi-search-default-map (kbd "C-c C-k") 'phi-search-mc/mark-all)
 
 ;; support for bookmarks
 (require 'breadcrumb)
