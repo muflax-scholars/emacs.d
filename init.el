@@ -16,14 +16,7 @@
 (add-to-list 'package-archives '("sunrise"   . "http://joseito.republika.pl/sunrise-commander/"))
 (package-initialize)
 
-;; color 
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
-(require 'color-theme)
-;; only load used color theme
-(require 'color-theme-almost-monokai)
-;(color-theme-initialize)
-
-;; use different color scheme depending on whether we run in X or a terminal
+;; selective hooks for either terminals or X windows
 (defvar after-make-console-frame-hooks '()
   "Hooks to run after creating a new TTY frame")
 (defvar after-make-window-system-frame-hooks '()
@@ -38,12 +31,39 @@
                'after-make-console-frame-hooks)))
 
 (add-hook 'after-make-frame-functions 'run-after-make-frame-hooks)
-(add-hook 'after-init-hook
-          (lambda ()
-            (run-after-make-frame-hooks (selected-frame))))
+(add-hook 'after-init-hook (lambda () (run-after-make-frame-hooks (selected-frame))))
 
-(add-hook 'after-make-window-system-frame-hooks 'color-theme-almost-monokai)
-(add-hook 'after-make-console-frame-hooks 'color-theme-almost-monokai)
+;; color theme
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
+
+(defvar use-bright-theme t
+  "Whether to use the bright or dark theme")
+
+(defvar bright-theme 'tango
+  "Bright theme to use")
+(defvar dark-theme 'tango-dark
+  "Bright theme to use")
+
+;; always disable old themes
+(defadvice load-theme 
+  (before theme-dont-propagate activate)
+  (mapcar #'disable-theme custom-enabled-themes))
+
+(defun set-color-theme ()
+  "sets appropriate color theme"
+  (interactive)
+  (if use-bright-theme (load-theme bright-theme) (load-theme dark-theme)))
+
+(defun toggle-bright-theme ()
+  "toggles between bright and dark theme"
+  (interactive)
+  (progn
+    (if use-bright-theme (setq use-bright-theme nil) (setq use-bright-theme t))
+    (set-color-theme)))
+(global-set-key "\C-c\C-t" 'toggle-bright-theme)
+
+(add-hook 'after-make-window-system-frame-hooks 'set-color-theme)
+(add-hook 'after-make-console-frame-hooks       'set-color-theme)
 
 ;; fonts
 (defvar use-small-font t)
@@ -788,7 +808,6 @@ See the variable `align-rules-list' for more details.")
    (quote ((encoding . utf-8)
            (eval set-input-method (quote muflax-latin))))))
 ;; keys
-(global-set-key "\C-c\C-t" 'ecb-toggle-layout)
 (global-set-key "\C-c;" 'ecb-minor-mode)
 ;; speedbar
 (setq speedbar-use-images nil)
