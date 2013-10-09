@@ -570,9 +570,9 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (add-hook 'markdown-mode-hook 'turn-on-spell-check)
 (add-hook 'org-mode-hook 'turn-on-spell-check)
 
-;; git
-(require 'format-spec)
-(require 'git-blame)
+;; disable version control in emacs
+(require 'vc)
+(setq vc-handled-backends ())
 
 ;; markdown
 (require 'markdown-mode)
@@ -707,7 +707,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (require 'pry)
 ;; optional suggestions
 (global-set-key [S-f9] 'pry-intercept)
-(global-set-key [f9] 'pry-intercept-rerun)
+(global-set-key [f9]   'pry-intercept-rerun)
 
 
 ;; javascript

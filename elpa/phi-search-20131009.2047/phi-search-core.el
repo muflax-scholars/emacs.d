@@ -44,10 +44,6 @@
   "maximum number of accepted matches"
   :group 'phi-search)
 
-(defcustom phi-search-case-sensitive nil
-  "when non-nil, phi-search will be case sensitive"
-  :group 'phi-search)
-
 (defcustom phi-search-default-map
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "C-s") 'phi-search-again-or-next)
@@ -80,30 +76,28 @@
 
 ;; + utilities
 
-(defun phi-search--search-backward (query limit &optional filter inclusive)
+(defun phi-search--search-backward (query limit &optional case-fold-search filter inclusive)
   "a handy version of search-backward-regexp"
   (ignore-errors
-    (let* ((case-fold-search (not phi-search-case-sensitive))
-           (pos1 (point))
+    (let* ((pos1 (point))
            (pos2 (search-backward-regexp query limit t)))
       (if (or (and (not inclusive) pos2 (= pos1 pos2))
               (and filter (not (save-match-data (funcall filter)))))
           (progn
             (backward-char 1)
-            (phi-search--search-backward query limit filter t))
+            (phi-search--search-backward query limit case-fold-search filter t))
         pos2))))
 
-(defun phi-search--search-forward (query limit &optional filter inclusive)
+(defun phi-search--search-forward (query limit &optional case-fold-search filter inclusive)
   "a handy version of search-forward-regexp"
   (ignore-errors
-    (let* ((case-fold-search (not phi-search-case-sensitive))
-           (pos1 (point))
+    (let* ((pos1 (point))
            (pos2 (search-forward-regexp query limit t)))
       (if (or (and (not inclusive) pos2 (= pos1 pos2))
               (and filter (not (save-match-data (funcall filter)))))
           (progn
             (forward-char 1)
-            (phi-search--search-forward query limit filter t))
+            (phi-search--search-forward query limit case-fold-search filter t))
         pos2))))
 
 (defmacro phi-search--with-sublimity (&rest body)
@@ -125,6 +119,9 @@
 (defvar phi-search--filter-function nil
   "when non-nil, candidates must pass this filter")
 (make-variable-buffer-local 'phi-search--filter-function)
+
+(defvar phi-search--case-fold-search t)
+(make-variable-buffer-local 'phi-search--case-fold-search)
 
 (defvar phi-search--original-position nil
   "stores position where this search started from.")
@@ -173,6 +170,7 @@ this value must be nil, if nothing is matched.")
 
 (defun phi-search--make-overlays-for-1 (query limit &optional unlimited)
   (while (and (phi-search--search-backward query limit
+                                           phi-search--case-fold-search
                                            phi-search--filter-function)
               (let ((ov (make-overlay (match-beginning 0) (match-end 0))))
                 (overlay-put ov 'face 'phi-search-match-face)
@@ -330,10 +328,11 @@ Otherwise yank a word from target buffer and expand query."
 
 ;; + start/end phi-search
 
-(defun phi-search--initialize (modeline-fmt keybinds filter-fn update-fn complete-fn)
+(defun phi-search--initialize (case-fold modeline-fmt keybinds filter-fn update-fn complete-fn)
   (setq phi-search--original-position     (point)
         phi-search--filter-function       filter-fn
         phi-search--after-update-function update-fn
+        phi-search--case-fold-search      case-fold
         phi-search--selection             nil
         phi-search--overlays              nil)
   (let ((wnd (selected-window))
@@ -343,7 +342,7 @@ Otherwise yank a word from target buffer and expand query."
     (add-hook 'after-change-functions 'phi-search--update nil t)
     (use-local-map
      (let ((map (copy-keymap phi-search-default-map)))
-       (dolist (bind keybinds)
+       (dolist (bind (reverse keybinds))
          (eval `(define-key map ,(car bind) ,(cdr bind))))
        map))
     (when (fboundp 'sublimity-mode) (sublimity-mode -1))
