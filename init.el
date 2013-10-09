@@ -39,7 +39,7 @@
 (defvar use-bright-theme t
   "Whether to use the bright or dark theme")
 
-(defvar bright-theme 'alect-dark
+(defvar bright-theme 'tango
   "Bright theme to use")
 (defvar dark-theme 'molokai
   "Bright theme to use")
@@ -52,7 +52,8 @@
 (defun set-color-theme ()
   "sets appropriate color theme"
   (interactive)
-  (if use-bright-theme (load-theme bright-theme) (load-theme dark-theme)))
+  (if window-system
+      (if use-bright-theme (load-theme bright-theme) (load-theme dark-theme))))
 
 (defun toggle-bright-theme ()
   "toggles between bright and dark theme"
@@ -63,33 +64,32 @@
 (global-set-key "\C-c\C-t" 'toggle-bright-theme)
 
 (add-hook 'after-make-window-system-frame-hooks 'set-color-theme)
-(add-hook 'after-make-console-frame-hooks       'set-color-theme)
+(add-hook 'after-make-console-frame-hooks       (lambda() (load-theme dark-theme)))
 
 ;; fonts
-(defvar use-small-font t)
-(defun small-font () 
-  "sets a small-ish font"
-  (interactive)
-  (set-frame-font "6x13"))
-  ;; (set-frame-font "Ricty 9"))
-(defun big-font () 
-  "sets a big-ish font"
-  (interactive)
-  (set-frame-font "-gnu-unifont-*"))
-  ;; (set-frame-font "Ricty 12"))
+(defvar fontList (list
+                  "5x7"
+                  "6x10"
+                  "6x13"
+                  "-gnu-unifont-*"
+                  ))
+(defvar currentFont "6x13")
 
 (defun set-window-font ()
-  (if use-small-font (small-font) (big-font)))
+  (set-frame-font currentFont))
 (add-hook 'after-make-window-system-frame-hooks 'set-window-font)
 
-(defun toggle-fonts ()
-  "toggles between small-ish and big-ish font"
+(defun cycle-fonts ()
+  "cycles through font list"
   (interactive)
-  (if use-small-font
-    (progn (big-font) (setq use-small-font nil))
-    (progn (small-font) (setq use-small-font t)))
-  )
-(global-set-key "\C-c\C-f" 'toggle-fonts)
+
+  (let (currentState)
+    ;; states starts from 1.
+    (setq currentState (if (get this-command 'state) (get this-command 'state) 1))
+    (setq currentFont (nth (1- currentState) fontList))
+    (put this-command 'state (1+ (% currentState (length fontList))))
+    (set-window-font)))
+(global-set-key "\C-c\C-f" 'cycle-fonts)
 
 ;; auctex
 (add-hook 'LaTeX-mode-hook 'TeX-PDF-mode)
