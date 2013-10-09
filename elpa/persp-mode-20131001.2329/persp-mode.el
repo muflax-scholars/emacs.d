@@ -313,7 +313,7 @@ named collections of buffers and window configurations."
   :keymap persp-mode-map
   :init-value nil
   :global t
-  :lighter (:eval (format "%s%.5s" " #"
+  :lighter (:eval (format "%s%.10s" " #"
                           (safe-persp-name (get-frame-persp))))
   (if persp-mode
       (progn
