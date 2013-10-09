@@ -24,7 +24,7 @@
 	  nil "Properly prefixed CL functions and macros" single
 	  ((:url . "http://elpa.gnu.org/packages/cl-lib.html"))])
  (coffee-mode .
-	      [(0 4 1 1)
+	      [(0 4 1)
 	       nil "Major mode for CoffeeScript files" single
 	       ((:url . "http://github.com/defunkt/coffee-mode"))])
  (company .

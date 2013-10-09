@@ -787,15 +787,16 @@ See the variable `align-rules-list' for more details.")
 (unless (boundp 'stack-trace-on-error)
   (defvar stack-trace-on-error nil)) 
 (custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(ansi-color-names-vector ["#212526" "#ff4b4b" "#b4fa70" "#fce94f" "#729fcf" "#ad7fa8" "#8cc4ff" "#eeeeec"])
- '(custom-safe-themes (quote ("7153b82e50b6f7452b4519097f880d968a6eaf6f6ef38cc45a144958e553fbc6" "a0feb1322de9e26a4d209d1cfa236deaf64662bb604fa513cca6a057ddf0ef64" default)))
  '(ecb-fix-window-size (quote auto))
  '(ecb-layout-name "left15")
- '(ecb-layout-window-sizes (quote (("left14" (ecb-speedbar-buffer-name 33 . 45) (ecb-history-buffer-name 33 . 23)) ("left15" (ecb-speedbar-buffer-name 33 . 34) (ecb-methods-buffer-name 33 . 34)))))
+ '(ecb-layout-window-sizes 
+    (quote 
+      (("left14" 
+        (ecb-speedbar-buffer-name 33 . 45) 
+        (ecb-history-buffer-name 33 . 23)) 
+       ("left15" 
+        (ecb-speedbar-buffer-name 33 . 34) 
+        (ecb-methods-buffer-name 33 . 34)))))
  '(ecb-options-version "2.40")
  '(ecb-primary-secondary-mouse-buttons (quote mouse-1--mouse-2))
  '(ecb-process-non-semantic-files t)
@@ -803,11 +804,9 @@ See the variable `align-rules-list' for more details.")
  '(ecb-toggle-layout-sequence (quote ("left14" "left15")))
  '(ecb-use-speedbar-instead-native-tree-buffer (quote dir))
  '(ecb-window-width 33)
- '(fci-rule-color "#222222")
- '(safe-local-variable-values (quote ((encoding . utf-8) (eval set-input-method (quote muflax-latin)))))
- '(vc-annotate-background "#222222")
- '(vc-annotate-color-map (quote ((20 . "#fa5151") (40 . "#e43838") (60 . "#f8ffa0") (80 . "#e8e815") (100 . "#fe8b04") (120 . "#e5c900") (140 . "#32cd32") (160 . "#8ce096") (180 . "#7fb07f") (200 . "#3cb370") (220 . "#099709") (240 . "#2fdbde") (260 . "#1fb3b3") (280 . "#8cf1f1") (300 . "#94bff3") (320 . "#62b6ea") (340 . "#00aff5") (360 . "#e81ee7"))))
- '(vc-annotate-very-old-color "#e81ee7"))
+ '(safe-local-variable-values
+   (quote ((encoding . utf-8)
+           (eval set-input-method (quote muflax-latin))))))
 ;; keys
 (global-set-key "\C-c;" 'ecb-minor-mode)
 ;; speedbar
@@ -1026,17 +1025,3 @@ You have:
 (diminish 'volatile-highlights-mode)
 (diminish 'whole-line-or-region-mode)
 (diminish 'yas-minor-mode)
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(diff-added ((((background dark)) (:foreground "#FFFF9B9BFFFF")) (t (:foreground "DarkGreen"))))
- '(diff-changed ((((background dark)) (:foreground "Yellow")) (t (:foreground "MediumBlue"))))
- '(diff-context ((((background dark)) (:foreground "White")) (t (:foreground "Black"))))
- '(diff-file-header ((((background dark)) (:foreground "Cyan" :background "Black")) (t (:foreground "Red" :background "White"))))
- '(diff-header ((((background dark)) (:foreground "Cyan")) (t (:foreground "Red"))))
- '(diff-hunk-header ((((background dark)) (:foreground "Black" :background "#05057F7F8D8D")) (t (:foreground "White" :background "Salmon"))))
- '(diff-index ((((background dark)) (:foreground "Magenta")) (t (:foreground "Green"))))
- '(diff-nonexistent ((((background dark)) (:foreground "#FFFFFFFF7474")) (t (:foreground "DarkBlue"))))
- '(diff-removed ((((background dark)) (:foreground "#7474FFFF7474")) (t (:foreground "DarkMagenta")))))
