@@ -36,7 +36,7 @@
 ;; color theme
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 
-(defvar use-bright-theme t
+(defvar use-bright-theme nil
   "Whether to use the bright or dark theme")
 
 (defvar bright-theme 'tango
@@ -44,16 +44,16 @@
 (defvar dark-theme 'molokai
   "Bright theme to use")
 
-;; always disable old themes
-(defadvice load-theme 
-  (before theme-dont-propagate activate)
-  (mapcar #'disable-theme custom-enabled-themes))
+(load-theme bright-theme t t)
+(load-theme dark-theme t t)
 
 (defun set-color-theme ()
   "sets appropriate color theme"
   (interactive)
   (if window-system
-      (if use-bright-theme (load-theme bright-theme) (load-theme dark-theme))))
+      (if use-bright-theme
+          (progn (disable-theme dark-theme) (enable-theme bright-theme))
+        (progn (disable-theme bright-theme) (enable-theme dark-theme)))))
 
 (defun toggle-bright-theme ()
   "toggles between bright and dark theme"
@@ -64,7 +64,7 @@
 (global-set-key "\C-c\C-t" 'toggle-bright-theme)
 
 (add-hook 'after-make-window-system-frame-hooks 'set-color-theme)
-(add-hook 'after-make-console-frame-hooks       (lambda() (load-theme dark-theme)))
+(add-hook 'after-make-console-frame-hooks       (lambda() (enable-theme dark-theme)))
 
 ;; fonts
 (defvar fontList (list
