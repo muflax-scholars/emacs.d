@@ -792,7 +792,7 @@ See the variable `align-rules-list' for more details.")
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector ["#212526" "#ff4b4b" "#b4fa70" "#fce94f" "#729fcf" "#ad7fa8" "#8cc4ff" "#eeeeec"])
- '(custom-safe-themes (quote ("b2919f14bf56b73f75c723364b2e84b20575a659444733fdcc701ab0346724f4" "a0feb1322de9e26a4d209d1cfa236deaf64662bb604fa513cca6a057ddf0ef64" "7153b82e50b6f7452b4519097f880d968a6eaf6f6ef38cc45a144958e553fbc6" default)))
+ '(custom-safe-themes (quote ("d1a8e9ed9fb1509571f5720fa1c114f11449c62b0b300d10ad430c2827d768f5" "55886d3d1eecb8c054eb779fd5b7f41dddaa81dc5d62395faa1cdc49d2b511e4" "636dcdc34ef0f8491da6ef3804970f53ba3dfddc7bc7fbe320f109f810197498" "b2919f14bf56b73f75c723364b2e84b20575a659444733fdcc701ab0346724f4" "a0feb1322de9e26a4d209d1cfa236deaf64662bb604fa513cca6a057ddf0ef64" "7153b82e50b6f7452b4519097f880d968a6eaf6f6ef38cc45a144958e553fbc6" default)))
  '(ecb-fix-window-size (quote auto))
  '(ecb-layout-name "left15")
  '(ecb-layout-window-sizes (quote (("left14" (ecb-speedbar-buffer-name 33 . 45) (ecb-history-buffer-name 33 . 23)) ("left15" (ecb-speedbar-buffer-name 33 . 34) (ecb-methods-buffer-name 33 . 34)))))

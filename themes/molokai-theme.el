@@ -32,7 +32,7 @@
  'molokai
 
  '(default ((t (:background "black" :foreground "#F8F8F2"))))
- '(cursor ((t (:foregound "#F8F8F0"))))
+ '(cursor ((t (:foregound "#F8F8F0" :background "#F8F8F2"))))
 
  '(bold ((t (:weight bold))))
  '(bold-italic ((t (:weight bold :slant italic))))
@@ -124,6 +124,7 @@
  '(woman-unknown ((t (:foreground "#66D9EF"))))
  '(enh-ruby-op-face ((t (:foreground "#66D9EF"))))
  '(enh-ruby-string-delimiter-face ((t (:foreground "#65b042")))))
+
 ;;;###autoload
 (when load-file-name
   (add-to-list 'custom-theme-load-path
