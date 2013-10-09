@@ -39,9 +39,9 @@
 (defvar use-bright-theme t
   "Whether to use the bright or dark theme")
 
-(defvar bright-theme 'tango
+(defvar bright-theme 'alect-dark
   "Bright theme to use")
-(defvar dark-theme 'tango-dark
+(defvar dark-theme 'molokai
   "Bright theme to use")
 
 ;; always disable old themes
@@ -787,16 +787,15 @@ See the variable `align-rules-list' for more details.")
 (unless (boundp 'stack-trace-on-error)
   (defvar stack-trace-on-error nil)) 
 (custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(ansi-color-names-vector ["#212526" "#ff4b4b" "#b4fa70" "#fce94f" "#729fcf" "#ad7fa8" "#8cc4ff" "#eeeeec"])
+ '(custom-safe-themes (quote ("b2919f14bf56b73f75c723364b2e84b20575a659444733fdcc701ab0346724f4" "a0feb1322de9e26a4d209d1cfa236deaf64662bb604fa513cca6a057ddf0ef64" "7153b82e50b6f7452b4519097f880d968a6eaf6f6ef38cc45a144958e553fbc6" default)))
  '(ecb-fix-window-size (quote auto))
  '(ecb-layout-name "left15")
- '(ecb-layout-window-sizes 
-    (quote 
-      (("left14" 
-        (ecb-speedbar-buffer-name 33 . 45) 
-        (ecb-history-buffer-name 33 . 23)) 
-       ("left15" 
-        (ecb-speedbar-buffer-name 33 . 34) 
-        (ecb-methods-buffer-name 33 . 34)))))
+ '(ecb-layout-window-sizes (quote (("left14" (ecb-speedbar-buffer-name 33 . 45) (ecb-history-buffer-name 33 . 23)) ("left15" (ecb-speedbar-buffer-name 33 . 34) (ecb-methods-buffer-name 33 . 34)))))
  '(ecb-options-version "2.40")
  '(ecb-primary-secondary-mouse-buttons (quote mouse-1--mouse-2))
  '(ecb-process-non-semantic-files t)
@@ -804,9 +803,12 @@ See the variable `align-rules-list' for more details.")
  '(ecb-toggle-layout-sequence (quote ("left14" "left15")))
  '(ecb-use-speedbar-instead-native-tree-buffer (quote dir))
  '(ecb-window-width 33)
- '(safe-local-variable-values
-   (quote ((encoding . utf-8)
-           (eval set-input-method (quote muflax-latin))))))
+ '(fci-rule-color "#f6f0e1")
+ '(linum-format " %7i ")
+ '(safe-local-variable-values (quote ((encoding . utf-8) (eval set-input-method (quote muflax-latin)))))
+ '(vc-annotate-background "#f6f0e1")
+ '(vc-annotate-color-map (quote ((20 . "#e43838") (40 . "#f71010") (60 . "#f8ffc5") (80 . "#ab9c3a") (100 . "#ef8300") (120 . "#a0682d") (140 . "#1c9e28") (160 . "#3cb368") (180 . "#028902") (200 . "#008b45") (220 . "#077707") (240 . "#409e9f") (260 . "#528d8d") (280 . "#1fb3b3") (300 . "#2c53ca") (320 . "#0000ff") (340 . "#0505cc") (360 . "#a020f0"))))
+ '(vc-annotate-very-old-color "#a020f0"))
 ;; keys
 (global-set-key "\C-c;" 'ecb-minor-mode)
 ;; speedbar
@@ -1025,3 +1027,17 @@ You have:
 (diminish 'volatile-highlights-mode)
 (diminish 'whole-line-or-region-mode)
 (diminish 'yas-minor-mode)
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(diff-added ((((background dark)) (:foreground "#FFFF9B9BFFFF")) (t (:foreground "DarkGreen"))))
+ '(diff-changed ((((background dark)) (:foreground "Yellow")) (t (:foreground "MediumBlue"))))
+ '(diff-context ((((background dark)) (:foreground "White")) (t (:foreground "Black"))))
+ '(diff-file-header ((((background dark)) (:foreground "Cyan" :background "Black")) (t (:foreground "Red" :background "White"))))
+ '(diff-header ((((background dark)) (:foreground "Cyan")) (t (:foreground "Red"))))
+ '(diff-hunk-header ((((background dark)) (:foreground "Black" :background "#05057F7F8D8D")) (t (:foreground "White" :background "Salmon"))))
+ '(diff-index ((((background dark)) (:foreground "Magenta")) (t (:foreground "Green"))))
+ '(diff-nonexistent ((((background dark)) (:foreground "#FFFFFFFF7474")) (t (:foreground "DarkBlue"))))
+ '(diff-removed ((((background dark)) (:foreground "#7474FFFF7474")) (t (:foreground "DarkMagenta")))))
