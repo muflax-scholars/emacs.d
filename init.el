@@ -67,16 +67,17 @@
 (add-hook 'after-make-console-frame-hooks       (lambda() (enable-theme dark-theme)))
 
 ;; fonts
-(defvar fontList (list
-                  "5x7"
-                  "6x10"
-                  "6x13"
-                  "-gnu-unifont-*"
-                  ))
-(defvar currentFont "6x13")
+(defvar small-font  "6x10")
+(defvar normal-font "6x13")
+(defvar big-font    "-gnu-unifont-*")
+(defvar font-list (list
+                   small-font
+                   normal-font
+                   big-font))
+(defvar current-font normal-font)
 
 (defun set-window-font ()
-  (set-frame-font currentFont))
+  (set-frame-font current-font))
 (add-hook 'after-make-window-system-frame-hooks 'set-window-font)
 
 (defun cycle-fonts ()
@@ -86,10 +87,30 @@
   (let (currentState)
     ;; states starts from 1.
     (setq currentState (if (get this-command 'state) (get this-command 'state) 1))
-    (setq currentFont (nth (1- currentState) fontList))
-    (put this-command 'state (1+ (% currentState (length fontList))))
+    (setq current-font (nth (1- currentState) font-list))
+    (put this-command 'state (1+ (% currentState (length font-list))))
     (set-window-font)))
 (global-set-key "\C-c\C-f" 'cycle-fonts)
+
+;; shortcut for the fonts
+(defun use-big-font ()
+  "use big font"
+  (interactive)
+  (setq current-font big-font)
+  (set-window-font))
+(defun use-normal-font ()
+  "use normal font"
+  (interactive)
+  (setq current-font normal-font)
+  (set-window-font))
+(defun use-small-font ()
+  "use small font"
+  (interactive)
+  (setq current-font small-font)
+  (set-window-font))
+(global-set-key (kbd "C-c <f1>") 'use-small-font)
+(global-set-key (kbd "C-c <f2>") 'use-normal-font)
+(global-set-key (kbd "C-c <f3>") 'use-big-font)
 
 ;; auctex
 (add-hook 'LaTeX-mode-hook 'TeX-PDF-mode)
