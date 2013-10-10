@@ -969,8 +969,8 @@ See the variable `align-rules-list' for more details.")
 
 ;; expand-region
 (require 'expand-region)
-(global-set-key (kbd "<C-next>") 'er/expand-region)
-(global-set-key (kbd "<C-prior>") 'er/contract-region)
+(global-set-key (kbd "<C-prior>")  'er/expand-region)
+(global-set-key (kbd "<C-next>") 'er/contract-region)
 
 ;; better handling than M-| / M-!
 (defun generalized-shell-command (command arg)
