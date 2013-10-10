@@ -40,7 +40,7 @@
 	     [(20130501 727)
 	      nil "provide framework about exception like Java for elisp [github]" single])
  (yasnippet .
-	    [(20130907 1855)
+	    [(20131010 2)
 	     nil "Yet another snippet extension for Emacs. [github]" tar])
  (yascroll .
 	   [(20130321 334)
@@ -394,7 +394,7 @@
 			     [(20120713 1116)
 			      nil "A soothing Emacs 24 light-on-dark theme [github]" single])
  (tup-mode .
-	   [(20130129 1533)
+	   [(20131010 113)
 	    nil "Major mode for editing files for Tup [github]" single])
  (tumblesocks .
 	      [(20130526 1503)
@@ -667,7 +667,7 @@
 		   (1 0)))
 		 "Use a different background for even and odd lines [github]" single])
  (string-utils .
-	       [(20121108 1917)
+	       [(20131009 1649)
 		((list-utils
 		  (0 1 2)))
 		"String-manipulation utilities [github]" single])
@@ -806,7 +806,7 @@
 	   [(20130312 1839)
 	    nil "Support sequential operation which omitted prefix keys. [github]" single])
  (smartparens .
-	      [(20131009 1805)
+	      [(20131010 751)
 	       ((cl-lib
 		 (0 1))
 		(dash
@@ -1193,7 +1193,7 @@
 	  [(20121017 157)
 	   nil "No description available. [github]" single])
  (quickrun .
-	   [(20130915 2230)
+	   [(20131010 1314)
 	    nil "Run commands quickly [github]" single])
  (quickref .
 	   [(20130113 1700)
@@ -1397,9 +1397,9 @@
 			  [(20130306 1515)
 			   nil "Monochromatic version of the Phoenix theme [github]" single])
  (phi-search-mc .
-		[(20130910 47)
+		[(20131010 1958)
 		 ((phi-search
-		   (1 1 3))
+		   (2 0 0))
 		  (multiple-cursors
 		   (1 2 1)))
 		 "multiple-cursors extension for phi-search [github]" single])
@@ -1499,7 +1499,7 @@
 	       [(20130923 2054)
 		nil "Adds a menu to paredit.el as memory aid [hg]" single])
  (paredit-everywhere .
-		     [(20130430 1059)
+		     [(20131010 1118)
 		      ((paredit
 			(22)))
 		      "Enable some paredit features in non-lisp buffers [github]" single])
@@ -1668,7 +1668,7 @@
 	     [(20130729 2050)
 	      nil "Export from Org using Pandoc [github]" tar])
  (org-page .
-	   [(20130903 1701)
+	   [(20130904 1217)
 	    ((ht
 	      (1 5))
 	     (mustache
@@ -1864,7 +1864,7 @@
 		     (9)))
 		   "decompilation extension for nrepl.el [github]" single])
  (nrepl .
-	[(20131008 1619)
+	[(20131010 1649)
 	 ((clojure-mode
 	   (2 0 0))
 	  (cl-lib
@@ -1875,7 +1875,7 @@
 	   (0 1)))
 	 "Client for Clojure nREPL [github]" single])
  (notmuch .
-	  [(20131007 2032)
+	  [(20131010 742)
 	   nil "No description available. [git]" tar])
  (nose .
        [(20110804 819)
@@ -2244,7 +2244,7 @@
 	 (0)))
        "Linewise User Interface [github]" tar])
  (lua-mode .
-	   [(20131008 943)
+	   [(20131010 43)
 	    nil "a major-mode for editing Lua scripts [github]" single])
  (love-minor-mode .
 		  [(20130429 1759)
@@ -2312,7 +2312,7 @@
 	     (1 1 0)))
 	   "dynamic evaluation replacement with emacs [github]" single])
  (list-utils .
-	     [(20121205 1456)
+	     [(20131009 1733)
 	      nil "List-manipulation utility functions [github]" single])
  (list-packages-ext .
 		    [(20130927 1808)
@@ -2633,6 +2633,11 @@
  (init-loader .
 	      [(20130218 1210)
 	       nil "Loader for configuration files [github]" single])
+ (inform7-mode .
+	       [(20131009 1643)
+		((sws-mode
+		  (0 1)))
+		"Major mode for editing Inform 7 source files [git]" single])
  (info+ .
 	[(20130723 2335)
 	 nil "Extensions to `info.el'. [wiki]" single])
@@ -2693,7 +2698,7 @@
 		    [(20130422 1226)
 		     nil "Makes ido-mode display vertically. [github]" single])
  (ido-ubiquitous .
-		 [(20131002 1511)
+		 [(20131009 1047)
 		  ((emacs
 		    (24 1)))
 		  "Use ido (nearly) everywhere. [github]" single])
@@ -2719,7 +2724,7 @@
 			       [(20130228 956)
 				nil "Complete SPACE or HYPHEN when type SPACE in ido [github]" single])
  (ido-at-point .
-	       [(20130926 2040)
+	       [(20131009 2135)
 		((emacs
 		  (24))
 		 (cl-lib
@@ -2853,6 +2858,13 @@
 	       ((helm
 		 (1 0)))
 	       "Color theme selection with helm interface [github]" single])
+ (helm-spotify .
+	       [(20131009 2126)
+		((helm
+		  (0 0 0))
+		 (multi
+		  (2 0 0)))
+		"Control Spotify with Helm. [github]" single])
  (helm-spaces .
 	      [(20130606 100)
 	       ((helm
@@ -3015,7 +3027,7 @@
 	    (20120509)))
 	  "helm-sources and some utilities for GNU R. [github]" single])
  (helm .
-       [(20131007 1533)
+       [(20131010 1042)
 	nil "Helm is an Emacs incremental and narrowing framework [github]" tar])
  (header2 .
 	  [(20130723 2321)
@@ -3644,8 +3656,8 @@
 	  [(20120211 1557)
 	   nil "Fast navigation and editing routines. [github]" single])
  (fasm-mode .
-	    [(20130925 1319)
-	     nil "Fasm major mode [hg]" single])
+	    [(20131010 1234)
+	     nil "Fasm major mode [github]" single])
  (fasd .
        [(20130831 1903)
 	((grizzl
@@ -3822,7 +3834,7 @@
 	 [(20130827 1016)
 	  nil "Erlang major mode [github]" tar])
  (ergoemacs-mode .
-		 [(20131009 36)
+		 [(20131009 2214)
 		  nil "Emacs mode based on common modern software interface and ergonomics. [github]" tar])
  (erefactor .
 	    [(20130521 1838)
@@ -4120,6 +4132,11 @@
  (ebib .
        [(20131002 39)
 	nil "a BibTeX database manager [github]" tar])
+ (easy-kill .
+	    [(20131010 2027)
+	     ((emacs
+	       (24)))
+	     "kill things easily [github]" single])
  (easy-after-load .
 		  [(20121224 2049)
 		   nil "eval-after-load for all files in a directory [github]" single])
@@ -4414,6 +4431,9 @@
  (cperl-mode .
 	     [(20130716 858)
 	      nil "Perl code editing commands for Emacs [github]" single])
+ (control-mode .
+	       [(20131009 1709)
+		nil "A \"control\" mode, similar to vim's \"normal\" mode [github]" single])
  (connection .
 	     [(20131005 1021)
 	      nil "TCP-based client connection [github]" single])
@@ -4452,10 +4472,10 @@
 		[(20121128 843)
 		 nil "Highlight certain character columns [wiki]" single])
  (colorsarenice-theme .
-		      [(20130930 1224)
+		      [(20131010 1226)
 		       ((emacs
 			 (24)))
-		       "A color theme. [hg]" tar])
+		       "A color theme. [github]" tar])
  (color-theme-solarized .
 			[(20130307 1350)
 			 ((color-theme
@@ -4754,7 +4774,7 @@
 	 [(20130917 1848)
 	  nil "Run AWK interactively on region! [wiki]" single])
  (autopair .
-	   [(20131007 150)
+	   [(20131009 1902)
 	    nil "Automagically pair braces and quotes like TextMate [github]" single])
  (automargin .
 	     [(20130910 40)
@@ -5021,7 +5041,7 @@
 	   [(20130607 917)
 	    nil "Major mode for editing abc music files [github]" single])
  (4clojure .
-	   [(20131007 1818)
+	   [(20131009 2058)
 	    ((json
 	      (1 2))
 	     (request

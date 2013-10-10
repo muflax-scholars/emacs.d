@@ -3,11 +3,11 @@
 ;;; Code:
 
 
-;;;### (autoloads (phi-search-from-isearch-mc/mark-all phi-search-from-isearch-mc/mark-previous
-;;;;;;  phi-search-from-isearch-mc/mark-next phi-search-from-isearch
-;;;;;;  phi-search-mc/mark-all phi-search-mc/mark-previous phi-search-mc/mark-next
-;;;;;;  phi-search-mc/mark-here) "phi-search-mc" "phi-search-mc.el"
-;;;;;;  (21073 50855 444448 317000))
+;;;### (autoloads (phi-search-from-isearch-mc/setup-keys phi-search-from-isearch-mc/mark-all
+;;;;;;  phi-search-from-isearch-mc/mark-previous phi-search-from-isearch-mc/mark-next
+;;;;;;  phi-search-from-isearch phi-search-mc/setup-keys phi-search-mc/mark-all
+;;;;;;  phi-search-mc/mark-previous phi-search-mc/mark-next phi-search-mc/mark-here)
+;;;;;;  "phi-search-mc" "phi-search-mc.el" (21078 61921 743871 424000))
 ;;; Generated autoloads from phi-search-mc.el
 
 (autoload 'phi-search-mc/mark-here "phi-search-mc" "\
@@ -40,6 +40,11 @@ Mark all matches as fake cursors.
 
 \(fn)" t nil)
 
+(autoload 'phi-search-mc/setup-keys "phi-search-mc" "\
+
+
+\(fn)" nil nil)
+
 (autoload 'phi-search-from-isearch "phi-search-mc" "\
 Switch to phi-search inheriting the current isearch query.
 Currently whitespace characters are taken literally, ignoring
@@ -62,10 +67,15 @@ Switch to phi-search and mark all isearch matches.
 
 \(fn)" t nil)
 
+(autoload 'phi-search-from-isearch-mc/setup-keys "phi-search-mc" "\
+
+
+\(fn)" nil nil)
+
 ;;;***
 
-;;;### (autoloads nil nil ("phi-search-mc-pkg.el") (21073 50855 477206
-;;;;;;  970000))
+;;;### (autoloads nil nil ("phi-search-mc-pkg.el") (21078 61921 772129
+;;;;;;  173000))
 
 ;;;***
 

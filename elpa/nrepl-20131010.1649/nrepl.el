@@ -9,8 +9,8 @@
 ;;         Hugo Duncan <hugo@hugoduncan.org>
 ;;         Steve Purcell <steve@sanityinc.com>
 ;; URL: http://www.github.com/clojure-emacs/nrepl.el
-;; Version: 20131008.1619
-;; X-Original-Version: 0.2.0-cvs
+;; Version: 20131010.1649
+;; X-Original-Version: 0.3.0-cvs
 ;; Keywords: languages, clojure, nrepl
 ;; Package-Requires: ((clojure-mode "2.0.0") (cl-lib "0.3") (dash "2.1.0") (pkg-info "0.1"))
 
