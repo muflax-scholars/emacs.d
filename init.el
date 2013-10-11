@@ -973,22 +973,29 @@ See the variable `align-rules-list' for more details.")
 (global-set-key (kbd "<C-next>") 'er/contract-region)
 
 ;; better handling than M-| / M-!
+(defun chomp (str)
+  "Chomp leading and tailing whitespace from STR."
+  (while (string-match "\\`\n+\\|^\\s-+\\|\\s-+$\\|\n+\\'"
+                       str)
+    (setq str (replace-match "" t t str)))
+  str)
+
 (defun generalized-shell-command (command arg)
   "Unifies `shell-command' and `shell-command-on-region'. 
 You have: 
 - (no arg) run command and place output
-- (C-u)    run command
+- (C-u)    ... don't chomp output
 - (region) replace region with output from command
-- (C-u region) ... and output to different buffer"
-  (interactive (list (read-from-minibuffer "Shell command: " nil nil nil 'shell-command-history)
+- (C-u region) ... and print to minibuffer" ;; TODO: make this also chomp
+  (interactive (list (read-from-minibuffer "$ " nil nil nil 'shell-command-history)
                      current-prefix-arg))
   (let ((p (if mark-active (region-beginning) 0))
         (m (if mark-active (region-end) 0)))
     (if (= p m)
-        ;; No active region
+        ;; no active region, so just output the output
         (if (eq arg nil)
-            (shell-command command t)
-          (shell-command command))
+            (insert (chomp (shell-command-to-string command)))
+          (shell-command command t))
       ;; Active region
       (if (eq arg nil)
           (shell-command-on-region p m command t t)
