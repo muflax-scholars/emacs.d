@@ -63,10 +63,10 @@
 
 (defvar phi-rectangle-mode-map
   (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "C-<return>") 'phi-rectangle-set-mark-command)
-    (define-key map (kbd "C-w")        'phi-rectangle-kill-region)
-    (define-key map (kbd "M-w")        'phi-rectangle-kill-ring-save)
-    (define-key map (kbd "C-y")        'phi-rectangle-yank)
+    (define-key map (kbd "C-M-<return>") 'phi-rectangle-set-mark-command)
+    (define-key map (kbd "C-w")          'phi-rectangle-kill-region)
+    (define-key map (kbd "M-w")          'phi-rectangle-kill-ring-save)
+    (define-key map (kbd "C-y")          'phi-rectangle-yank)
     map))
 
 (defvar phi-rectangle-mark-active-map
