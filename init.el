@@ -1022,6 +1022,11 @@ You have:
   (goto-line (line-number-at-pos) (window-buffer (next-window))))
 (global-set-key (kbd "C-c C-l") 'sync-lines)
 
+;; increment / decrement thing at point
+(require 'increment)
+(global-set-key (kbd "C-c C-+") 'increment-integer-at-point)
+(global-set-key (kbd "C-c C--") 'decrement-integer-at-point)
+
 ;; handle camelcase better
 (global-subword-mode 1)
 
