@@ -3,7 +3,11 @@
 
 (setq mc/cmds-to-run-for-all
       '(
+        indent-region
+        lua-electric-match
         phi-rectangle-next-line
+        smart-end-of-line
+        yas-expand
         ))
 
 (setq mc/cmds-to-run-once
