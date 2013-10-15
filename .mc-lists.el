@@ -4,6 +4,7 @@
 (setq mc/cmds-to-run-for-all
       '(
         indent-region
+        kill-and-join-forward
         lua-electric-match
         phi-rectangle-next-line
         smart-end-of-line
