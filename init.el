@@ -610,6 +610,8 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (setq org-blank-before-new-entry '(
   (heading . nil)
   (plain-list-item . auto)))
+;; tag column
+(setq org-tags-column -70)
 ;; dependencies
 (setq org-enforce-todo-dependencies t)
 ;; make clock history persistent
@@ -651,7 +653,8 @@ If visual-line-mode is on, then also jump to beginning of real line."
 
 ;; shortcut for C-u C-c C-l
 (defun org-insert-file-link () (interactive) (org-insert-link '(4)))
-(define-key global-map "\C-cl" 'org-insert-file-link)
+;; (define-key global-map "\C-cl" 'org-insert-file-link)
+(define-key global-map "\C-cl" 'org-store-link)
 ;; go to spoiler index
 (define-key global-map "\C-c\C-s" (lambda () (interactive) (find-file "~/spoiler/notes/index.org")))
 
