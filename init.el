@@ -653,7 +653,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
 
 ;; shortcut for C-u C-c C-l
 (defun org-insert-file-link () (interactive) (org-insert-link '(4)))
-;; (define-key global-map "\C-cl" 'org-insert-file-link)
+(define-key global-map "\C-cf" 'org-insert-file-link)
 (define-key global-map "\C-cl" 'org-store-link)
 ;; go to spoiler index
 (define-key global-map "\C-c\C-s" (lambda () (interactive) (find-file "~/spoiler/notes/index.org")))
@@ -805,7 +805,7 @@ See the variable `align-rules-list' for more details.")
 (semantic-mode 1)
 (global-semantic-idle-summary-mode 1)
 (global-semantic-idle-completions-mode 1)
-(global-set-key "\C-cf" 'semantic-ia-show-summary)
+;; (global-set-key "\C-cf" 'semantic-ia-show-summary)
 
 ;; ecb (code browser)
 (require 'ecb-autoloads)
