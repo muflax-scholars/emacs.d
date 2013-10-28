@@ -52,9 +52,9 @@
 
 (defun turn-on-adaptive-wrap-prefix-mode ()
   ;; disable it in org-mode 'cause they already do something like that
-  (unless (memq major-mode
-                (list 'org-mode))
-    (adaptive-wrap-prefix-mode 1)))
+  ;; (unless (memq major-mode
+                ;; (list 'org-mode))
+    (adaptive-wrap-prefix-mode 1))
 
 (define-globalized-minor-mode global-adaptive-wrap-prefix-mode
   adaptive-wrap-prefix-mode turn-on-adaptive-wrap-prefix-mode

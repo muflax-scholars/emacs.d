@@ -329,45 +329,47 @@ If visual-line-mode is on, then also jump to beginning of real line."
 ;; snippets
 (setq yas-snippet-dirs "~/.emacs.d/snippets")
 (require 'yasnippet)
-(define-key yas-minor-mode-map [backtab] 'yas-next-field)
-(define-key yas-minor-mode-map [(shift tab)] 'yas-next-field)
-(define-key yas-minor-mode-map [(control tab)] 'yas-prev-field)
-(yas-global-mode 1)
+(define-key yas-minor-mode-map (kbd "C-t") 'yas-next-field-or-maybe-expand)
+(define-key yas-minor-mode-map (kbd "M-t") 'yas-prev-field)
+;; turn on yasnippet only in some modes
+(add-hook 'prog-mode-hook '(lambda () (yas-minor-mode)))
+(add-hook 'markdown-mode-hook '(lambda () (yas-minor-mode)))
+
 ; auto-yasnippet
 (require 'auto-yasnippet)
 (global-set-key (kbd "C-c ~")   'aya-create)
 (global-set-key (kbd "C-c C-~") 'aya-expand)
 
 ;; text completion
-;; auto completion
-(require 'auto-complete-config)
-(add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
-(add-to-list 'ac-modes 'text-mode)
-(add-to-list 'ac-modes 'markdown-mode)
-(add-to-list 'ac-modes 'org-mode)
-(setq ac-comphist-file "~/.emacs.d/cache/ac-comphist.dat")
-(setq ac-use-menu-map t)
-(setq ac-auto-show-menu nil) 
-(setq ac-ignore-case nil) 
-(ac-config-default)
-;; disabling Yasnippet completion
-(defun epy-snips-from-table (table)
-  (with-no-warnings
-    (let ((hashtab (ac-yasnippet-table-hash table))
-          (parent (ac-yasnippet-table-parent table))
-          candidates)
-      (maphash (lambda (key value)
-                 (push key candidates))
-               hashtab)
-      (identity candidates)
-      )))
-(defun epy-get-all-snips ()
-  (let (candidates)
-    (maphash
-     (lambda (kk vv) (push (epy-snips-from-table vv) candidates)) yas--tables)
-    (apply 'append candidates))
-  )
-(setq ac-ignores (concatenate 'list ac-ignores (epy-get-all-snips)))
+;; ;; auto completion
+;; (require 'auto-complete-config)
+;; (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
+;; (add-to-list 'ac-modes 'text-mode)
+;; (add-to-list 'ac-modes 'markdown-mode)
+;; (add-to-list 'ac-modes 'org-mode)
+;; (setq ac-comphist-file "~/.emacs.d/cache/ac-comphist.dat")
+;; (setq ac-use-menu-map t)
+;; (setq ac-auto-show-menu nil) 
+;; (setq ac-ignore-case nil) 
+;; (ac-config-default)
+;; ;; disabling Yasnippet completion
+;; (defun epy-snips-from-table (table)
+;;   (with-no-warnings
+;;     (let ((hashtab (ac-yasnippet-table-hash table))
+;;           (parent (ac-yasnippet-table-parent table))
+;;           candidates)
+;;       (maphash (lambda (key value)
+;;                  (push key candidates))
+;;                hashtab)
+;;       (identity candidates)
+;;       )))
+;; (defun epy-get-all-snips ()
+;;   (let (candidates)
+;;     (maphash
+;;      (lambda (kk vv) (push (epy-snips-from-table vv) candidates)) yas--tables)
+;;     (apply 'append candidates))
+;;   )
+;; (setq ac-ignores (concatenate 'list ac-ignores (epy-get-all-snips)))
 
 ;; ido and smex (ido for M-x)
 ;; ido
@@ -605,11 +607,17 @@ If visual-line-mode is on, then also jump to beginning of real line."
 ;; loaded so that we can diminish it later
 (require 'org-indent)
 ;; proper indentation / folding
-(setq org-startup-indented t)
+(setq org-startup-indented nil)
+(setq org-hide-leading-stars t)
+(setq org-indent-indentation-per-level 2)
 (setq org-startup-folded 'content)
 (setq org-blank-before-new-entry '(
   (heading . nil)
   (plain-list-item . auto)))
+(defun no-electric-indent-org ()
+  (electric-indent-mode -1)
+  (define-key org-mode-map [(return)] 'newline-and-indent))
+(add-hook 'org-mode-hook 'no-electric-indent-org)
 ;; tag column
 (setq org-tags-column -70)
 ;; dependencies
@@ -650,14 +658,12 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (org-defkey org-mode-map "\C-c\C-t" (lambda () (interactive) (org-todo "TODO")))
 (org-defkey org-mode-map "\C-c\C-w" (lambda () (interactive) (org-todo "WAITING")))
 (org-defkey org-mode-map "\C-c\C-d" (lambda () (interactive) (org-todo "DONE")))
-
 ;; shortcut for C-u C-c C-l
 (defun org-insert-file-link () (interactive) (org-insert-link '(4)))
 (define-key global-map "\C-cf" 'org-insert-file-link)
 (define-key global-map "\C-cl" 'org-store-link)
 ;; go to last position before C-c C-o
 (define-key global-map "\C-co" 'org-mark-ring-goto)
-
 ;; some templates
 (setcdr (assoc "c" org-structure-template-alist)
         '("#+BEGIN_COMMENT\n?\n#+END_COMMENT"))
@@ -1056,18 +1062,17 @@ You have:
 ;; (setq persp-auto-save-num-of-backups 10)
 ;; (persp-mode t)
 
-  ;; clean up modeline and hide standard minor modes
+;; clean up modeline and hide standard minor modes
 ;; should be last so all modes are already loaded
 (require 'diminish)
 (diminish 'abbrev-mode)
-(diminish 'auto-complete-mode "AC")
+;; (diminish 'auto-complete-mode "AC")
 (diminish 'auto-fill-function "AF")
 (diminish 'auto-revert-mode)
 (diminish 'fic-mode)
 (diminish 'global-visual-line-mode)
 (diminish 'highlight-parentheses-mode)
 (diminish 'ibus-mode)
-(diminish 'org-indent-mode)
 (diminish 'undo-tree-mode)
 (diminish 'visual-line-mode)
 (diminish 'volatile-highlights-mode)
