@@ -486,6 +486,9 @@ If visual-line-mode is on, then also jump to beginning of real line."
     (delete-indentation t)
     (kill-line arg)))
 (global-set-key "\C-k" 'kill-and-join-forward)
+;; delete all space before point up to beginning of line or non-whitespace char
+(require 'hungry-delete)
+(global-hungry-delete-mode)
 
 ;; more useful kill-ring
 (setq kill-ring-max 200)
@@ -1020,6 +1023,9 @@ You have:
         (shell-command-on-region p m command)))))
 (global-set-key (kbd "C-|") 'generalized-shell-command)
 (global-set-key (kbd "C-\\") 'generalized-shell-command) ;; terminal bug
+
+;; remove trailing whitespace on save
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 ;; use y/n instead of yes/no
 (defalias 'yes-or-no-p 'y-or-n-p)
