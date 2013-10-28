@@ -39,7 +39,7 @@
 (defvar use-bright-theme nil
   "Whether to use the bright or dark theme")
 
-(defvar bright-theme 'tango
+(defvar bright-theme 'alect-dark
   "Bright theme to use")
 (defvar dark-theme 'molokai
   "Bright theme to use")
