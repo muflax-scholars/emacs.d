@@ -18361,7 +18361,7 @@ BEG and END default to the buffer boundaries."
 (org-defkey org-mode-map "\C-c\C-x" (make-sparse-keymap))
 
 ;; TAB key with modifiers
-(org-defkey org-mode-map "\C-i"       'org-cycle)
+(org-defkey org-mode-map "\C-i"       'org-indent-line)
 ;; (org-defkey org-mode-map [(tab)]      'org-cycle)
 ;; (org-defkey org-mode-map [(control tab)] 'org-force-cycle-archived)
 ;; (org-defkey org-mode-map "\M-\t" 'pcomplete)
@@ -18370,7 +18370,7 @@ BEG and END default to the buffer boundaries."
   ;(org-defkey org-mode-map [S-iso-lefttab]  'org-shifttab))
 ;(org-defkey org-mode-map [(shift tab)]    'org-shifttab)
 ;(define-key org-mode-map [backtab] 'org-shifttab)
-(define-key org-mode-map "\M-i" 'org-shifttab)
+(define-key org-mode-map "\M-i" 'org-indent-block)
 
 (org-defkey org-mode-map [(shift return)]         'org-insert-heading) ; used for lists
 ; meta creates subheadings, control stays on the same level, shift sets TODO

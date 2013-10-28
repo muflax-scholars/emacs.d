@@ -8,6 +8,7 @@
         indent-region
         kill-and-join-forward
         lua-electric-match
+        org-indent-line
         org-self-insert-command
         phi-rectangle-next-line
         smart-end-of-line
