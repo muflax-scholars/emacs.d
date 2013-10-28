@@ -657,6 +657,8 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (define-key global-map "\C-cl" 'org-store-link)
 ;; go to spoiler index
 (define-key global-map "\C-c\C-s" (lambda () (interactive) (find-file "~/spoiler/notes/index.org")))
+;; go to last position before C-c C-o
+(define-key global-map "\C-co" 'org-mark-ring-goto)
 
 ;; reload file when it changed (and the buffer has no changes)
 (global-auto-revert-mode 1)
