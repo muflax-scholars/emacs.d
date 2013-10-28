@@ -6,6 +6,7 @@
         indent-region
         kill-and-join-forward
         lua-electric-match
+        org-self-insert-command
         phi-rectangle-next-line
         smart-end-of-line
         yas-expand
