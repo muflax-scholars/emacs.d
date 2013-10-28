@@ -216,7 +216,7 @@
 	       (1 6 8)))
 	     "Weblog maintenance via XML-RPC APIs [bzr]" single])
  (web-mode .
-	   [(20131026 1738)
+	   [(20131028 1431)
 	    nil "major mode for editing html templates [github]" tar])
  (web .
       [(20130827 1312)
@@ -600,7 +600,7 @@
 	   [(20120307 1523)
 	    nil "Simple timer package, useful to make perfect tea. [github]" single])
  (tc .
-     [(20130403 1455)
+     [(20131028 1749)
       nil "a Japanese input method with T-Code on Emacs [github]" tar])
  (tangotango-theme .
 		   [(20130827 1221)
@@ -1403,9 +1403,6 @@
 	     ((cl-lib
 	       (0 2)))
 	     "Rewrite of Powerline [github]" tar])
- (pov-mode .
-	   [(20120825 1616)
-	    nil "Major mode for editing POV-Ray scene files. [git]" tar])
  (pos-tip .
 	  [(20121128 2315)
 	   nil "Show tooltip at point [github]" single])
@@ -1983,7 +1980,7 @@
 	  [(20130723 2350)
 	   nil "Extensions to `novice.el'. [wiki]" single])
  (notmuch .
-	  [(20131027 931)
+	  [(20131027 1735)
 	   nil "No description available. [git]" tar])
  (nose .
        [(20110804 819)
@@ -3332,7 +3329,7 @@
 	   [(20080919 2256)
 	    nil "goto last change [wiki]" single])
  (gore-mode .
-	    [(20131027 1241)
+	    [(20131028 927)
 	     nil "Simple mode for gore, a command-line evaluator for golang. [github]" single])
  (google-weather .
 		 [(20110930 1055)
@@ -4066,7 +4063,7 @@
 	  [(20091203 1913)
 	   nil "emacs window session manager [github]" single])
  (es-lib .
-	 [(20131022 2059)
+	 [(20131028 940)
 	  ((cl-lib
 	    (0 3)))
 	  "A collection of emacs utilities [github]" tar])
@@ -4392,7 +4389,7 @@
        [(20131015 1929)
 	nil "a BibTeX database manager [github]" tar])
  (easy-kill .
-	    [(20131027 1115)
+	    [(20131028 1456)
 	     ((emacs
 	       (24)))
 	     "kill things easily [github]" single])
@@ -5416,5 +5413,7 @@
 	      (1 2))
 	     (request
 	      (0 2 0)))
-	    "Open and evaluate 4clojure.com questions [github]" single]))
-
+	    "Open and evaluate 4clojure.com questions [github]" single])
+ (pov-mode .
+	   [(20120825 1616)
+	    nil "Major mode for editing POV-Ray scene files. [git]" tar]))

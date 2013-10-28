@@ -6976,11 +6976,11 @@ Optional arguments START and END can be used to limit the range."
 	    (org-defkey map "b" 'outline-backward-same-level)
 	    (org-defkey map "u" 'outline-up-heading))
 	  (org-defkey map "/" 'org-occur)
-	  (org-defkey map "\C-c\C-n" 'outline-next-visible-heading)
-	  (org-defkey map "\C-c\C-p" 'outline-previous-visible-heading)
-	  (org-defkey map "\C-c\C-f" 'outline-forward-same-level)
-	  (org-defkey map "\C-c\C-b" 'outline-backward-same-level)
-	  (org-defkey map "\C-c\C-u" 'outline-up-heading)
+	  ;; (org-defkey map "\C-c\C-n" 'outline-next-visible-heading)
+	  ;; (org-defkey map "\C-c\C-p" 'outline-previous-visible-heading)
+	  ;; (org-defkey map "\C-c\C-f" 'outline-forward-same-level)
+	  ;; (org-defkey map "\C-c\C-b" 'outline-backward-same-level)
+	  ;; (org-defkey map "\C-c\C-u" 'outline-up-heading)
 	  map)))
 
 (defconst org-goto-help
@@ -18317,17 +18317,17 @@ BEG and END default to the buffer boundaries."
 
 ;; Outline functions from `outline-mode-prefix-map'
 ;; that can be remapped in Org:
-(define-key org-mode-map [remap outline-mark-subtree] 'org-mark-subtree)
-(define-key org-mode-map [remap show-subtree] 'org-show-subtree)
-(define-key org-mode-map [remap outline-forward-same-level]
-  'org-forward-heading-same-level)
-(define-key org-mode-map [remap outline-backward-same-level]
-  'org-backward-heading-same-level)
-(define-key org-mode-map [remap show-branches]
-  'org-kill-note-or-show-branches)
-(define-key org-mode-map [remap outline-promote] 'org-promote-subtree)
-(define-key org-mode-map [remap outline-demote] 'org-demote-subtree)
-(define-key org-mode-map [remap outline-insert-heading] 'org-ctrl-c-ret)
+;; (define-key org-mode-map [remap outline-mark-subtree] 'org-mark-subtree)
+;; (define-key org-mode-map [remap show-subtree] 'org-show-subtree)
+;; (define-key org-mode-map [remap outline-forward-same-level]
+;;   'org-forward-heading-same-level)
+;; (define-key org-mode-map [remap outline-backward-same-level]
+;;   'org-backward-heading-same-level)
+;; (define-key org-mode-map [remap show-branches]
+;;   'org-kill-note-or-show-branches)
+;; (define-key org-mode-map [remap outline-promote] 'org-promote-subtree)
+;; (define-key org-mode-map [remap outline-demote] 'org-demote-subtree)
+;; (define-key org-mode-map [remap outline-insert-heading] 'org-ctrl-c-ret)
 
 ;; Outline functions from `outline-mode-prefix-map' that can not
 ;; be remapped in Org:
@@ -18444,8 +18444,8 @@ BEG and END default to the buffer boundaries."
 
 ;; All the other keys
 
-(org-defkey org-mode-map "\C-c\C-a" 'show-all)  ; in case allout messed up.
-(org-defkey org-mode-map "\C-c\C-r" 'org-reveal)
+;; (org-defkey org-mode-map "\C-c\C-a" 'show-all)  ; in case allout messed up.
+;; (org-defkey org-mode-map "\C-c\C-r" 'org-reveal)
 (if (boundp 'narrow-map)
     (org-defkey narrow-map "s" 'org-narrow-to-subtree)
   (org-defkey org-mode-map "\C-xns" 'org-narrow-to-subtree))
@@ -18458,10 +18458,10 @@ BEG and END default to the buffer boundaries."
 (org-defkey org-mode-map "\C-\M-t"  'org-transpose-element)
 (org-defkey org-mode-map "\M-}"     'org-forward-element)
 (org-defkey org-mode-map "\M-{"     'org-backward-element)
-(org-defkey org-mode-map "\C-c\C-^" 'org-up-element)
-(org-defkey org-mode-map "\C-c\C-_" 'org-down-element)
-(org-defkey org-mode-map "\C-c\C-f" 'org-forward-heading-same-level)
-(org-defkey org-mode-map "\C-c\C-b" 'org-backward-heading-same-level)
+;; (org-defkey org-mode-map "\C-c\C-^" 'org-up-element)
+;; (org-defkey org-mode-map "\C-c\C-_" 'org-down-element)
+;; (org-defkey org-mode-map "\C-c\C-f" 'org-forward-heading-same-level)
+;; (org-defkey org-mode-map "\C-c\C-b" 'org-backward-heading-same-level)
 (org-defkey org-mode-map "\C-c$"    'org-archive-subtree)
 (org-defkey org-mode-map "\C-c\C-x\C-s" 'org-advertized-archive-subtree)
 (org-defkey org-mode-map "\C-c\C-x\C-a" 'org-archive-subtree-default)
@@ -18469,19 +18469,19 @@ BEG and END default to the buffer boundaries."
 (org-defkey org-mode-map "\C-c\C-xa" 'org-toggle-archive-tag)
 (org-defkey org-mode-map "\C-c\C-xA" 'org-archive-to-archive-sibling)
 (org-defkey org-mode-map "\C-c\C-xb" 'org-tree-to-indirect-buffer)
-(org-defkey org-mode-map "\C-c\C-j" 'org-goto)
-(org-defkey org-mode-map "\C-c\C-t" 'org-todo)
-(org-defkey org-mode-map "\C-c\C-q" 'org-set-tags-command)
-(org-defkey org-mode-map "\C-c\C-s" 'org-schedule)
-(org-defkey org-mode-map "\C-c\C-d" 'org-deadline)
-(org-defkey org-mode-map "\C-c;"    'org-toggle-comment)
-(org-defkey org-mode-map "\C-c\C-w" 'org-refile)
-(org-defkey org-mode-map "\C-c\M-w" 'org-copy)
+;; (org-defkey org-mode-map "\C-c\C-j" 'org-goto)
+;; (org-defkey org-mode-map "\C-c\C-t" 'org-todo)
+;; (org-defkey org-mode-map "\C-c\C-q" 'org-set-tags-command)
+;; (org-defkey org-mode-map "\C-c\C-s" 'org-schedule)
+;; (org-defkey org-mode-map "\C-c\C-d" 'org-deadline)
+;; (org-defkey org-mode-map "\C-c;"    'org-toggle-comment)
+;; (org-defkey org-mode-map "\C-c\C-w" 'org-refile)
+;; (org-defkey org-mode-map "\C-c\M-w" 'org-copy)
 (org-defkey org-mode-map "\C-c/"    'org-sparse-tree)   ; Minor-mode reserved
 (org-defkey org-mode-map "\C-c\\"   'org-match-sparse-tree) ; Minor-mode res.
-(org-defkey org-mode-map "\C-c\C-m" 'org-ctrl-c-ret)
+;; (org-defkey org-mode-map "\C-c\C-m" 'org-ctrl-c-ret)
 (org-defkey org-mode-map "\M-\C-m"  'org-insert-heading)
-(org-defkey org-mode-map "\C-c\C-xc" 'org-clone-subtree-with-time-shift)
+;; (org-defkey org-mode-map "\C-c\C-xc" 'org-clone-subtree-with-time-shift)
 (org-defkey org-mode-map "\C-c\C-xv" 'org-copy-visible)
 (org-defkey org-mode-map "\C-c\C-x\C-n" 'org-next-link)
 (org-defkey org-mode-map "\C-c\C-x\C-p" 'org-previous-link)
@@ -18490,25 +18490,25 @@ BEG and END default to the buffer boundaries."
 (org-defkey org-mode-map "\C-c\C-o" 'org-open-at-point)
 (org-defkey org-mode-map "\C-c%"    'org-mark-ring-push)
 (org-defkey org-mode-map "\C-c&"    'org-mark-ring-goto)
-(org-defkey org-mode-map "\C-c\C-z" 'org-add-note)  ; Alternative binding
+;; (org-defkey org-mode-map "\C-c\C-z" 'org-add-note)  ; Alternative binding
 (org-defkey org-mode-map "\C-c."    'org-time-stamp)  ; Minor-mode reserved
-(org-defkey org-mode-map "\C-c!"    'org-time-stamp-inactive) ; Minor-mode r.
-(org-defkey org-mode-map "\C-c,"    'org-priority)    ; Minor-mode reserved
-(org-defkey org-mode-map "\C-c\C-y" 'org-evaluate-time-range)
-(org-defkey org-mode-map "\C-c>"    'org-goto-calendar)
-(org-defkey org-mode-map "\C-c<"    'org-date-from-calendar)
-(org-defkey org-mode-map [(control ?,)]     'org-cycle-agenda-files)
-(org-defkey org-mode-map [(control ?\')]     'org-cycle-agenda-files)
-(org-defkey org-mode-map "\C-c["    'org-agenda-file-to-front)
-(org-defkey org-mode-map "\C-c]"    'org-remove-file)
+;; (org-defkey org-mode-map "\C-c!"    'org-time-stamp-inactive) ; Minor-mode r.
+;; (org-defkey org-mode-map "\C-c,"    'org-priority)    ; Minor-mode reserved
+;; (org-defkey org-mode-map "\C-c\C-y" 'org-evaluate-time-range)
+;; (org-defkey org-mode-map "\C-c>"    'org-goto-calendar)
+;; (org-defkey org-mode-map "\C-c<"    'org-date-from-calendar)
+;; (org-defkey org-mode-map [(control ?,)]     'org-cycle-agenda-files)
+;; (org-defkey org-mode-map [(control ?\')]     'org-cycle-agenda-files)
+;; (org-defkey org-mode-map "\C-c["    'org-agenda-file-to-front)
+;; (org-defkey org-mode-map "\C-c]"    'org-remove-file)
 (org-defkey org-mode-map "\C-c\C-x<" 'org-agenda-set-restriction-lock)
 (org-defkey org-mode-map "\C-c\C-x>" 'org-agenda-remove-restriction-lock)
 (org-defkey org-mode-map "\C-c-"    'org-ctrl-c-minus)
 (org-defkey org-mode-map "\C-c*"    'org-ctrl-c-star)
 (org-defkey org-mode-map "\C-c^"    'org-sort)
 (org-defkey org-mode-map "\C-c\C-c" 'org-ctrl-c-ctrl-c)
-(org-defkey org-mode-map "\C-c\C-k" 'org-kill-note-or-show-branches)
-(org-defkey org-mode-map "\C-c#"    'org-update-statistics-cookies)
+;; (org-defkey org-mode-map "\C-c\C-k" 'org-kill-note-or-show-branches)
+;; (org-defkey org-mode-map "\C-c#"    'org-update-statistics-cookies)
 (org-defkey org-mode-map "\C-m"     'org-return)
 (org-defkey org-mode-map "\C-j"     'org-return-indent)
 (org-defkey org-mode-map "\C-c?"    'org-table-field-info)
@@ -18518,20 +18518,20 @@ BEG and END default to the buffer boundaries."
 (org-defkey org-mode-map "\C-c'"    'org-edit-special)
 (org-defkey org-mode-map "\C-c`"    'org-table-edit-field)
 (org-defkey org-mode-map "\C-c|"    'org-table-create-or-convert-from-region)
-(org-defkey org-mode-map [(control ?#)] 'org-table-rotate-recalc-marks)
-(org-defkey org-mode-map "\C-c~"    'org-table-create-with-table.el)
-(org-defkey org-mode-map "\C-c\C-a" 'org-attach)
-(org-defkey org-mode-map "\C-c}"    'org-table-toggle-coordinate-overlays)
-(org-defkey org-mode-map "\C-c{"    'org-table-toggle-formula-debugger)
-(org-defkey org-mode-map "\C-c\C-e" 'org-export)
-(org-defkey org-mode-map "\C-c:"    'org-toggle-fixed-width-section)
+;; (org-defkey org-mode-map [(control ?#)] 'org-table-rotate-recalc-marks)
+;; (org-defkey org-mode-map "\C-c~"    'org-table-create-with-table.el)
+;; (org-defkey org-mode-map "\C-c\C-a" 'org-attach)
+;; (org-defkey org-mode-map "\C-c}"    'org-table-toggle-coordinate-overlays)
+;; (org-defkey org-mode-map "\C-c{"    'org-table-toggle-formula-debugger)
+;; (org-defkey org-mode-map "\C-c\C-e" 'org-export)
+;; (org-defkey org-mode-map "\C-c:"    'org-toggle-fixed-width-section)
 (org-defkey org-mode-map "\C-c\C-x\C-f" 'org-emphasize)
 (org-defkey org-mode-map "\C-c\C-xf"    'org-footnote-action)
 (org-defkey org-mode-map "\C-c\C-x\C-mg"    'org-mobile-pull)
 (org-defkey org-mode-map "\C-c\C-x\C-mp"    'org-mobile-push)
-(org-defkey org-mode-map "\C-c@" 'org-mark-subtree)
-(org-defkey org-mode-map "\M-h" 'org-mark-element)
-(org-defkey org-mode-map [?\C-c (control ?*)] 'org-list-make-subtree)
+;; (org-defkey org-mode-map "\C-c@" 'org-mark-subtree)
+;; (org-defkey org-mode-map "\M-h" 'org-mark-element)
+;; (org-defkey org-mode-map [?\C-c (control ?*)] 'org-list-make-subtree)
 ;;(org-defkey org-mode-map [?\C-c (control ?-)] 'org-list-make-list-from-subtree)
 
 (org-defkey org-mode-map "\C-c\C-x\C-w" 'org-cut-special)
@@ -18559,7 +18559,7 @@ BEG and END default to the buffer boundaries."
 (org-defkey org-mode-map "\C-c\C-xE"    'org-inc-effort)
 (org-defkey org-mode-map "\C-c\C-xo"    'org-toggle-ordered-property)
 (org-defkey org-mode-map "\C-c\C-xi"    'org-insert-columns-dblock)
-(org-defkey org-mode-map [(control ?c) (control ?x) ?\;] 'org-timer-set-timer)
+;; (org-defkey org-mode-map [(control ?c) (control ?x) ?\;] 'org-timer-set-timer)
 (org-defkey org-mode-map [(control ?c) (control ?x) ?\:] 'org-timer-cancel-timer)
 
 (org-defkey org-mode-map "\C-c\C-x."    'org-timer)
@@ -22208,8 +22208,8 @@ the cursor is already beyond the end of the headline."
 	 (t (call-interactively move-fun)))))
     (org-no-warnings (and (featurep 'xemacs) (setq zmacs-region-stays t)))))
 
-(define-key org-mode-map "\C-a" 'org-beginning-of-line)
-(define-key org-mode-map "\C-e" 'org-end-of-line)
+;; (define-key org-mode-map "\C-a" 'org-beginning-of-line)
+;; (define-key org-mode-map "\C-e" 'org-end-of-line)
 
 (defun org-backward-sentence (&optional arg)
   "Go to beginning of sentence, or beginning of table field.

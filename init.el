@@ -1,4 +1,4 @@
-;; load path 
+;; load path
 ;; site-lisp stores manually maintained packages
 (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
   (let* ((my-lisp-dir "~/.emacs.d/site-lisp/")
@@ -223,17 +223,17 @@
 
 ;; fix mod4 bug
 (define-key special-event-map (kbd "<key-17>") 'ignore)
-(define-key special-event-map (kbd "<M-key-17>") 'ignore) 
+(define-key special-event-map (kbd "<M-key-17>") 'ignore)
 
 ;; key bindings
-(mouse-wheel-mode t)   
+(mouse-wheel-mode t)
 (global-set-key "\C-cg" 'goto-line)
 (global-set-key (kbd "C-c SPC") 'comment-dwim)
 (global-set-key (kbd "C-c C-SPC") 'comment-dwim)
 (global-set-key "\C-cc" 'comment-region)
 (global-set-key "\C-cu" 'uncomment-region)
-(global-set-key "\C-cn" 'next-error)  
-(global-set-key "\C-cp" 'previous-error) 
+(global-set-key "\C-cn" 'next-error)
+(global-set-key "\C-cp" 'previous-error)
 (global-set-key "\M-t"  'find-tag)
 (global-set-key "\C-ci" 'indent-region)
 ;; because we navigate via cursor keys, we can put something more useful on the
@@ -277,7 +277,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
   (interactive) ; Use (interactive "^") in Emacs 23 to make shift-select work
   (let ((oldpos (point))
         (vispos (point)))
-        
+
         (beginning-of-visual-line)
         (setq vispos (point))
         (beginning-of-line-text)
@@ -293,7 +293,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
   "Move point to end of visual line or, if already there, to end of logical line."
   (interactive) ; Use (interactive "^") in Emacs 23 to make shift-select work
   (let ((oldpos (point)))
-        
+
         (end-of-visual-line)
         (when (= oldpos (point))
           (end-of-line))))
@@ -317,9 +317,9 @@ If visual-line-mode is on, then also jump to beginning of real line."
 ;; save minibuffer history
 (savehist-mode 1)
 (setq savehist-file "~/.emacs.d/cache/history")
-(setq savehist-additional-variables '(search-ring 
-                                       regexp-search-ring 
-                                       kill-ring 
+(setq savehist-additional-variables '(search-ring
+                                       regexp-search-ring
+                                       kill-ring
                                        compile-command))
 
 ;; number windows, i.e. M-1 .. M-0 to jump to window
@@ -349,8 +349,8 @@ If visual-line-mode is on, then also jump to beginning of real line."
 ;; (add-to-list 'ac-modes 'org-mode)
 ;; (setq ac-comphist-file "~/.emacs.d/cache/ac-comphist.dat")
 ;; (setq ac-use-menu-map t)
-;; (setq ac-auto-show-menu nil) 
-;; (setq ac-ignore-case nil) 
+;; (setq ac-auto-show-menu nil)
+;; (setq ac-ignore-case nil)
 ;; (ac-config-default)
 ;; ;; disabling Yasnippet completion
 ;; (defun epy-snips-from-table (table)
@@ -403,8 +403,8 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (require 'recentf)
 (setq recentf-max-saved-items 1000)
 (setq recentf-save-file "~/.emacs.d/cache/recentf")
-(setq recentf-exclude (append recentf-exclude 
-  '("\.emacs\.d/cache" 
+(setq recentf-exclude (append recentf-exclude
+  '("\.emacs\.d/cache"
     "\.emacs\.d/elpa")))
 (recentf-mode 1)
 ;; file completion
@@ -463,7 +463,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
 
 ;; undo hardwrapped markdown
 (defun unfill-region (begin end)
-  "Remove all line breaks in a region but leave paragraphs, 
+  "Remove all line breaks in a region but leave paragraphs,
   indented text (quotes, code) and lists intakt."
   (interactive "r")
   (replace-regexp "\\([^\n]\\)\n\\([^ *\\>-\n]\\)" "\\1 \\2" nil begin end))
@@ -479,7 +479,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
 ;; deleting
 ;; delete spaces when killing a line
 (defun kill-and-join-forward (&optional arg)
-  "If at end of line, join with following; otherwise kill line. 
+  "If at end of line, join with following; otherwise kill line.
   Deletes whitespace at join."
   (interactive "P")
   (if (and (eolp) (not (bolp)))
@@ -570,7 +570,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
 
 
 ;; enable spell-check in certain modes
-(defun turn-on-spell-check () 
+(defun turn-on-spell-check ()
   (wcheck-mode 1))
 (add-hook 'text-mode-hook 'turn-on-spell-check)
 (add-hook 'markdown-mode-hook 'turn-on-spell-check)
@@ -704,7 +704,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (defface erm-syn-errline
   '((t (:underline "red")))
   "Face used for marking error lines."
-  :group 'enh-ruby) 
+  :group 'enh-ruby)
 ;; misc stuff
 (require 'yari)        ; ri documentation tool
 (require 'ruby-block)  ; show what block an end belongs to
@@ -828,7 +828,7 @@ See the variable `align-rules-list' for more details.")
 (require 'ecb-autoloads)
 ;; fix for emacs 24
 (unless (boundp 'stack-trace-on-error)
-  (defvar stack-trace-on-error nil)) 
+  (defvar stack-trace-on-error nil))
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -863,7 +863,7 @@ See the variable `align-rules-list' for more details.")
 
 ;; if no region is active, act on current line
 (require 'whole-line-or-region)
-(setq whole-line-or-region-extensions-alist 
+(setq whole-line-or-region-extensions-alist
   '((comment-dwim whole-line-or-region-comment-dwim-2 nil)
     (copy-region-as-kill whole-line-or-region-copy-region-as-kill nil)
     (kill-region whole-line-or-region-kill-region nil)
@@ -913,7 +913,7 @@ See the variable `align-rules-list' for more details.")
 (load "custom-input-methods.el" nil t t)
 
 ;; ibus (works exactly like normal ibus, but has better integration)
-(require 'ibus) 
+(require 'ibus)
 (add-hook 'after-init-hook 'ibus-mode-on)
 (global-set-key (kbd "<kanji>") 'ibus-toggle)
 
@@ -1002,8 +1002,8 @@ See the variable `align-rules-list' for more details.")
   str)
 
 (defun generalized-shell-command (command arg)
-  "Unifies `shell-command' and `shell-command-on-region'. 
-You have: 
+  "Unifies `shell-command' and `shell-command-on-region'.
+You have:
 - (no arg) run command and place output
 - (C-u)    ... don't chomp output
 - (region) replace region with output from command
@@ -1034,7 +1034,6 @@ You have:
 (require 'scratch)
 ;; don't want to remember which key I used
 (global-set-key (kbd "C-c b")   'scratch)
-(global-set-key (kbd "C-c C-b") 'scratch) 
 ;; don't start in lisp
 (setq initial-major-mode 'org-mode)
 (setq initial-scratch-message nil)
@@ -1060,6 +1059,16 @@ You have:
 ;; misbehaving modes
 (add-hook 'enh-ruby-mode-hook 'fic-mode)
 (add-hook 'js2-mode-hook 'fic-mode)
+
+;; indentation-based folding
+(require 'yafolding)
+(define-key global-map (kbd "C-c C-f") 'yafolding)
+(define-key global-map (kbd "C-c M-f") 'yafolding-toggle-all)
+(define-key global-map (kbd "C-c C-b") 'yafolding-toggle-all-by-current-level)
+;; I hate outline and I'm gonna stop using it soon :<
+(define-key outline-mode-map (kbd "C-c C-f") 'yafolding)
+(define-key outline-mode-map (kbd "C-c M-f") 'yafolding-toggle-all)
+(define-key outline-mode-map (kbd "C-c C-b") 'yafolding-toggle-all-by-current-level)
 
 ;; perspectives / workspaces (has to be loaded late)
 ;; (require 'persp-mode)
