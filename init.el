@@ -660,6 +660,14 @@ If visual-line-mode is on, then also jump to beginning of real line."
 ;; go to last position before C-c C-o
 (define-key global-map "\C-co" 'org-mark-ring-goto)
 
+;; some templates
+(setcdr (assoc "c" org-structure-template-alist)
+        '("#+BEGIN_COMMENT\n?\n#+END_COMMENT"))
+(add-to-list 'org-structure-template-alist
+             '("r"
+               "#+BEGIN_SRC ruby\n?\n#+END_SRC"
+               "<src lang=\"ruby\">\n\n</src>"))
+
 ;; reload file when it changed (and the buffer has no changes)
 (global-auto-revert-mode 1)
 
