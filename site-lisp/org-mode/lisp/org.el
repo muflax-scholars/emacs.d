@@ -1171,7 +1171,7 @@ this function for details."
   :group 'org-edit-structure
   :type 'boolean)
 
-(defcustom org-M-RET-may-split-line '((default . t))
+(defcustom org-M-RET-may-split-line '((default . nil))
   "Non-nil means M-RET will split the line at the cursor position.
 When nil, it will go to the end of the line before making a
 new line.

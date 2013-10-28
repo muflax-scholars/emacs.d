@@ -613,7 +613,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (setq org-startup-indented nil)
 (setq org-hide-leading-stars t)
 (setq org-indent-indentation-per-level 2)
-(setq org-startup-folded 'content)
+(setq org-startup-folded 'showeverything)
 (setq org-blank-before-new-entry '(
   (heading . nil)
   (plain-list-item . auto)))
