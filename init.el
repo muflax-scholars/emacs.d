@@ -623,7 +623,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
   "Scan for org files whenever todo list is loaded."
   ; 'find' is faster and has better control than lisp
   (setq org-agenda-files (mapcar 'abbreviate-file-name (split-string
-    (shell-command-to-string "find ~/spoiler/projects -type f -name \"*.org\" | sort")
+    (shell-command-to-string "find ~/spoiler -type f -name \"*.org\" | sort")
       "\n"))))
 ;; todo states
 (setq org-todo-keywords
@@ -655,8 +655,6 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (defun org-insert-file-link () (interactive) (org-insert-link '(4)))
 (define-key global-map "\C-cf" 'org-insert-file-link)
 (define-key global-map "\C-cl" 'org-store-link)
-;; go to spoiler index
-(define-key global-map "\C-c\C-s" (lambda () (interactive) (find-file "~/spoiler/notes/index.org")))
 ;; go to last position before C-c C-o
 (define-key global-map "\C-co" 'org-mark-ring-goto)
 
