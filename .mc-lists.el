@@ -10,8 +10,10 @@
         lua-electric-match
         org-force-self-insert
         org-indent-line
+        org-return-indent
         org-self-insert-command
         phi-rectangle-next-line
+        phi-rectangle-yank
         smart-end-of-line
         yas-expand
         ))
