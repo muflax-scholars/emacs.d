@@ -3,8 +3,10 @@
 
 (setq mc/cmds-to-run-for-all
       '(
+        enh-ruby-electric-brace
         hungry-delete-backward
         hungry-delete-forward
+        indent-for-tab-command
         indent-region
         kill-and-join-forward
         lua-electric-match
