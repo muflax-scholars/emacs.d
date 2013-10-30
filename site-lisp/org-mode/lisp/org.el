@@ -18361,7 +18361,7 @@ BEG and END default to the buffer boundaries."
 (org-defkey org-mode-map "\C-c\C-x" (make-sparse-keymap))
 
 ;; TAB key with modifiers
-(org-defkey org-mode-map "\C-i"       'org-indent-line)
+(org-defkey org-mode-map "\C-i"       'org-cycle)
 ;; (org-defkey org-mode-map [(tab)]      'org-cycle)
 ;; (org-defkey org-mode-map [(control tab)] 'org-force-cycle-archived)
 ;; (org-defkey org-mode-map "\M-\t" 'pcomplete)
