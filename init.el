@@ -610,17 +610,13 @@ If visual-line-mode is on, then also jump to beginning of real line."
 ;; loaded so that we can diminish it later
 (require 'org-indent)
 ;; proper indentation / folding
-(setq org-startup-indented nil)
+(setq org-startup-indented t)
 (setq org-hide-leading-stars t)
 (setq org-indent-indentation-per-level 2)
-(setq org-startup-folded 'showeverything)
+(setq org-startup-folded 'content)
 (setq org-blank-before-new-entry '(
   (heading . nil)
   (plain-list-item . auto)))
-(defun no-electric-indent-org ()
-  (electric-indent-mode -1)
-  (define-key org-mode-map [(return)] 'newline-and-indent))
-(add-hook 'org-mode-hook 'no-electric-indent-org)
 ;; tag column
 (setq org-tags-column -70)
 ;; dependencies

@@ -18370,7 +18370,7 @@ BEG and END default to the buffer boundaries."
   ;(org-defkey org-mode-map [S-iso-lefttab]  'org-shifttab))
 ;(org-defkey org-mode-map [(shift tab)]    'org-shifttab)
 ;(define-key org-mode-map [backtab] 'org-shifttab)
-(define-key org-mode-map "\M-i" 'org-indent-block)
+(define-key org-mode-map "\M-i" 'org-shifttab)
 
 (org-defkey org-mode-map [(shift return)]         'org-insert-heading) ; used for lists
 ; meta creates subheadings, control stays on the same level, shift sets TODO
