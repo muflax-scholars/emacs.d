@@ -64,7 +64,7 @@
 (global-set-key "\C-c\C-t" 'toggle-bright-theme)
 
 (add-hook 'after-make-window-system-frame-hooks 'set-color-theme)
-(add-hook 'after-make-console-frame-hooks       (lambda() (enable-theme dark-theme)))
+(add-hook 'after-make-console-frame-hooks       'set-color-theme)
 
 ;; fonts
 (defvar small-font  "6x10")
