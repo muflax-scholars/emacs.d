@@ -331,9 +331,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (require 'yasnippet)
 (define-key yas-minor-mode-map (kbd "C-t") 'yas-next-field-or-maybe-expand)
 (define-key yas-minor-mode-map (kbd "M-t") 'yas-prev-field)
-;; turn on yasnippet only in some modes
-(add-hook 'prog-mode-hook '(lambda () (yas-minor-mode)))
-(add-hook 'markdown-mode-hook '(lambda () (yas-minor-mode)))
+(yas-global-mode 1)
 
 ; auto-yasnippet
 (require 'auto-yasnippet)
@@ -341,35 +339,35 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (global-set-key (kbd "C-c C-~") 'aya-expand)
 
 ;; text completion
-;; ;; auto completion
-;; (require 'auto-complete-config)
-;; (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
+;; auto completion
+(require 'auto-complete-config)
+(add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
 ;; (add-to-list 'ac-modes 'text-mode)
-;; (add-to-list 'ac-modes 'markdown-mode)
+(add-to-list 'ac-modes 'markdown-mode)
 ;; (add-to-list 'ac-modes 'org-mode)
-;; (setq ac-comphist-file "~/.emacs.d/cache/ac-comphist.dat")
-;; (setq ac-use-menu-map t)
-;; (setq ac-auto-show-menu nil)
-;; (setq ac-ignore-case nil)
-;; (ac-config-default)
-;; ;; disabling Yasnippet completion
-;; (defun epy-snips-from-table (table)
-;;   (with-no-warnings
-;;     (let ((hashtab (ac-yasnippet-table-hash table))
-;;           (parent (ac-yasnippet-table-parent table))
-;;           candidates)
-;;       (maphash (lambda (key value)
-;;                  (push key candidates))
-;;                hashtab)
-;;       (identity candidates)
-;;       )))
-;; (defun epy-get-all-snips ()
-;;   (let (candidates)
-;;     (maphash
-;;      (lambda (kk vv) (push (epy-snips-from-table vv) candidates)) yas--tables)
-;;     (apply 'append candidates))
-;;   )
-;; (setq ac-ignores (concatenate 'list ac-ignores (epy-get-all-snips)))
+(setq ac-comphist-file "~/.emacs.d/cache/ac-comphist.dat")
+(setq ac-use-menu-map t)
+(setq ac-auto-show-menu nil)
+(setq ac-ignore-case nil)
+(ac-config-default)
+;; disabling Yasnippet completion
+(defun epy-snips-from-table (table)
+  (with-no-warnings
+    (let ((hashtab (ac-yasnippet-table-hash table))
+          (parent (ac-yasnippet-table-parent table))
+          candidates)
+      (maphash (lambda (key value)
+                 (push key candidates))
+               hashtab)
+      (identity candidates)
+      )))
+(defun epy-get-all-snips ()
+  (let (candidates)
+    (maphash
+     (lambda (kk vv) (push (epy-snips-from-table vv) candidates)) yas--tables)
+    (apply 'append candidates))
+  )
+(setq ac-ignores (concatenate 'list ac-ignores (epy-get-all-snips)))
 
 ;; ido and smex (ido for M-x)
 ;; ido
@@ -1077,7 +1075,7 @@ You have:
 ;; should be last so all modes are already loaded
 (require 'diminish)
 (diminish 'abbrev-mode)
-;; (diminish 'auto-complete-mode "AC")
+(diminish 'auto-complete-mode "AC")
 (diminish 'auto-fill-function "AF")
 (diminish 'auto-revert-mode)
 (diminish 'fic-mode)
