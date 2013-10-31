@@ -57,7 +57,7 @@
 (deftheme twilight-anti-bright
   "A soothing light-on-dark theme.")
 
-(let ((background "#14191f")
+(let ((background "gray20")
       (foreground "#dcdddd")
       (selection "#313c4d")
       (hl-line "#11151a")
