@@ -16,6 +16,7 @@
         org-self-insert-command
         phi-rectangle-next-line
         phi-rectangle-yank
+        smart-beginning-of-line
         smart-end-of-line
         yas-expand
         ))
