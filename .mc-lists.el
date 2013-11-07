@@ -14,6 +14,7 @@
         org-indent-line
         org-return-indent
         org-self-insert-command
+        phi-rectangle-kill-region
         phi-rectangle-next-line
         phi-rectangle-yank
         smart-beginning-of-line
