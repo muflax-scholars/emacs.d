@@ -765,7 +765,7 @@ See the variable `align-rules-list' for more details.")
 (dolist (it ruby-align-rules-list)
   (add-to-list 'align-rules-list it))
 ;; align current region
-(global-set-key (kbd "C-c=") 'align-current)
+(global-set-key (kbd "C-c =") 'align-current)
 ;; repeat regex (teh fuck ain't that the default?!)
 (defun align-repeat (start end regexp)
   "Repeat alignment with respect to the given regular expression."
