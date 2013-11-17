@@ -3,6 +3,7 @@
 
 (setq mc/cmds-to-run-for-all
       '(
+        end-of-visual-line
         enh-ruby-electric-brace
         hungry-delete-backward
         hungry-delete-forward
@@ -15,6 +16,7 @@
         org-return-indent
         org-self-insert-command
         phi-rectangle-kill-region
+        phi-rectangle-kill-ring-save
         phi-rectangle-next-line
         phi-rectangle-yank
         smart-beginning-of-line
