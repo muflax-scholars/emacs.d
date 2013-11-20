@@ -247,6 +247,9 @@
 (global-set-key "\M-f" 'forward-sentence)
 (global-set-key "\M-b" 'backward-sentence)
 
+;; make C-Backspace "work" in terminal
+(global-set-key (kbd "S-<f7>") 'backward-kill-word)
+
 ;; better search/replace
 (require 'visual-regexp)
 (require 'visual-regexp-steroids)
