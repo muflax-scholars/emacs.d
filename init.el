@@ -580,12 +580,30 @@ If visual-line-mode is on, then also jump to beginning of real line."
                  word language)))))
 
 
-;; enable spell-check in certain modes
-(defun turn-on-spell-check ()
+;; make it possible to toggle wcheck on/off globally
+;; TODO have it disable wcheck in open buffers too
+(defvar use-spell-check t)
+(defun disable-spell-check ()
+  "turns spell-check off globally"
+  (interactive)
+  (setq use-spell-check nil)
+  (wcheck-mode 0))
+(defun enable-spell-check ()
+  "turns spell-check off globally"
+  (interactive)
+  (setq use-spell-check t)
   (wcheck-mode 1))
-(add-hook 'text-mode-hook 'turn-on-spell-check)
+(global-set-key (kbd "C-c <f5>")   'disable-spell-check)
+(global-set-key (kbd "C-c C-<f5>") 'enable-spell-check)
+(global-set-key (kbd "C-c <f6>")   'wcheck-mode)
+
+(defun turn-on-spell-check ()
+  (if use-spell-check (wcheck-mode 1)))
+
+;; enable spell-check in certain modes
+(add-hook 'text-mode-hook     'turn-on-spell-check)
 (add-hook 'markdown-mode-hook 'turn-on-spell-check)
-(add-hook 'org-mode-hook 'turn-on-spell-check)
+(add-hook 'org-mode-hook      'turn-on-spell-check)
 
 ;; disable version control in emacs
 (require 'vc)
