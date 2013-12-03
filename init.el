@@ -69,11 +69,13 @@
 ;; fonts
 (defvar small-font  "6x10")
 (defvar normal-font "6x13")
-(defvar big-font    "-gnu-unifont-*")
+(defvar big-font    "7x14")
+(defvar huge-font   "-gnu-unifont-*")
 (defvar font-list (list
                    small-font
                    normal-font
-                   big-font))
+                   big-font
+                   huge-font))
 (defvar current-font normal-font)
 
 (defun set-window-font ()
@@ -93,6 +95,11 @@
 (global-set-key "\C-c\C-f" 'cycle-fonts)
 
 ;; shortcut for the fonts
+(defun use-huge-font ()
+  "use huge font"
+  (interactive)
+  (setq current-font huge-font)
+  (set-window-font))
 (defun use-big-font ()
   "use big font"
   (interactive)
@@ -111,6 +118,7 @@
 (global-set-key (kbd "C-c <f1>") 'use-small-font)
 (global-set-key (kbd "C-c <f2>") 'use-normal-font)
 (global-set-key (kbd "C-c <f3>") 'use-big-font)
+(global-set-key (kbd "C-c <f4>") 'use-huge-font)
 
 ;; auctex
 (add-hook 'LaTeX-mode-hook 'TeX-PDF-mode)
