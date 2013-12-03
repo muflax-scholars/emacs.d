@@ -382,6 +382,8 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (setq ido-use-url-at-point nil)
 (global-set-key "\C-x\M-f" 'find-file-at-point)
 (setq ido-use-virtual-buffers t)
+(setq ido-default-file-method 'selected-window) ; ignore buffers in different frames
+(setq ido-default-buffer-method 'selected-window) ; ignore buffers in different frames
 (setq ido-save-directory-list-file "~/.emacs.d/cache/ido.last")
 (setq ido-ignore-buffers
       '("\\` " "^\*Mess" "^\*Back" ".*Completion" "^\*Ido" "^\*trace"
