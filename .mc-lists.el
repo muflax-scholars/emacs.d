@@ -15,6 +15,7 @@
         org-indent-line
         org-return-indent
         org-self-insert-command
+        orgtbl-self-insert-command
         phi-rectangle-kill-region
         phi-rectangle-kill-ring-save
         phi-rectangle-next-line
