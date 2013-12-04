@@ -190,6 +190,7 @@
 
 ;; optical stuff
 (blink-cursor-mode -1)
+(setq-default cursor-type '(bar . 1))
 (setq inhibit-splash-screen t)
 ;; shows current selected region
 (setq-default transient-mark-mode t)
