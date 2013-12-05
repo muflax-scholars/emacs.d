@@ -23,6 +23,7 @@
         phi-rectangle-yank
         smart-beginning-of-line
         smart-end-of-line
+        sp--self-insert-command
         yas-expand
         ))
 
