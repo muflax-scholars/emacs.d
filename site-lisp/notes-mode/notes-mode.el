@@ -108,7 +108,6 @@
 ;;     (require 'notes-mode)
 ;;     (add-to-list 'auto-mode-alist '("\\.txt\\'" . notes-mode))
 
-
 ;;; Code:
 
 (eval-when-compile (require 'cl))
@@ -121,7 +120,7 @@
 (defgroup notes nil
   "Major mode for editing text files in Notes format."
   :prefix "notes-"
-  :group 'wp))
+  :group 'wp)
 
 (defcustom notes-uri-types
   '("acap" "cid" "data" "dav" "fax" "file" "ftp" "gopher" "http" "https"
@@ -182,6 +181,9 @@
 
 (defvar notes-link-face 'notes-link-face
   "Face name to use for links.")
+
+(defvar notes-reference-face 'notes-reference-face
+  "Face name to use for references.")
 
 (defvar notes-footnote-face 'notes-footnote-face
   "Face name to use for footnote identifiers.")
@@ -284,6 +286,11 @@
   "Face for footnote markers."
   :group 'notes-faces)
 
+(defface notes-reference-face
+  '((t (:inherit font-lock-keyword-face)))
+  "Face for footnote markers."
+  :group 'notes-faces)
+
 (defface notes-url-face
   '((t (:inherit font-lock-string-face)))
   "Face for URLs."
@@ -305,7 +312,7 @@
   "Regular expression for a reference link [text][id].")
 
 (defconst notes-regex-reference-definition
-  "^ +\\(\\[[^^]+?\\]\\):\\s *\\(.*?\\)\\s *\\( \"[^\"]*\"$\\|$\\)"
+  "^[ ]*\\(\\[[^^]+?\\]\\):\\s *\\(.*?\\)[ ]*\\( \"[^\"]*\"$\\|$\\)"
   "Regular expression for a link definition [id]: ...")
 
 (defconst notes-regex-footnote
@@ -313,27 +320,59 @@
   "Regular expression for a footnote marker [^fn].")
 
 (defconst notes-regex-header
-  "^\\([(\\[{<] \\)\\(.*?\\)"
+  "^\\([ ]*\\)\\([(\\[{<][ ]*\\)\\(.+\\)"
   "Regular expression for headers.")
 
-(defconst notes-regex-annotation
-  "^\\([%@>+#~$!=] +\\)\\(.*?\\)"
-  "Regular expression for line annotation.")
+(defconst notes-regex-annotation-abstract
+  "^\\([ ]*\\)\\([+] +\\)\\(.*\\)"
+  "Regular expression for abstract annotation.")
+
+(defconst notes-regex-annotation-code
+  "^\\([ ]*\\)\\([~] +\\)\\(.*\\)"
+  "Regular expression for code annotation.")
+
+(defconst notes-regex-annotation-comment
+  "^\\([ ]*\\)\\([#] +\\)\\(.*\\)"
+  "Regular expression for comment annotation.")
+
+(defconst notes-regex-annotation-equivalent
+  "^\\([ ]*\\)\\([=] +\\)\\(.*\\)"
+  "Regular expression for equivalent annotation.")
+
+(defconst notes-regex-annotation-model
+  "^\\([ ]*\\)\\([$] +\\)\\(.*\\)"
+  "Regular expression for model annotation.")
+
+(defconst notes-regex-annotation-prompt
+  "^\\([ ]*\\)\\([%] +\\)\\(.*\\)"
+  "Regular expression for prompt annotation.")
+
+(defconst notes-regex-annotation-quote
+  "^\\([ ]*\\)\\([>] +\\)\\(.*\\)"
+  "Regular expression for quote annotation.")
+
+(defconst notes-regex-annotation-reply
+  "^\\([ ]*\\)\\([@] +\\)\\(.*\\)"
+  "Regular expression for reply annotation.")
+
+(defconst notes-regex-annotation-wrong
+  "^\\([ ]*\\)\\([!] +\\)\\(.*\\)"
+  "Regular expression for  annotation.")
 
 (defconst notes-regex-list
-  "^\\([ \t]*\\)\\([0-9]+\\.\\|[\\*\\+-]\\)\\([ \t]+\\)"
+  "^\\([ ]*\\)\\([0-9]+\\.\\|[-]\\)\\([ \t]+\\)"
   "Regular expression for matching list items.")
 
 (defconst notes-regex-bold
-  ;; "\\(^\\|[^\\]\\)\\(\\([*_]\\{2\\}\\)\\(.\\|\n[^\n]\\)*?[^\\ ]\\3\\)"
+  "\\(^\\|[ ]\\)\\([*]\\(.+?\\)[*]\\)"
   "Regular expression for matching bold text.")
 
 (defconst notes-regex-italic
-  ;; "\\(^\\|[^\\]\\)\\(\\([*_]\\)\\([^ \\]\\3\\|[^ ]\\(.\\|\n[^\n]\\)*?[^\\ ]\\3\\)\\)"
+  "\\(^\\|[ ]\\)\\([/]\\(.+?\\)[/]\\)"
   "Regular expression for matching italic text.")
 
 (defconst notes-regex-placeholder
-  "\\(\\[[^]]+?\\]\\)[^[]?"
+  "\\(\\[.+?\\]\\)[^[]?"
   "Regular expression for matching placeholder text.")
 
 (defconst notes-regex-uri
@@ -372,21 +411,35 @@
    ;;                                     (3 notes-header-delimiter-face)))
    ;; (cons 'notes-match-comments '((0 notes-comment-face t t)))
    ;; (cons notes-regex-code '(2 notes-inline-code-face))
-   ;; (cons notes-regex-angle-uri 'notes-link-face)
-   ;; (cons notes-regex-uri 'notes-link-face)
-   ;; (cons notes-regex-email 'notes-link-face)
-   ;; (cons notes-regex-list '(2 notes-list-face))
-   ;; (cons notes-regex-link-inline '((1 notes-link-face t)
-   ;;                                    (2 notes-url-face t)))
-   ;; (cons notes-regex-link-reference '((1 notes-link-face t)
-   ;;                                       (2 notes-reference-face t)))
-   ;; (cons notes-regex-reference-definition '((1 notes-reference-face t)
-   ;;                                             (2 notes-url-face t)
-   ;;                                             (3 notes-link-title-face t)))
-   ;; (cons notes-regex-footnote 'notes-footnote-face)
-   ;; (cons notes-regex-bold '(2 notes-bold-face))
-   ;; (cons notes-regex-italic '(2 notes-italic-face))
-   )
+   (cons notes-regex-angle-uri             'notes-link-face)
+   (cons notes-regex-uri                   'notes-link-face)
+   (cons notes-regex-email                 'notes-link-face)
+   (cons notes-regex-list                  '(2 notes-list-face))
+   (cons notes-regex-link-inline           '((1 notes-link-face t)
+                                             (2 notes-url-face t)))
+   (cons notes-regex-link-reference        '((1 notes-link-face t)
+                                             (2 notes-reference-face t)))
+   (cons notes-regex-reference-definition  '((1 notes-reference-face t)
+                                             (2 notes-url-face t)
+                                             (3 notes-link-title-face t)))
+   (cons notes-regex-footnote              'notes-footnote-face)
+
+   (cons notes-regex-bold                  '(2 notes-bold-face))
+   (cons notes-regex-italic                '(2 notes-italic-face))
+   (cons notes-regex-placeholder           '(1 notes-placeholder-face))
+
+   (cons notes-regex-annotation-abstract   'notes-annotation-abstract-face)
+   (cons notes-regex-annotation-code       'notes-annotation-code-face)
+   (cons notes-regex-annotation-comment    'notes-annotation-comment-face)
+   (cons notes-regex-annotation-equivalent 'notes-annotation-equivalent-face)
+   (cons notes-regex-annotation-model      'notes-annotation-model-face)
+   (cons notes-regex-annotation-prompt     'notes-annotation-prompt-face)
+   (cons notes-regex-annotation-quote      'notes-annotation-quote-face)
+   (cons notes-regex-annotation-reply      'notes-annotation-reply-face)
+   (cons notes-regex-annotation-wrong      'notes-annotation-wrong-face)
+
+   (cons notes-regex-header                '(3 notes-header-face))
+)
   "Syntax highlighting for Notes files.")
 
 ;;; Notes parsing functions ================================================
@@ -758,76 +811,76 @@ This helps improve font locking for block constructs such as pre blocks."
 
 ;;; Indentation ====================================================================
 
-;; (defun notes-indent-find-next-position (cur-pos positions)
-;;   "Return the position after the index of CUR-POS in POSITIONS."
-;;   (while (and positions
-;;               (not (equal cur-pos (car positions))))
-;;     (setq positions (cdr positions)))
-;;   (or (cadr positions) 0))
+(defun notes-indent-find-next-position (cur-pos positions)
+  "Return the position after the index of CUR-POS in POSITIONS."
+  (while (and positions
+              (not (equal cur-pos (car positions))))
+    (setq positions (cdr positions)))
+  (or (cadr positions) 0))
 
-;; (defun notes-indent-line ()
-;;   "Indent the current line using some heuristics.
-;; If the _previous_ command was either `notes-enter-key' or
-;; `notes-cycle', then we should cycle to the next
-;; reasonable indentation position.  Otherwise, we could have been
-;; called directly by `notes-enter-key', by an initial call of
-;; `notes-cycle', or indirectly by `auto-fill-mode'.  In
-;; these cases, indent to the default position."
-;;   (interactive)
-;;   (let ((positions (notes-calc-indents))
-;;         (cur-pos (current-column)))
-;;     (if (not (equal this-command 'notes-cycle))
-;;         (indent-line-to (car positions))
-;;       (setq positions (sort (delete-dups positions) '<))
-;;       (indent-line-to
-;;        (notes-indent-find-next-position cur-pos positions)))))
+(defun notes-indent-line ()
+  "Indent the current line using some heuristics.
+If the _previous_ command was either `notes-enter-key' or
+`notes-cycle', then we should cycle to the next
+reasonable indentation position.  Otherwise, we could have been
+called directly by `notes-enter-key', by an initial call of
+`notes-cycle', or indirectly by `auto-fill-mode'.  In
+these cases, indent to the default position."
+  (interactive)
+  (let ((positions (notes-calc-indents))
+        (cur-pos (current-column)))
+    (if (not (equal this-command 'notes-cycle))
+        (indent-line-to (car positions))
+      (setq positions (sort (delete-dups positions) '<))
+      (indent-line-to
+       (notes-indent-find-next-position cur-pos positions)))))
 
-;; (defun notes-calc-indents ()
-;;   "Return a list of indentation columns to cycle through.
-;; The first element in the returned list should be considered the
-;; default indentation level."
-;;   (let (pos prev-line-pos positions)
+(defun notes-calc-indents ()
+  "Return a list of indentation columns to cycle through.
+The first element in the returned list should be considered the
+default indentation level."
+  (let (pos prev-line-pos positions)
 
-;;     ;; Previous line indent
-;;     (setq prev-line-pos (notes-prev-line-indent))
-;;     (setq positions (cons prev-line-pos positions))
+    ;; Previous line indent
+    (setq prev-line-pos (notes-prev-line-indent))
+    (setq positions (cons prev-line-pos positions))
 
-;;     ;; Previous non-list-marker indent
-;;     (setq pos (notes-prev-non-list-indent))
-;;     (when pos
-;;       (setq positions (cons pos positions))
-;;       (setq positions (cons (+ pos tab-width) positions)))
+    ;; Previous non-list-marker indent
+    (setq pos (notes-prev-non-list-indent))
+    (when pos
+      (setq positions (cons pos positions))
+      (setq positions (cons (+ pos tab-width) positions)))
 
-;;     ;; Indentation of the previous line + tab-width
-;;     (cond
-;;      (prev-line-pos
-;;       (setq positions (cons (+ prev-line-pos tab-width) positions)))
-;;      (t
-;;       (setq positions (cons tab-width positions))))
+    ;; Indentation of the previous line + tab-width
+    (cond
+     (prev-line-pos
+      (setq positions (cons (+ prev-line-pos tab-width) positions)))
+     (t
+      (setq positions (cons tab-width positions))))
 
-;;     ;; Indentation of the previous line - tab-width
-;;     (if (and prev-line-pos
-;;              (> prev-line-pos tab-width))
-;;         (setq positions (cons (- prev-line-pos tab-width) positions)))
+    ;; Indentation of the previous line - tab-width
+    (if (and prev-line-pos
+             (> prev-line-pos tab-width))
+        (setq positions (cons (- prev-line-pos tab-width) positions)))
 
-;;     ;; Indentation of preceeding list item
-;;     (setq pos
-;;           (save-excursion
-;;             (forward-line -1)
-;;             (catch 'break
-;;               (while (not (equal (point) (point-min)))
-;;                 (forward-line -1)
-;;                 (goto-char (point-at-bol))
-;;                 (when (re-search-forward notes-regex-list (point-at-eol) t)
-;;                   (throw 'break (length (match-string 1)))))
-;;               nil)))
-;;     (if (and pos (not (eq pos prev-line-pos)))
-;;         (setq positions (cons pos positions)))
+    ;; Indentation of preceeding list item
+    (setq pos
+          (save-excursion
+            (forward-line -1)
+            (catch 'break
+              (while (not (equal (point) (point-min)))
+                (forward-line -1)
+                (goto-char (point-at-bol))
+                (when (re-search-forward notes-regex-list (point-at-eol) t)
+                  (throw 'break (length (match-string 1)))))
+              nil)))
+    (if (and pos (not (eq pos prev-line-pos)))
+        (setq positions (cons pos positions)))
 
-;;     ;; First column
-;;     (setq positions (cons 0 positions))
+    ;; First column
+    (setq positions (cons 0 positions))
 
-;;     (reverse positions)))
+    (reverse positions)))
 
 (defun notes-dedent-or-delete (arg)
   "Handle BACKSPACE by cycling through indentation points.

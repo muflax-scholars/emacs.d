@@ -363,6 +363,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
 ;; (add-to-list 'ac-modes 'text-mode)
 (add-to-list 'ac-modes 'markdown-mode)
+;; (add-to-list 'ac-modes 'notes-mode)
 ;; (add-to-list 'ac-modes 'org-mode)
 (setq ac-comphist-file "~/.emacs.d/cache/ac-comphist.dat")
 (setq ac-use-menu-map t)
@@ -612,6 +613,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (add-hook 'text-mode-hook     'turn-on-spell-check)
 (add-hook 'markdown-mode-hook 'turn-on-spell-check)
 (add-hook 'org-mode-hook      'turn-on-spell-check)
+(add-hook 'notes-mode-hook    'turn-on-spell-check)
 
 ;; disable version control in emacs
 (require 'vc)
@@ -625,6 +627,12 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (add-to-list 'auto-mode-alist '("\\.md$"       . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\bREADME$"   . markdown-mode))
+
+;; notes-mode
+(require 'notes-mode)
+(add-to-list 'auto-mode-alist '("\\.txt$"      . notes-mode))
+(add-to-list 'auto-mode-alist '("\\.notes$"    . notes-mode))
+(add-to-list 'auto-mode-alist '("\\.script$"   . notes-mode))
 
 ;; yaml
 (require 'yaml-mode)
