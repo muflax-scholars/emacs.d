@@ -440,23 +440,8 @@ the coordinates to ibus-daemon."
 
 (defcustom ibus-agent-file-name
   (let ((dir-list `(,(file-name-directory load-file-name)
-		    "~/bin/"
-		    "/usr/local/bin/"
-		    "/usr/local/libexec/"
-		    "/usr/local/libexec/ibus-el/"
-		    "/usr/local/libexec/emacs-ibus/"
-		    "/usr/local/lib/ibus-el/"
-		    "/usr/local/lib/emacs-ibus/"
-		    "/usr/local/share/ibus-el/"
-		    "/usr/local/share/emacs-ibus/"
-		    "/usr/bin/"
-		    "/usr/libexec/"
-		    "/usr/libexec/ibus-el/"
-		    "/usr/libexec/emacs-ibus/"
-		    "/usr/lib/ibus-el/"
-		    "/usr/lib/emacs-ibus/"
-		    "/usr/share/ibus-el/"
-		    "/usr/share/emacs-ibus/"))
+		    "~/local/bin/"
+		    "~/.emacs.d/site-lisp/ibus/"))
 	file-name)
     (while dir-list
       (setq file-name (concat (pop dir-list) "ibus-el-agent"))
@@ -470,7 +455,7 @@ be executable."
   :type '(file :must-match t)
   :group 'ibus-expert)
 
-(defcustom ibus-python-shell-command-name "python"
+(defcustom ibus-python-shell-command-name "python2"
   "String specifying shell command of Python interpreter, which is
 used for executing ibus-el-agent. The value nil means execute the agent
 directly as a shell command."
