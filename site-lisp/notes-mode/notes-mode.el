@@ -308,11 +308,11 @@
   "Regular expression for a [text](file) or an image link ![text](file).")
 
 (defconst notes-regex-link-reference
-  "\\(!?\\[[^]]+?\\]\\)[ ]?\\(\\[[^]]*?\\]\\)"
+  "\\(!?\\[[^]]+?\\]\\)[ \t]?\\(\\[[^]]*?\\]\\)"
   "Regular expression for a reference link [text][id].")
 
 (defconst notes-regex-reference-definition
-  "^[ ]*\\(\\[[^^]+?\\]\\):\\s *\\(.*?\\)[ ]*\\( \"[^\"]*\"$\\|$\\)"
+  "^[ \t]*\\(\\[[^^]+?\\]\\):\\s *\\(.*?\\)[ \t]*\\( \"[^\"]*\"$\\|$\\)"
   "Regular expression for a link definition [id]: ...")
 
 (defconst notes-regex-footnote
@@ -320,55 +320,55 @@
   "Regular expression for a footnote marker [^fn].")
 
 (defconst notes-regex-header
-  "^\\([ ]*\\)\\([(\\[{<][ ]*\\)\\(.+\\)"
+  "^\\([ \t]*\\)\\([\\[{<][ \t]*\\)\\(.+\\)"
   "Regular expression for headers.")
 
 (defconst notes-regex-annotation-abstract
-  "^\\([ ]*\\)\\([+] +\\)\\(.*\\)"
+  "^\\([ \t]*\\)\\([+][ \t]+\\)\\(.*\\)"
   "Regular expression for abstract annotation.")
 
 (defconst notes-regex-annotation-code
-  "^\\([ ]*\\)\\([~] +\\)\\(.*\\)"
+  "^\\([ \t]*\\)\\([~][ \t]+\\)\\(.*\\)"
   "Regular expression for code annotation.")
 
 (defconst notes-regex-annotation-comment
-  "^\\([ ]*\\)\\([#] +\\)\\(.*\\)"
+  "^\\([ \t]*\\)\\([#][ \t]+\\)\\(.*\\)"
   "Regular expression for comment annotation.")
 
 (defconst notes-regex-annotation-equivalent
-  "^\\([ ]*\\)\\([=] +\\)\\(.*\\)"
+  "^\\([ \t]*\\)\\([=][ \t]+\\)\\(.*\\)"
   "Regular expression for equivalent annotation.")
 
 (defconst notes-regex-annotation-model
-  "^\\([ ]*\\)\\([$] +\\)\\(.*\\)"
+  "^\\([ \t]*\\)\\([$][ \t]+\\)\\(.*\\)"
   "Regular expression for model annotation.")
 
 (defconst notes-regex-annotation-prompt
-  "^\\([ ]*\\)\\([%] +\\)\\(.*\\)"
+  "^\\([ \t]*\\)\\([%][ \t]+\\)\\(.*\\)"
   "Regular expression for prompt annotation.")
 
 (defconst notes-regex-annotation-quote
-  "^\\([ ]*\\)\\([>] +\\)\\(.*\\)"
+  "^\\([ \t]*\\)\\([>][ \t]+\\)\\(.*\\)"
   "Regular expression for quote annotation.")
 
 (defconst notes-regex-annotation-reply
-  "^\\([ ]*\\)\\([@] +\\)\\(.*\\)"
+  "^\\([ \t]*\\)\\([@][ \t]+\\)\\(.*\\)"
   "Regular expression for reply annotation.")
 
 (defconst notes-regex-annotation-wrong
-  "^\\([ ]*\\)\\([!] +\\)\\(.*\\)"
+  "^\\([ \t]*\\)\\([!][ \t]+\\)\\(.*\\)"
   "Regular expression for  annotation.")
 
 (defconst notes-regex-list
-  "^\\([ ]*\\)\\([0-9]+\\.\\|[-]\\)\\([ \t]+\\)"
+  "^\\([ \t]*\\)\\([0-9]+\\.\\|[-]\\)\\([ \t]+\\)"
   "Regular expression for matching list items.")
 
 (defconst notes-regex-bold
-  "\\(^\\|[ ]\\)\\([*]\\(.+?\\)[*]\\)"
+  "\\(^\\|[ \t]\\)\\([*]\\(.+?\\)[*]\\)"
   "Regular expression for matching bold text.")
 
 (defconst notes-regex-italic
-  "\\(^\\|[ ]\\)\\([/]\\(.+?\\)[/]\\)"
+  "\\(^\\|[ \t]\\)\\([/]\\(.+?\\)[/]\\)"
   "Regular expression for matching italic text.")
 
 (defconst notes-regex-placeholder
