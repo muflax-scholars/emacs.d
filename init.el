@@ -1128,6 +1128,7 @@ You have:
 (require 'smartparens-config) ; load default
 (smartparens-global-mode t)
 (show-smartparens-global-mode t)
+(setq sp-autoescape-string-quote nil)
 
 ;; markdown-mode
 (sp-with-modes '(markdown-mode)
