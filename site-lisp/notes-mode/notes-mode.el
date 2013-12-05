@@ -393,7 +393,7 @@
   "Regular expression for matching inline email addresses.")
 
 (defconst notes-regex-list-indent
-  ;; "^\\(\\s *\\)\\([0-9]+\\.\\|[\\*\\+-]\\)\\(\\s +\\)"
+  "^\\([ \t]*\\)\\([0-9]+\\.\\|[-]\\)\\([ \t]+\\)"
   "Regular expression for matching indentation of list items.")
 
 ;; keywords
@@ -402,13 +402,6 @@
   (list
    ;; (cons 'notes-match-fenced-code-blocks '((0 notes-pre-face)))
    ;; (cons notes-regex-blockquote 'notes-blockquote-face)
-   ;; (cons notes-regex-header-1-setext '((1 notes-header-face-1)
-   ;;                                        (2 notes-header-rule-face)))
-   ;; (cons notes-regex-header-2-setext '((1 notes-header-face-2)
-   ;;                                        (2 notes-header-rule-face)))
-   ;; (cons notes-regex-header-1-atx '((1 notes-header-delimiter-face)
-   ;;                                     (2 notes-header-face-1)
-   ;;                                     (3 notes-header-delimiter-face)))
    ;; (cons 'notes-match-comments '((0 notes-comment-face t t)))
    ;; (cons notes-regex-code '(2 notes-inline-code-face))
    (cons notes-regex-angle-uri             'notes-link-face)

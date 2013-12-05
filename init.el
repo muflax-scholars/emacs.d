@@ -208,7 +208,7 @@
 (setq-default cursor-type 'box)
 
 ;; text stuff
-(setq default-major-mode 'org-mode)
+(setq default-major-mode 'notes-mode)
 (prefer-coding-system 'utf-8)
 (setq undo-limit 1000000)
 (setq sentence-end-double-space nil)
@@ -1091,7 +1091,7 @@ You have:
 ;; don't want to remember which key I used
 (global-set-key (kbd "C-c b")   'scratch)
 ;; don't start in lisp
-(setq initial-major-mode 'org-mode)
+(setq initial-major-mode 'notes-mode)
 (setq initial-scratch-message nil)
 
 ;; sync lines between buffers
@@ -1127,7 +1127,7 @@ You have:
 (define-key outline-mode-map (kbd "C-c C-b") 'yafolding-toggle-all-by-current-level)
 
 ;; smart parentheses
-(require 'smartparens-config) ; load default
+(require 'smartparens-config)
 (smartparens-global-mode t)
 (show-smartparens-global-mode t)
 (setq sp-autoescape-string-quote nil)
