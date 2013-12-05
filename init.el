@@ -142,10 +142,10 @@
 
 ;; multiple cursors
 (require 'multiple-cursors)
-(global-set-key (kbd "C-c k")    'mc/edit-lines)
+(global-set-key (kbd "C-c d")    'mc/edit-lines)
 (global-set-key (kbd "<C-down>") 'mc/mark-next-like-this)
 (global-set-key (kbd "<C-up>")   'mc/mark-previous-like-this)
-(global-set-key (kbd "C-c C-k")  'mc/mark-all-dwim)
+(global-set-key (kbd "C-c C-d")  'mc/mark-all-dwim)
 (global-set-key (kbd "C-c >")    'mc/mark-like-this-extended)
 (global-set-key (kbd "C-c <")    'mc/mark-like-this-extended)
 (require 'phi-search)
@@ -484,7 +484,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
 ;; undo hardwrapped markdown
 (defun unfill-region (begin end)
   "Remove all line breaks in a region but leave paragraphs,
-  indented text (quotes, code) and lists intakt."
+  indented text (quotes, code) and lists intact."
   (interactive "r")
   (replace-regexp "\\([^\n]\\)\n\\([^ *\\>-\n]\\)" "\\1 \\2" nil begin end))
 (global-set-key "\M-Q" 'unfill-region)
@@ -511,7 +511,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (global-hungry-delete-mode)
 
 ;; more useful kill-ring
-(setq kill-ring-max 200)
+(setq kill-ring-max 2000)
 (require 'kill-ring-search)
 (global-set-key "\M-\C-y" 'kill-ring-search)
 (defun yank-pop-reverse ()
@@ -786,7 +786,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
 
 ;; edit symbol in multiple places simultaneously
 (require 'iedit)
-(global-set-key "\C-ce" 'iedit-mode)
+(global-set-key (kbd "C-c ;")'iedit-mode)
 
 ;; align
 (require 'align)
@@ -981,12 +981,6 @@ See the variable `align-rules-list' for more details.")
       (message (concat "Deleted file: " currentFile))
       )))
 
-;; semi-port of surround.vim
-(require 'surround)
-(global-set-key "\C-cd" 'surround-delete)
-(global-set-key "\C-cD" 'surround-delete-within)
-(global-set-key "\C-c\M-d" 'surround-change)
-
 ;; move lines like in org-mode
 (defun move-line (n)
   "Move the current line up or down by N lines."
@@ -1044,8 +1038,6 @@ See the variable `align-rules-list' for more details.")
 (require 'expand-region)
 (global-set-key (kbd "<C-prior>") 'er/expand-region)
 (global-set-key (kbd "<C-next>")  'er/contract-region)
-(global-set-key (kbd "<C-left>")  'er/contract-region)
-(global-set-key (kbd "<C-right>") 'er/expand-region)
 
 ;; better handling than M-| / M-!
 (defun chomp (str)
@@ -1129,6 +1121,62 @@ You have:
 (smartparens-global-mode t)
 (show-smartparens-global-mode t)
 (setq sp-autoescape-string-quote nil)
+;; keybindings
+(define-key sp-keymap (kbd "C-M-f") 'sp-forward-sexp)
+(define-key sp-keymap (kbd "C-M-b") 'sp-backward-sexp)
+(define-key sp-keymap (kbd "C-S-a") 'sp-beginning-of-sexp)
+(define-key sp-keymap (kbd "C-S-d") 'sp-end-of-sexp)
+(define-key sp-keymap (kbd "C-M-k") 'sp-kill-sexp)
+(define-key sp-keymap (kbd "C-M-w") 'sp-copy-sexp)
+(define-key sp-keymap (kbd "C-<left>") 'sp-add-to-next-sexp)
+(define-key sp-keymap (kbd "C-<right>") 'sp-add-to-previous-sexp)
+(define-key sp-keymap (kbd "M-<delete>") 'sp-unwrap-sexp)
+(define-key sp-keymap (kbd "M-<backspace>") 'sp-backward-unwrap-sexp)
+(define-key sp-keymap (kbd "C-c k") 'sp-splice-sexp)
+(define-key sp-keymap (kbd "C-c C-k") 'sp-rewrap-sexp)
+(define-key sp-keymap (kbd "S-<left>") 'sp-select-previous-thing)
+(define-key sp-keymap (kbd "S-<right>") 'sp-select-next-thing)
+(define-key sp-keymap (kbd "C-c |") 'sp-split-sexp)
+(define-key sp-keymap (kbd "C-c C-|") 'sp-join-sexp)
+
+;; move to beginning of text on line
+(defun sp-kill-to-end-of-sexp ()
+  "Kill everything in the sexp without unbalancing it."
+  (interactive)
+  (save-excursion
+    (set-mark (point))
+    (sp-end-of-sexp)
+    (kill-region (mark) (point))))
+;; move to beginning of text on line
+(defun sp-kill-to-beginning-of-sexp ()
+  "Kill everything in the sexp without unbalancing it."
+  (interactive)
+  (save-excursion
+    (set-mark (point))
+    (sp-beginning-of-sexp)
+    (kill-region (mark) (point))))
+;; move to beginning of text on line
+(defun sp-copy-to-end-of-sexp ()
+  "Copy everything in the sexp without unbalancing it."
+  (interactive)
+  (save-excursion
+    (set-mark (point))
+    (sp-end-of-sexp)
+    (kill-ring-save (mark) (point))))
+;; move to beginning of text on line
+(defun sp-copy-to-beginning-of-sexp ()
+  "copy everything in the sexp without unbalancing it."
+  (interactive)
+  (save-excursion
+    (set-mark (point))
+    (sp-beginning-of-sexp)
+    (kill-ring-save (mark) (point))))
+(define-key sp-keymap (kbd "C-c a") 'sp-beginning-of-sexp)
+(define-key sp-keymap (kbd "C-c e") 'sp-end-of-sexp)
+(define-key sp-keymap (kbd "C-c C-a") 'sp-kill-to-beginning-of-sexp)
+(define-key sp-keymap (kbd "C-c C-e") 'sp-kill-to-end-of-sexp)
+(define-key sp-keymap (kbd "C-c M-a") 'sp-copy-to-beginning-of-sexp)
+(define-key sp-keymap (kbd "C-c M-e") 'sp-copy-to-end-of-sexp)
 
 ;; markdown-mode
 (sp-with-modes '(markdown-mode)
