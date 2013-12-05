@@ -1042,8 +1042,10 @@ See the variable `align-rules-list' for more details.")
 
 ;; expand-region
 (require 'expand-region)
-(global-set-key (kbd "<C-prior>")  'er/expand-region)
-(global-set-key (kbd "<C-next>") 'er/contract-region)
+(global-set-key (kbd "<C-prior>") 'er/expand-region)
+(global-set-key (kbd "<C-next>")  'er/contract-region)
+(global-set-key (kbd "<C-left>")  'er/contract-region)
+(global-set-key (kbd "<C-right>") 'er/expand-region)
 
 ;; better handling than M-| / M-!
 (defun chomp (str)
