@@ -8,6 +8,7 @@
         hungry-delete-backward
         hungry-delete-forward
         indent-for-tab-command
+        indent-new-comment-line
         indent-region
         kill-and-join-forward
         lua-electric-match
