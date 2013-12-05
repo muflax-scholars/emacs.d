@@ -189,8 +189,6 @@
 (setq-default save-place t)
 
 ;; optical stuff
-(blink-cursor-mode -1)
-(setq-default cursor-type '(bar . 1))
 (setq inhibit-splash-screen t)
 ;; shows current selected region
 (setq-default transient-mark-mode t)
@@ -201,6 +199,12 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (set-fringe-mode '(0 . 1))
+
+;; blinking cursor
+(require 'heartbeat-cursor)
+(blink-cursor-mode -1)
+(heartbeat-cursor-mode)
+;; (setq-default cursor-type '(bar . 1))
 
 ;; text stuff
 (setq default-major-mode 'org-mode)
