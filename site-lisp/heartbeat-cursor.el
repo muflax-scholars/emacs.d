@@ -15,7 +15,7 @@
 (defun heartbeat-cursor-colors ()
   (let ((cnt (* heartbeat-period heartbeat-fps)))
     (mapcar (lambda (r)
-              (color-rgb-to-hex r 0 0))
+              (color-rgb-to-hex 1 r r))
             (nconc (heartbeat-range .2 1 (/ cnt 2))
                    (heartbeat-range 1 .2 (/ cnt 2))))))
 

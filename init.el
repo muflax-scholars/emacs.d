@@ -204,7 +204,8 @@
 (require 'heartbeat-cursor)
 (blink-cursor-mode -1)
 (heartbeat-cursor-mode)
-;; (setq-default cursor-type '(bar . 1))
+;; (setq-default cursor-type '(bar . 2))
+(setq-default cursor-type 'box)
 
 ;; text stuff
 (setq default-major-mode 'org-mode)
