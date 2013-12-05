@@ -1122,6 +1122,24 @@ You have:
 (define-key outline-mode-map (kbd "C-c M-f") 'yafolding-toggle-all)
 (define-key outline-mode-map (kbd "C-c C-b") 'yafolding-toggle-all-by-current-level)
 
+;; smart parentheses
+(require 'smartparens-config) ; load default
+(smartparens-global-mode t)
+(show-smartparens-global-mode t)
+
+;; markdown-mode
+(sp-with-modes '(markdown-mode)
+  (sp-local-pair "*" "*" :actions '(wrap autoskip))
+  (sp-local-pair "_" "_" :actions '(wrap autoskip))
+  )
+
+;; notes-mode
+(sp-with-modes '(notes-mode)
+  (sp-local-pair "*" "*" :actions '(wrap autoskip))
+  (sp-local-pair "/" "/" :actions '(wrap autoskip))
+  (sp-local-pair "[" "]")
+  )
+
 ;; perspectives / workspaces (has to be loaded late)
 ;; (require 'persp-mode)
 ;; (setq persp-save-dir (expand-file-name "~/.emacs.d/cache/persp-confs"))
