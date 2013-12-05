@@ -332,6 +332,8 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (add-to-list 'interpreter-mode-alist '("python3" . python-mode))
 (add-to-list 'interpreter-mode-alist '("ruby18" .  enh-ruby-mode))
 (add-to-list 'interpreter-mode-alist '("ruby19" .  enh-ruby-mode))
+(add-to-list 'interpreter-mode-alist '("ruby20" .  enh-ruby-mode))
+(add-to-list 'interpreter-mode-alist '("ruby21" .  enh-ruby-mode))
 
 ;; save minibuffer history
 (savehist-mode 1)
