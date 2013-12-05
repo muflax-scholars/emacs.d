@@ -817,8 +817,16 @@ See the variable `align-rules-list' for more details.")
 (add-to-list 'align-open-comment-modes 'enh-ruby-mode)
 (dolist (it ruby-align-rules-list)
   (add-to-list 'align-rules-list it))
+
+(defun align-region-or-current ()
+  "Align current selected region or implied region if nothing is selected."
+  (interactive)
+  (if (and mark-active
+           (/= (point) (mark)))
+      (align (point) (mark))
+    (align-current)))
 ;; align current region
-(global-set-key (kbd "C-c =") 'align-current)
+(global-set-key (kbd "C-c =") 'align-region-or-current)
 ;; repeat regex (teh fuck ain't that the default?!)
 (defun align-repeat (start end regexp)
   "Repeat alignment with respect to the given regular expression."
