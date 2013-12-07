@@ -3,8 +3,10 @@
 
 (setq mc/cmds-to-run-for-all
       '(
+        downcase-region
         end-of-visual-line
         enh-ruby-electric-brace
+        handle-switch-frame
         hungry-delete-backward
         hungry-delete-forward
         increment-integer-at-point

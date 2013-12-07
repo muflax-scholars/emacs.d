@@ -326,6 +326,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
 
 ;; enable useful command
 (put 'narrow-to-region 'disabled nil)
+(put 'downcase-region 'disabled nil)
 
 ;; associate non-standardish interpreters with modes
 (add-to-list 'interpreter-mode-alist '("python2" . python-mode))
