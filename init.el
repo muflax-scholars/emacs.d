@@ -76,7 +76,7 @@
                    normal-font
                    big-font
                    huge-font))
-(defvar current-font normal-font)
+(defvar current-font big-font)
 
 (defun set-window-font ()
   (set-frame-font current-font))
