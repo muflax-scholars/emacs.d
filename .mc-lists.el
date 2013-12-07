@@ -20,6 +20,7 @@
         org-indent-line
         org-return-indent
         org-self-insert-command
+        orgtbl-ctrl-c-ctrl-c
         orgtbl-self-insert-command
         phi-rectangle-kill-region
         phi-rectangle-kill-ring-save
@@ -28,6 +29,8 @@
         smart-beginning-of-line
         smart-end-of-line
         sp--self-insert-command
+        sp-add-to-previous-sexp
+        sp-end-of-sexp
         yas-expand
         ))
 
