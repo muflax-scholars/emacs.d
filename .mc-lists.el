@@ -7,11 +7,13 @@
         enh-ruby-electric-brace
         hungry-delete-backward
         hungry-delete-forward
+        increment-integer-at-point
         indent-for-tab-command
         indent-new-comment-line
         indent-region
         kill-and-join-forward
         lua-electric-match
+        notes-dedent-or-delete
         org-force-self-insert
         org-indent-line
         org-return-indent

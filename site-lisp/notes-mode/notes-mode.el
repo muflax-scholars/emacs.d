@@ -308,7 +308,7 @@
   "Regular expression for a [text](file) or an image link ![text](file).")
 
 (defconst notes-regex-link-reference
-  "\\(!?\\[[^]]+?\\]\\)[ \t]?\\(\\[[^]]*?\\]\\)"
+  "\\(!?\\[[^]]+?\\]\\)\\(\\[[^]]*?\\]\\)"
   "Regular expression for a reference link [text][id].")
 
 (defconst notes-regex-reference-definition
