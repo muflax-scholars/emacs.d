@@ -1132,6 +1132,7 @@ You have:
 (smartparens-global-mode t)
 (show-smartparens-global-mode t)
 (setq sp-autoescape-string-quote nil)
+(setq sp-highlight-pair-overlay nil)
 ;; keybindings
 (define-key sp-keymap (kbd "C-M-f") 'sp-forward-sexp)
 (define-key sp-keymap (kbd "C-M-b") 'sp-backward-sexp)
