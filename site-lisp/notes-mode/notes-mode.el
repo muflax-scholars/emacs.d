@@ -813,16 +813,14 @@ This helps improve font locking for block constructs such as pre blocks."
 
 (defun notes-indent-line ()
   "Indent the current line using some heuristics.
-If the _previous_ command was either `notes-enter-key' or
-`notes-cycle', then we should cycle to the next
-reasonable indentation position.  Otherwise, we could have been
-called directly by `notes-enter-key', by an initial call of
-`notes-cycle', or indirectly by `auto-fill-mode'.  In
+If the _previous_ command was `notes-indent-line', then we should cycle to the next reasonable indentation position.
+
+Otherwise, we could have been called directly by `notes-enter-key' or indirectly by `auto-fill-mode'. In
 these cases, indent to the default position."
   (interactive)
   (let ((positions (notes-calc-indents))
         (cur-pos (current-column)))
-    (if (not (equal this-command 'notes-cycle))
+    (if (not (equal this-command 'notes-indent-line))
         (indent-line-to (car positions))
       (setq positions (sort (delete-dups positions) '<))
       (indent-line-to
@@ -901,7 +899,7 @@ Otherwise, do normal delete by repeating
     ;; Indentation
     (define-key map (kbd "<backspace>") 'notes-dedent-or-delete)
     ;; Visibility cycling
-    (define-key map "\C-i" 'notes-cycle)
+    (define-key map "\C-i" 'notes-indent-line)
     (define-key map "\M-i" 'notes-shifttab)
     ;; Lists
     ;; (define-key map "\C-c\C-cn" 'notes-cleanup-list-numbers)
