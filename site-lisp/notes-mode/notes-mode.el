@@ -324,39 +324,39 @@
   "Regular expression for headers.")
 
 (defconst notes-regex-annotation-abstract
-  "^\\([ \t]*\\)\\([+][ \t]+\\)\\(.*\\)"
+  "^\\([ \t]*\\)\\([+]\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)"
   "Regular expression for abstract annotation.")
 
 (defconst notes-regex-annotation-code
-  "^\\([ \t]*\\)\\([~][ \t]+\\)\\(.*\\)"
+  "^\\([ \t]*\\)\\([~]\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)"
   "Regular expression for code annotation.")
 
 (defconst notes-regex-annotation-comment
-  "^\\([ \t]*\\)\\([#][ \t]+\\)\\(.*\\)"
+  "^\\([ \t]*\\)\\([#]\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)"
   "Regular expression for comment annotation.")
 
 (defconst notes-regex-annotation-equivalent
-  "^\\([ \t]*\\)\\([=][ \t]+\\)\\(.*\\)"
+  "^\\([ \t]*\\)\\([=]\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)"
   "Regular expression for equivalent annotation.")
 
 (defconst notes-regex-annotation-model
-  "^\\([ \t]*\\)\\([$][ \t]+\\)\\(.*\\)"
+  "^\\([ \t]*\\)\\([$]\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)"
   "Regular expression for model annotation.")
 
 (defconst notes-regex-annotation-prompt
-  "^\\([ \t]*\\)\\([%][ \t]+\\)\\(.*\\)"
+  "^\\([ \t]*\\)\\([%]\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)"
   "Regular expression for prompt annotation.")
 
 (defconst notes-regex-annotation-quote
-  "^\\([ \t]*\\)\\([>][ \t]+\\)\\(.*\\)"
+  "^\\([ \t]*\\)\\([>]\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)"
   "Regular expression for quote annotation.")
 
 (defconst notes-regex-annotation-reply
-  "^\\([ \t]*\\)\\([@][ \t]+\\)\\(.*\\)"
+  "^\\([ \t]*\\)\\([@]\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)"
   "Regular expression for reply annotation.")
 
 (defconst notes-regex-annotation-wrong
-  "^\\([ \t]*\\)\\([!][ \t]+\\)\\(.*\\)"
+  "^\\([ \t]*\\)\\([!]\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)"
   "Regular expression for  annotation.")
 
 (defconst notes-regex-list
