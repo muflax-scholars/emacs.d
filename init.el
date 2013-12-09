@@ -918,7 +918,7 @@ See the variable `align-rules-list' for more details.")
  '(vc-annotate-color-map (quote ((20 . "#e43838") (40 . "#f71010") (60 . "#f8ffc5") (80 . "#ab9c3a") (100 . "#ef8300") (120 . "#a0682d") (140 . "#1c9e28") (160 . "#3cb368") (180 . "#028902") (200 . "#008b45") (220 . "#077707") (240 . "#409e9f") (260 . "#528d8d") (280 . "#1fb3b3") (300 . "#2c53ca") (320 . "#0000ff") (340 . "#0505cc") (360 . "#a020f0"))))
  '(vc-annotate-very-old-color "#a020f0"))
 ;; keys
-(global-set-key "\C-c;" 'ecb-minor-mode)
+;; (global-set-key "\C-c;" 'ecb-minor-mode)
 ;; speedbar
 (setq speedbar-use-images nil)
 (setq speedbar-show-unknown-files t)
