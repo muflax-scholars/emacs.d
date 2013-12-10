@@ -134,6 +134,7 @@
 ;; necessary or scrolling is really slow
 (setq-default bidi-display-reordering  nil)
 (setq auto-window-vscroll nil)
+(setq scroll-error-top-bottom t)
 
 ;; try to keep windows within a max margin
 (require 'automargin)
