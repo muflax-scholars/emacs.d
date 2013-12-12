@@ -1,0 +1,5 @@
+#name : prompt
+# --
+% ${1:prompt}
+@ ${2:reply}
+$0

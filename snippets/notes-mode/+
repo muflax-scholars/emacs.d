@@ -1,0 +1,6 @@
+#name : abstract prompt
+# --
++ ${1:transformation}
+% ${2:before}
+@ ${3:after}
+$0
