@@ -31,6 +31,7 @@
         sp--self-insert-command
         sp-add-to-previous-sexp
         sp-end-of-sexp
+        sp-remove-active-pair-overlay
         yas-expand
         ))
 
