@@ -1,5 +1,5 @@
 #name : prompt
 # --
 % ${1:prompt}
-@ ${2:reply}
+@ ${2:$1}
 $0
