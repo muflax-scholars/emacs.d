@@ -126,6 +126,7 @@
 ;; scrolling
 (setq scroll-preserve-screen-position t)
 (setq mouse-wheel-progressive-speed nil)
+(setq scroll-error-top-bottom t)
 ;; smooth scrolling with margin
 (require 'smooth-scrolling)
 (setq smooth-scroll-margin 5)
@@ -134,7 +135,6 @@
 ;; necessary or scrolling is really slow
 (setq-default bidi-display-reordering  nil)
 (setq auto-window-vscroll nil)
-(setq scroll-error-top-bottom t)
 
 ;; try to keep windows within a max margin
 (require 'automargin)
@@ -197,11 +197,11 @@
 (setq-default transient-mark-mode t)
 (global-font-lock-mode t)
 (set-scroll-bar-mode 'right)
-(setq frame-title-format "%b - emacs")
+(setq frame-title-format "%b")
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
-(set-fringe-mode '(0 . 1))
+(set-fringe-mode '(1 . 10))
 
 ;; blinking cursor
 (require 'heartbeat-cursor)
@@ -224,11 +224,7 @@
 (global-adaptive-wrap-prefix-mode 1)
 (setq visual-line-fringe-indicators '(nil right-curly-arrow))
 
-;; parentheses are connected and their content highlighted
-(show-paren-mode 1)
-(setq blink-matching-paren-distance nil)
-(setq show-paren-style 'parenthesis)
-(setq show-paren-delay 0)
+;; nested parentheses are highlighted when inside of them
 (require 'highlight-parentheses)
 (defun turn-on-highlight-parentheses () (highlight-parentheses-mode 1))
 (add-hook 'emacs-lisp-mode-hook 'turn-on-highlight-parentheses)
@@ -263,8 +259,6 @@
 (global-set-key "\M-n" (lambda () (interactive) (other-window -1)))
 (global-set-key "\C-f" 'forward-word)
 (global-set-key "\C-b" 'backward-word)
-(global-set-key "\M-f" 'forward-sentence)
-(global-set-key "\M-b" 'backward-sentence)
 
 ;; make C-Backspace "work" in terminal
 (global-set-key (kbd "S-<f7>") 'backward-kill-word)
@@ -321,6 +315,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
           (end-of-line))))
 (global-set-key "\C-e" 'smart-end-of-line)
 
+;; org-mode has similar behavior built-in, so use it instead
 (setq org-special-ctrl-a/e t)
 
 ;; calendar
@@ -334,10 +329,10 @@ If visual-line-mode is on, then also jump to beginning of real line."
 ;; associate non-standardish interpreters with modes
 (add-to-list 'interpreter-mode-alist '("python2" . python-mode))
 (add-to-list 'interpreter-mode-alist '("python3" . python-mode))
-(add-to-list 'interpreter-mode-alist '("ruby18" .  enh-ruby-mode))
-(add-to-list 'interpreter-mode-alist '("ruby19" .  enh-ruby-mode))
-(add-to-list 'interpreter-mode-alist '("ruby20" .  enh-ruby-mode))
-(add-to-list 'interpreter-mode-alist '("ruby21" .  enh-ruby-mode))
+(add-to-list 'interpreter-mode-alist '("ruby18"  . enh-ruby-mode))
+(add-to-list 'interpreter-mode-alist '("ruby19"  . enh-ruby-mode))
+(add-to-list 'interpreter-mode-alist '("ruby20"  . enh-ruby-mode))
+(add-to-list 'interpreter-mode-alist '("ruby21"  . enh-ruby-mode))
 
 ;; save minibuffer history
 (savehist-mode 1)
@@ -377,7 +372,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (setq ac-ignore-case nil)
 (ac-config-default)
 ;; disabling Yasnippet completion
-(defun epy-snips-from-table (table)
+(defun yasnippet-snippets-from-table (table)
   (with-no-warnings
     (let ((hashtab (ac-yasnippet-table-hash table))
           (parent (ac-yasnippet-table-parent table))
@@ -387,13 +382,13 @@ If visual-line-mode is on, then also jump to beginning of real line."
                hashtab)
       (identity candidates)
       )))
-(defun epy-get-all-snips ()
+(defun yasnippet-get-all-snippets ()
   (let (candidates)
     (maphash
-     (lambda (kk vv) (push (epy-snips-from-table vv) candidates)) yas--tables)
+     (lambda (kk vv) (push (yasnippet-snippets-from-table vv) candidates)) yas--tables)
     (apply 'append candidates))
   )
-(setq ac-ignores (concatenate 'list ac-ignores (epy-get-all-snips)))
+(setq ac-ignores (concatenate 'list ac-ignores (yasnippet-get-all-snippets)))
 
 ;; ido and smex (ido for M-x)
 ;; ido
@@ -449,12 +444,12 @@ If visual-line-mode is on, then also jump to beginning of real line."
   (save-buffer))
 
 ;; search wort at point, like vim
-(defun my-isearch-word-at-point ()
+(defun isearch-word-at-point ()
   (interactive)
   (call-interactively 'isearch-forward-regexp))
 
-(defun my-isearch-yank-word-hook ()
-  (when (equal this-command 'my-isearch-word-at-point)
+(defun isearch-yank-word-hook ()
+  (when (equal this-command 'isearch-word-at-point)
     (let ((string (concat "\\<"
                           (buffer-substring-no-properties
                             (progn (skip-syntax-backward "w_") (point))
@@ -471,8 +466,8 @@ If visual-line-mode is on, then also jump to beginning of real line."
             isearch-yank-flag t)
       (isearch-search-and-update))))
 
-(add-hook 'isearch-mode-hook 'my-isearch-yank-word-hook)
-(global-set-key (kbd "C-c *") 'my-isearch-word-at-point)
+(add-hook 'isearch-mode-hook 'isearch-yank-word-hook)
+(global-set-key (kbd "C-c *") 'isearch-word-at-point)
 
 ;; indentation
 (setq-default tab-width 2)
@@ -512,6 +507,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
     (delete-indentation t)
     (kill-line arg)))
 (global-set-key "\C-k" 'kill-and-join-forward)
+
 ;; delete all space before point up to beginning of line or non-whitespace char
 (require 'hungry-delete)
 (global-hungry-delete-mode)
@@ -672,17 +668,6 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (setq org-tags-column -70)
 ;; dependencies
 (setq org-enforce-todo-dependencies t)
-;; make clock history persistent
-(setq org-clock-persist 'history)
-(setq org-clock-persist-file "~/.emacs.d/cache/org-clock-save.el")
-(org-clock-persistence-insinuate)
-;; spoiler files
-(defadvice org-todo-list (before org-todo-list-reload activate compile)
-  "Scan for org files whenever todo list is loaded."
-  ; 'find' is faster and has better control than lisp
-  (setq org-agenda-files (mapcar 'abbreviate-file-name (split-string
-    (shell-command-to-string "find ~/spoiler -type f -name \"*.org\" | sort")
-      "\n"))))
 ;; todo states
 (setq org-todo-keywords
       '((sequence "TODO(t)" "|" "WAITING(w)" "DONE(d)")))
@@ -777,10 +762,8 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (add-to-list 'auto-mode-alist '("\\.erb$"     . rhtml-mode))
 ;; pry
 (require 'pry)
-;; optional suggestions
 (global-set-key [S-f9] 'pry-intercept)
 (global-set-key [f9]   'pry-intercept-rerun)
-
 
 ;; javascript
 (require 'js2-mode)
@@ -792,7 +775,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
 
 ;; edit symbol in multiple places simultaneously
 (require 'iedit)
-(global-set-key (kbd "C-c ;")'iedit-mode)
+(global-set-key (kbd "C-c ;") 'iedit-mode)
 
 ;; align
 (require 'align)
@@ -831,6 +814,7 @@ See the variable `align-rules-list' for more details.")
     (align-current)))
 ;; align current region
 (global-set-key (kbd "C-c =") 'align-region-or-current)
+
 ;; repeat regex (teh fuck ain't that the default?!)
 (defun align-repeat (start end regexp)
   "Repeat alignment with respect to the given regular expression."
@@ -882,50 +866,16 @@ See the variable `align-rules-list' for more details.")
 (setq make-pointer-invisible t)
 (setq mouse-yank-at-point t)
 
-;; semantic (code parser)
-(require 'semantic)
-(setq semanticdb-default-save-directory "~/.emacs.d/cache/semanticdb")
-(semantic-mode 1)
-(global-semantic-idle-summary-mode 1)
-(global-semantic-idle-completions-mode 1)
-;; (global-set-key "\C-cf" 'semantic-ia-show-summary)
-
-;; ecb (code browser)
-(require 'ecb-autoloads)
-;; fix for emacs 24
-(unless (boundp 'stack-trace-on-error)
-  (defvar stack-trace-on-error nil))
+;; custom variables because fuck emacs
 (custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector ["#212526" "#ff4b4b" "#b4fa70" "#fce94f" "#729fcf" "#ad7fa8" "#8cc4ff" "#eeeeec"])
  '(custom-safe-themes (quote ("854e99f94a7dae0446b2f8c1de3ceeaeeb60f9085b1880e63def87ae81190869" "aab3160500dd6949d3cdaea37f285e7b40758aaeff3ff1bf174ed1c13719fe76" "3f01e71f0f0d0c9c1468e4145a348a27709dec858e89b2d5b2de72f3f30a3b1c" "9ea054db5cdbd5baa4cda9d373a547435ba88d4e345f4b06f732edbc4f017dc3" "d1a8e9ed9fb1509571f5720fa1c114f11449c62b0b300d10ad430c2827d768f5" "55886d3d1eecb8c054eb779fd5b7f41dddaa81dc5d62395faa1cdc49d2b511e4" "636dcdc34ef0f8491da6ef3804970f53ba3dfddc7bc7fbe320f109f810197498" "b2919f14bf56b73f75c723364b2e84b20575a659444733fdcc701ab0346724f4" "a0feb1322de9e26a4d209d1cfa236deaf64662bb604fa513cca6a057ddf0ef64" "7153b82e50b6f7452b4519097f880d968a6eaf6f6ef38cc45a144958e553fbc6" default)))
- '(ecb-fix-window-size (quote auto))
- '(ecb-layout-name "left15")
- '(ecb-layout-window-sizes (quote (("left14" (ecb-speedbar-buffer-name 33 . 45) (ecb-history-buffer-name 33 . 23)) ("left15" (ecb-speedbar-buffer-name 33 . 34) (ecb-methods-buffer-name 33 . 34)))))
- '(ecb-options-version "2.40")
- '(ecb-primary-secondary-mouse-buttons (quote mouse-1--mouse-2))
- '(ecb-process-non-semantic-files t)
- '(ecb-tip-of-the-day nil)
- '(ecb-toggle-layout-sequence (quote ("left14" "left15")))
- '(ecb-use-speedbar-instead-native-tree-buffer (quote dir))
- '(ecb-window-width 33)
  '(fci-rule-color "#f6f0e1")
  '(linum-format " %7i ")
  '(safe-local-variable-values (quote ((encoding . utf-8) (eval set-input-method (quote muflax-latin)))))
  '(vc-annotate-background "#f6f0e1")
  '(vc-annotate-color-map (quote ((20 . "#e43838") (40 . "#f71010") (60 . "#f8ffc5") (80 . "#ab9c3a") (100 . "#ef8300") (120 . "#a0682d") (140 . "#1c9e28") (160 . "#3cb368") (180 . "#028902") (200 . "#008b45") (220 . "#077707") (240 . "#409e9f") (260 . "#528d8d") (280 . "#1fb3b3") (300 . "#2c53ca") (320 . "#0000ff") (340 . "#0505cc") (360 . "#a020f0"))))
  '(vc-annotate-very-old-color "#a020f0"))
-;; keys
-;; (global-set-key "\C-c;" 'ecb-minor-mode)
-;; speedbar
-(setq speedbar-use-images nil)
-(setq speedbar-show-unknown-files t)
-;; get some parsing for ruby
-(require 'imenu)
-(setq imenu-auto-rescan t)
 
 ;; if no region is active, act on current line
 (require 'whole-line-or-region)
@@ -1082,7 +1032,7 @@ You have:
           (shell-command-on-region p m command t t)
         (shell-command-on-region p m command)))))
 (global-set-key (kbd "C-|") 'generalized-shell-command)
-(global-set-key (kbd "C-\\") 'generalized-shell-command) ;; terminal bug
+(global-set-key (kbd "C-\\") 'generalized-shell-command) ; terminal bug
 
 ;; remove trailing whitespace on save
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
@@ -1097,13 +1047,6 @@ You have:
 ;; don't start in lisp
 (setq initial-major-mode 'notes-mode)
 (setq initial-scratch-message nil)
-
-;; sync lines between buffers
-(defun sync-lines ()
-  (interactive)
-  (goto-line (line-number-at-pos) (window-buffer (next-window)))
-  (goto-line (line-number-at-pos) (window-buffer (next-window))))
-(global-set-key (kbd "C-c C-l") 'sync-lines)
 
 ;; increment / decrement thing at point
 (require 'increment)
@@ -1133,12 +1076,19 @@ You have:
 ;; smart parentheses
 (require 'smartparens-config)
 (smartparens-global-mode t)
-(show-smartparens-global-mode t)
 (setq sp-autoescape-string-quote nil)
 (setq sp-highlight-pair-overlay nil)
+;; parenthesis highlighting behavior
+(show-paren-mode 1)
+(setq blink-matching-paren-distance nil)
+(setq show-paren-style 'parenthesis)
+(setq show-paren-delay 0)
+(show-smartparens-global-mode t)
 ;; keybindings
 (define-key sp-keymap (kbd "C-M-f") 'sp-forward-sexp)
 (define-key sp-keymap (kbd "C-M-b") 'sp-backward-sexp)
+(define-key sp-keymap (kbd "M-f") 'sp-forward-sexp)
+(define-key sp-keymap (kbd "M-b") 'sp-backward-sexp)
 (define-key sp-keymap (kbd "C-S-a") 'sp-beginning-of-sexp)
 (define-key sp-keymap (kbd "C-S-d") 'sp-end-of-sexp)
 (define-key sp-keymap (kbd "C-M-k") 'sp-kill-sexp)
@@ -1207,10 +1157,10 @@ You have:
   )
 
 ;; perspectives / workspaces (has to be loaded late)
-;; (require 'persp-mode)
-;; (setq persp-save-dir (expand-file-name "~/.emacs.d/cache/persp-confs"))
-;; (setq persp-set-last-persp-for-new-frames nil)
-;; (setq persp-auto-save-num-of-backups 10)
+(require 'persp-mode)
+(setq persp-save-dir (expand-file-name "~/.emacs.d/cache/persp-confs"))
+(setq persp-set-last-persp-for-new-frames nil)
+(setq persp-auto-save-num-of-backups 10)
 ;; (persp-mode t)
 
 ;; load raw text in a basic mode (for performance reasons)
