@@ -737,6 +737,8 @@ If visual-line-mode is on, then also jump to beginning of real line."
   '((t (:underline "red")))
   "Face used for marking error lines."
   :group 'enh-ruby)
+(global-set-key (kbd "C-c C-n") 'enh-ruby-find-error)
+(global-set-key (kbd "C-c C-p") 'enh-ruby-beginning-of-defun)
 ;; misc stuff
 (require 'yari)        ; ri documentation tool
 (require 'ruby-block)  ; show what block an end belongs to
