@@ -1148,15 +1148,17 @@ You have:
 ;; markdown-mode
 (sp-with-modes '(markdown-mode)
   (sp-local-pair "*" "*" :actions '(wrap autoskip))
-  (sp-local-pair "_" "_" :actions '(wrap autoskip))
-  )
+  (sp-local-pair "_" "_" :actions '(wrap autoskip)))
 
 ;; notes-mode
 (sp-with-modes '(notes-mode)
   (sp-local-pair "*" "*" :actions '(wrap autoskip))
   (sp-local-pair "/" "/" :actions '(wrap autoskip))
-  (sp-local-pair "[" "]")
-  )
+  (sp-local-pair "[" "]"))
+
+;; overwrite |pipe| handling in ruby
+(sp-with-modes '(enh-ruby-mode ruby-mode)
+  (sp-local-pair "|" "|" :pre-handlers nil))
 
 ;; perspectives / workspaces (has to be loaded late)
 (require 'persp-mode)
