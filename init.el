@@ -67,16 +67,16 @@
 (add-hook 'after-make-console-frame-hooks       'set-color-theme)
 
 ;; fonts
-(defvar small-font  "6x10")
-(defvar normal-font "6x13")
-(defvar big-font    "7x14")
-(defvar huge-font   "-gnu-unifont-*")
+(defvar small-font  "Terminus 9")
+(defvar normal-font "-Misc-Fixed-*-14-*-iso8859-1")
+(defvar big-font    "Monaco 10")
+(defvar huge-font   "Monaco 11")
 (defvar font-list (list
                    small-font
                    normal-font
                    big-font
                    huge-font))
-(defvar current-font big-font)
+(defvar current-font normal-font)
 
 (defun set-window-font ()
   (set-frame-font current-font))
@@ -1169,6 +1169,9 @@ You have:
 
 ;; load raw text in a basic mode (for performance reasons)
 (add-to-list 'auto-mode-alist '("\\.log$" . fundamental-mode))
+
+;; load minimap mode
+(require 'minimap)
 
 ;; clean up modeline and hide standard minor modes
 ;; should be last so all modes are already loaded
