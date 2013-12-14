@@ -67,7 +67,7 @@
 (add-hook 'after-make-console-frame-hooks       'set-color-theme)
 
 ;; fonts
-(defvar small-font  "Terminus 9")
+(defvar small-font  "Anonymous Pro 8")
 (defvar normal-font "-Misc-Fixed-*-14-*-iso8859-1")
 (defvar big-font    "Monaco 10")
 (defvar huge-font   "Monaco 11")
