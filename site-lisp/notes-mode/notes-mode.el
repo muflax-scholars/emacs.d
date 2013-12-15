@@ -167,8 +167,8 @@
 (defvar notes-annotation-equivalent-face 'notes-annotation-equivalent-face
   "Face name to use as a base for equivalent annotation.")
 
-(defvar notes-annotation-code-face 'notes-annotation-code-face
-  "Face name to use as a base for code annotation.")
+(defvar notes-annotation-transformation-face 'notes-annotation-transformation-face
+  "Face name to use as a base for transformation annotation.")
 
 (defvar notes-bracket-face 'notes-bracket-face
   "Face name to use as a base for grab brackets.")
@@ -226,9 +226,9 @@
   "Base face for headers."
   :group 'notes-faces)
 
-(defface notes-annotation-code-face
-  '((t (:inherit font-lock-constant-face)))
-  "Face for code annotation."
+(defface notes-annotation-transformation-face
+  '((t (:inherit font-lock-function-name-face)))
+  "Face for transformation annotation."
   :group 'notes-faces)
 
 (defface notes-annotation-quote-face
@@ -242,17 +242,17 @@
   :group 'notes-faces)
 
 (defface notes-annotation-prompt-face
-  '((t (:inherit font-lock-doc-face)))
+  '((t (:inherit font-lock-variable-name-face)))
   "Face for prompt annotation."
   :group 'notes-faces)
 
 (defface notes-annotation-reply-face
-  '((t (:inherit font-lock-doc-face)))
+  '((t (:inherit font-lock-string-face)))
   "Face for reply annotation."
   :group 'notes-faces)
 
 (defface notes-annotation-abstract-face
-  '((t (:inherit font-lock-keyword-face)))
+  '((t (:inherit font-lock-type-face)))
   "Face for abstract annotation."
   :group 'notes-faces)
 
@@ -320,16 +320,16 @@
   "Regular expression for a footnote marker [^fn].")
 
 (defconst notes-regex-header
-  "^\\([ \t]*\\)\\([\\[{<][ \t]*\\)\\(.+\\)"
+  "^\\([ \t]*\\)\\([\\[{][ \t]*\\)\\(.+\\)"
   "Regular expression for headers.")
 
 (defconst notes-regex-annotation-abstract
   "^\\([ \t]*\\)\\([+]\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)"
   "Regular expression for abstract annotation.")
 
-(defconst notes-regex-annotation-code
-  "^\\([ \t]*\\)\\([~]\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)"
-  "Regular expression for code annotation.")
+(defconst notes-regex-annotation-transformation
+  "^\\([ \t]*\\)\\([<>]\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)"
+  "Regular expression for transformation annotation.")
 
 (defconst notes-regex-annotation-comment
   "^\\([ \t]*\\)\\([#]\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)"
@@ -344,19 +344,19 @@
   "Regular expression for model annotation.")
 
 (defconst notes-regex-annotation-prompt
-  "^\\([ \t]*\\)\\([%]\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)"
+  "^\\([ \t]*\\)\\([%?]\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)"
   "Regular expression for prompt annotation.")
 
 (defconst notes-regex-annotation-quote
-  "^\\([ \t]*\\)\\([>]\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)"
+  "^\\([ \t]*\\)\\([|]\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)"
   "Regular expression for quote annotation.")
 
 (defconst notes-regex-annotation-reply
-  "^\\([ \t]*\\)\\([@]\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)"
+  "^\\([ \t]*\\)\\([@!]\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)"
   "Regular expression for reply annotation.")
 
 (defconst notes-regex-annotation-wrong
-  "^\\([ \t]*\\)\\([!]\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)"
+  "^\\([ \t]*\\)\\([*]\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)"
   "Regular expression for  annotation.")
 
 (defconst notes-regex-list
@@ -404,34 +404,34 @@
    ;; (cons notes-regex-blockquote 'notes-blockquote-face)
    ;; (cons 'notes-match-comments '((0 notes-comment-face t t)))
    ;; (cons notes-regex-code '(2 notes-inline-code-face))
-   (cons notes-regex-angle-uri             'notes-link-face)
-   (cons notes-regex-uri                   'notes-link-face)
-   (cons notes-regex-email                 'notes-link-face)
-   (cons notes-regex-list                  '(2 notes-list-face))
-   (cons notes-regex-link-inline           '((1 notes-link-face t)
-                                             (2 notes-url-face t)))
-   (cons notes-regex-link-reference        '((1 notes-link-face t)
-                                             (2 notes-reference-face t)))
-   (cons notes-regex-reference-definition  '((1 notes-reference-face t)
-                                             (2 notes-url-face t)
-                                             (3 notes-link-title-face t)))
-   (cons notes-regex-footnote              'notes-footnote-face)
+   (cons notes-regex-angle-uri                 'notes-link-face)
+   (cons notes-regex-uri                       'notes-link-face)
+   (cons notes-regex-email                     'notes-link-face)
+   (cons notes-regex-list                      '(2 notes-list-face))
+   (cons notes-regex-link-inline               '((1 notes-link-face t)
+                                                 (2 notes-url-face t)))
+   (cons notes-regex-link-reference            '((1 notes-link-face t)
+                                                 (2 notes-reference-face t)))
+   (cons notes-regex-reference-definition      '((1 notes-reference-face t)
+                                                 (2 notes-url-face t)
+                                                 (3 notes-link-title-face t)))
+   (cons notes-regex-footnote                  'notes-footnote-face)
 
-   (cons notes-regex-bold                  '(2 notes-bold-face))
-   (cons notes-regex-italic                '(2 notes-italic-face))
-   (cons notes-regex-placeholder           '(1 notes-placeholder-face))
+   (cons notes-regex-bold                      '(2 notes-bold-face))
+   (cons notes-regex-italic                    '(2 notes-italic-face))
+   (cons notes-regex-placeholder               '(1 notes-placeholder-face))
 
-   (cons notes-regex-annotation-abstract   '(2 notes-annotation-abstract-face))
-   (cons notes-regex-annotation-code       '(2 notes-annotation-code-face))
-   (cons notes-regex-annotation-comment    '(2 notes-annotation-comment-face))
-   (cons notes-regex-annotation-equivalent '(2 notes-annotation-equivalent-face))
-   (cons notes-regex-annotation-model      '(2 notes-annotation-model-face))
-   (cons notes-regex-annotation-prompt     '(2 notes-annotation-prompt-face))
-   (cons notes-regex-annotation-quote      '(2 notes-annotation-quote-face))
-   (cons notes-regex-annotation-reply      '(2 notes-annotation-reply-face))
-   (cons notes-regex-annotation-wrong      '(2 notes-annotation-wrong-face))
+   (cons notes-regex-annotation-abstract       '(2 notes-annotation-abstract-face))
+   (cons notes-regex-annotation-transformation '(2 notes-annotation-transformation-face))
+   (cons notes-regex-annotation-comment        '(2 notes-annotation-comment-face))
+   (cons notes-regex-annotation-equivalent     '(2 notes-annotation-equivalent-face))
+   (cons notes-regex-annotation-model          '(2 notes-annotation-model-face))
+   (cons notes-regex-annotation-prompt         '(2 notes-annotation-prompt-face))
+   (cons notes-regex-annotation-quote          '(2 notes-annotation-quote-face))
+   (cons notes-regex-annotation-reply          '(2 notes-annotation-reply-face))
+   (cons notes-regex-annotation-wrong          '(2 notes-annotation-wrong-face))
 
-   (cons notes-regex-header                '(3 notes-header-face))
+   (cons notes-regex-header                    '(3 notes-header-face))
 )
   "Syntax highlighting for Notes files.")
 
