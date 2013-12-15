@@ -778,6 +778,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
 ;; edit symbol in multiple places simultaneously
 (require 'iedit)
 (global-set-key (kbd "C-c ;") 'iedit-mode)
+(global-set-key (kbd "C-c C-;") 'iedit-mode-toggle-on-function)
 
 ;; align
 (require 'align)
