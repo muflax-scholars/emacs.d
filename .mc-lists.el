@@ -30,6 +30,7 @@
         smart-end-of-line
         sp--self-insert-command
         sp-add-to-previous-sexp
+        sp-beginning-of-sexp
         sp-end-of-sexp
         sp-remove-active-pair-overlay
         yas-expand
