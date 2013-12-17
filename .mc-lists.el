@@ -3,6 +3,7 @@
 
 (setq mc/cmds-to-run-for-all
       '(
+        beginning-of-visual-line
         downcase-region
         end-of-visual-line
         enh-ruby-electric-brace
