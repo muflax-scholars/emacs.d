@@ -1180,6 +1180,16 @@ You have:
 ;; load minimap mode
 (require 'minimap)
 
+;; normalize unicode in buffer
+(defun normalize-unicode-in-buffer ()
+  "Normalize Unicode in buffer to NFKC form."
+  (interactive)
+  (save-excursion
+    (ucs-normalize-NFKC-region (point-min) (point-max))))
+
+;; normalize buffer before saving
+(add-hook 'before-save-hook 'normalize-unicode-in-buffer)
+
 ;; clean up modeline and hide standard minor modes
 ;; should be last so all modes are already loaded
 (require 'diminish)
