@@ -143,19 +143,21 @@
 
 ;; multiple cursors
 (require 'multiple-cursors)
-(global-set-key (kbd "C-c d")    'mc/edit-lines)
-(global-set-key (kbd "<C-down>") 'mc/mark-next-like-this)
-(global-set-key (kbd "<C-up>")   'mc/mark-previous-like-this)
-(global-set-key (kbd "C-c C-d")  'mc/mark-all-dwim)
-(global-set-key (kbd "C-c >")    'mc/mark-more-like-this-extended)
-(global-set-key (kbd "C-c <")    'mc/mark-more-like-this-extended)
+(global-set-key (kbd "C-c d")      'mc/edit-lines)
+(global-set-key (kbd "<C-down>")   'mc/mark-next-like-this)
+(global-set-key (kbd "<C-up>")     'mc/mark-previous-like-this)
+(global-set-key (kbd "<M-C-down>") 'mc/skip-to-next-like-this)
+(global-set-key (kbd "<M-C-up>")   'mc/skip-to-previous-like-this)
+(global-set-key (kbd "C-c C-d")    'mc/mark-all-dwim)
+(global-set-key (kbd "C-c >")      'mc/mark-more-like-this-extended)
+(global-set-key (kbd "C-c <")      'mc/mark-more-like-this-extended)
 (require 'phi-search)
 (require 'phi-search-mc)
 (global-set-key (kbd "C-c C-s") 'phi-search)
 (global-set-key (kbd "C-c C-r") 'phi-search-backward)
-(define-key phi-search-default-map (kbd "<C-down>") 'phi-search-mc/mark-next)
-(define-key phi-search-default-map (kbd "<C-up>")   'phi-search-mc/mark-previous)
-(define-key phi-search-default-map (kbd "C-c C-k")  'phi-search-mc/mark-all)
+(define-key phi-search-default-map (kbd "<C-down>")   'phi-search-mc/mark-next)
+(define-key phi-search-default-map (kbd "<C-up>")     'phi-search-mc/mark-previous)
+(define-key phi-search-default-map (kbd "C-c C-k")    'phi-search-mc/mark-all)
 
 ;; support for bookmarks
 (require 'breadcrumb)
@@ -1158,7 +1160,8 @@ You have:
   (sp-local-pair "/" "/" :actions '(wrap autoskip))
   (sp-local-pair "<" ">" :actions '(wrap autoskip))
   (sp-local-pair "[" "]")
-  (sp-local-pair "'" "'" :actions '(wrap autoskip)))
+  (sp-local-pair "'" "'" :actions '(wrap autoskip))
+  (sp-local-pair "`" "`" :actions '(wrap autoskip)))
 
 ;; overwrite |pipe| handling in ruby
 (sp-with-modes '(enh-ruby-mode ruby-mode)

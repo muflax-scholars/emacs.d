@@ -15,6 +15,7 @@
         indent-region
         kill-and-join-forward
         lua-electric-match
+        move-line-down
         notes-dedent-or-delete
         org-force-self-insert
         org-indent-line
@@ -40,6 +41,7 @@
       '(
         align-current
         bc-set
+        down-list
         ibus-handle-event
         repeat
         smex
