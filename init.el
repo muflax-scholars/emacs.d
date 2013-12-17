@@ -934,7 +934,8 @@ See the variable `align-rules-list' for more details.")
 ;; ibus (works exactly like normal ibus, but has better integration)
 (require 'ibus)
 (add-hook 'after-init-hook 'ibus-mode-on)
-(global-set-key (kbd "<kanji>") 'ibus-toggle)
+(global-set-key (kbd "<kanji>")   'ibus-toggle)
+(global-set-key (kbd "S-<kanji>") 'ibus-next-input-method)
 
 ;; analog to delete-file
 (defun delete-current-file ()
@@ -1186,7 +1187,6 @@ You have:
 (diminish 'fic-mode)
 (diminish 'global-visual-line-mode)
 (diminish 'highlight-parentheses-mode)
-(diminish 'ibus-mode)
 (diminish 'undo-tree-mode)
 (diminish 'visual-line-mode)
 (diminish 'volatile-highlights-mode)

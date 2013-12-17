@@ -2835,6 +2835,22 @@ ENGINE-NAME, if given as a string, specifies input method engine."
     (ibus-check-current-buffer))
   (ibus-enable engine-name))
 
+(defun ibus-next-input-method ()
+  "Select the next IBus engine in the list. If the current engine is the last
+engine in the list then the first one will be enabled."
+  (interactive)
+  (when (and (processp ibus-agent-process)
+             (numberp ibus-imcontext-id))
+    (let* ((current-engine (cdr (assoc ibus-selected-display
+                                       (nth 2 (assq ibus-buffer-group
+                                                    ibus-buffer-group-alist)))))
+           (engines (ibus-get-active-engine-list))
+           (remaining-engines (cdr (member current-engine engines))))
+      (message "current-engine: %s" current-engine)
+      (if remaining-engines
+          (ibus-enable (car remaining-engines))
+        (ibus-enable (car engines))))))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Manage buffer switching
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
