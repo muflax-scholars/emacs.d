@@ -1155,7 +1155,9 @@ You have:
 (sp-with-modes '(notes-mode)
   (sp-local-pair "*" "*" :actions '(wrap autoskip))
   (sp-local-pair "/" "/" :actions '(wrap autoskip))
-  (sp-local-pair "[" "]"))
+  (sp-local-pair "<" ">" :actions '(wrap autoskip))
+  (sp-local-pair "[" "]")
+  (sp-local-pair "'" "'" :actions '(wrap autoskip)))
 
 ;; overwrite |pipe| handling in ruby
 (sp-with-modes '(enh-ruby-mode ruby-mode)
