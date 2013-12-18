@@ -1010,6 +1010,9 @@ See the variable `align-rules-list' for more details.")
 (global-set-key (kbd "<C-prior>") 'er/expand-region)
 (global-set-key (kbd "<C-next>")  'er/contract-region)
 
+;; make zsh aliases work
+(setq shell-command-switch "-ic")
+
 ;; better handling than M-| / M-!
 (defun chomp (str)
   "Chomp leading and tailing whitespace from STR."
