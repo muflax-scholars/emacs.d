@@ -601,7 +601,8 @@ If visual-line-mode is on, then also jump to beginning of real line."
   "turns spell-check off globally"
   (interactive)
   (setq use-spell-check nil)
-  (wcheck-mode 0))
+  (dolist (buffer (buffer-list))
+    (wcheck-mode 0)))
 (defun enable-spell-check ()
   "turns spell-check off globally"
   (interactive)
