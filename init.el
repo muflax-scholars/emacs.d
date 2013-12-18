@@ -615,10 +615,8 @@ If visual-line-mode is on, then also jump to beginning of real line."
   (if use-spell-check (wcheck-mode 1)))
 
 ;; enable spell-check in certain modes
-(add-hook 'text-mode-hook     'turn-on-spell-check)
 (add-hook 'markdown-mode-hook 'turn-on-spell-check)
 (add-hook 'org-mode-hook      'turn-on-spell-check)
-(add-hook 'notes-mode-hook    'turn-on-spell-check)
 
 ;; disable version control in emacs
 (require 'vc)
