@@ -10,6 +10,7 @@
         handle-switch-frame
         hungry-delete-backward
         hungry-delete-forward
+        ido-switch-buffer
         increment-integer-at-point
         indent-for-tab-command
         indent-new-comment-line
