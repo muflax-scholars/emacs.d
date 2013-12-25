@@ -18,6 +18,7 @@
         kill-and-join-forward
         lua-electric-match
         move-line-down
+        move-line-up
         notes-dedent-or-delete
         org-force-self-insert
         org-indent-line
