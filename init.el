@@ -1012,7 +1012,7 @@ See the variable `align-rules-list' for more details.")
 (global-set-key (kbd "<C-next>")  'er/contract-region)
 
 ;; make zsh aliases work
-(setq shell-command-switch "-ic")
+(setq shell-command-switch "-lc")
 
 ;; better handling than M-| / M-!
 (defun chomp (str)
