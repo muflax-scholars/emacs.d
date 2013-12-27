@@ -882,7 +882,8 @@ See the variable `align-rules-list' for more details.")
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector ["#212526" "#ff4b4b" "#b4fa70" "#fce94f" "#729fcf" "#ad7fa8" "#8cc4ff" "#eeeeec"])
- '(custom-safe-themes (quote ("a2b98c16c7c52d5e755bd704eeb34b86c4a83bf19fad75b5094915c9ff41e022" "854e99f94a7dae0446b2f8c1de3ceeaeeb60f9085b1880e63def87ae81190869" "aab3160500dd6949d3cdaea37f285e7b40758aaeff3ff1bf174ed1c13719fe76" "3f01e71f0f0d0c9c1468e4145a348a27709dec858e89b2d5b2de72f3f30a3b1c" "9ea054db5cdbd5baa4cda9d373a547435ba88d4e345f4b06f732edbc4f017dc3" "d1a8e9ed9fb1509571f5720fa1c114f11449c62b0b300d10ad430c2827d768f5" "55886d3d1eecb8c054eb779fd5b7f41dddaa81dc5d62395faa1cdc49d2b511e4" "636dcdc34ef0f8491da6ef3804970f53ba3dfddc7bc7fbe320f109f810197498" "b2919f14bf56b73f75c723364b2e84b20575a659444733fdcc701ab0346724f4" "a0feb1322de9e26a4d209d1cfa236deaf64662bb604fa513cca6a057ddf0ef64" "7153b82e50b6f7452b4519097f880d968a6eaf6f6ef38cc45a144958e553fbc6" default)))
+ '(custom-safe-themes (quote ("129b50546f17a14f93bdffb4adae004cfc2fd07d7cc5f79abaa2ecac920ae721" "8a6d41e3c656a607dbd8f34fba8ead004b10726097ba5c82a0e3c4885887f690" "a2b98c16c7c52d5e755bd704eeb34b86c4a83bf19fad75b5094915c9ff41e022" "854e99f94a7dae0446b2f8c1de3ceeaeeb60f9085b1880e63def87ae81190869" "aab3160500dd6949d3cdaea37f285e7b40758aaeff3ff1bf174ed1c13719fe76" "3f01e71f0f0d0c9c1468e4145a348a27709dec858e89b2d5b2de72f3f30a3b1c" "9ea054db5cdbd5baa4cda9d373a547435ba88d4e345f4b06f732edbc4f017dc3" "d1a8e9ed9fb1509571f5720fa1c114f11449c62b0b300d10ad430c2827d768f5" "55886d3d1eecb8c054eb779fd5b7f41dddaa81dc5d62395faa1cdc49d2b511e4" "636dcdc34ef0f8491da6ef3804970f53ba3dfddc7bc7fbe320f109f810197498" "b2919f14bf56b73f75c723364b2e84b20575a659444733fdcc701ab0346724f4" "a0feb1322de9e26a4d209d1cfa236deaf64662bb604fa513cca6a057ddf0ef64" "7153b82e50b6f7452b4519097f880d968a6eaf6f6ef38cc45a144958e553fbc6" default)))
+ '(fci-rule-character-color "#192028")
  '(fci-rule-color "#f6f0e1")
  '(linum-format " %7i ")
  '(safe-local-variable-values (quote ((encoding . utf-8) (eval set-input-method (quote muflax-latin)))))
@@ -1219,17 +1220,3 @@ You have:
 (diminish 'yas-minor-mode)
 (diminish 'ruby-block-mode)
 (diminish 'smartparens-mode)
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(diff-added ((((background dark)) (:foreground "#FFFF9B9BFFFF")) (t (:foreground "DarkGreen"))) t)
- '(diff-changed ((((background dark)) (:foreground "Yellow")) (t (:foreground "MediumBlue"))) t)
- '(diff-context ((((background dark)) (:foreground "White")) (t (:foreground "Black"))) t)
- '(diff-file-header ((((background dark)) (:foreground "Cyan" :background "Black")) (t (:foreground "Red" :background "White"))) t)
- '(diff-header ((((background dark)) (:foreground "Cyan")) (t (:foreground "Red"))) t)
- '(diff-hunk-header ((((background dark)) (:foreground "Black" :background "#05057F7F8D8D")) (t (:foreground "White" :background "Salmon"))) t)
- '(diff-index ((((background dark)) (:foreground "Magenta")) (t (:foreground "Green"))) t)
- '(diff-nonexistent ((((background dark)) (:foreground "#FFFFFFFF7474")) (t (:foreground "DarkBlue"))) t)
- '(diff-removed ((((background dark)) (:foreground "#7474FFFF7474")) (t (:foreground "DarkMagenta"))) t))
