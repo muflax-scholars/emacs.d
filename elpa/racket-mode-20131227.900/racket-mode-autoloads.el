@@ -4,7 +4,7 @@
 
 
 ;;;### (autoloads (run-racket racket-mode) "racket-mode" "racket-mode.el"
-;;;;;;  (21181 41999 241588 71000))
+;;;;;;  (21183 23570 142356 757000))
 ;;; Generated autoloads from racket-mode.el
 
 (setq auto-mode-alist (append '(("\\.rkt\\'" . racket-mode) ("\\.rktd\\'" . racket-mode)) auto-mode-alist))
@@ -25,8 +25,8 @@ is run).
 
 ;;;***
 
-;;;### (autoloads nil nil ("racket-mode-pkg.el") (21181 41999 257435
-;;;;;;  558000))
+;;;### (autoloads nil nil ("racket-mode-pkg.el") (21183 23570 162136
+;;;;;;  604000))
 
 ;;;***
 

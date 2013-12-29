@@ -2,12 +2,12 @@
 
 ;; Copyright © 2007-2013 Jeffrey Chu, Lennart Staflin, Phil Hagelberg
 ;;
-;; Authors: Jeffrey Chu <jochu0@gmail.com>
-;;          Lennart Staflin <lenst@lysator.liu.se>
-;;          Phil Hagelberg <technomancy@gmail.com>
+;; Author: Jeffrey Chu <jochu0@gmail.com>
+;;         Lennart Staflin <lenst@lysator.liu.se>
+;;         Phil Hagelberg <technomancy@gmail.com>
 ;; URL: http://github.com/clojure-emacs/clojure-mode
-;; Version: 20131222.444
-;; X-Original-Version: 2.1.0
+;; Version: 20131227.1044
+;; X-Original-Version: 2.1.1
 ;; Keywords: languages, lisp
 
 ;; This file is not part of GNU Emacs.
@@ -1199,6 +1199,9 @@ word test in it and whether the file lives under the test/ directory."
   "Jump from implementation file to test."
   (interactive)
   (find-file (funcall clojure-test-for-fn (clojure-find-ns))))
+
+(make-obsolete 'clojure-jump-to-test
+               "use projectile or toggle.el instead." "2.1.1")
 
 (defun clojure-jump-between-tests-and-code ()
   "Jump between implementation and related test file."

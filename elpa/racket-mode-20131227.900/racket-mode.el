@@ -263,7 +263,7 @@ Lisp function does not specify a special indentation."
                (lisp-indent-specform method state
                                      indent-point normal-indent))
               (method
-               (funcall method state indent-point normal-indent)))))))
+               (funcall method state indent-point normal-indent))))))
 
 (defun racket-indent-for-fold (state indent-point normal-indent)
   ;; see http://community.schemewiki.org/?emacs-indentation
@@ -1727,6 +1727,9 @@ Lisp function does not specify a special indentation."
     ;; symbol
     ("'\\sw+"                   . racket-selfeval-face)
     ("'|\\(\\sw\\| \\)+|"       . racket-selfeval-face)
+
+    ;; #rx #px
+    ("\\(#[pr]x\\)\"" (1 racket-selfeval-face))
 
     ;; literal char
     ("\\_<#\\\\\\([][-`~!@#$%&*()_+=^{}\;:'\"<>,.?/|\\\\]\\|\\sw+\\>\\)"

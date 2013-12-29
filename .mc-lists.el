@@ -5,6 +5,7 @@
       '(
         beginning-of-visual-line
         downcase-region
+        electric-graphviz-dot-semi
         end-of-visual-line
         enh-ruby-electric-brace
         handle-switch-frame
