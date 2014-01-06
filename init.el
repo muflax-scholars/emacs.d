@@ -717,7 +717,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
 
 ;; new python mode
 (require 'python)
-(setq python-indent 2)
+(setq python-indent-offset 2)
 (defun no-electric-indent-python ()
   ;; TODO should be a generic macro or something
   (electric-indent-mode -1)
