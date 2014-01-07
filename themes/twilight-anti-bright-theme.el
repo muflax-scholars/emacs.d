@@ -49,83 +49,83 @@
    'twilight-anti-bright
 
    ;; Basics
-   `(default ((t (:background ,background :foreground ,foreground))))
-   `(cursor ((t (:background ,cursor))))
-   `(region ((t (:background ,selection))))
-   `(highlight ((t (:foreground ,blue-3 :background ,blue-3bg))))
+   `(default ((((type graphic)) (:background ,background :foreground ,foreground))))
+   `(cursor ((((type graphic)) (:background ,cursor))))
+   `(region ((((type graphic)) (:background ,selection))))
+   `(highlight ((((type graphic)) (:foreground ,blue-3 :background ,blue-3bg))))
    `(hl-line ((t (:background ,hl-line))))
-   `(minibuffer-prompt ((t (:foreground ,orange-1 :background ,orange-1bg))))
-   `(escape-glyph ((t (:foreground ,purple-1 :background , purple-1bg))))
+   `(minibuffer-prompt ((((type graphic)) (:foreground ,orange-1 :background ,orange-1bg))))
+   `(escape-glyph ((((type graphic)) (:foreground ,purple-1 :background , purple-1bg))))
 
    ;; Font-lock stuff
-   `(font-lock-builtin-face ((t (:foreground ,yellow-1 :background ,yellow-1bg))))
-   `(font-lock-constant-face ((t (:foreground ,purple-1 :background ,purple-1bg))))
-   `(font-lock-comment-face ((t (:foreground ,comment :background ,gray-1bg :italic t))))
-   `(font-lock-doc-face ((t (:foreground ,gray-1 :background ,gray-1bg))))
-   `(font-lock-doc-string-face ((t (:foreground ,gray-1 :background ,gray-1bg))))
-   `(font-lock-function-name-face ((t (:foreground ,red-1 :background ,red-1bg))))
-   `(font-lock-keyword-face ((t (:foreground ,orange-1 :background ,orange-1bg))))
-   `(font-lock-negation-char-face ((t (:foreground ,yellow-1 :background ,yellow-1bg))))
-   `(font-lock-preprocessor-face ((t (:foreground ,orange-1 :background ,orange-1bg))))
-   `(font-lock-string-face ((t (:foreground ,green-1 :background ,green-1bg))))
-   `(font-lock-type-face ((t (:foreground ,red-2 :background ,red-2bg :bold nil))))
-   `(font-lock-variable-name-face ((t (:foreground ,blue-1 :background ,blue-1bg))))
-   `(font-lock-warning-face ((t (:foreground ,red-2 :background ,red-2bg))))
+   `(font-lock-builtin-face ((((type graphic)) (:foreground ,yellow-1 :background ,yellow-1bg))))
+   `(font-lock-constant-face ((((type graphic)) (:foreground ,purple-1 :background ,purple-1bg))))
+   `(font-lock-comment-face ((((type graphic)) (:foreground ,comment :background ,gray-1bg :italic t))))
+   `(font-lock-doc-face ((((type graphic)) (:foreground ,gray-1 :background ,gray-1bg))))
+   `(font-lock-doc-string-face ((((type graphic)) (:foreground ,gray-1 :background ,gray-1bg))))
+   `(font-lock-function-name-face ((((type graphic)) (:foreground ,red-1 :background ,red-1bg))))
+   `(font-lock-keyword-face ((((type graphic)) (:foreground ,orange-1 :background ,orange-1bg))))
+   `(font-lock-negation-char-face ((((type graphic)) (:foreground ,yellow-1 :background ,yellow-1bg))))
+   `(font-lock-preprocessor-face ((((type graphic)) (:foreground ,orange-1 :background ,orange-1bg))))
+   `(font-lock-string-face ((((type graphic)) (:foreground ,green-1 :background ,green-1bg))))
+   `(font-lock-type-face ((((type graphic)) (:foreground ,red-2 :background ,red-2bg :bold nil))))
+   `(font-lock-variable-name-face ((((type graphic)) (:foreground ,blue-1 :background ,blue-1bg))))
+   `(font-lock-warning-face ((((type graphic)) (:foreground ,red-2 :background ,red-2bg))))
 
    ;; UI related
-   `(link ((t (:foreground ,blue-1 :background ,blue-1bg))))
-   `(fringe ((t (:background ,gray-1bg))))
-   `(mode-line ((t (:foreground ,blue-1 :background ,blue-2bg))))
-   `(mode-line-inactive ((t (:foreground ,blue-4 :background ,gray-4))))
-   `(vertical-border ((t (:background ,background :foreground ,gray-5))))
+   `(link ((((type graphic)) (:foreground ,blue-1 :background ,blue-1bg))))
+   `(fringe ((((type graphic)) (:background ,gray-1bg))))
+   `(mode-line ((((type graphic)) (:foreground ,blue-1 :background ,blue-2bg))))
+   `(mode-line-inactive ((((type graphic)) (:foreground ,blue-4 :background ,gray-4))))
+   `(vertical-border ((((type graphic)) (:background ,background :foreground ,gray-5))))
 
    ;; Linum
-   `(linum ((t (:foreground ,gray-2 :background ,gray-1bg))))
+   `(linum ((((type graphic)) (:foreground ,gray-2 :background ,gray-1bg))))
 
    ;; show-paren-mode
-   `(show-paren-match ((t (:foreground ,orange-1 :background ,orange-1bg))))
-   `(show-paren-mismatch ((t (:foreground ,red-2bg :background ,red-2))))
+   `(show-paren-match ((((type graphic)) (:foreground ,orange-1 :background ,orange-1bg))))
+   `(show-paren-mismatch ((((type graphic)) (:foreground ,red-2bg :background ,red-2))))
 
    ;; ido
-   `(ido-only-match ((t (:foreground ,green-1 :background ,green-1bg))))
-   `(ido-subdir ((t (:foreground ,purple-1 :background ,purple-1bg))))
+   `(ido-only-match ((((type graphic)) (:foreground ,green-1 :background ,green-1bg))))
+   `(ido-subdir ((((type graphic)) (:foreground ,purple-1 :background ,purple-1bg))))
 
    ;; whitespace-mode
-   `(whitespace-empty ((t (:foreground ,yellow-1bg :background ,yellow-1))))
-   `(whitespace-hspace ((t (:foreground ,gray-2))))
-   `(whitespace-indentation ((t (:foreground ,gray-2))))
-   `(whitespace-line ((t (:background ,gray-2))))
-   `(whitespace-newline ((t (:foreground ,gray-2))))
-   `(whitespace-space ((t (:foreground ,gray-2))))
-   `(whitespace-space-after-tab ((t (:foreground ,gray-2))))
-   `(whitespace-tab ((t (:foreground ,gray-2))))
-   `(whitespace-trailing ((t (:foreground ,red-1bg :background ,red-1))))
+   `(whitespace-empty ((((type graphic)) (:foreground ,yellow-1bg :background ,yellow-1))))
+   `(whitespace-hspace ((((type graphic)) (:foreground ,gray-2))))
+   `(whitespace-indentation ((((type graphic)) (:foreground ,gray-2))))
+   `(whitespace-line ((((type graphic)) (:background ,gray-2))))
+   `(whitespace-newline ((((type graphic)) (:foreground ,gray-2))))
+   `(whitespace-space ((((type graphic)) (:foreground ,gray-2))))
+   `(whitespace-space-after-tab ((((type graphic)) (:foreground ,gray-2))))
+   `(whitespace-tab ((((type graphic)) (:foreground ,gray-2))))
+   `(whitespace-trailing ((((type graphic)) (:foreground ,red-1bg :background ,red-1))))
 
    ;; flyspell-mode
-   `(flyspell-incorrect ((t (:underline ,red-2))))
-   `(flyspell-duplicate ((t (:underline ,red-2))))
+   `(flyspell-incorrect ((((type graphic)) (:underline ,red-2))))
+   `(flyspell-duplicate ((((type graphic)) (:underline ,red-2))))
 
    ;; magit
-   `(magit-diff-add ((t (:foreground ,green-1))))
-   `(magit-diff-del ((t (:foreground ,red-2))))
-   `(magit-item-highlight ((t (:background ,gray-1bg))))
+   `(magit-diff-add ((((type graphic)) (:foreground ,green-1))))
+   `(magit-diff-del ((((type graphic)) (:foreground ,red-2))))
+   `(magit-item-highlight ((((type graphic)) (:background ,gray-1bg))))
 
    ;; highlight-indentation-mode
-   `(highlight-indentation-face ((t (:background ,gray-1bg))))
-   `(highlight-indentation-current-column-face ((t (:background ,gray-4))))
+   `(highlight-indentation-face ((((type graphic)) (:background ,gray-1bg))))
+   `(highlight-indentation-current-column-face ((((type graphic)) (:background ,gray-4))))
 
    ;; ECB
-   `(ecb-default-general-face ((t (:foreground ,gray-3 :background ,gray-1bg))))
-   `(ecb-default-highlight-face ((t (:foreground ,red-1 :background ,red-1bg))))
-   `(ecb-method-face ((t (:foreground ,red-1 :background ,red-1bg))))
-   `(ecb-tag-header-face ((t (:background ,blue-2bg))))
+   `(ecb-default-general-face ((((type graphic)) (:foreground ,gray-3 :background ,gray-1bg))))
+   `(ecb-default-highlight-face ((((type graphic)) (:foreground ,red-1 :background ,red-1bg))))
+   `(ecb-method-face ((((type graphic)) (:foreground ,red-1 :background ,red-1bg))))
+   `(ecb-tag-header-face ((((type graphic)) (:background ,blue-2bg))))
 
    ;; org-mode
-   `(org-date ((t (:foreground ,purple-1 :background ,purple-1bg))))
-   `(org-done ((t (:foreground ,green-1 :background ,green-1bg))))
-   `(org-hide ((t (:foreground ,gray-2 :background ,gray-1bg))))
-   `(org-link ((t (:foreground ,blue-1 :background ,blue-1bg))))
-   `(org-todo ((t (:foreground ,red-1 :background ,red-1bg))))
+   `(org-date ((((type graphic)) (:foreground ,purple-1 :background ,purple-1bg))))
+   `(org-done ((((type graphic)) (:foreground ,green-1 :background ,green-1bg))))
+   `(org-hide ((((type graphic)) (:foreground ,gray-2 :background ,gray-1bg))))
+   `(org-link ((((type graphic)) (:foreground ,blue-1 :background ,blue-1bg))))
+   `(org-todo ((((type graphic)) (:foreground ,red-1 :background ,red-1bg))))
    )
 
   (custom-theme-set-variables
@@ -134,13 +134,6 @@
    ;; ;; Fill Column Indicator mode
    `(fci-rule-color ,gray-6)
    `(fci-rule-character-color ,gray-6)
-
-   `(ansi-color-names-vector
-     ;; black, red, green, yellow, blue, magenta, cyan, white
-     [,background ,red-1 ,green-1 ,yellow-1 ,blue-1 ,purple-1 ,blue-1 ,foreground])
-   `(ansi-term-color-vector
-     ;; black, red, green, yellow, blue, magenta, cyan, white
-     [unspecified ,background ,red-1 ,green-1 ,yellow-1 ,blue-1 ,purple-1 ,blue-1 ,foreground])
    )
   )
 
