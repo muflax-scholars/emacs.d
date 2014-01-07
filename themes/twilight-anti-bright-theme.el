@@ -21,7 +21,7 @@
 (let ((background "gray20")
       (foreground "#dcdddd")
       (selection "#313c4d")
-      (hl-line "#1A1A1A")
+      (hl-line "#11151a")
       (cursor "#b4b4b4")
       (comment "#716d73")
 
@@ -54,7 +54,7 @@
    `(region ((t (:background ,selection))))
    `(highlight ((default (:foreground ,blue-3))
                 (((type graphic)) :background ,blue-3bg)))
-   `(hl-line ((t (:background ,hl-line))))
+   `(hl-line ((((type graphic)) (:background ,hl-line))))
    `(minibuffer-prompt ((default (:foreground ,orange-1))
                         (((type graphic)) :background ,orange-1bg)))
    `(escape-glyph ((default (:foreground ,purple-1))
