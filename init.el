@@ -452,6 +452,14 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (global-set-key "\C-s" 'isearch-forward-regexp)
 (global-set-key "\C-r" 'isearch-backward-regexp)
 
+;; normalize search string so unicode diacritics work normally
+(defun isearch-normalize-string ()
+  (interactive)
+  (let* ((string (ucs-normalize-NFKC-string isearch-string)))
+    (setq isearch-string string
+          isearch-message (mapconcat 'isearch-text-char-description string ""))
+    (isearch-search-and-update)))
+(define-key isearch-mode-map (kbd "C-c C-c") 'isearch-normalize-string)
 
 ;; search wort at point, like vim
 (defun isearch-word-at-point ()
