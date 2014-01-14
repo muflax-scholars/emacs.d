@@ -1217,6 +1217,10 @@ You have:
 ;; normalize buffer before saving
 (add-hook 'before-save-hook 'normalize-unicode-in-buffer)
 
+;; clean up buffers every once in a while
+(require 'midnight)
+(midnight-delay-set 'midnight-delay "0:00am")
+
 ;; clean up modeline and hide standard minor modes
 ;; should be last so all modes are already loaded
 (require 'diminish)
@@ -1234,17 +1238,3 @@ You have:
 (diminish 'yas-minor-mode)
 (diminish 'ruby-block-mode)
 (diminish 'smartparens-mode)
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(diff-added ((((background dark)) (:foreground "#FFFF9B9BFFFF")) (t (:foreground "DarkGreen"))) t)
- '(diff-changed ((((background dark)) (:foreground "Yellow")) (t (:foreground "MediumBlue"))) t)
- '(diff-context ((((background dark)) (:foreground "White")) (t (:foreground "Black"))) t)
- '(diff-file-header ((((background dark)) (:foreground "Cyan" :background "Black")) (t (:foreground "Red" :background "White"))) t)
- '(diff-header ((((background dark)) (:foreground "Cyan")) (t (:foreground "Red"))) t)
- '(diff-hunk-header ((((background dark)) (:foreground "Black" :background "#05057F7F8D8D")) (t (:foreground "White" :background "Salmon"))) t)
- '(diff-index ((((background dark)) (:foreground "Magenta")) (t (:foreground "Green"))) t)
- '(diff-nonexistent ((((background dark)) (:foreground "#FFFFFFFF7474")) (t (:foreground "DarkBlue"))) t)
- '(diff-removed ((((background dark)) (:foreground "#7474FFFF7474")) (t (:foreground "DarkMagenta"))) t))
