@@ -1221,6 +1221,11 @@ You have:
 (require 'midnight)
 (midnight-delay-set 'midnight-delay "0:00am")
 
+;; dired
+(require 'dired)
+(require 'dired-x)
+(global-set-key (kbd "C-c C-j") 'dired-jump)
+
 ;; clean up modeline and hide standard minor modes
 ;; should be last so all modes are already loaded
 (require 'diminish)
