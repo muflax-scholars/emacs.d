@@ -451,6 +451,8 @@ If visual-line-mode is on, then also jump to beginning of real line."
 ;; use regexp search by default
 (global-set-key "\C-s" 'isearch-forward-regexp)
 (global-set-key "\C-r" 'isearch-backward-regexp)
+;; make backspace sane
+(define-key isearch-mode-map (kbd "<backspace>") 'isearch-del-char)
 
 ;; normalize search string so unicode diacritics work normally
 (defun isearch-normalize-string ()
