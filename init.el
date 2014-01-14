@@ -448,6 +448,11 @@ If visual-line-mode is on, then also jump to beginning of real line."
   (interactive)
   (save-buffer))
 
+;; use regexp search by default
+(global-set-key "\C-s" 'isearch-forward-regexp)
+(global-set-key "\C-r" 'isearch-backward-regexp)
+
+
 ;; search wort at point, like vim
 (defun isearch-word-at-point ()
   (interactive)
