@@ -1111,6 +1111,7 @@ You have:
 (setq sp-autoescape-string-quote nil)
 (setq sp-highlight-pair-overlay nil)
 (setq sp-autoinsert-pair nil)
+(setq sp-autodelete-pair nil)
 ;; parenthesis highlighting behavior
 (show-paren-mode 1)
 (setq blink-matching-paren-distance nil)
