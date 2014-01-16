@@ -1075,7 +1075,7 @@ You have:
 ;; scratchpad buffers
 (require 'scratch)
 ;; don't want to remember which key I used
-(global-set-key (kbd "C-c b")   'scratch)
+(global-set-key (kbd "C-c C-b")   'scratch)
 ;; don't start in lisp
 (setq initial-major-mode 'notes-mode)
 (setq initial-scratch-message nil)
@@ -1096,14 +1096,14 @@ You have:
 (add-hook 'js2-mode-hook 'fic-mode)
 
 ;; indentation-based folding
-(require 'yafolding)
-(define-key global-map (kbd "C-c C-f") 'yafolding)
-(define-key global-map (kbd "C-c M-f") 'yafolding-toggle-all)
-(define-key global-map (kbd "C-c C-b") 'yafolding-toggle-all-by-current-level)
-;; I hate outline and I'm gonna stop using it soon :<
-(define-key outline-mode-map (kbd "C-c C-f") 'yafolding)
-(define-key outline-mode-map (kbd "C-c M-f") 'yafolding-toggle-all)
-(define-key outline-mode-map (kbd "C-c C-b") 'yafolding-toggle-all-by-current-level)
+;; (require 'yafolding)
+;; (define-key global-map (kbd "C-c C-f") 'yafolding)
+;; (define-key global-map (kbd "C-c M-f") 'yafolding-toggle-all)
+;; (define-key global-map (kbd "C-c C-b") 'yafolding-toggle-all-by-current-level)
+;; ;; I hate outline and I'm gonna stop using it soon :<
+;; (define-key outline-mode-map (kbd "C-c C-f") 'yafolding)
+;; (define-key outline-mode-map (kbd "C-c M-f") 'yafolding-toggle-all)
+;; (define-key outline-mode-map (kbd "C-c C-b") 'yafolding-toggle-all-by-current-level)
 
 ;; smart parentheses
 (require 'smartparens-config)
