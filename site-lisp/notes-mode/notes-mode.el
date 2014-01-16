@@ -242,7 +242,7 @@
   :group 'notes-faces)
 
 (defface notes-annotation-prompt-face
-  '((t (:inherit font-lock-variable-name-face)))
+  '((t (:inherit font-lock-string-face)))
   "Face for prompt annotation."
   :group 'notes-faces)
 
@@ -257,7 +257,7 @@
   :group 'notes-faces)
 
 (defface notes-annotation-model-face
-  '((t (:inherit font-lock-doc-face)))
+  '((t (:inherit font-lock-string-face)))
   "Face for model annotation."
   :group 'notes-faces)
 
@@ -402,7 +402,6 @@
   (list
    ;; (cons 'notes-match-fenced-code-blocks '((0 notes-pre-face)))
    ;; (cons notes-regex-blockquote 'notes-blockquote-face)
-   ;; (cons 'notes-match-comments '((0 notes-comment-face t t)))
    ;; (cons notes-regex-code '(2 notes-inline-code-face))
    (cons notes-regex-angle-uri                 'notes-link-face)
    (cons notes-regex-uri                       'notes-link-face)
@@ -678,18 +677,6 @@ Leave match data intact for `notes-regex-list'."
                nonlist-indent)
           (list prev-begin prev-end indent nonlist-indent)
         nil))))
-
-;; From html-helper-mode
-(defun notes-match-comments (last)
-  "Match HTML comments from the point to LAST."
-  (cond ((search-forward "<!--" last t)
-         (backward-char 4)
-         (let ((beg (point)))
-           (cond ((search-forward-regexp "--[ \t]*>" last t)
-                  (set-match-data (list beg (point)))
-                  t)
-                 (t nil))))
-        (t nil)))
 
 (defun notes-match-pre-blocks (last)
   "Match Markdown pre blocks from point to LAST.
@@ -977,14 +964,10 @@ increase the indentation by one level."
   (setq tab-width 2)
 
   ;; ;; comments
-  ;; (make-local-variable 'comment-start)
-  ;; (setq comment-start "<!-- ")
-  ;; (make-local-variable 'comment-end)
-  ;; (setq comment-end " -->")
-  ;; (make-local-variable 'comment-start-skip)
-  ;; (setq comment-start-skip "<!--[ \t]*")
-  ;; (make-local-variable 'comment-column)
-  ;; (setq comment-column 0)
+  (make-local-variable 'comment-start)
+  (setq comment-start "# ")
+  (make-local-variable 'comment-column)
+  (setq comment-column 0)
 
   ;; Font lock.
   (set (make-local-variable 'font-lock-defaults)
@@ -993,9 +976,13 @@ increase the indentation by one level."
   (add-hook 'font-lock-extend-region-functions
             'notes-font-lock-extend-region)
 
-  ;; Make filling work with lists (unordered, ordered, and definition) and quotes.
+  ;; Make filling work with lists and annotations.
   (set (make-local-variable 'paragraph-start)
-       "\f\\|[ \t]*$\\|^[ \t]*[*+-] \\|^[ \t]*[0-9]+\\.\\|^[ \t]*: \\|^[ \t]*> ")
+       "\f\\|[ \t]*$\\|[ \t]*[*+-] \\|[ \t]*[0-9]+\\. \\|[ \t]*[$?!<>=*+#%@|] ")
+
+  ;; FIXME this isn't a good fix, but works for now...
+  (set (make-local-variable 'adaptive-fill-regexp)
+       "[ \t]*[*+-] \\|[ \t]*[0-9]+\\. \\|[ \t]*[$?!<>=*+#%@|] ")
 
   ;; Indentation and filling
   (make-local-variable 'fill-nobreak-predicate)
