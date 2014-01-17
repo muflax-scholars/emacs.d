@@ -257,7 +257,13 @@
 ;; better search/replace
 (require 'visual-regexp)
 (require 'visual-regexp-steroids)
-(global-set-key "\C-cr" 'vr/query-replace)
+(global-set-key (kbd "C-c r") 'vr/query-replace)
+(defun vr/query-replace-from-beginning ()
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (call-interactively 'vr/query-replace)))
+(global-set-key (kbd "C-c R") 'vr/query-replace-from-beginning)
 
 ;; copy end of line, like C-k
 (defun copy-line ()
