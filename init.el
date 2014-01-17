@@ -84,7 +84,6 @@
   (set-frame-font current-font))
 (add-hook 'after-make-window-system-frame-hooks 'set-window-font)
 
-
 ;; shortcut for the fonts
 (defun use-huge-font ()
   "use huge font"
@@ -1084,15 +1083,15 @@ You have:
 (add-hook 'enh-ruby-mode-hook 'fic-mode)
 (add-hook 'js2-mode-hook 'fic-mode)
 
-;; indentation-based folding
-;; (require 'yafolding)
-;; (define-key global-map (kbd "C-c C-f") 'yafolding)
-;; (define-key global-map (kbd "C-c M-f") 'yafolding-toggle-all)
-;; (define-key global-map (kbd "C-c C-b") 'yafolding-toggle-all-by-current-level)
-;; ;; I hate outline and I'm gonna stop using it soon :<
-;; (define-key outline-mode-map (kbd "C-c C-f") 'yafolding)
-;; (define-key outline-mode-map (kbd "C-c M-f") 'yafolding-toggle-all)
-;; (define-key outline-mode-map (kbd "C-c C-b") 'yafolding-toggle-all-by-current-level)
+;; folding
+(require 'hideshow)
+(require 'hideshowvis)
+(require 'fold-dwim)
+(define-key global-map (kbd "C-c C-f") 'fold-dwim-toggle)
+(define-key global-map (kbd "C-c f")   'fold-dwim-hide-all)
+(define-key global-map (kbd "C-c M-f") 'fold-dwim-show-all)
+(add-hook 'enh-ruby-hook   'hs-minor-mode)
+(add-hook 'notes-mode-hook 'hs-minor-mode)
 
 ;; smart parentheses
 (require 'smartparens-config)
@@ -1233,3 +1232,4 @@ You have:
 (diminish 'yas-minor-mode)
 (diminish 'ruby-block-mode)
 (diminish 'smartparens-mode)
+(diminish 'hs-minor-mode)
