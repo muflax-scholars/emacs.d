@@ -400,21 +400,21 @@
 
 (defvar notes-mode-font-lock-keywords
   (list
-   ;; (cons 'notes-match-fenced-code-blocks '((0 notes-pre-face)))
    ;; (cons notes-regex-blockquote 'notes-blockquote-face)
-   ;; (cons notes-regex-code '(2 notes-inline-code-face))
-   (cons notes-regex-angle-uri                 'notes-link-face)
-   (cons notes-regex-uri                       'notes-link-face)
-   (cons notes-regex-email                     'notes-link-face)
+
+   ;; (cons notes-regex-angle-uri                 'notes-link-face)
+   ;; (cons notes-regex-uri                       'notes-link-face)
+   ;; (cons notes-regex-email                     'notes-link-face)
+   ;; (cons notes-regex-link-inline               '((1 notes-link-face t)
+   ;;                                               (2 notes-url-face t)))
+   ;; (cons notes-regex-link-reference            '((1 notes-link-face t)
+   ;;                                               (2 notes-reference-face t)))
+   ;; (cons notes-regex-reference-definition      '((1 notes-reference-face t)
+   ;;                                               (2 notes-url-face t)
+   ;;                                               (3 notes-link-title-face t)))
+   ;; (cons notes-regex-footnote                  'notes-footnote-face)
+
    (cons notes-regex-list                      '(2 notes-list-face))
-   (cons notes-regex-link-inline               '((1 notes-link-face t)
-                                                 (2 notes-url-face t)))
-   (cons notes-regex-link-reference            '((1 notes-link-face t)
-                                                 (2 notes-reference-face t)))
-   (cons notes-regex-reference-definition      '((1 notes-reference-face t)
-                                                 (2 notes-url-face t)
-                                                 (3 notes-link-title-face t)))
-   (cons notes-regex-footnote                  'notes-footnote-face)
 
    (cons notes-regex-bold                      '(2 notes-bold-face))
    (cons notes-regex-italic                    '(2 notes-italic-face))
