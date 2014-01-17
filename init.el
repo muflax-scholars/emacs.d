@@ -1195,7 +1195,7 @@ You have:
 (add-to-list 'auto-mode-alist '("\\.log$" . fundamental-mode))
 
 ;; load minimap mode
-(require 'minimap)
+;; (require 'minimap)
 
 ;; normalize unicode in buffer
 (defun normalize-unicode-in-buffer ()
