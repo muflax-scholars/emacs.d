@@ -119,7 +119,7 @@ The list is (Bookmark1 Bookmark2 ...) where each Bookmark is (TYPE FILENAME . PO
   "Jump to the previous bookmark."
   (interactive)
   (if *bc-bookmark-just-added*
-      (progn 
+      (progn
         ;; begin a new descent, so let's add a mark here and skip over it...
         (bc-set)
         (setq *bc-bookmark-just-added* nil)))
@@ -786,4 +786,3 @@ If POS is nil, use current buffer location."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; breadcrumb.el ends here
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-

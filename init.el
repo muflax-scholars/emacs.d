@@ -1093,6 +1093,19 @@ You have:
 (add-hook 'enh-ruby-hook   'hs-minor-mode)
 (add-hook 'notes-mode-hook 'hs-minor-mode)
 
+;; fast navigation
+(require 'imenu)
+(require 'idomenu)
+(require 'imenu-anywhere)
+(define-key global-map (kbd "C-c [")   'idomenu)
+(define-key global-map (kbd "C-c C-[") 'idomenu)
+(define-key global-map (kbd "C-c ]")   'imenu-anywhere)
+(define-key global-map (kbd "C-c C-]") 'imenu-anywhere)
+
+;; recentering
+(setq recenter-positions '(2 middle))
+(add-hook 'imenu-after-jump-hook 'recenter-top-bottom)
+
 ;; smart parentheses
 (require 'smartparens-config)
 (smartparens-global-mode t)

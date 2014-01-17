@@ -987,6 +987,12 @@ increase the indentation by one level."
   ;; Indentation and filling
   (make-local-variable 'fill-nobreak-predicate)
   (add-hook 'fill-nobreak-predicate 'notes-nobreak-p)
+
+  ;; imenu support
+  (set (make-local-variable 'imenu-generic-expression)
+       '(
+         (nil "^[[{] \\(.+\\)$" 1)
+         ))
   )
 
 (provide 'notes-mode)
