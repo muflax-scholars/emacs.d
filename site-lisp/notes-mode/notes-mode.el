@@ -372,7 +372,7 @@
   "Regular expression for matching italic text.")
 
 (defconst notes-regex-placeholder
-  "\\(\\[.+?\\]\\)[^[]?"
+  "\\(\\[.*?\\]\\)[^[]?"
   "Regular expression for matching placeholder text.")
 
 (defconst notes-regex-uri
