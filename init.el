@@ -1088,7 +1088,7 @@ You have:
 (require 'fold-dwim)
 (define-key global-map (kbd "C-c C-f") 'fold-dwim-toggle)
 (define-key global-map (kbd "C-c f")   'fold-dwim-hide-all)
-(define-key global-map (kbd "C-c M-f") 'fold-dwim-show-all)
+(define-key global-map (kbd "C-c F") 'fold-dwim-show-all)
 (add-hook 'enh-ruby-hook   'hs-minor-mode)
 (add-hook 'notes-mode-hook 'hs-minor-mode)
 
