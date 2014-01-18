@@ -35,7 +35,7 @@
 ;; color theme
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 
-(defvar use-bright-theme nil
+(defvar use-bright-theme t
   "Whether to use the bright or dark theme")
 
 (defvar bright-theme 'twilight-anti-bright
