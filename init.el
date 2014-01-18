@@ -455,6 +455,12 @@ If visual-line-mode is on, then also jump to beginning of real line."
           isearch-message (mapconcat 'isearch-text-char-description string ""))
     (isearch-search-and-update)))
 (define-key isearch-mode-map (kbd "C-c C-c") 'isearch-normalize-string)
+(define-key isearch-mode-map (kbd "C-c C-w") 'isearch-toggle-word)
+(define-key isearch-mode-map (kbd "C-c C-r") 'isearch-toggle-regexp)
+(define-key isearch-mode-map (kbd "C-c C-i") 'isearch-toggle-case-fold)
+(define-key isearch-mode-map (kbd "C-c C-s") 'isearch-toggle-symbol)
+(define-key isearch-mode-map (kbd "C-c C-SPC") 'isearch-toggle-lax-whitespace)
+(define-key isearch-mode-map (kbd "C-c C-o") 'isearch-occur)
 
 ;; search wort at point, like vim
 (defun isearch-word-at-point ()
