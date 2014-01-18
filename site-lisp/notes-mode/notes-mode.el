@@ -388,15 +388,15 @@
   "Regular expression for matching italic text.")
 
 (defconst notes-regex-placeholder-square
-  "\\(\\[\\([^ \t].*?\\|\\)\\]\\)"
+  "\\(\\(\\[\\]\\|\\[[^] \t\n][^]\n]*\\]\\)\\)"
   "Regular expression for matching [] placeholder text.")
 
 (defconst notes-regex-placeholder-wiggly
-  "\\({\\([^ \t].*?\\|\\)}\\)"
+  "\\(\\({}\\|{[^} \t\n][^}\n]*}\\)\\)"
   "Regular expression for matching {} placeholder text.")
 
 (defconst notes-regex-placeholder-pointy
-  "\\(<\\([^ \t].*?\\|\\)>\\)"
+  "\\(\\(<>\\|<[^> \t\n][^>\n]*>\\)\\)"
   "Regular expression for matching <> placeholder text.")
 
 (defconst notes-regex-uri
