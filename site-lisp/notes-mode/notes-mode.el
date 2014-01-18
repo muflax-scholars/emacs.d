@@ -140,8 +140,14 @@
 (defvar notes-bold-face 'notes-bold-face
   "Face name to use for bold text.")
 
-(defvar notes-placeholder-face 'notes-placeholder-face
-  "Face name to use for placeholder text.")
+(defvar notes-placeholder-square-face 'notes-placeholder-square-face
+  "Face name to use for [] placeholder text.")
+
+(defvar notes-placeholder-wiggly-face 'notes-placeholder-wiggly-face
+  "Face name to use for {} placeholder text.")
+
+(defvar notes-placeholder-pointy-face 'notes-placeholder-pointy-face
+  "Face name to use for <> placeholder text.")
 
 (defvar notes-annotation-prompt-face 'notes-annotation-prompt-face
   "Face name to use as a base for prompt annotation.")
@@ -211,9 +217,19 @@
   "Face for bold text."
   :group 'notes-faces)
 
-(defface notes-placeholder-face
+(defface notes-placeholder-square-face
   '((t (:inherit font-lock-variable-name-face)))
-  "Face for placeholder text."
+  "Face for [] placeholder text."
+  :group 'notes-faces)
+
+(defface notes-placeholder-wiggly-face
+  '((t (:inherit font-lock-string-face)))
+  "Face for {} placeholder text."
+  :group 'notes-faces)
+
+(defface notes-placeholder-pointy-face
+  '((t (:inherit font-lock-doc-face)))
+  "Face for <> placeholder text."
   :group 'notes-faces)
 
 (defface notes-bracket-face
@@ -320,7 +336,7 @@
   "Regular expression for a footnote marker [^fn].")
 
 (defconst notes-regex-header
-  "^\\([ \t]*\\)\\([\\[{][ \t]*\\)\\(.+\\)"
+  "^\\([ \t]*\\)\\([\\[{][ \t]+\\)\\(.+\\)"
   "Regular expression for headers.")
 
 (defconst notes-regex-annotation-abstract
@@ -371,9 +387,17 @@
   "\\(^\\|[ \t]\\)\\([/]\\(.+?\\)[/]\\)"
   "Regular expression for matching italic text.")
 
-(defconst notes-regex-placeholder
-  "\\(\\[.*?\\]\\)[^[]?"
-  "Regular expression for matching placeholder text.")
+(defconst notes-regex-placeholder-square
+  "\\(\\[\\([^ \t].*?\\|\\)\\]\\)"
+  "Regular expression for matching [] placeholder text.")
+
+(defconst notes-regex-placeholder-wiggly
+  "\\({\\([^ \t].*?\\|\\)}\\)"
+  "Regular expression for matching {} placeholder text.")
+
+(defconst notes-regex-placeholder-pointy
+  "\\(<\\([^ \t].*?\\|\\)>\\)"
+  "Regular expression for matching <> placeholder text.")
 
 (defconst notes-regex-uri
   (concat
@@ -418,7 +442,9 @@
 
    (cons notes-regex-bold                      '(2 notes-bold-face))
    (cons notes-regex-italic                    '(2 notes-italic-face))
-   (cons notes-regex-placeholder               '(1 notes-placeholder-face))
+   (cons notes-regex-placeholder-square        '(1 notes-placeholder-square-face))
+   (cons notes-regex-placeholder-wiggly        '(1 notes-placeholder-wiggly-face))
+   (cons notes-regex-placeholder-pointy        '(1 notes-placeholder-pointy-face))
 
    (cons notes-regex-annotation-abstract       '(2 notes-annotation-abstract-face))
    (cons notes-regex-annotation-transformation '(2 notes-annotation-transformation-face))
