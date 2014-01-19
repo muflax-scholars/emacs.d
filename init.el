@@ -388,6 +388,17 @@ If visual-line-mode is on, then also jump to beginning of real line."
   )
 (setq ac-ignores (concatenate 'list ac-ignores (yasnippet-get-all-snippets)))
 
+(defun insert-file-name (filename &optional args)
+  "Insert name of file FILENAME into buffer after point.
+
+  Prefixed with \\[universal-argument], expand the file name to its full path."
+  (interactive "*fInsert file name: \nP")
+  (cond ((not (null args))
+         (insert (expand-file-name filename)))
+        (t
+         (insert (file-relative-name filename)))))
+(global-set-key "\C-c\C-i" 'insert-file-name)
+
 ;; ido and smex (ido for M-x)
 ;; ido
 (require 'ido)
