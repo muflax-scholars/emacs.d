@@ -4,6 +4,7 @@
 (setq mc/cmds-to-run-for-all
       '(
         beginning-of-visual-line
+        copy-line
         downcase-region
         electric-graphviz-dot-semi
         end-of-visual-line
