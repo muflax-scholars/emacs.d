@@ -719,16 +719,11 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (setq org-src-fontify-natively t)
 (setq org-confirm-babel-evaluate nil)
 ;; keybindings
-(define-key global-map "\C-ct" 'org-todo-list)
 (org-defkey org-mode-map "\C-c\C-t" (lambda () (interactive) (org-todo "TODO")))
 (org-defkey org-mode-map "\C-c\C-w" (lambda () (interactive) (org-todo "WAITING")))
 (org-defkey org-mode-map "\C-c\C-d" (lambda () (interactive) (org-todo "DONE")))
 ;; shortcut for C-u C-c C-l
 (defun org-insert-file-link () (interactive) (org-insert-link '(4)))
-(define-key global-map "\C-cf" 'org-insert-file-link)
-(define-key global-map "\C-cl" 'org-store-link)
-;; go to last position before C-c C-o
-(define-key global-map "\C-co" 'org-mark-ring-goto)
 ;; some templates
 (setcdr (assoc "c" org-structure-template-alist)
         '("#+BEGIN_COMMENT\n?\n#+END_COMMENT"))
