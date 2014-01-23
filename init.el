@@ -187,6 +187,7 @@
 ;; shows current selected region
 (setq-default transient-mark-mode t)
 (global-font-lock-mode t)
+(setq jit-lock-stealth-time 5)
 (set-scroll-bar-mode 'right)
 (setq frame-title-format "%b")
 (menu-bar-mode -1)
