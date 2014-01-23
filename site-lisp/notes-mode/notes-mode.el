@@ -319,22 +319,6 @@
 
 ;; parsing
 
-(defconst notes-regex-link-inline
-  "\\(!?\\[[^]]*?\\]\\)\\(([^\\)]*)\\)"
-  "Regular expression for a [text](file) or an image link ![text](file).")
-
-(defconst notes-regex-link-reference
-  "\\(!?\\[[^]]+?\\]\\)\\(\\[[^]]*?\\]\\)"
-  "Regular expression for a reference link [text][id].")
-
-(defconst notes-regex-reference-definition
-  "^[ \t]*\\(\\[[^^]+?\\]\\):\\s *\\(.*?\\)[ \t]*\\( \"[^\"]*\"$\\|$\\)"
-  "Regular expression for a link definition [id]: ...")
-
-(defconst notes-regex-footnote
-  "\\(\\[\\^.+?\\]\\)"
-  "Regular expression for a footnote marker [^fn].")
-
 (defconst notes-regex-header
   "^\\([ \t]*\\)\\([\\[{][ \t]+\\)\\(.+\\)"
   "Regular expression for headers.")
@@ -399,23 +383,6 @@
   "\\(\\(<>\\|<[^> \t\n][^>\n]*>\\)\\)"
   "Regular expression for matching <> placeholder text.")
 
-(defconst notes-regex-uri
-  (concat
-   "\\(" (mapconcat 'identity notes-uri-types "\\|")
-   "\\):[^]\t\n\r<>,;() ]+")
-  "Regular expression for matching inline URIs.")
-
-(defconst notes-regex-angle-uri
-  (concat
-   "\\(<\\)\\(\\(?:"
-   (mapconcat 'identity notes-uri-types "\\|")
-   "\\):[^]\t\n\r<>,;()]+\\)\\(>\\)")
-  "Regular expression for matching inline URIs in angle brackets.")
-
-(defconst notes-regex-email
-  "<\\(\\sw\\|\\s_\\|\\s.\\)+@\\(\\sw\\|\\s_\\|\\s.\\)+>"
-  "Regular expression for matching inline email addresses.")
-
 (defconst notes-regex-list-indent
   "^\\([ \t]*\\)\\([0-9]+\\.\\|[-]\\)\\([ \t]+\\)"
   "Regular expression for matching indentation of list items.")
@@ -424,20 +391,6 @@
 
 (defvar notes-mode-font-lock-keywords
   (list
-   ;; (cons notes-regex-blockquote 'notes-blockquote-face)
-
-   ;; (cons notes-regex-angle-uri                 'notes-link-face)
-   ;; (cons notes-regex-uri                       'notes-link-face)
-   ;; (cons notes-regex-email                     'notes-link-face)
-   ;; (cons notes-regex-link-inline               '((1 notes-link-face t)
-   ;;                                               (2 notes-url-face t)))
-   ;; (cons notes-regex-link-reference            '((1 notes-link-face t)
-   ;;                                               (2 notes-reference-face t)))
-   ;; (cons notes-regex-reference-definition      '((1 notes-reference-face t)
-   ;;                                               (2 notes-url-face t)
-   ;;                                               (3 notes-link-title-face t)))
-   ;; (cons notes-regex-footnote                  'notes-footnote-face)
-
    (cons notes-regex-list                      '(2 notes-list-face))
 
    (cons notes-regex-bold                      '(2 notes-bold-face))
@@ -704,109 +657,6 @@ Leave match data intact for `notes-regex-list'."
           (list prev-begin prev-end indent nonlist-indent)
         nil))))
 
-(defun notes-match-pre-blocks (last)
-  "Match Markdown pre blocks from point to LAST.
-A region matches as if it is indented at least four spaces
-relative to the nearest previous block of lesser non-list-marker
-indentation."
-
-  (let (cur-begin cur-end cur-indent prev-indent prev-list stop match found)
-    ;; Don't start in the middle of a block
-    (unless (and (bolp)
-                 (notes-prev-line-blank-p)
-                 (not (notes-cur-line-blank-p)))
-      (notes--next-block))
-
-    ;; Move to the first full block in the region with indent 4 or more
-    (while (and (not (>= (setq cur-indent (notes-cur-line-indent)) 4))
-                (not (>= (point) last)))
-      (notes--next-block))
-    (setq cur-begin (point))
-    (notes--end-of-level cur-indent)
-    (setq cur-end (point))
-    (setq match nil)
-    (setq stop (> cur-begin cur-end))
-
-    (while (and (<= cur-end last) (not stop) (not match))
-      ;; Move to the nearest preceding block of lesser (non-marker) indentation
-      (setq prev-indent (+ cur-indent 1))
-      (goto-char cur-begin)
-      (setq found nil)
-      (while (and (>= prev-indent cur-indent)
-                  (not (and prev-list
-                            (eq prev-indent cur-indent)))
-                  (not (bobp)))
-
-        ;; Move point to the last line of the previous block.
-        (forward-line -1)
-        (while (and (notes-cur-line-blank-p)
-                    (not (bobp)))
-          (forward-line -1))
-
-        ;; Update the indentation level using either the
-        ;; non-list-marker indentation, if the previous line is the
-        ;; start of a list, or the actual indentation.
-        (setq prev-list (notes-cur-non-list-indent))
-        (setq prev-indent (or prev-list
-                              (notes-cur-line-indent)))
-        (setq found t))
-
-      ;; If the loop didn't execute
-      (unless found
-        (setq prev-indent 0))
-
-      ;; Compare with prev-indent minus its remainder mod 4
-      (setq prev-indent (- prev-indent (mod prev-indent 4)))
-
-      ;; Set match data and return t if we have a match
-      (if (>= cur-indent (+ prev-indent 4))
-          ;; Match
-          (progn
-            (setq match t)
-            (set-match-data (list cur-begin cur-end))
-            ;; Leave point at end of block
-            (goto-char cur-end)
-            (forward-line))
-
-        ;; Move to the next block (if possible)
-        (goto-char cur-end)
-        (notes--next-block)
-        (setq cur-begin (point))
-        (setq cur-indent (notes-cur-line-indent))
-        (notes--end-of-level cur-indent)
-        (setq cur-end (point))
-        (setq stop (equal cur-begin cur-end))))
-    match))
-
-(defun notes-match-fenced-code-blocks (last)
-  "Match fenced code blocks from the point to LAST."
-  (cond ((search-forward-regexp "^\\([~]\\{3,\\}\\)" last t)
-         (beginning-of-line)
-         (let ((beg (point)))
-           (forward-line)
-           (cond ((search-forward-regexp
-                   (concat "^" (match-string 1) "~*") last t)
-                  (set-match-data (list beg (point)))
-                  t)
-                 (t nil))))
-        (t nil)))
-
-(defun notes-font-lock-extend-region ()
-  "Extend the search region to include an entire block of text.
-This helps improve font locking for block constructs such as pre blocks."
-  ;; Avoid compiler warnings about these global variables from font-lock.el.
-  ;; See the documentation for variable `font-lock-extend-region-functions'.
-  (eval-when-compile (defvar font-lock-beg) (defvar font-lock-end))
-  (save-excursion
-    (goto-char font-lock-beg)
-    (let ((found (re-search-backward "\n\n" nil t)))
-      (when found
-        (goto-char font-lock-end)
-        (when (re-search-forward "\n\n" nil t)
-          (beginning-of-line)
-          (setq font-lock-end (point)))
-        (setq font-lock-beg found)))))
-
 ;;; Syntax Table ==============================================================
 
 (defvar notes-mode-syntax-table
@@ -985,24 +835,25 @@ increase the indentation by one level."
 
 ;;;###autoload
 (define-derived-mode notes-mode text-mode "Notes"
-  "Major mode for editing Markdown files."
+  "Major mode for editing Notes files."
+
   ;; Ruby/C-style tab width
   (setq tab-width 2)
 
-  ;; ;; comments
+  ;; comments
   (make-local-variable 'comment-start)
   (setq comment-start "# ")
   (make-local-variable 'comment-column)
   (setq comment-column 0)
 
-  ;; Font lock.
+  ;; font lock
   (set (make-local-variable 'font-lock-defaults)
        '(notes-mode-font-lock-keywords))
-  (set (make-local-variable 'font-lock-multiline) t)
-  (add-hook 'font-lock-extend-region-functions
-            'notes-font-lock-extend-region)
 
-  ;; Make filling work with lists and annotations.
+  ;; no syntax can stretch multiple lines
+  (set (make-local-variable 'font-lock-multiline) nil)
+
+  ;; make filling work with lists and annotations
   (set (make-local-variable 'paragraph-start)
        "\f\\|[ \t]*$\\|[ \t]*[*+-] \\|[ \t]*[0-9]+\\. \\|[ \t]*[$?!<>=*+#%@|] ")
 
@@ -1010,7 +861,7 @@ increase the indentation by one level."
   (set (make-local-variable 'adaptive-fill-regexp)
        "[ \t]*[*+-] \\|[ \t]*[0-9]+\\. \\|[ \t]*[$?!<>=*+#%@|] ")
 
-  ;; Indentation and filling
+  ;; indentation and filling
   (make-local-variable 'fill-nobreak-predicate)
   (add-hook 'fill-nobreak-predicate 'notes-nobreak-p)
 
