@@ -1141,7 +1141,6 @@ You have:
 (setq blink-matching-paren-distance nil)
 (setq show-paren-style 'parenthesis)
 (setq show-paren-delay 0)
-(show-smartparens-global-mode t)
 ;; keybindings
 (define-key sp-keymap (kbd "C-M-f") 'sp-forward-sexp)
 (define-key sp-keymap (kbd "C-M-b") 'sp-backward-sexp)
