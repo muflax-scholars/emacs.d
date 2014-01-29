@@ -1249,6 +1249,8 @@ You have:
 (require 'dired)
 (require 'dired-x)
 (global-set-key (kbd "C-c C-j") 'dired-jump)
+(define-key dired-mode-map (kbd "C-c C-c") 'wdired-change-to-wdired-mode)
+
 
 ;; clean up modeline and hide standard minor modes
 ;; should be last so all modes are already loaded
