@@ -1120,6 +1120,11 @@ You have:
 (define-key global-map (kbd "C-c ]")   'imenu-anywhere)
 (define-key global-map (kbd "C-c C-]") 'imenu-anywhere)
 
+(defun imenu-flush-cache ()
+  "Flushes imenu cache."
+  (interactive)
+  (setq imenu--index-alist nil))
+
 ;; recentering
 (setq recenter-positions '(2 middle))
 (add-hook 'imenu-after-jump-hook 'recenter-top-bottom)
