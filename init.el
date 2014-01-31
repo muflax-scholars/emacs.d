@@ -1,11 +1,10 @@
-;; load path
-;; site-lisp stores manually maintained packages
+;; load path; site-lisp stores manually maintained packages
 (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
-  (let* ((my-lisp-dir "~/.emacs.d/site-lisp/")
-         (default-directory my-lisp-dir))
-    (progn
-      (setq load-path (cons my-lisp-dir load-path))
-      (normal-top-level-add-subdirs-to-load-path))))
+    (let* ((my-lisp-dir "~/.emacs.d/site-lisp/")
+           (default-directory my-lisp-dir))
+      (progn
+        (setq load-path (cons my-lisp-dir load-path))
+        (normal-top-level-add-subdirs-to-load-path))))
 (setq load-path (cons (expand-file-name "~/.emacs.d") load-path))
 
 ;; elpa
@@ -26,7 +25,7 @@
   `after-make-window-system-frame-hooks'"
   (select-frame frame)
   (run-hooks (if window-system
-               'after-make-window-system-frame-hooks
+                 'after-make-window-system-frame-hooks
                'after-make-console-frame-hooks)))
 
 (add-hook 'after-make-frame-functions 'run-after-make-frame-hooks)
@@ -296,15 +295,15 @@ If visual-line-mode is on, then also jump to beginning of real line."
   (let ((oldpos (point))
         (vispos (point)))
 
-        (beginning-of-visual-line)
-        (setq vispos (point))
-        (beginning-of-line-text)
+    (beginning-of-visual-line)
+    (setq vispos (point))
+    (beginning-of-line-text)
 
-        (if (and (> vispos (point))
-                 (not (= oldpos vispos)))
-            (goto-char vispos)
-          (when (= oldpos (point))
-             (beginning-of-line)))))
+    (if (and (> vispos (point))
+             (not (= oldpos vispos)))
+        (goto-char vispos)
+      (when (= oldpos (point))
+        (beginning-of-line)))))
 (global-set-key "\C-a" 'smart-beginning-of-line)
 
 (defun smart-end-of-line ()
@@ -312,9 +311,9 @@ If visual-line-mode is on, then also jump to beginning of real line."
   (interactive) ; Use (interactive "^") in Emacs 23 to make shift-select work
   (let ((oldpos (point)))
 
-        (end-of-visual-line)
-        (when (= oldpos (point))
-          (end-of-line))))
+    (end-of-visual-line)
+    (when (= oldpos (point))
+      (end-of-line))))
 (global-set-key "\C-e" 'smart-end-of-line)
 
 ;; org-mode has similar behavior built-in, so use it instead
@@ -356,7 +355,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (define-key yas-minor-mode-map (kbd "M-t") 'yas-prev-field)
 (yas-global-mode 1)
 
-; auto-yasnippet
+;; auto-yasnippet
 (require 'auto-yasnippet)
 (global-set-key (kbd "C-c ~")   'aya-create)
 (global-set-key (kbd "C-c C-~") 'aya-expand)
@@ -439,8 +438,8 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (setq recentf-max-saved-items 1000)
 (setq recentf-save-file "~/.emacs.d/cache/recentf")
 (setq recentf-exclude (append recentf-exclude
-  '("\.emacs\.d/cache"
-    "\.emacs\.d/elpa")))
+                              '("\.emacs\.d/cache"
+                                "\.emacs\.d/elpa")))
 (recentf-mode 1)
 ;; file completion
 (defun recentf-ido-find-file ()
@@ -487,12 +486,12 @@ If visual-line-mode is on, then also jump to beginning of real line."
   (when (equal this-command 'isearch-word-at-point)
     (let ((string (concat "\\<"
                           (buffer-substring-no-properties
-                            (progn (skip-syntax-backward "w_") (point))
-                            (progn (skip-syntax-forward "w_") (point)))
+                           (progn (skip-syntax-backward "w_") (point))
+                           (progn (skip-syntax-forward "w_") (point)))
                           "\\>")))
       (if (and isearch-case-fold-search
                (eq 'not-yanks search-upper-case))
-        (setq string (downcase string)))
+          (setq string (downcase string)))
       (setq isearch-string string
             isearch-message
             (concat isearch-message
@@ -539,7 +538,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
   Deletes whitespace at join."
   (interactive "P")
   (if (and (eolp) (not (bolp)))
-    (delete-indentation t)
+      (delete-indentation t)
     (kill-line arg)))
 (global-set-key "\C-k" 'kill-and-join-forward)
 
@@ -605,7 +604,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
 ;; add to dictionary functionality
 (defun enchant-suggestions-menu (marked-text)
   (cons (cons "[Add]" 'enchant-add-to-dictionary)
-                  (wcheck-parser-ispell-suggestions)))
+        (wcheck-parser-ispell-suggestions)))
 
 (defvar enchant-dictionaries-dir "~/.config/enchant")
 
@@ -624,7 +623,6 @@ If visual-line-mode is on, then also jump to beginning of real line."
         (append-to-file (point-min) (point-max) file)
         (message "Added word \"%s\" to the %s dictionary"
                  word language)))))
-
 
 ;; make it possible to toggle wcheck on/off globally
 ;; TODO have it disable wcheck in open buffers too
@@ -697,8 +695,8 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (setq org-indent-indentation-per-level 2)
 (setq org-startup-folded 'content)
 (setq org-blank-before-new-entry '(
-  (heading . nil)
-  (plain-list-item . auto)))
+                                   (heading . nil)
+                                   (plain-list-item . auto)))
 ;; tag column
 (setq org-tags-column -70)
 ;; dependencies
@@ -876,7 +874,7 @@ See the variable `align-rules-list' for more details.")
     (let* ((end (progn (skip-syntax-forward "w_") (point)))
            (begin (progn (skip-syntax-backward "w_") (point))))
       (if (eq begin end)
-        (isearch-forward regexp-p no-recursive-edit)
+          (isearch-forward regexp-p no-recursive-edit)
         (setq isearch-initial-string (buffer-substring begin end))
         (add-hook 'isearch-mode-hook 'isearch-set-initial-string)
         (isearch-forward regexp-p no-recursive-edit)))))
@@ -918,12 +916,12 @@ See the variable `align-rules-list' for more details.")
 ;; if no region is active, act on current line
 (require 'whole-line-or-region)
 (setq whole-line-or-region-extensions-alist
-  '((comment-dwim whole-line-or-region-comment-dwim-2 nil)
-    (copy-region-as-kill whole-line-or-region-copy-region-as-kill nil)
-    (kill-region whole-line-or-region-kill-region nil)
-    (kill-ring-save whole-line-or-region-kill-ring-save nil)
-    (yank whole-line-or-region-yank nil)
-  ))
+      '((comment-dwim whole-line-or-region-comment-dwim-2 nil)
+        (copy-region-as-kill whole-line-or-region-copy-region-as-kill nil)
+        (kill-region whole-line-or-region-kill-region nil)
+        (kill-ring-save whole-line-or-region-kill-ring-save nil)
+        (yank whole-line-or-region-yank nil)
+        ))
 (whole-line-or-region-mode 1)
 
 ;; better rectangle functionality
@@ -938,13 +936,13 @@ See the variable `align-rules-list' for more details.")
 ;; unset unwanted keys
 (when (eq window-system 'x)
   (if (eq (key-binding "\C-x\C-z") 'suspend-frame)
-    (global-unset-key "\C-x\C-z"))
+      (global-unset-key "\C-x\C-z"))
   (if (eq (key-binding "\C-z") 'suspend-frame)
-    (global-unset-key "\C-z")))
+      (global-unset-key "\C-z")))
 (if (eq (key-binding [(insert)]) 'overwrite-mode)
-  (global-unset-key [(insert)]))
+    (global-unset-key [(insert)]))
 (if (eq (key-binding [(insertchar)]) 'overwrite-mode)
-  (global-unset-key [(insertchar)]))
+    (global-unset-key [(insertchar)]))
 
 ;; shell stuff
 (setq sh-basic-offset tab-width)
@@ -954,7 +952,7 @@ See the variable `align-rules-list' for more details.")
 
 ;; highlight current line
 (defface hl-line '((t (:background "Gray")))
-         "Face to use for `hl-line-face'." :group 'hl-line)
+  "Face to use for `hl-line-face'." :group 'hl-line)
 (setq hl-line-face 'hl-line)
 (global-hl-line-mode t)
 
@@ -1255,7 +1253,6 @@ You have:
 (global-set-key (kbd "C-c C-j") 'dired-jump)
 (define-key dired-mode-map (kbd "C-c C-c")  'wdired-change-to-wdired-mode)
 (define-key dired-mode-map (kbd "<insert>") 'dired-mark)
-
 
 ;; clean up modeline and hide standard minor modes
 ;; should be last so all modes are already loaded
