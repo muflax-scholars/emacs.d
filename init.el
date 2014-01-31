@@ -280,6 +280,10 @@
     (kill-ring-save (mark) (point))))
 (global-set-key "\M-k" 'copy-line)
 
+;; append to last kill
+(global-set-key (kbd "C-c C-w") (lambda () (interactive) (append-next-kill) (phi-rectangle-kill-region)))
+(global-set-key (kbd "C-c w")   (lambda () (interactive) (append-next-kill) (phi-rectangle-kill-ring-save)))
+
 ;; move to beginning of text on line
 (defun smart-beginning-of-line ()
   "Move point to first non-whitespace character or beginning-of-line.
@@ -337,9 +341,9 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (savehist-mode 1)
 (setq savehist-file "~/.emacs.d/cache/history")
 (setq savehist-additional-variables '(search-ring
-                                       regexp-search-ring
-                                       kill-ring
-                                       compile-command))
+                                      regexp-search-ring
+                                      kill-ring
+                                      compile-command))
 
 ;; number windows, i.e. M-1 .. M-0 to jump to window
 (require 'window-numbering)
