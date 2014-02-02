@@ -37,9 +37,9 @@
 (defvar use-bright-theme t
   "Whether to use the bright or dark theme")
 
-(defvar bright-theme 'twilight-anti-bright
+(defvar bright-theme 'leuven
   "Bright theme to use")
-(defvar dark-theme 'molokai
+(defvar dark-theme 'twilight-anti-bright
   "Bright theme to use")
 
 (load-theme bright-theme t)
