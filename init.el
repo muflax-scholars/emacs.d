@@ -76,7 +76,7 @@
                    normal-font
                    big-font
                    huge-font))
-(defvar current-font normal-font)
+(defvar current-font big-font)
 
 (defun set-window-font ()
   (set-frame-font current-font))
@@ -197,7 +197,7 @@
 ;; blinking cursor
 (require 'heartbeat-cursor)
 (blink-cursor-mode -1)
-(heartbeat-cursor-mode)
+;; (heartbeat-cursor-mode)
 ;; (setq-default cursor-type '(bar . 2))
 (setq-default cursor-type 'box)
 

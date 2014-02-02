@@ -54,7 +54,7 @@ Semantic, and Ansi-Color faces are included -- and much more...")
       (diff-none '(:foreground "gray33"))
       (diff-removed '(:foreground "#A60000" :background "#FFDDDD"))
       (directory '(:weight bold :foreground "blue" :background "#FFFFD2"))
-      (highlight-line '(:bold t :background "#c6c6c6")) ; #F5F5F5 or #CCDEED
+      (highlight-line '(:bold t :background nil)) ; #F5F5F5 or #CCDEED
       (link '(:underline t :foreground "#006DAF"))
       (mail-header-name '(:weight bold :foreground "black"))
       (marked-line '(:weight bold :foreground "white" :background "red"))
