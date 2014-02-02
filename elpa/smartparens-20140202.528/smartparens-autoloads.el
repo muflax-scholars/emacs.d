@@ -8,7 +8,7 @@
 ;;;;;;  turn-on-smartparens-mode smartparens-global-mode turn-on-smartparens-strict-mode
 ;;;;;;  smartparens-global-strict-mode smartparens-strict-mode smartparens-mode
 ;;;;;;  sp-use-smartparens-bindings sp-use-paredit-bindings sp-cheat-sheet)
-;;;;;;  "smartparens" "smartparens.el" (21227 24371 909672 36000))
+;;;;;;  "smartparens" "smartparens.el" (21230 25839 582221 6000))
 ;;; Generated autoloads from smartparens.el
 
 (autoload 'sp-cheat-sheet "smartparens" "\
@@ -173,7 +173,7 @@ Turn off `show-smartparens-mode'.
 
 ;;;### (autoloads nil nil ("smartparens-config.el" "smartparens-html.el"
 ;;;;;;  "smartparens-latex.el" "smartparens-lua.el" "smartparens-pkg.el"
-;;;;;;  "smartparens-ruby.el") (21227 24371 982831 29000))
+;;;;;;  "smartparens-ruby.el") (21230 25839 680395 470000))
 
 ;;;***
 
