@@ -1023,7 +1023,8 @@ See the variable `align-rules-list' for more details.")
 
 ;; ace-jump (hint-style navigation)
 (require 'ace-jump-mode)
-(global-set-key (kbd "C-c j")  'ace-jump-mode)
+(global-set-key (kbd "C-c j")   'ace-jump-mode)
+(global-set-key (kbd "C-c C-g") 'ace-jump-line-mode)
 
 ;; cookies
 (setq url-cookie-file "~/.emacs.d/cache/url/cookies")
