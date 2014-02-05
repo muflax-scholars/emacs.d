@@ -3,6 +3,7 @@
 
 (setq mc/cmds-to-run-for-all
       '(
+        align-region-or-current
         beginning-of-visual-line
         copy-line
         downcase-region
