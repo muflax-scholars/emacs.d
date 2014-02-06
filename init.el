@@ -830,9 +830,9 @@ If visual-line-mode is on, then also jump to beginning of real line."
      (modes . '(enh-ruby-mode))))
   "Alignment rules specific to the ruby mode.
 See the variable `align-rules-list' for more details.")
-(add-to-list 'align-perl-modes 'enh-ruby-mode)
-(add-to-list 'align-dq-string-modes 'enh-ruby-mode)
-(add-to-list 'align-sq-string-modes 'enh-ruby-mode)
+(add-to-list 'align-perl-modes         'enh-ruby-mode)
+(add-to-list 'align-dq-string-modes    'enh-ruby-mode)
+(add-to-list 'align-sq-string-modes    'enh-ruby-mode)
 (add-to-list 'align-open-comment-modes 'enh-ruby-mode)
 (dolist (it ruby-align-rules-list)
   (add-to-list 'align-rules-list it))
