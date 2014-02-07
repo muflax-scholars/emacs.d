@@ -1252,6 +1252,8 @@ You have:
 ;; dired
 (require 'dired)
 (require 'dired-x)
+(require 'dired-details)
+(require 'dired-details+)
 (global-set-key (kbd "C-c C-j") 'dired-jump)
 (define-key dired-mode-map (kbd "C-c C-c")  'wdired-change-to-wdired-mode)
 (define-key dired-mode-map (kbd "<insert>") 'dired-mark)
