@@ -268,7 +268,7 @@
   :group 'notes-faces)
 
 (defface notes-annotation-abstract-face
-  '((t (:inherit font-lock-type-face)))
+  '((t (:inherit font-lock-type-face :weight bold)))
   "Face for abstract annotation."
   :group 'notes-faces)
 
@@ -399,15 +399,24 @@
    (cons notes-regex-placeholder-wiggly        '(1 notes-placeholder-wiggly-face))
    (cons notes-regex-placeholder-pointy        '(1 notes-placeholder-pointy-face))
 
-   (cons notes-regex-annotation-abstract       '(2 notes-annotation-abstract-face))
-   (cons notes-regex-annotation-transformation '(2 notes-annotation-transformation-face))
-   (cons notes-regex-annotation-comment        '(2 notes-annotation-comment-face))
-   (cons notes-regex-annotation-equivalent     '(2 notes-annotation-equivalent-face))
-   (cons notes-regex-annotation-model          '(2 notes-annotation-model-face))
-   (cons notes-regex-annotation-prompt         '(2 notes-annotation-prompt-face))
-   (cons notes-regex-annotation-quote          '(2 notes-annotation-quote-face))
-   (cons notes-regex-annotation-reply          '(2 notes-annotation-reply-face))
-   (cons notes-regex-annotation-wrong          '(2 notes-annotation-wrong-face))
+   (cons notes-regex-annotation-abstract       '((2 notes-annotation-abstract-face)
+                                                 (3 notes-annotation-abstract-face keep)))
+   (cons notes-regex-annotation-transformation '((2 notes-annotation-transformation-face)
+                                                 (3 notes-annotation-transformation-face keep)))
+   (cons notes-regex-annotation-comment        '((2 notes-annotation-comment-face)
+                                                 (3 notes-annotation-comment-face keep)))
+   (cons notes-regex-annotation-equivalent     '((2 notes-annotation-equivalent-face)
+                                                 (3 notes-annotation-equivalent-face keep)))
+   (cons notes-regex-annotation-model          '((2 notes-annotation-model-face)
+                                                 (3 notes-annotation-model-face keep)))
+   (cons notes-regex-annotation-prompt         '((2 notes-annotation-prompt-face)))
+                                                 ;; (3 notes-annotation-prompt-face keep)))
+   (cons notes-regex-annotation-quote          '((2 notes-annotation-quote-face)
+                                                 (3 notes-annotation-quote-face keep)))
+   (cons notes-regex-annotation-reply          '((2 notes-annotation-reply-face)))
+                                                 ;; (3 notes-annotation-reply-face keep)))
+   (cons notes-regex-annotation-wrong          '((2 notes-annotation-wrong-face)))
+                                                 ;; (3 notes-annotation-wrong-face keep)))
 
    (cons notes-regex-header                    '(3 notes-header-face))
 )
