@@ -145,7 +145,11 @@
 (define-key phi-search-default-map (kbd "<C-down>")   'phi-search-mc/mark-next)
 (define-key phi-search-default-map (kbd "<C-up>")     'phi-search-mc/mark-previous)
 (define-key phi-search-default-map (kbd "C-c C-k")    'phi-search-mc/mark-all)
-
+;; <ret> inserts a newline; C-j exits (a bit more convenient that way)
+(eval-after-load "multiple-cursors-core"
+  '(progn
+     (define-key mc/keymap (kbd "<return>") nil)
+     (define-key mc/keymap (kbd "C-j") 'multiple-cursors-mode)))
 ;; support for bookmarks
 (require 'breadcrumb)
 (global-set-key (kbd "C-c m") 'bc-set)
