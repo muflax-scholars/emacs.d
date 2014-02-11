@@ -364,14 +364,14 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (global-set-key (kbd "C-c ~")   'aya-create)
 (global-set-key (kbd "C-c C-~") 'aya-expand)
 
-;; text completion
 ;; auto completion
 (require 'auto-complete-config)
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
-;; (add-to-list 'ac-modes 'text-mode)
+(add-to-list 'ac-modes 'text-mode)
 (add-to-list 'ac-modes 'markdown-mode)
-;; (add-to-list 'ac-modes 'notes-mode)
-;; (add-to-list 'ac-modes 'org-mode)
+(add-to-list 'ac-modes 'enh-ruby-mode)
+(add-to-list 'ac-modes 'notes-mode)
+(add-to-list 'ac-modes 'org-mode)
 (setq ac-comphist-file "~/.emacs.d/cache/ac-comphist.dat")
 (setq ac-use-menu-map t)
 (setq ac-auto-show-menu nil)
@@ -395,6 +395,22 @@ If visual-line-mode is on, then also jump to beginning of real line."
     (apply 'append candidates))
   )
 (setq ac-ignores (concatenate 'list ac-ignores (yasnippet-get-all-snippets)))
+;; saner keys
+(setq ac-use-menu-map nil)
+(ac-set-trigger-key "C-t")
+(global-set-key (kbd "C-t") 'ac-trigger-key-command)
+(define-key ac-completing-map "\t"        nil)
+(define-key ac-completing-map [tab]       nil)
+(define-key ac-completing-map (kbd "Tab") nil)
+(define-key ac-completing-map [up]        nil)
+(define-key ac-completing-map [down]      nil)
+(define-key ac-completing-map (kbd "M-n") nil)
+(define-key ac-completing-map (kbd "M-p") nil)
+(define-key ac-completing-map (kbd "C-t") 'ac-next)
+(define-key ac-completing-map (kbd "M-t") 'ac-previous)
+(define-key ac-completing-map [return]    nil)
+(define-key ac-completing-map "\r"        nil)
+(define-key ac-completing-map (kbd "C-j") 'ac-complete)
 
 (defun insert-file-name (filename &optional args)
   "Insert name of file FILENAME into buffer after point.
@@ -774,6 +790,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
 
 ;; ruby mode
 ;; enhanced ruby mode
+(require 'enh-ruby-mode)
 (setq enh-ruby-program "~/.rbenv/shims/ruby")
 (add-to-list 'interpreter-mode-alist '("ruby" . enh-ruby-mode))
 ;; replace normal ruby mode
