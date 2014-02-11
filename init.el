@@ -747,8 +747,17 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (add-hook 'python-mode-hook 'no-electric-indent-python)
 
 ;; haskell mode
+(require 'haskell-mode)
+(require 'haskell-doc)
+(require 'haskell-indentation)
+(require 'inf-haskell)
+(require 'ghc)
+(add-hook 'haskell-mode-hook (lambda () (ghc-init)))
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
-(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
+(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+(add-hook 'inferior-haskell-mode-hook 'turn-on-ghci-completion)
+(define-key haskell-mode-map (kbd "C-c ?")   'haskell-process-do-type)
+(define-key haskell-mode-map (kbd "C-c C-?") 'haskell-process-do-info)
 
 ;; ruby mode
 ;; enhanced ruby mode
@@ -835,6 +844,23 @@ See the variable `align-rules-list' for more details.")
 (add-to-list 'align-open-comment-modes 'enh-ruby-mode)
 (dolist (it ruby-align-rules-list)
   (add-to-list 'align-rules-list it))
+;; haskell alignments
+(add-to-list 'align-rules-list
+             '(haskell-types
+               (regexp . "\\(\\s-+\\)\\(::\\|∷\\)\\s-+")
+               (modes quote (haskell-mode literate-haskell-mode))))
+(add-to-list 'align-rules-list
+             '(haskell-assignment
+               (regexp . "\\(\\s-+\\)=\\s-+")
+               (modes quote (haskell-mode literate-haskell-mode))))
+(add-to-list 'align-rules-list
+             '(haskell-arrows
+               (regexp . "\\(\\s-+\\)\\(->\\|→\\)\\s-+")
+               (modes quote (haskell-mode literate-haskell-mode))))
+(add-to-list 'align-rules-list
+             '(haskell-left-arrows
+               (regexp . "\\(\\s-+\\)\\(<-\\|←\\)\\s-+")
+               (modes quote (haskell-mode literate-haskell-mode))))
 
 (defun align-region-or-current ()
   "Align current selected region or implied region if nothing is selected."
@@ -1267,3 +1293,5 @@ You have:
 (diminish 'ruby-block-mode)
 (diminish 'smartparens-mode)
 (diminish 'hs-minor-mode)
+(diminish 'haskell-doc-mode)
+(diminish 'haskell-indentation-mode)
