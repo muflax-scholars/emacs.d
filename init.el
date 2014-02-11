@@ -771,7 +771,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
   "Face used for marking warning lines."
   :group 'enh-ruby)
 (defface erm-syn-errline
-  '((t (:underline "red")))
+  '((t (:background "pink")))
   "Face used for marking error lines."
   :group 'enh-ruby)
 (global-set-key (kbd "C-c C-n") 'enh-ruby-find-error)
