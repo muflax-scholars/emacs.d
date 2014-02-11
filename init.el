@@ -544,6 +544,14 @@ If visual-line-mode is on, then also jump to beginning of real line."
 ;; delete all space before point up to beginning of line or non-whitespace char
 (require 'hungry-delete)
 (global-hungry-delete-mode)
+(defun literal-delete-char (&optional arg)
+  (interactive "P")
+  (delete-char 1))
+(defun literal-delete-backward-char (&optional arg)
+  (interactive "P")
+  (delete-backward-char 1))
+(global-set-key (kbd "C-d") 'literal-delete-char)
+(global-set-key (kbd "M-d") 'literal-delete-backward-char)
 
 ;; more useful kill-ring
 (setq kill-ring-max 2000)
