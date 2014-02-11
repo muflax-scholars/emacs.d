@@ -354,8 +354,9 @@ If visual-line-mode is on, then also jump to beginning of real line."
 ;; snippets
 (setq yas-snippet-dirs "~/.emacs.d/snippets")
 (require 'yasnippet)
-(define-key yas-minor-mode-map (kbd "C-t") 'yas-next-field-or-maybe-expand)
-(define-key yas-minor-mode-map (kbd "M-t") 'yas-prev-field)
+(define-key yas-minor-mode-map (kbd "C-$") 'yas-expand)
+(define-key yas-minor-mode-map [(tab)] nil)
+(define-key yas-minor-mode-map (kbd "TAB") nil)
 (yas-global-mode 1)
 
 ;; auto-yasnippet
