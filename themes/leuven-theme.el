@@ -55,7 +55,7 @@ Semantic, and Ansi-Color faces are included -- and much more...")
       (diff-removed '(:foreground "#A60000" :background "#FFDDDD"))
       (directory '(:weight bold :foreground "blue" :background "#FFFFD2"))
       (highlight-line '(:bold t :background nil)) ; #F5F5F5 or #CCDEED
-      (link '(:underline t :foreground "#006DAF"))
+      (link '(:underline t :foreground "#006FE0"))
       (mail-header-name '(:weight bold :foreground "black"))
       (marked-line '(:weight bold :foreground "white" :background "red"))
       (match '(:background "#FBE448"))
@@ -132,7 +132,7 @@ Semantic, and Ansi-Color faces are included -- and much more...")
    `(font-lock-warning-face ((,class (:weight bold :foreground "red"))))
 
    ;; Button and link faces
-   `(link ((,class (:underline t :foreground "#8AC6F2"))))
+   `(link ((,class (:underline t :foreground "#006FE0"))))
    `(link-visited ((,class (:underline t :foreground "#E5786D"))))
    `(button ((,class (:underline t :foreground "#006DAF"))))
    `(header-line ((,class (:weight bold :underline "black" :overline "black" :foreground "black" :background "#FFFF88"))))
