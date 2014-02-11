@@ -1173,8 +1173,8 @@ You have:
 ;; keybindings
 (define-key sp-keymap (kbd "C-M-f") 'sp-forward-sexp)
 (define-key sp-keymap (kbd "C-M-b") 'sp-backward-sexp)
-(define-key sp-keymap (kbd "M-f") 'sp-next-sexp)
-(define-key sp-keymap (kbd "M-b") 'sp-previous-sexp)
+(define-key sp-keymap (kbd "M-f") 'sp-forward-symbol)
+(define-key sp-keymap (kbd "M-b") 'sp-backward-symbol)
 (define-key sp-keymap (kbd "C-S-a") 'sp-beginning-of-sexp)
 (define-key sp-keymap (kbd "C-S-d") 'sp-end-of-sexp)
 (define-key sp-keymap (kbd "C-M-k") 'sp-kill-sexp)
