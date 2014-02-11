@@ -61,7 +61,6 @@
   (progn
     (if use-bright-theme (setq use-bright-theme nil) (setq use-bright-theme t))
     (set-color-theme)))
-(global-set-key "\C-c\C-t" 'toggle-bright-theme)
 
 (add-hook 'after-make-window-system-frame-hooks 'set-color-theme)
 (add-hook 'after-make-console-frame-hooks       'set-color-theme)
