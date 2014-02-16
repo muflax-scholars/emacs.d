@@ -3,6 +3,8 @@
 
 (setq mc/cmds-to-run-for-all
       '(
+        ace-jump-done
+        ace-jump-line-mode
         align-region-or-current
         beginning-of-visual-line
         copy-line
