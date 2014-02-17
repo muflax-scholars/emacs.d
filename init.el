@@ -130,14 +130,15 @@
 
 ;; multiple cursors
 (require 'multiple-cursors)
-(global-set-key (kbd "C-c d")      'mc/edit-lines)
-(global-set-key (kbd "<C-down>")   'mc/mark-next-like-this)
-(global-set-key (kbd "<C-up>")     'mc/mark-previous-like-this)
-(global-set-key (kbd "<M-C-down>") 'mc/skip-to-next-like-this)
-(global-set-key (kbd "<M-C-up>")   'mc/skip-to-previous-like-this)
-(global-set-key (kbd "C-c C-d")    'mc/mark-all-dwim)
-(global-set-key (kbd "C-c >")      'mc/mark-more-like-this-extended)
-(global-set-key (kbd "C-c <")      'mc/mark-more-like-this-extended)
+(global-set-key (kbd "C-c d")         'mc/edit-lines)
+(global-set-key (kbd "<C-down>")      'mc/mark-next-like-this)
+(global-set-key (kbd "<C-up>")        'mc/mark-previous-like-this)
+(global-set-key (kbd "<M-C-down>")    'mc/skip-to-next-like-this)
+(global-set-key (kbd "<M-C-up>")      'mc/skip-to-previous-like-this)
+(global-set-key (kbd "C-c C-d")       'mc/mark-all-dwim)
+(global-set-key (kbd "C-c >")         'mc/mark-more-like-this-extended)
+(global-set-key (kbd "C-c <")         'mc/mark-more-like-this-extended)
+(global-set-key (kbd "C-S-<mouse-1>") 'mc/add-cursor-on-click)
 (require 'phi-search)
 (require 'phi-search-mc)
 (global-set-key (kbd "C-c C-s") 'phi-search)
@@ -341,6 +342,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
 
 ;; save minibuffer history
 (savehist-mode 1)
+(setq history-length 1000)
 (setq savehist-file "~/.emacs.d/cache/history")
 (setq savehist-additional-variables '(search-ring
                                       regexp-search-ring
@@ -615,7 +617,9 @@ If visual-line-mode is on, then also jump to beginning of real line."
   (newline-and-indent))
 (global-set-key "\C-o" 'next-newline-and-indent)
 
-;; deleting
+;; move files to trash instead
+(setq delete-by-moving-to-trash t)
+
 ;; delete spaces when killing a line
 (defun kill-and-join-forward (&optional arg)
   "If at end of line, join with following; otherwise kill line.
@@ -974,6 +978,10 @@ See the variable `align-rules-list' for more details.")
 ;; diff- mode (better colors)
 (require 'diff-mode-)
 
+;; a slightly saner diff command
+(require 'ediff)
+(setq ediff-diff-options "-w")
+
 ;; "*" from vim
 ;; I-search with initial contents
 (defvar isearch-initial-string nil)
@@ -1152,6 +1160,10 @@ See the variable `align-rules-list' for more details.")
 
 ;; make zsh aliases work
 (setq shell-command-switch "-lc")
+;; tab-completion for shell-command
+;; FIXME not working yet, but meh
+(require 'shell-command)
+(shell-command-completion-mode)
 
 ;; better handling than M-| / M-!
 (defun chomp (str)
@@ -1246,6 +1258,7 @@ You have:
 (define-key global-map (kbd "C-c C-[") 'idomenu)
 (define-key global-map (kbd "C-c ]")   'imenu-anywhere)
 (define-key global-map (kbd "C-c C-]") 'imenu-anywhere)
+(set-default 'imenu-auto-rescan t)
 
 (defun imenu-flush-cache ()
   "Flushes imenu cache."
@@ -1374,12 +1387,79 @@ You have:
 
 ;; dired
 (require 'dired)
+(require 'wdired)
 (require 'dired-x)
 (require 'dired-details)
 (require 'dired-details+)
+;; move files between split panes
+(setq dired-dwim-target t)
+;; reload dired after making changes
+(--each '(dired-do-rename
+          dired-do-copy
+          dired-create-directory
+          wdired-abort-changes)
+        (eval `(defadvice ,it (after revert-buffer activate)
+                 (revert-buffer))))
 (global-set-key (kbd "C-c C-j") 'dired-jump)
 (define-key dired-mode-map (kbd "C-c C-c")  'wdired-change-to-wdired-mode)
 (define-key dired-mode-map (kbd "<insert>") 'dired-mark)
+;; C-a goes to filename
+(defun dired-back-to-start-of-files ()
+  (interactive)
+  (backward-char (- (current-column) 2)))
+(define-key dired-mode-map (kbd "C-a") 'dired-back-to-start-of-files)
+(define-key wdired-mode-map (kbd "C-a") 'dired-back-to-start-of-files)
+;; M-up goes to first file
+(defun dired-back-to-top ()
+  (interactive)
+  (beginning-of-buffer)
+  (dired-next-line 4))
+(define-key dired-mode-map (vector 'remap 'beginning-of-buffer) 'dired-back-to-top)
+(define-key wdired-mode-map (vector 'remap 'beginning-of-buffer) 'dired-back-to-top)
+(define-key dired-mode-map (vector 'remap 'smart-up) 'dired-back-to-top)
+;; M-down goes to last file
+(defun dired-jump-to-bottom ()
+  (interactive)
+  (end-of-buffer)
+  (dired-next-line -1))
+(define-key dired-mode-map (vector 'remap 'end-of-buffer) 'dired-jump-to-bottom)
+(define-key dired-mode-map (vector 'remap 'smart-down) 'dired-jump-to-bottom)
+(define-key wdired-mode-map (vector 'remap 'end-of-buffer) 'dired-jump-to-bottom)
+
+;; show keystrokes in progress
+(setq echo-keystrokes 0.1)
+
+;; don't use shift to mark things; smartparens overwrites this anyway, but be explicit about it
+(setq shift-select-mode nil)
+
+;; transparently open compressed files
+(auto-compression-mode t)
+
+;; UTF-8 please
+(setq locale-coding-system   'utf-8) ; pretty
+(set-terminal-coding-system  'utf-8) ; pretty
+(set-keyboard-coding-system  'utf-8) ; pretty
+(set-selection-coding-system 'utf-8) ; please
+(prefer-coding-system        'utf-8) ; with sugar on top
+
+;; normally smartparens wraps selected text, but if input is not a pair, just overwrite the text
+(delete-selection-mode 1)
+
+;; allow recursive minibuffers
+(setq enable-recursive-minibuffers t)
+
+;; a bit more relaxed garbage collection
+(setq gc-cons-threshold 20000000)
+
+;; make sure we always know what's happening when eval-ing things
+(setq eval-expression-print-level nil)
+
+;; when popping the mark, continue popping until the cursor actually moves
+(defadvice pop-to-mark-command (around ensure-new-position activate)
+  (let ((p (point)))
+    (dotimes (i 10)
+      (when (= p (point)) ad-do-it))))
+
 
 ;; clean up modeline and hide standard minor modes
 ;; should be last so all modes are already loaded
