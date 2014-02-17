@@ -824,6 +824,9 @@ If visual-line-mode is on, then also jump to beginning of real line."
 
 ;; reload file when it changed (and the buffer has no changes)
 (global-auto-revert-mode 1)
+;; also revert dired
+(setq global-auto-revert-non-file-buffers t)
+(setq auto-revert-verbose nil)
 
 ;; new python mode
 (require 'python)
