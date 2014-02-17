@@ -680,9 +680,10 @@ Leave match data intact for `notes-regex-list'."
 
 (defun notes-indent-find-next-position (cur-pos positions)
   "Return the position after the index of CUR-POS in POSITIONS."
-  (while (and positions
-              (not (equal cur-pos (car positions))))
-    (setq positions (cdr positions)))
+  (if (not (equal cur-pos 0))
+      (while (and positions
+                  (not (equal cur-pos (car positions))))
+        (setq positions (cdr positions))))
   (or (cadr positions) 0))
 
 (defun notes-indent-line ()
@@ -696,7 +697,6 @@ these cases, indent to the default position."
         (cur-pos (current-column)))
     (if (not (equal this-command 'notes-indent-line))
         (indent-line-to (car positions))
-      (setq positions (sort (delete-dups positions) '<))
       (indent-line-to
        (notes-indent-find-next-position cur-pos positions)))))
 
@@ -706,29 +706,29 @@ The first element in the returned list should be considered the
 default indentation level."
   (let (pos prev-line-pos positions)
 
-    ;; Previous line indent
+    ;; first column
+    (setq positions (cons 0 positions))
+
+    ;; previous line indent
     (setq prev-line-pos (notes-prev-line-indent))
     (setq positions (cons prev-line-pos positions))
 
-    ;; Previous non-list-marker indent
-    (setq pos (notes-prev-non-list-indent))
-    (when pos
+    ;; previous non-list-marker indent (+ tab-width)
+    (when (setq pos (notes-prev-non-list-indent))
       (setq positions (cons pos positions))
-      (setq positions (cons (+ pos tab-width) positions)))
+      (setq positions (cons (+ pos tab-width) positions))
+      )
 
-    ;; Indentation of the previous line + tab-width
-    (cond
-     (prev-line-pos
-      (setq positions (cons (+ prev-line-pos tab-width) positions)))
-     (t
-      (setq positions (cons tab-width positions))))
+    ;; indentation of the previous line + tab-width
+    (if prev-line-pos
+        (setq positions (cons (+ prev-line-pos tab-width) positions))
+      (setq positions (cons tab-width positions)))
 
-    ;; Indentation of the previous line - tab-width
-    (if (and prev-line-pos
-             (> prev-line-pos tab-width))
+    ;; indentation of the previous line - tab-width
+    (if (and prev-line-pos (> prev-line-pos tab-width))
         (setq positions (cons (- prev-line-pos tab-width) positions)))
 
-    ;; Indentation of preceeding list item
+    ;; indentation of preceeding list item
     (setq pos
           (save-excursion
             (forward-line -1)
@@ -742,10 +742,7 @@ default indentation level."
     (if (and pos (not (eq pos prev-line-pos)))
         (setq positions (cons pos positions)))
 
-    ;; First column
-    (setq positions (cons 0 positions))
-
-    (reverse positions)))
+    (delete-dups (reverse positions))))
 
 (defun notes-dedent-or-delete (arg)
   "Handle BACKSPACE by cycling through indentation points.
@@ -810,8 +807,8 @@ increase the indentation by one level."
         (setq item-indent (nth 2 bounds))
         (setq marker (concat (match-string 2) (match-string 3)))
         (setq indent (cond
-                      ((= arg 4) (max (- item-indent 4) 0))
-                      ((= arg 16) (+ item-indent 4))
+                      ((= arg 4) (max (- item-indent 2) 0))
+                      ((= arg 16) (+ item-indent 2))
                       (t item-indent)))
         (setq new-indent (make-string indent 32))
         (goto-char (nth 1 bounds))
