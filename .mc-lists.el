@@ -12,9 +12,11 @@
         electric-graphviz-dot-semi
         end-of-visual-line
         enh-ruby-electric-brace
+        eval-defun
         handle-switch-frame
         hungry-delete-backward
         hungry-delete-forward
+        ibus-exec-callback
         ido-switch-buffer
         increment-integer-at-point
         indent-for-tab-command
