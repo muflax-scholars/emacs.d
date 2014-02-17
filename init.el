@@ -1185,7 +1185,7 @@ You have:
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 ;; highlight some whitespace
-(require 'whitespace-mode)
+(require 'whitespace)
 (setq whitespace-style (quote (face tabs tab-mark)))
 (global-whitespace-mode)
 
