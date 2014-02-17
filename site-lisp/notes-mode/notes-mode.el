@@ -9,7 +9,7 @@
 ;;
 ;; This program is distributed in the hope that it will be useful,
 ;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 ;; GNU General Public License for more details.
 ;;
 ;; You should have received a copy of the GNU General Public License
@@ -357,7 +357,7 @@
 
 (defconst notes-regex-annotation-wrong
   "^\\([ \t]*\\)\\([*]\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)"
-  "Regular expression for  annotation.")
+  "Regular expression for annotation.")
 
 (defconst notes-regex-list
   "^\\([ \t]*\\)\\([0-9]+\\.\\|[-]\\)\\([ \t]+\\)"
@@ -391,34 +391,45 @@
 
 (defvar notes-mode-font-lock-keywords
   (list
-   (cons notes-regex-list                      '(2 notes-list-face))
+   (cons notes-regex-list   '(2 notes-list-face))
+   (cons notes-regex-bold   '(2 notes-bold-face))
+   (cons notes-regex-italic '(2 notes-italic-face))
+   (cons notes-regex-header '(3 notes-header-face))
 
-   (cons notes-regex-bold                      '(2 notes-bold-face))
-   (cons notes-regex-italic                    '(2 notes-italic-face))
-   (cons notes-regex-placeholder-square        '(1 notes-placeholder-square-face))
-   (cons notes-regex-placeholder-wiggly        '(1 notes-placeholder-wiggly-face))
-   (cons notes-regex-placeholder-pointy        '(1 notes-placeholder-pointy-face))
+   (cons notes-regex-placeholder-square
+         '(1 notes-placeholder-square-face))
+   (cons notes-regex-placeholder-wiggly
+         '(1 notes-placeholder-wiggly-face))
+   (cons notes-regex-placeholder-pointy
+         '(1 notes-placeholder-pointy-face))
 
-   (cons notes-regex-annotation-abstract       '((2 notes-annotation-abstract-face)
-                                                 (3 notes-annotation-abstract-face keep)))
-   (cons notes-regex-annotation-transformation '((2 notes-annotation-transformation-face)
-                                                 (3 notes-annotation-transformation-face keep)))
-   (cons notes-regex-annotation-comment        '((2 notes-annotation-comment-face)
-                                                 (3 notes-annotation-comment-face keep)))
-   (cons notes-regex-annotation-equivalent     '((2 notes-annotation-equivalent-face)
-                                                 (3 notes-annotation-equivalent-face keep)))
-   (cons notes-regex-annotation-model          '((2 notes-annotation-model-face)
-                                                 (3 notes-annotation-model-face keep)))
-   (cons notes-regex-annotation-prompt         '((2 notes-annotation-prompt-face)))
-                                                 ;; (3 notes-annotation-prompt-face keep)))
-   (cons notes-regex-annotation-quote          '((2 notes-annotation-quote-face)
-                                                 (3 notes-annotation-quote-face keep)))
-   (cons notes-regex-annotation-reply          '((2 notes-annotation-reply-face)))
-                                                 ;; (3 notes-annotation-reply-face keep)))
-   (cons notes-regex-annotation-wrong          '((2 notes-annotation-wrong-face)))
-                                                 ;; (3 notes-annotation-wrong-face keep)))
-
-   (cons notes-regex-header                    '(3 notes-header-face))
+   (cons notes-regex-annotation-abstract
+         '((2 notes-annotation-abstract-face)
+           (3 notes-annotation-abstract-face keep)))
+   (cons notes-regex-annotation-transformation
+         '((2 notes-annotation-transformation-face)
+           (3 notes-annotation-transformation-face keep)))
+   (cons notes-regex-annotation-comment
+         '((2 notes-annotation-comment-face)
+           (3 notes-annotation-comment-face keep)))
+   (cons notes-regex-annotation-equivalent
+         '((2 notes-annotation-equivalent-face)
+           (3 notes-annotation-equivalent-face keep)))
+   (cons notes-regex-annotation-model
+         '((2 notes-annotation-model-face)
+           (3 notes-annotation-model-face keep)))
+   (cons notes-regex-annotation-prompt
+         '((2 notes-annotation-prompt-face)))
+   ;; (3 notes-annotation-prompt-face keep)))
+   (cons notes-regex-annotation-quote
+         '((2 notes-annotation-quote-face)
+           (3 notes-annotation-quote-face keep)))
+   (cons notes-regex-annotation-reply
+         '((2 notes-annotation-reply-face)))
+   ;; (3 notes-annotation-reply-face keep)))
+   (cons notes-regex-annotation-wrong
+         '((2 notes-annotation-wrong-face)))
+   ;; (3 notes-annotation-wrong-face keep)))
 )
   "Syntax highlighting for Notes files.")
 
@@ -504,7 +515,7 @@ If the previous line is empty, check the line before that one, too."
   "Move the point to the end of region with indentation at least LEVEL."
   (let (indent)
     (while (and (not (< (setq indent (notes-cur-line-indent)) level))
-                (not (>= indent (+ level 4)))
+                (not (>= indent (+ level 2)))
                 (not (eobp)))
       (notes--next-block))
     (unless (eobp)
@@ -595,10 +606,6 @@ upon failure."
          ((and (< indent level)
                (notes-prev-line-blank-p))
           (setq next nil))
-         ;; Stop at a header
-         ((looking-at notes-regex-header) (setq next nil))
-         ;; Stop at a horizontal rule
-         ((looking-at notes-regex-hr) (setq next nil))
          ;; Otherwise, continue.
          (t t))
       (forward-line)
@@ -626,16 +633,11 @@ If the point is not in a list item, do nothing."
           nil)
          ;; Stop at a new list item of the same or lesser indentation
          ((looking-at notes-regex-list) nil)
-         ;; Stop at a header
-         ((looking-at notes-regex-header) nil)
-         ;; Stop at a horizontal rule
-         ((looking-at notes-regex-hr) nil)
          ;; Otherwise, continue.
          (t t))
       (forward-line)
       (setq indent (notes-cur-line-indent)))
-    ;; Don't skip over whitespace for empty list items (marker and
-    ;; whitespace only), just move to end of whitespace.
+    ;; Don't skip over whitespace for empty list items (marker and whitespace only), just move to end of whitespace.
     (if (looking-back (concat notes-regex-list "\\s-*"))
           (goto-char (match-end 3))
       (skip-syntax-backward "-"))))
@@ -840,7 +842,7 @@ increase the indentation by one level."
   ;; inside in square brackets (e.g., link anchor text)
   (looking-back "\\[[^]]*"))
 
-;;; Mode definition  ==========================================================
+;;; Mode definition ==========================================================
 
 ;;;###autoload
 (define-derived-mode notes-mode text-mode "Notes"
