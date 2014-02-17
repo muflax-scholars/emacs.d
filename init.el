@@ -1130,6 +1130,11 @@ You have:
 ;; remove trailing whitespace on save
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
+;; highlight some whitespace
+(require 'whitespace-mode)
+(setq whitespace-style (quote (face tabs tab-mark)))
+(global-whitespace-mode)
+
 ;; use y/n instead of yes/no
 (defalias 'yes-or-no-p 'y-or-n-p)
 
@@ -1323,19 +1328,22 @@ You have:
 ;; should be last so all modes are already loaded
 (require 'diminish)
 (diminish 'abbrev-mode)
-(diminish 'auto-complete-mode "AC")
+(diminish 'auto-complete-mode)
 (diminish 'auto-fill-function "AF")
 (diminish 'auto-revert-mode)
 (diminish 'fic-mode)
 (diminish 'global-visual-line-mode)
+(diminish 'global-whitespace-mode " »")
+(diminish 'haskell-doc-mode)
+(diminish 'haskell-indentation-mode)
 (diminish 'highlight-parentheses-mode)
+(diminish 'hs-minor-mode)
+(diminish 'ibus-mode " I")
+(diminish 'ruby-block-mode)
+(diminish 'smartparens-mode)
 (diminish 'undo-tree-mode)
 (diminish 'visual-line-mode)
 (diminish 'volatile-highlights-mode)
+(diminish 'whitespace-mode "WS")
 (diminish 'whole-line-or-region-mode)
 (diminish 'yas-minor-mode)
-(diminish 'ruby-block-mode)
-(diminish 'smartparens-mode)
-(diminish 'hs-minor-mode)
-(diminish 'haskell-doc-mode)
-(diminish 'haskell-indentation-mode)

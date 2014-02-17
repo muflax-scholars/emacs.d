@@ -96,7 +96,8 @@ Semantic, and Ansi-Color faces are included -- and much more...")
    `(whitespace-hspace ((,class (:foreground "#D2D2D2"))))
    `(whitespace-indentation ((,class (:foreground "firebrick" :background "yellow"))))
    `(whitespace-line ((,class (:foreground "#CC0000" :background "#FFFF88"))))
-   `(whitespace-tab ((,class (:foreground "lightgray" :background "beige"))))
+   `(whitespace-space ((,class (:foreground "#c0c0c0"))))
+   `(whitespace-tab ((,class (:foreground "#c0c0c0"))))
    `(whitespace-trailing ((,class (:weight bold :foreground "yellow" :background "red1"))))
 
    ;; Mode line faces
