@@ -112,7 +112,7 @@
 
 (eval-when-compile (require 'cl))
 
-;;; Customizable variables ====================================================
+;; Customizable Variables
 
 (defvar notes-mode-hook nil
   "Hook run when entering Markdown mode.")
@@ -122,15 +122,7 @@
   :prefix "notes-"
   :group 'wp)
 
-(defcustom notes-uri-types
-  '("acap" "cid" "data" "dav" "fax" "file" "ftp" "gopher" "http" "https"
-    "imap" "ldap" "mailto" "mid" "modem" "news" "nfs" "nntp" "pop" "prospero"
-    "rtsp" "service" "sip" "tel" "telnet" "tip" "urn" "vemmi" "wais")
-  "Link types for syntax highlighting of URIs."
-  :group 'notes
-  :type 'list)
-
-;;; Font lock =================================================================
+;; Font Lock
 
 (require 'font-lock)
 
@@ -194,13 +186,7 @@
 (defvar notes-footnote-face 'notes-footnote-face
   "Face name to use for footnote identifiers.")
 
-(defvar notes-url-face 'notes-url-face
-  "Face name to use for URLs.")
-
-(defvar notes-link-title-face 'notes-link-title-face
-  "Face name to use for reference link titles.")
-
-;; customization
+;; Customization
 
 (defgroup notes-faces nil
   "Faces used in Notes Mode"
@@ -307,17 +293,7 @@
   "Face for footnote markers."
   :group 'notes-faces)
 
-(defface notes-url-face
-  '((t (:inherit font-lock-string-face)))
-  "Face for URLs."
-  :group 'notes-faces)
-
-(defface notes-link-title-face
-  '((t (:inherit font-lock-comment-face)))
-  "Face for reference link titles."
-  :group 'notes-faces)
-
-;; parsing
+;; Parsing
 
 (defconst notes-regex-header
   "^\\([ \t]*\\)\\([\\[{][ \t]+\\)\\(.+\\)"
@@ -387,7 +363,7 @@
   "^\\([ \t]*\\)\\([0-9]+\\.\\|[-]\\)\\([ \t]+\\)"
   "Regular expression for matching indentation of list items.")
 
-;; keywords
+;; Keywords
 
 (defvar notes-mode-font-lock-keywords
   (list
@@ -430,10 +406,10 @@
    (cons notes-regex-annotation-wrong
          '((2 notes-annotation-wrong-face)))
    ;; (3 notes-annotation-wrong-face keep)))
-)
+   )
   "Syntax highlighting for Notes files.")
 
-;;; Notes parsing functions ================================================
+;; Notes Parsing Functions
 
 (defun notes-cur-line-blank-p ()
   "Return t if the current line is blank and nil otherwise."
@@ -519,7 +495,7 @@ If the previous line is empty, check the line before that one, too."
                 (not (eobp)))
       (notes--next-block))
     (unless (eobp)
-      ;; Move back before any trailing blank lines
+      ;; move back before any trailing blank lines
       (while (and (notes-prev-line-blank-p)
                   (not (bobp)))
         (forward-line -1))
@@ -528,44 +504,43 @@ If the previous line is empty, check the line before that one, too."
 
 (defun notes-prev-list-item (level)
   "Search backward from point for a list item with indentation LEVEL.
-Set point to the beginning of the item, and return point, or nil
-upon failure."
+Set point to the beginning of the item, and return point, or nil upon failure."
   (let (bounds indent prev)
     (setq prev (point))
     (forward-line -1)
     (setq indent (notes-cur-line-indent))
     (while
         (cond
-         ;; Stop at beginning of buffer
+         ;; stop at beginning of buffer
          ((bobp) (setq prev nil))
-         ;; Continue if current line is blank
+         ;; continue if current line is blank
          ((notes-cur-line-blank-p) t)
-         ;; List item
+         ;; list item
          ((and (looking-at notes-regex-list)
                (setq bounds (notes-cur-list-item-bounds)))
           (cond
-           ;; Continue at item with greater indentation
+           ;; continue at item with greater indentation
            ((> (nth 3 bounds) level) t)
-           ;; Stop and return point at item of equal indentation
+           ;; stop and return point at item of equal indentation
            ((= (nth 3 bounds) level)
             (setq prev (point))
             nil)
-           ;; Stop and return nil at item with lesser indentation
+           ;; stop and return nil at item with lesser indentation
            ((< (nth 3 bounds) level)
             (setq prev nil)
             nil)))
-         ;; Continue while indentation is the same or greater
+         ;; continue while indentation is the same or greater
          ((>= indent level) t)
-         ;; Stop if current indentation is less than list item
+         ;; stop if current indentation is less than list item
          ;; and the next is blank
          ((and (< indent level)
                (notes-next-line-blank-p))
           (setq prev nil))
-         ;; Stop at a header
+         ;; stop at a header
          ((looking-at notes-regex-header) (setq prev nil))
-         ;; Stop at a horizontal rule
+         ;; stop at a horizontal rule
          ((looking-at notes-regex-hr) (setq prev nil))
-         ;; Otherwise, continue.
+         ;; otherwise, continue
          (t t))
       (forward-line -1)
       (setq indent (notes-cur-line-indent)))
@@ -573,40 +548,39 @@ upon failure."
 
 (defun notes-next-list-item (level)
   "Search forward from point for the next list item with indentation LEVEL.
-Set point to the beginning of the item, and return point, or nil
-upon failure."
+Set point to the beginning of the item, and return point, or nil upon failure."
   (let (bounds indent next)
     (setq next (point))
     (forward-line)
     (setq indent (notes-cur-line-indent))
     (while
         (cond
-         ;; Stop at end of the buffer.
+         ;; stop at end of the buffer.
          ((eobp) (setq prev nil))
-         ;; Continue if the current line is blank
+         ;; continue if the current line is blank
          ((notes-cur-line-blank-p) t)
-         ;; List item
+         ;; list item
          ((and (looking-at notes-regex-list)
                (setq bounds (notes-cur-list-item-bounds)))
           (cond
-           ;; Continue at item with greater indentation
+           ;; continue at item with greater indentation
            ((> (nth 3 bounds) level) t)
-           ;; Stop and return point at item of equal indentation
+           ;; stop and return point at item of equal indentation
            ((= (nth 3 bounds) level)
             (setq next (point))
             nil)
-           ;; Stop and return nil at item with lesser indentation
+           ;; stop and return nil at item with lesser indentation
            ((< (nth 3 bounds) level)
             (setq next nil)
             nil)))
-         ;; Continue while indentation is the same or greater
+         ;; continue while indentation is the same or greater
          ((>= indent level) t)
-         ;; Stop if current indentation is less than list item
-         ;; and the previous line was blank.
+         ;; stop if current indentation is less than list item
+         ;; and the previous line was blank
          ((and (< indent level)
                (notes-prev-line-blank-p))
           (setq next nil))
-         ;; Otherwise, continue.
+         ;; otherwise, continue
          (t t))
       (forward-line)
       (setq indent (notes-cur-line-indent)))
@@ -620,37 +594,35 @@ If the point is not in a list item, do nothing."
     (setq indent (notes-cur-line-indent))
     (while
         (cond
-         ;; Stop at end of the buffer.
+         ;; stop at end of the buffer
          ((eobp) nil)
-         ;; Continue if the current line is blank
+         ;; continue if the current line is blank
          ((notes-cur-line-blank-p) t)
-         ;; Continue while indentation is the same or greater
+         ;; continue while indentation is the same or greater
          ((>= indent level) t)
-         ;; Stop if current indentation is less than list item
-         ;; and the previous line was blank.
+         ;; stop if current indentation is less than list item
+         ;; and the previous line was blank
          ((and (< indent level)
                (notes-prev-line-blank-p))
           nil)
-         ;; Stop at a new list item of the same or lesser indentation
+         ;; stop at a new list item of the same or lesser indentation
          ((looking-at notes-regex-list) nil)
-         ;; Otherwise, continue.
+         ;; otherwise, continue
          (t t))
       (forward-line)
       (setq indent (notes-cur-line-indent)))
-    ;; Don't skip over whitespace for empty list items (marker and whitespace only), just move to end of whitespace.
+    ;; don't skip over whitespace for empty list items (marker and whitespace only), just move to end of whitespace
     (if (looking-back (concat notes-regex-list "\\s-*"))
           (goto-char (match-end 3))
       (skip-syntax-backward "-"))))
 
 (defun notes-cur-list-item-bounds ()
   "Return bounds and indentation of the current list item.
-Return a list of the form (begin end indent nonlist-indent).
-If the point is not inside a list item, return nil.
-Leave match data intact for `notes-regex-list'."
+Return a list of the form (begin end indent nonlist-indent). If the point is not inside a list item, return nil. Leave match data intact for `notes-regex-list'."
   (let (cur prev-begin prev-end indent nonlist-indent)
-    ;; Store current location
+    ;; store current location
     (setq cur (point))
-    ;; Verify that cur is between beginning and end of item
+    ;; verify that cur is between beginning and end of item
     (save-excursion
       (if (looking-at notes-regex-list)
           (beginning-of-line)
@@ -668,7 +640,7 @@ Leave match data intact for `notes-regex-list'."
           (list prev-begin prev-end indent nonlist-indent)
         nil))))
 
-;;; Syntax Table ==============================================================
+;; Syntax Table
 
 (defvar notes-mode-syntax-table
   (let ((tab (make-syntax-table text-mode-syntax-table)))
@@ -676,7 +648,7 @@ Leave match data intact for `notes-regex-list'."
     tab)
   "Syntax table for `notes-mode'.")
 
-;;; Indentation ====================================================================
+;; Indentation
 
 (defun notes-indent-find-next-position (cur-pos positions)
   "Return the position after the index of CUR-POS in POSITIONS."
@@ -690,8 +662,7 @@ Leave match data intact for `notes-regex-list'."
   "Indent the current line using some heuristics.
 If the _previous_ command was `notes-indent-line', then we should cycle to the next reasonable indentation position.
 
-Otherwise, we could have been called directly by `notes-enter-key' or indirectly by `auto-fill-mode'. In
-these cases, indent to the default position."
+Otherwise, we could have been called directly by `notes-enter-key' or indirectly by `auto-fill-mode'. In these cases, indent to the default position."
   (interactive)
   (let ((positions (notes-calc-indents))
         (cur-pos (current-column)))
@@ -702,8 +673,7 @@ these cases, indent to the default position."
 
 (defun notes-calc-indents ()
   "Return a list of indentation columns to cycle through.
-The first element in the returned list should be considered the
-default indentation level."
+The first element in the returned list should be considered the default indentation level."
   (let (pos prev-line-pos positions)
 
     ;; first column
@@ -746,10 +716,7 @@ default indentation level."
 
 (defun notes-dedent-or-delete (arg)
   "Handle BACKSPACE by cycling through indentation points.
-When BACKSPACE is pressed, if there is only whitespace
-before the current point, then dedent the line one level.
-Otherwise, do normal delete by repeating
-`backward-delete-char-untabify' ARG times."
+When BACKSPACE is pressed, if there is only whitespace before the current point, then dedent the line one level. Otherwise, do normal delete by repeating `backward-delete-char-untabify' ARG times."
   (interactive "*p")
   (let ((cur-pos (current-column))
         (start-of-indention (save-excursion
@@ -763,7 +730,7 @@ Otherwise, do normal delete by repeating
           (indent-line-to result))
       (backward-delete-char-untabify arg))))
 
-;;; Keymap ====================================================================
+;; Keymap
 
 (defvar notes-mode-map
   (let ((map (make-keymap)))
@@ -779,31 +746,26 @@ Otherwise, do normal delete by repeating
     map)
   "Keymap for Markdown major mode.")
 
-;;; Lists =====================================================================
+;; Lists
 
 (defun notes-insert-list-item (&optional arg)
   "Insert a new list item.
-If the point is inside unordered list, insert a bullet mark.  If
-the point is inside ordered list, insert the next number followed
-by a period.  Use the previous list item to determine the amount
-of whitespace to place before and after list markers.
+If the point is inside unordered list, insert a bullet mark.  If the point is inside ordered list, insert the next number followed by a period.  Use the previous list item to determine the amount of whitespace to place before and after list markers.
 
-With a \\[universal-argument] prefix (i.e., when ARG is 4),
-decrease the indentation by one level.
+With a \\[universal-argument] prefix (i.e., when ARG is 4), decrease the indentation by one level.
 
-With two \\[universal-argument] prefixes (i.e., when ARG is 16),
-increase the indentation by one level."
+With two \\[universal-argument] prefixes (i.e., when ARG is 16), increase the indentation by one level."
   (interactive "p")
   (let (bounds item-indent marker indent new-indent end)
     (save-match-data
       (setq bounds (notes-cur-list-item-bounds))
       (if (not bounds)
-          ;; When not in a list, start a new unordered one
+          ;; when not in a list, start a new unordered one
           (progn
             (unless (notes-cur-line-blank-p)
               (insert "\n"))
             (insert "* "))
-        ;; Compute indentation for a new list item
+        ;; compute indentation for a new list item
         (setq item-indent (nth 2 bounds))
         (setq marker (concat (match-string 2) (match-string 3)))
         (setq indent (cond
@@ -814,32 +776,23 @@ increase the indentation by one level."
         (goto-char (nth 1 bounds))
         (newline)
         (cond
-         ;; Ordered list
+         ;; ordered list
          ((string-match "[0-9]" marker)
           (if (= arg 16) ;; starting a new column indented one more level
               (insert (concat new-indent "1. "))
-            ;; travel up to the last item and pick the correct number.  If
-            ;; the argument was nil, "new-indent = item-indent" is the same,
-            ;; so we don't need special treatment. Neat.
+            ;; travel up to the last item and pick the correct number.  If the argument was nil, "new-indent = item-indent" is the same, so we don't need special treatment. Neat.
             (save-excursion
               (while (not (looking-at (concat new-indent "\\([0-9]+\\)\\.")))
                 (forward-line -1)))
             (insert (concat new-indent
                             (int-to-string (1+ (string-to-number (match-string 1))))
                             ". "))))
-         ;; Unordered list
+         ;; unordered list
          ((string-match "[-]" marker)
           (insert (concat new-indent marker))))))))
 
 
-;; ;;; Miscellaneous =============================================================
-
-(defun notes-nobreak-p ()
-  "Return nil if it is acceptable to break the current line at the point."
-  ;; inside in square brackets (e.g., link anchor text)
-  (looking-back "\\[[^]]*"))
-
-;;; Mode definition ==========================================================
+;; Mode Definition
 
 ;;;###autoload
 (define-derived-mode notes-mode text-mode "Notes"
@@ -868,10 +821,6 @@ increase the indentation by one level."
   ;; FIXME this isn't a good fix, but works for now...
   (set (make-local-variable 'adaptive-fill-regexp)
        "[ \t]*[*+-] \\|[ \t]*[0-9]+\\. \\|[ \t]*[$?!<>=*+#%@|] ")
-
-  ;; indentation and filling
-  (make-local-variable 'fill-nobreak-predicate)
-  (add-hook 'fill-nobreak-predicate 'notes-nobreak-p)
 
   ;; imenu support
   (set (make-local-variable 'imenu-generic-expression)
