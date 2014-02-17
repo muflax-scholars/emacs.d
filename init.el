@@ -529,6 +529,56 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (setq-default indent-tabs-mode nil)
 (defun use-tabs () (setq indent-tabs-mode t))
 (add-hook 'notes-mode-hook 'use-tabs)
+;; insert literal tab
+(global-set-key (kbd "<C-tab>") (lambda () (interactive)
+                                  (insert "\t")))
+
+;; replacement for orgtbl by using " | " as separator
+(require 'delim-col)
+(setq delimit-columns-str-separator " | ")
+(setq delimit-columns-separator " +| +")
+(setq delimit-columns-format 'separator)
+(setq delimit-columns-extra nil)
+
+(defun delimit-columns-current ()
+  "Delimit columns of current table."
+  (interactive)
+
+  (let ((beg)
+        (end)
+        (start)
+        (regexp "^[^ \t\n]+.* | .*$"))
+    (save-excursion
+      ;; initialize region on the current line
+      (beginning-of-line)
+      (setq beg (point))
+      (end-of-line)
+      (setq end (point))
+
+      (setq start beg)
+
+      ;; find beginning of block
+      (goto-char start)
+      (while (and (looking-at regexp)
+                  (not (bobp)))
+        (setq beg (point))
+        (forward-line -1))
+
+      ;; find end of block
+      (goto-char start)
+      (while (and (looking-at regexp)
+                  (not (eobp)))
+        (end-of-line)
+        (setq end (point))
+        (forward-line 1))
+      )
+
+    ;; call alignment function
+    (delimit-columns-region beg end)
+    ))
+(global-set-key (kbd "C-c t") 'delimit-columns-current)
+(global-set-key (kbd "C-c T") 'delimit-columns-region)
+
 
 ;; automatically indent on return, except in a few modes that have similar stuff by default
 (electric-indent-mode 1)
