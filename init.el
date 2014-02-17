@@ -525,10 +525,24 @@ If visual-line-mode is on, then also jump to beginning of real line."
 
 ;; indentation
 (setq-default tab-width 2)
+;; don't use tabs normally, except for a few special modes
 (setq-default indent-tabs-mode nil)
-;; automatically turn on indenting
+(defun use-tabs () (setq indent-tabs-mode t))
+(add-hook 'notes-mode-hook 'use-tabs)
+
+;; automatically indent on return, except in a few modes that have similar stuff by default
 (electric-indent-mode 1)
-;; also when yanked
+;; TODO should be a generic macro or something
+(defun no-electric-indent-yaml ()
+  (electric-indent-mode -1)
+  (define-key yaml-mode-map [(return)] 'newline-and-indent))
+(add-hook 'yaml-mode-hook 'no-electric-indent-yaml)
+(defun no-electric-indent-python ()
+  (electric-indent-mode -1)
+  (define-key python-mode-map [(return)] 'newline-and-indent))
+(add-hook 'python-mode-hook 'no-electric-indent-python)
+
+;; also indent when yanked
 (defun yank-and-indent ()
   "Yank and then indent the newly formed region according to mode."
   (interactive)
@@ -536,7 +550,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
   (call-interactively 'indent-region))
 (global-set-key "\C-y" 'yank-and-indent)
 
-;; undo hardwrapped markdown
+;; undo hardwrapped regions (mostly markdown)
 (defun unfill-region (begin end)
   "Remove all line breaks in a region but leave paragraphs,
   indented text (quotes, code) and lists intact."
@@ -701,18 +715,13 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode))
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
-(defun no-electric-indent-yaml ()
-  (electric-indent-mode -1)
-  (define-key yaml-mode-map [(return)] 'newline-and-indent))
-(add-hook 'yaml-mode-hook 'no-electric-indent-yaml)
 
 ;; user data
 (setq user-mail-address "mail@muflax.com")
 (setq user-full-name "muflax")
 
 ;; org-mode (use private version)
-;; #FIXME (tab) for org-cycle is disabled directly in the library; this should
-;; probably be some unset here.
+;; #FIXME (tab) for org-cycle is disabled directly in the library; this should probably be some unset here.
 (setq load-path (cons "~/.emacs.d/site-lisp/org-mode/lisp" load-path))
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
 ;; loaded so that we can diminish it later
@@ -769,11 +778,6 @@ If visual-line-mode is on, then also jump to beginning of real line."
 ;; new python mode
 (require 'python)
 (setq python-indent-offset 2)
-(defun no-electric-indent-python ()
-  ;; TODO should be a generic macro or something
-  (electric-indent-mode -1)
-  (define-key python-mode-map [(return)] 'newline-and-indent))
-(add-hook 'python-mode-hook 'no-electric-indent-python)
 
 ;; haskell mode
 (require 'haskell-mode)
