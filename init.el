@@ -237,23 +237,24 @@
 
 ;; key bindings
 (mouse-wheel-mode t)
-(global-set-key "\C-cg" 'goto-line)
-(global-set-key (kbd "C-c SPC") 'comment-dwim)
+(global-set-key (kbd "C-cg")      'goto-line)
+(global-set-key (kbd "C-c SPC")   'comment-dwim)
 (global-set-key (kbd "C-c C-SPC") 'comment-dwim)
-(global-set-key "\C-cc" 'comment-region)
-(global-set-key "\C-cu" 'uncomment-region)
-(global-set-key "\C-cn" 'next-error)
-(global-set-key "\C-cp" 'previous-error)
-(global-set-key "\M-t"  'find-tag)
-(global-set-key "\C-ci" 'indent-region)
-;; because we navigate via cursor keys, we can put something more useful on the
-;; default navigational keys
-(global-set-key "\C-p" 'undo-tree-undo)
-(global-set-key "\M-p" 'undo-tree-redo)
-(global-set-key "\C-n" 'other-window)
-(global-set-key "\M-n" (lambda () (interactive) (other-window -1)))
-(global-set-key "\C-f" 'forward-word)
-(global-set-key "\C-b" 'backward-word)
+(global-set-key (kbd "C-cc")      'comment-region)
+(global-set-key (kbd "C-cu")      'uncomment-region)
+(global-set-key (kbd "C-cn")      'next-error)
+(global-set-key (kbd "C-cp")      'previous-error)
+(global-set-key (kbd "M-t")       'find-tag)
+(global-set-key (kbd "C-ci")      'indent-region)
+;; because we navigate via cursor keys, we can put something more useful on the default navigational keys
+(global-set-key (kbd "C-p")    'undo-tree-undo)
+(global-set-key (kbd "M-p")    'undo-tree-redo)
+(global-set-key (kbd "C-n")    'other-window)
+(global-set-key (kbd "M-n")    (lambda () (interactive) (other-window -1)))
+(global-set-key (kbd "C-f")    'forward-word)
+(global-set-key (kbd "C-b")    'backward-word)
+(global-set-key (kbd "<home>") 'beginning-of-buffer)
+(global-set-key (kbd "<end>")  'end-of-buffer)
 
 ;; make C-Backspace "work" in terminal
 (global-set-key (kbd "S-<f7>") 'backward-kill-word)
