@@ -342,8 +342,8 @@
                    (,(kbd "C-M-.")            find-tag-regexp)
                    (,(kbd "C-M-/")            dabbrev-completion)
                    )
-      collect (if (eq (key-binding (car key)) (cadr key))
-                  (global-unset-key (car key))))
+      collect (if (eq (key-binding (first key)) (second key))
+                  (global-unset-key (first key))))
 
 
 ;; better search/replace
