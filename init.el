@@ -235,17 +235,20 @@
 (define-key special-event-map (kbd "<key-17>") 'ignore)
 (define-key special-event-map (kbd "<M-key-17>") 'ignore)
 
-;; key bindings
+;; generic key bindings
 (mouse-wheel-mode t)
-(global-set-key (kbd "C-cg")      'goto-line)
+(global-set-key (kbd "C-c g")     'goto-line)
 (global-set-key (kbd "C-c SPC")   'comment-dwim)
 (global-set-key (kbd "C-c C-SPC") 'comment-dwim)
-(global-set-key (kbd "C-cc")      'comment-region)
-(global-set-key (kbd "C-cu")      'uncomment-region)
-(global-set-key (kbd "C-cn")      'next-error)
-(global-set-key (kbd "C-cp")      'previous-error)
+(global-set-key (kbd "C-c c")     'comment-region)
+(global-set-key (kbd "C-c u")     'uncomment-region)
+(global-set-key (kbd "C-c n")     'next-error)
+(global-set-key (kbd "C-c p")     'previous-error)
 (global-set-key (kbd "M-t")       'find-tag)
-(global-set-key (kbd "C-ci")      'indent-region)
+(global-set-key (kbd "C-c i")     'indent-region)
+;; analogous to C-S-x
+(global-set-key (kbd "C-S-M-x")   'eval-buffer)
+
 ;; because we navigate via cursor keys, we can put something more useful on the default navigational keys
 (global-set-key (kbd "C-p")    'undo-tree-undo)
 (global-set-key (kbd "M-p")    'undo-tree-redo)
@@ -255,7 +258,6 @@
 (global-set-key (kbd "C-b")    'backward-word)
 (global-set-key (kbd "<home>") 'beginning-of-buffer)
 (global-set-key (kbd "<end>")  'end-of-buffer)
-
 ;; make C-Backspace "work" in terminal
 (global-set-key (kbd "S-<f7>") 'backward-kill-word)
 
@@ -1482,7 +1484,6 @@ You have:
   (let ((p (point)))
     (dotimes (i 10)
       (when (= p (point)) ad-do-it))))
-
 
 ;; clean up modeline and hide standard minor modes
 ;; should be last so all modes are already loaded
