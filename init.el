@@ -268,7 +268,7 @@
       (concat "abcdefghijklmnopqrstuvwxyzßł"
               "ABCDEFGHIJKLMNOPQRSTUVWXYZẞŁ"
               "1234567890"
-              "!@#$%^&*()-=[]{};'\\:\"|,./<>?`~"
+              "!@#$%^&*()-=[]{};'\\:\"|,./<>?`~_+"
               ))
 
 ;; unset unwanted default keys
