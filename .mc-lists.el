@@ -23,6 +23,7 @@
         indent-new-comment-line
         indent-region
         kill-and-join-forward
+        literal-delete-char
         lua-electric-match
         move-line-down
         move-line-up
