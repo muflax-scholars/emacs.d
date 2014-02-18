@@ -26,6 +26,7 @@
         literal-delete-backward-char
         literal-delete-char
         lua-electric-match
+        mouse-yank-primary
         move-line-down
         move-line-up
         notes-dedent-or-delete
