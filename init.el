@@ -343,7 +343,9 @@ If visual-line-mode is on, then also jump to beginning of real line."
 
 ;; save minibuffer history
 (savehist-mode 1)
-(setq history-length 1000)
+(setq history-length         1000)
+(setq search-ring-max        1000)
+(setq regexp-search-ring-max 1000)
 (setq savehist-file "~/.emacs.d/cache/history")
 (setq savehist-additional-variables '(search-ring
                                       regexp-search-ring
@@ -479,10 +481,30 @@ If visual-line-mode is on, then also jump to beginning of real line."
   (interactive)
   (save-buffer))
 
-;; use regexp search by default
-(global-set-key "\C-s" 'isearch-forward-regexp)
-(global-set-key "\C-r" 'isearch-backward-regexp)
-;; make backspace sane
+;; use regexp search and selected region (if any) by default
+(defun region-as-string ()
+  (buffer-substring (region-beginning)
+                    (region-end)))
+
+(defun isearch-forward-use-region ()
+  (interactive)
+  (when (region-active-p)
+    (add-to-history 'regexp-search-ring (region-as-string))
+    (deactivate-mark))
+  (call-interactively 'isearch-forward-regexp))
+
+(defun isearch-backward-use-region ()
+  (interactive)
+  (when (region-active-p)
+    (add-to-history 'regexp-search-ring (region-as-string))
+    (deactivate-mark))
+  (call-interactively 'isearch-backward-regexp))
+
+(global-set-key (kbd "C-s") 'isearch-forward-use-region)
+(global-set-key (kbd "C-r") 'isearch-backward-use-region)
+(global-set-key (kbd "C-S-s") 'isearch-forward-regexp)
+(global-set-key (kbd "C-S-r") 'isearch-backward-regexp)
+;; make backspace more intuitive
 (define-key isearch-mode-map (kbd "<backspace>") 'isearch-del-char)
 
 ;; normalize search string so unicode diacritics work normally
