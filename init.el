@@ -1076,15 +1076,15 @@ See the variable `align-rules-list' for more details.")
 (setq tramp-persistency-file-name "~/.emacs.d/cache/tramp")
 
 ;; unset unwanted keys
-(when (eq window-system 'x)
-  (if (eq (key-binding "\C-x\C-z") 'suspend-frame)
-      (global-unset-key "\C-x\C-z"))
-  (if (eq (key-binding "\C-z") 'suspend-frame)
-      (global-unset-key "\C-z")))
-(if (eq (key-binding [(insert)]) 'overwrite-mode)
-    (global-unset-key [(insert)]))
-(if (eq (key-binding [(insertchar)]) 'overwrite-mode)
-    (global-unset-key [(insertchar)]))
+(setq unwanted-keys `((,(kbd "C-x C-z") . 'suspend-frame)
+                      (,(kbd "C-z")     . 'suspend-frame)
+                      ([(insert)]       . 'overwrite-mode)
+                      ([(insertchar)]   . 'overwrite-mode)
+                      ))
+
+(loop for key in unwanted-keys
+      collect (if (eq (key-binding (car key)) (cdr key))
+                  (global-unset-key (car key))))
 
 ;; shell stuff
 (setq sh-basic-offset tab-width)
