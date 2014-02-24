@@ -1559,6 +1559,14 @@ You have:
     (dotimes (i 10)
       (when (= p (point)) ad-do-it))))
 
+;; automatically create directories if necessary
+(defadvice find-file (before make-directory-maybe (filename &optional wildcards) activate)
+  "Create parent directory if not exists while visiting file."
+  (unless (file-exists-p filename)
+    (let ((dir (file-name-directory filename)))
+      (unless (file-exists-p dir)
+        (make-directory dir)))))
+
 ;; clean up modeline and hide standard minor modes
 ;; should be last so all modes are already loaded
 (require 'diminish)
