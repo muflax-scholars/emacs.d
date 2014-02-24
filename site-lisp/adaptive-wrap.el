@@ -29,6 +29,7 @@
 ;;; Code:
 
 (require 'easymenu)
+(require 's)
 
 (defcustom adaptive-wrap-extra-indent 0
   "Number of extra spaces to indent in `adaptive-wrap-prefix-mode'.
@@ -67,6 +68,13 @@ extra indent = 2
          (fill-char (if (< 0 fcp-len)
                         (string-to-char (substring fcp -1))
                       ?\ )))
+
+    ;; Tabs are wonky because visual-lines can't work around Emacs' limitation that tabs have to snap to physical columns, so we replace them with spaces instead.
+    (if (string-match "^[\t]+$" fcp)
+        (setq fcp (replace-regexp-in-string "[\t]"
+                                            (s-repeat tab-width " ")
+                                            fcp)))
+
     (cond
      ((= 0 adaptive-wrap-extra-indent)
       fcp)
