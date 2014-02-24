@@ -820,7 +820,7 @@ With two \\[universal-argument] prefixes (i.e., when ARG is 16), increase the in
 
   ;; FIXME this isn't a good fix, but works for now...
   (set (make-local-variable 'adaptive-fill-regexp)
-       "[ \t]*[*+-] \\|[ \t]*[0-9]+\\. \\|[ \t]*[$?!<>=*+#%@|] ")
+       "[ \t]*[*+-] \\|[ \t]*[0-9]+\\. \\|[ \t]*[$?!<>=*+#%@|] \\|[\t]+")
 
   ;; imenu support
   (set (make-local-variable 'imenu-generic-expression)
