@@ -216,7 +216,7 @@
 ;; don't hard-wrap text, but use nice virtual wrapping
 (setq-default fill-column 80)
 (global-visual-line-mode 1)
-(require 'adaptive-wrap-prefix)
+(require 'adaptive-wrap)
 (global-adaptive-wrap-prefix-mode 1)
 (setq visual-line-fringe-indicators '(nil right-curly-arrow))
 
