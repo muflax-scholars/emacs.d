@@ -70,10 +70,9 @@ extra indent = 2
                       ?\ )))
 
     ;; Tabs are wonky because visual-lines can't work around Emacs' limitation that tabs have to snap to physical columns, so we replace them with spaces instead.
-    (if (string-match "^[\t]+$" fcp)
-        (setq fcp (replace-regexp-in-string "[\t]"
-                                            (s-repeat tab-width " ")
-                                            fcp)))
+    (setq fcp (replace-regexp-in-string "[\t]"
+                                        (s-repeat tab-width " ")
+                                        fcp))
 
     (cond
      ((= 0 adaptive-wrap-extra-indent)
