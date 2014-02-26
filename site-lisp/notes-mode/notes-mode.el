@@ -752,9 +752,9 @@ When BACKSPACE is pressed, if there is only whitespace before the current point,
   "Insert a new list item.
 If the point is inside unordered list, insert a bullet mark.  If the point is inside ordered list, insert the next number followed by a period.  Use the previous list item to determine the amount of whitespace to place before and after list markers.
 
-With a \\[universal-argument] prefix (i.e., when ARG is 4), decrease the indentation by one level.
+With a \\[universal-argument] prefix (i.e., when ARG is 4), increase the indentation by one level.
 
-With two \\[universal-argument] prefixes (i.e., when ARG is 16), increase the indentation by one level."
+With two \\[universal-argument] prefixes (i.e., when ARG is 16), decrease the indentation by one level."
   (interactive "p")
   (let (bounds item-indent marker indent new-indent end)
     (save-match-data
@@ -764,15 +764,15 @@ With two \\[universal-argument] prefixes (i.e., when ARG is 16), increase the in
           (progn
             (unless (notes-cur-line-blank-p)
               (insert "\n"))
-            (insert "* "))
+            (insert "- "))
         ;; compute indentation for a new list item
-        (setq item-indent (nth 2 bounds))
+        (setq item-indent (/ (nth 2 bounds) 2))
         (setq marker (concat (match-string 2) (match-string 3)))
         (setq indent (cond
-                      ((= arg 4) (max (- item-indent 2) 0))
-                      ((= arg 16) (+ item-indent 2))
+                      ((= arg 4) (+ item-indent 1))
+                      ((= arg 16) (max (- item-indent 1) 0))
                       (t item-indent)))
-        (setq new-indent (make-string indent 32))
+        (setq new-indent (make-string indent 9))
         (goto-char (nth 1 bounds))
         (newline)
         (cond
@@ -790,7 +790,6 @@ With two \\[universal-argument] prefixes (i.e., when ARG is 16), increase the in
          ;; unordered list
          ((string-match "[-]" marker)
           (insert (concat new-indent marker))))))))
-
 
 ;; Mode Definition
 
