@@ -30,6 +30,7 @@
         move-line-down
         move-line-up
         notes-dedent-or-delete
+        notes-indent-line
         org-force-self-insert
         org-indent-line
         org-return-indent
