@@ -1301,7 +1301,6 @@ You have:
 ;; highlight some whitespace
 (require 'whitespace)
 (setq whitespace-style (quote (face tabs tab-mark)))
-(global-whitespace-mode)
 
 ;; use y/n instead of yes/no
 (defalias 'yes-or-no-p 'y-or-n-p)
