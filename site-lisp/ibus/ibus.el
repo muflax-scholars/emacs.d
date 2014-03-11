@@ -516,7 +516,7 @@ non-nil value means start the daemon unconditionally."
 ;; System settings
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defvar ibus-debug nil)
+(defvar ibus-debug t)
 (defvar ibus-log-buffer "*ibus-mode log*")
 
 (defvar ibus-agent-buffer-name " *IBus*")

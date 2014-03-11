@@ -1179,6 +1179,15 @@ See the variable `align-rules-list' for more details.")
 
 ;; input methods
 (load "custom-input-methods.el" nil t t)
+(global-set-key (kbd "C-c 1") (lambda () (interactive)
+                                (set-input-method nil)))
+(global-set-key (kbd "C-c 2") (lambda () (interactive)
+                                (set-input-method "muflax-cyrillic")))
+(global-set-key (kbd "C-c 3") (lambda () (interactive)
+                                (set-input-method "muflax-turkish")))
+(global-set-key (kbd "C-c 4") (lambda () (interactive)
+                                (set-input-method "muflax-greek")))
+(global-set-key (kbd "C-c C-m") 'toggle-input-method)
 
 ;; ibus (works exactly like normal ibus, but has better integration)
 (require 'ibus)
