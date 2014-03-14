@@ -740,9 +740,8 @@ When BACKSPACE is pressed, if there is only whitespace before the current point,
     (define-key map "\C-i" 'notes-indent-line)
     (define-key map "\M-i" 'notes-shifttab)
     ;; Lists
-    ;; (define-key map "\C-c\C-cn" 'notes-cleanup-list-numbers)
     (define-key map (kbd "S-<return>") 'notes-insert-list-item)
-    ;; (define-key map (kbd "C-<return>") 'notes-insert-list-item)
+    (define-key map (kbd "C-<return>") 'notes-insert-list-item)
     map)
   "Keymap for Markdown major mode.")
 
