@@ -1002,8 +1002,8 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (add-to-list 'auto-mode-alist '("\\.erb$"     . rhtml-mode))
 ;; pry
 (require 'pry)
-(define-key enh-ruby-mode-map (kbd "<S-f9") 'pry-intercept)
-(define-key enh-ruby-mode-map (kbd "<f9")   'pry-intercept-rerun)
+(define-key enh-ruby-mode-map (kbd "<S-f9>") 'pry-intercept)
+(define-key enh-ruby-mode-map (kbd "<f9>")   'pry-intercept-rerun)
 ;; auto-completion
 (add-hook 'robe-mode-hook 'robe-ac-setup)
 ;; documentation
