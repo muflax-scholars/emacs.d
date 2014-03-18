@@ -5,7 +5,6 @@
       (progn
         (setq load-path (cons my-lisp-dir load-path))
         (normal-top-level-add-subdirs-to-load-path))))
-(setq load-path (cons (expand-file-name "~/.emacs.d") load-path))
 
 ;; elpa
 (require 'package)
