@@ -60,4 +60,5 @@
         ibus-handle-event
         repeat
         smex
+        use-big-font
         ))
