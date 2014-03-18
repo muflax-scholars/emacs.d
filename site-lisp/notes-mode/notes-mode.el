@@ -776,15 +776,12 @@ With two \\[universal-argument] prefixes (i.e., when ARG is 16), decrease the in
           (insert (concat new-indent marker))))))))
 
 ;; Useful functions
-(defun notes-find-annotations (style &optional arg)
+(defun notes-find-annotations (style)
   "Find all annotation lines that match a pattern."
-  (interactive "Mstyle: \np")
+  (interactive "Mstyle: ")
 
   (let ((pattern (thing-at-point 'word)))
-    (if (or (= arg 4)
-            (eq pattern nil))
-        (setq pattern (read-from-minibuffer "Pattern: " pattern)))
-    (setq pattern (or pattern ""))
+    (setq pattern (read-from-minibuffer "Pattern: " pattern))
     (occur (concat
             "^[ \t]*" (regexp-quote style)
             ".*" (ucs-normalize-NFKC-string pattern) ".*$")))
@@ -803,12 +800,12 @@ With two \\[universal-argument] prefixes (i.e., when ARG is 16), decrease the in
     (define-key map (kbd "S-<return>") 'notes-insert-list-item)
     (define-key map (kbd "C-<return>") 'notes-insert-list-item)
     ;; Misc
-    (define-key map (kbd "C-v +") (lambda (&optional arg) (interactive "p") (notes-find-annotations "+" arg)))
-    (define-key map (kbd "C-v ?") (lambda (&optional arg) (interactive "p") (notes-find-annotations "?" arg)))
-    (define-key map (kbd "C-v !") (lambda (&optional arg) (interactive "p") (notes-find-annotations "!" arg)))
-    (define-key map (kbd "C-v #") (lambda (&optional arg) (interactive "p") (notes-find-annotations "#" arg)))
-    (define-key map (kbd "C-v >") (lambda (&optional arg) (interactive "p") (notes-find-annotations ">" arg)))
-    (define-key map (kbd "C-v $") (lambda (&optional arg) (interactive "p") (notes-find-annotations "$" arg)))
+    (define-key map (kbd "C-v +") (lambda () (interactive) (notes-find-annotations "+")))
+    (define-key map (kbd "C-v ?") (lambda () (interactive) (notes-find-annotations "?")))
+    (define-key map (kbd "C-v !") (lambda () (interactive) (notes-find-annotations "!")))
+    (define-key map (kbd "C-v #") (lambda () (interactive) (notes-find-annotations "#")))
+    (define-key map (kbd "C-v >") (lambda () (interactive) (notes-find-annotations ">")))
+    (define-key map (kbd "C-v $") (lambda () (interactive) (notes-find-annotations "$")))
     (define-key map (kbd "C-c C-v") 'notes-find-annotations)
     map)
   "Keymap for Markdown major mode.")
