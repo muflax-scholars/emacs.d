@@ -251,10 +251,12 @@
 (global-set-key (kbd "C-S-M-x")   'eval-buffer)
 
 ;; because we navigate via cursor keys, we can put something more useful on the default navigational keys
-(global-set-key (kbd "C-p")    'undo-tree-undo)
-(global-set-key (kbd "M-p")    'undo-tree-redo)
+(global-set-key (kbd "C-z")    'undo-tree-undo)
+(global-set-key (kbd "M-z")    'undo-tree-redo)
 (global-set-key (kbd "C-n")    'other-window)
-(global-set-key (kbd "M-n")    (lambda () (interactive) (other-window -1)))
+(global-set-key (kbd "C-p")    (lambda () (interactive) (other-window -1)))
+(global-set-key (kbd "M-n")    'undo-tree-undo)
+(global-set-key (kbd "M-p")    'undo-tree-redo)
 (global-set-key (kbd "C-f")    'forward-word)
 (global-set-key (kbd "C-b")    'backward-word)
 (global-set-key (kbd "<home>") 'beginning-of-buffer)
