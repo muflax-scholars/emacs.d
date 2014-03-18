@@ -1576,6 +1576,10 @@ You have:
       (unless (file-exists-p dir)
         (make-directory dir)))))
 
+;; avoid splitting horizontally
+(setq split-height-threshold nil)
+(setq split-width-threshold 40)
+
 ;; clean up modeline and hide standard minor modes
 ;; should be last so all modes are already loaded
 (require 'diminish)
