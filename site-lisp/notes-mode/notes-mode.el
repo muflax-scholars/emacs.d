@@ -730,21 +730,6 @@ When BACKSPACE is pressed, if there is only whitespace before the current point,
           (indent-line-to result))
       (backward-delete-char-untabify arg))))
 
-;; Keymap
-
-(defvar notes-mode-map
-  (let ((map (make-keymap)))
-    ;; Indentation
-    (define-key map (kbd "<backspace>") 'notes-dedent-or-delete)
-    ;; Visibility cycling
-    (define-key map "\C-i" 'notes-indent-line)
-    (define-key map "\M-i" 'notes-shifttab)
-    ;; Lists
-    (define-key map (kbd "S-<return>") 'notes-insert-list-item)
-    (define-key map (kbd "C-<return>") 'notes-insert-list-item)
-    map)
-  "Keymap for Markdown major mode.")
-
 ;; Lists
 
 (defun notes-insert-list-item (&optional arg)
@@ -789,6 +774,43 @@ With two \\[universal-argument] prefixes (i.e., when ARG is 16), decrease the in
          ;; unordered list
          ((string-match "[-]" marker)
           (insert (concat new-indent marker))))))))
+
+;; Useful functions
+(defun notes-find-annotations (style &optional arg)
+  "Find all annotation lines that match a pattern."
+  (interactive "Mstyle: \np")
+
+  (let ((pattern (thing-at-point 'word)))
+    (if (or (= arg 4)
+            (eq pattern nil))
+        (setq pattern (read-from-minibuffer "Pattern: " pattern)))
+    (setq pattern (or pattern ""))
+    (occur (concat
+            "^[ \t]*" (regexp-quote style)
+            ".*" (ucs-normalize-NFKC-string pattern) ".*$")))
+  )
+
+;; Keymap
+
+(defvar notes-mode-map
+  (let ((map (make-keymap)))
+    ;; Indentation
+    (define-key map (kbd "<backspace>") 'notes-dedent-or-delete)
+    ;; Visibility cycling
+    (define-key map "\C-i" 'notes-indent-line)
+    (define-key map "\M-i" 'notes-shifttab)
+    ;; Lists
+    (define-key map (kbd "S-<return>") 'notes-insert-list-item)
+    (define-key map (kbd "C-<return>") 'notes-insert-list-item)
+    ;; Misc
+    (define-key map (kbd "C-v +") (lambda (&optional arg) (interactive "p") (notes-find-annotations "+" arg)))
+    (define-key map (kbd "C-v ?") (lambda (&optional arg) (interactive "p") (notes-find-annotations "?" arg)))
+    (define-key map (kbd "C-v !") (lambda (&optional arg) (interactive "p") (notes-find-annotations "!" arg)))
+    (define-key map (kbd "C-v #") (lambda (&optional arg) (interactive "p") (notes-find-annotations "#" arg)))
+    (define-key map (kbd "C-v >") (lambda (&optional arg) (interactive "p") (notes-find-annotations ">" arg)))
+    (define-key map (kbd "C-v $") (lambda (&optional arg) (interactive "p") (notes-find-annotations "$" arg)))
+    map)
+  "Keymap for Markdown major mode.")
 
 ;; Mode Definition
 
