@@ -1330,12 +1330,13 @@ You have:
 ;; rotate / toggle text
 (require 'rotate-text)
 (global-set-key (kbd "C-c C-t") 'rotate-text)
-(add-to-list 'rotate-text-words '("true" "false"))
-(add-to-list 'rotate-text-words '("yes" "no"))
-(add-to-list 'rotate-text-words '("t" "nil"))
-(add-to-list 'rotate-text-words '("if" "unless"))
-(add-to-list 'rotate-text-words '("map" "each"))
-(add-to-list 'rotate-text-words '("select" "reject"))
+(add-to-list 'rotate-text-words   '("true" "false"))
+(add-to-list 'rotate-text-words   '("yes" "no"))
+(add-to-list 'rotate-text-words   '("t" "nil"))
+(add-to-list 'rotate-text-words   '("if" "unless"))
+(add-to-list 'rotate-text-words   '("map" "each"))
+(add-to-list 'rotate-text-words   '("select" "reject"))
+(add-to-list 'rotate-text-symbols '("?" "!"))
 
 ;; handle camelcase better
 (global-subword-mode 1)
