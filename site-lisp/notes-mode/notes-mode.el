@@ -809,6 +809,7 @@ With two \\[universal-argument] prefixes (i.e., when ARG is 16), decrease the in
     (define-key map (kbd "C-v #") (lambda (&optional arg) (interactive "p") (notes-find-annotations "#" arg)))
     (define-key map (kbd "C-v >") (lambda (&optional arg) (interactive "p") (notes-find-annotations ">" arg)))
     (define-key map (kbd "C-v $") (lambda (&optional arg) (interactive "p") (notes-find-annotations "$" arg)))
+    (define-key map (kbd "C-c C-v") 'notes-find-annotations)
     map)
   "Keymap for Markdown major mode.")
 
