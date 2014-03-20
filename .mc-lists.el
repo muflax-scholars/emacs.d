@@ -18,6 +18,7 @@
         hungry-delete-forward
         ibus-exec-callback
         ido-switch-buffer
+        iedit-mode
         increment-integer-at-point
         indent-for-tab-command
         indent-new-comment-line
