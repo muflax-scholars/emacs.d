@@ -272,7 +272,7 @@
               "!@#$%^&*()-=[]{};'\\:\"|,./<>?`~_+"
               ))
 
-;; unset unwanted default keys
+;; unset unwanted default keys, so they show up in free-keys
 (loop for key in `(
                    (,(kbd "C-x C-z")          suspend-frame)
                    (,(kbd "C-z")              suspend-frame)
@@ -346,6 +346,11 @@
       collect (if (eq (key-binding (first key)) (second key))
                   (global-unset-key (first key))))
 
+;; fuck you, you key-stealing whore
+(loop for stupid-map in (list
+                         enh-ruby-mode-map
+                         )
+      collect (define-key stupid-map (kbd "C-c") nil))
 
 ;; better search/replace
 (require 'visual-regexp)
