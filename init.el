@@ -1586,6 +1586,10 @@ You have:
 (setq split-height-threshold nil)
 (setq split-width-threshold 90)
 
+;; don't warn about impossible undo
+(require 'warnings)
+(setq warning-suppress-types (append '(undo discard-info) warning-suppress-types))
+
 ;; clean up modeline and hide standard minor modes
 ;; should be last so all modes are already loaded
 (require 'diminish)
