@@ -347,10 +347,8 @@
                   (global-unset-key (first key))))
 
 ;; fuck you, you key-stealing whore
-(loop for stupid-map in (list
-                         enh-ruby-mode-map
-                         )
-      collect (define-key stupid-map (kbd "C-c") nil))
+(defun unbreak-stupid-map (stupid-map)
+  (define-key stupid-map (kbd "C-c") nil))
 
 ;; better search/replace
 (require 'visual-regexp)
@@ -981,6 +979,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
   '((t (:background "pink")))
   "Face used for marking error lines."
   :group 'enh-ruby)
+(unbreak-stupid-map enh-ruby-mode-map)
 (define-key enh-ruby-mode-map (kbd "C-c C-n") 'enh-ruby-find-error)
 (define-key enh-ruby-mode-map (kbd "C-c C-p") 'enh-ruby-beginning-of-defun)
 ;; misc stuff
