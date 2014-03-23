@@ -12,6 +12,7 @@
         electric-graphviz-dot-semi
         end-of-visual-line
         enh-ruby-electric-brace
+        enh-ruby-find-error
         eval-defun
         handle-switch-frame
         hungry-delete-backward
