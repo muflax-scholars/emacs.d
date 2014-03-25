@@ -871,7 +871,6 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (add-to-list 'auto-mode-alist '("\\.mkd$"      . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.md$"       . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\bREADME$"   . markdown-mode))
 
 ;; notes-mode
 (require 'notes-mode)
