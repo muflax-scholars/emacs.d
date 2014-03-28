@@ -40,11 +40,6 @@
 (defmacro go--xemacs-p ()
   `(featurep 'xemacs))
 
-(defalias 'go--kill-whole-line
-  (if (fboundp 'kill-whole-line)
-      #'kill-whole-line
-    #'kill-entire-line))
-
 ;; Delete the current line without putting it in the kill-ring.
 (defun go--delete-whole-line (&optional arg)
   ;; Emacs uses both kill-region and kill-new, Xemacs only uses
@@ -52,10 +47,9 @@
   ;; not modify the kill ring. This solution does depend on the
   ;; implementation of kill-line, but it's the only viable solution
   ;; that does not require to write kill-line from scratch.
-  (flet ((kill-region (beg end)
-                      (delete-region beg end))
-         (kill-new (s) ()))
-    (go--kill-whole-line arg)))
+  (kill-whole-line arg)
+  (setq kill-ring (cdr kill-ring))
+  (setq this-command nil))
 
 ;; declare-function is an empty macro that only byte-compile cares
 ;; about. Wrap in always false if to satisfy Emacsen without that
@@ -86,7 +80,7 @@
   ;; XEmacs does not support \_<, GNU Emacs does. In GNU Emacs we make
   ;; extensive use of \_< to support unicode in identifiers. Until we
   ;; come up with a better solution for XEmacs, this solution will
-  ;; break fontification in XEmacs for identifiers such as "typeµ".
+  ;; break fontification in XEmacs for identifiers such as "typeμ".
   ;; XEmacs will consider "type" a keyword, GNU Emacs won't.
 
   (if (go--xemacs-p)

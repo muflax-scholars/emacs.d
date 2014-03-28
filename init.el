@@ -376,8 +376,8 @@
 (global-set-key "\M-k" 'copy-line)
 
 ;; append to last kill
-(global-set-key (kbd "C-c C-w") (lambda () (interactive) (append-next-kill) (whole-line-or-region-kill-region)))
-(global-set-key (kbd "C-c w")   (lambda () (interactive) (append-next-kill) (whole-line-or-region-kill-ring-save)))
+;; (global-set-key (kbd "C-c C-w") (lambda () (interactive) (append-next-kill) (whole-line-or-region-kill-region)))
+;; (global-set-key (kbd "C-c w")   (lambda () (interactive) (append-next-kill) (whole-line-or-region-kill-ring-save)))
 
 ;; move to beginning of text on line
 (defun smart-beginning-of-line ()
@@ -1152,8 +1152,8 @@ See the variable `align-rules-list' for more details.")
         (copy-region-as-kill whole-line-or-region-copy-region-as-kill nil)
         (kill-region whole-line-or-region-kill-region nil)
         (kill-ring-save whole-line-or-region-kill-ring-save nil)
-        (yank whole-line-or-region-yank nil)
-        ))
+         (yank whole-line-or-region-yank nil)
+         ))
 (whole-line-or-region-mode 1)
 
 ;; tramp (remote files)
