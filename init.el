@@ -376,8 +376,8 @@
 (global-set-key "\M-k" 'copy-line)
 
 ;; append to last kill
-(global-set-key (kbd "C-c C-w") (lambda () (interactive) (append-next-kill) (phi-rectangle-kill-region)))
-(global-set-key (kbd "C-c w")   (lambda () (interactive) (append-next-kill) (phi-rectangle-kill-ring-save)))
+(global-set-key (kbd "C-c C-w") (lambda () (interactive) (append-next-kill) (whole-line-or-region-kill-region)))
+(global-set-key (kbd "C-c w")   (lambda () (interactive) (append-next-kill) (whole-line-or-region-kill-ring-save)))
 
 ;; move to beginning of text on line
 (defun smart-beginning-of-line ()
@@ -784,6 +784,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (define-auto-insert "\\.rb$"  "ruby")
 (define-auto-insert "\\.c$"   "c")
 (define-auto-insert "\\.cpp$" "cpp")
+(define-auto-insert "\\.go$"  "go")
 
 ;; spell checker
 (require 'wcheck-mode)
@@ -1154,10 +1155,6 @@ See the variable `align-rules-list' for more details.")
         (yank whole-line-or-region-yank nil)
         ))
 (whole-line-or-region-mode 1)
-
-;; better rectangle functionality
-(require 'phi-rectangle)
-(phi-rectangle-mode)
 
 ;; tramp (remote files)
 (setq tramp-default-method "ssh")
