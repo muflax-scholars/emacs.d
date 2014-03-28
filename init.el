@@ -1588,6 +1588,14 @@ You have:
 (require 'warnings)
 (setq warning-suppress-types (append '(undo discard-info) warning-suppress-types))
 
+;; go-lang
+(require 'go-mode)
+(require 'golint)
+(require 'go-autocomplete)
+(add-hook 'before-save-hook #'gofmt-before-save)
+(setq gofmt-command "goimports")
+(unbreak-stupid-map go-mode-map)
+
 ;; clean up modeline and hide standard minor modes
 ;; should be last so all modes are already loaded
 (require 'diminish)
