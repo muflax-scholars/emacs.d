@@ -1587,6 +1587,8 @@ You have:
 ;; go-lang
 (require 'go-mode)
 (require 'go-autocomplete)
+(require 'go-eldoc)
+(add-hook 'go-mode-hook 'go-eldoc-setup)
 (add-hook 'before-save-hook #'gofmt-before-save)
 (setq gofmt-command "goimports")
 (unbreak-stupid-map go-mode-map)
