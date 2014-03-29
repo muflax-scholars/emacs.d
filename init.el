@@ -1584,6 +1584,10 @@ You have:
 (require 'warnings)
 (setq warning-suppress-types (append '(undo discard-info) warning-suppress-types))
 
+;; eldoc, ie function signatures in the minibuffer
+(require 'eldoc)
+(add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
+
 ;; go-lang
 (require 'go-mode)
 (require 'go-autocomplete)
@@ -1600,6 +1604,7 @@ You have:
 (diminish 'auto-complete-mode)
 (diminish 'auto-fill-function "AF")
 (diminish 'auto-revert-mode)
+(diminish 'eldoc-mode)
 (diminish 'fic-mode)
 (diminish 'global-visual-line-mode)
 (diminish 'global-whitespace-mode " »")
