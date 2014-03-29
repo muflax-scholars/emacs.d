@@ -1596,6 +1596,8 @@ You have:
 (add-hook 'before-save-hook #'gofmt-before-save)
 (setq gofmt-command "goimports")
 (unbreak-stupid-map go-mode-map)
+(define-key go-mode-map (kbd "M-t") 'godef-jump)
+(define-key go-mode-map (kbd "M-T") 'godef-jump-other-window)
 
 ;; clean up modeline and hide standard minor modes
 ;; should be last so all modes are already loaded
