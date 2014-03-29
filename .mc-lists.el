@@ -14,6 +14,7 @@
         enh-ruby-electric-brace
         enh-ruby-find-error
         eval-defun
+        go-mode-insert-and-indent
         handle-switch-frame
         hungry-delete-backward
         hungry-delete-forward
