@@ -1586,7 +1586,6 @@ You have:
 
 ;; go-lang
 (require 'go-mode)
-(require 'golint)
 (require 'go-autocomplete)
 (add-hook 'before-save-hook #'gofmt-before-save)
 (setq gofmt-command "goimports")
