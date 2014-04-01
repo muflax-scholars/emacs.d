@@ -53,6 +53,8 @@
         sp-end-of-sexp
         sp-remove-active-pair-overlay
         whole-line-or-region-comment-dwim-2
+        whole-line-or-region-kill-region
+        yank-and-indent
         yas-expand
         ))
 
