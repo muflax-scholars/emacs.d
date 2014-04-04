@@ -13,6 +13,10 @@
 (add-to-list 'package-archives '("melpa"     . "http://melpa.milkbox.net/packages/"))
 (package-initialize)
 
+;; init setup
+(require 'setup)
+(setup-initialize)
+
 ;; selective hooks for either terminals or X windows
 (defvar after-make-console-frame-hooks '()
   "Hooks to run after creating a new TTY frame")
@@ -754,7 +758,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
 
 ;; more useful kill-ring
 (setq kill-ring-max 2000)
-(autload 'kill-ring-search)
+(require 'kill-ring-search)
 (global-set-key "\M-\C-y" 'kill-ring-search)
 (defun yank-pop-reverse ()
   (interactive)
@@ -1602,7 +1606,6 @@ You have:
 (diminish 'haskell-indentation-mode)
 (diminish 'highlight-parentheses-mode)
 (diminish 'hs-minor-mode)
-(diminish 'ibus-mode " I")
 (diminish 'ruby-block-mode)
 (diminish 'smartparens-mode)
 (diminish 'undo-tree-mode)
