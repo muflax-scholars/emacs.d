@@ -151,15 +151,16 @@
   '(progn
      (define-key mc/keymap (kbd "<return>") nil)
      (define-key mc/keymap (kbd "C-j") 'multiple-cursors-mode)))
-;; support for bookmarks
-(require 'breadcrumb)
-(global-set-key (kbd "C-c m") 'bc-set)
-(global-set-key (kbd "M-SPC") 'bc-previous)
-(global-set-key (kbd "M-S-SPC") 'bc-next)
-(setq bc-bookmark-limit 1000)
-(setq bc-bookmark-file (expand-file-name "~/.emacs.d/cache/breadcrumb"))
-;; normal bookmarks
-(setq bookmark-default-file "~/.emacs.d/cache/bookmarks")
+
+;; support for bookmarks (broken; resurrect this at some point...)
+;; (require 'breadcrumb)
+;; (global-set-key (kbd "C-c m") 'bc-set)
+;; (global-set-key (kbd "M-SPC") 'bc-previous)
+;; (global-set-key (kbd "M-S-SPC") 'bc-next)
+;; (setq bc-bookmark-limit 1000)
+;; (setq bc-bookmark-file (expand-file-name "~/.emacs.d/cache/breadcrumb"))
+;; ;; normal bookmarks
+;; (setq bookmark-default-file "~/.emacs.d/cache/bookmarks")
 
 ;; show #colors in matching color
 (require 'rainbow-mode)
@@ -442,10 +443,6 @@ If visual-line-mode is on, then also jump to beginning of real line."
                                       regexp-search-ring
                                       kill-ring
                                       compile-command))
-
-;; number windows, i.e. M-1 .. M-0 to jump to window
-(require 'window-numbering)
-(window-numbering-mode 1)
 
 ;; snippets
 (setq yas-snippet-dirs "~/.emacs.d/snippets")
@@ -757,7 +754,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
 
 ;; more useful kill-ring
 (setq kill-ring-max 2000)
-(require 'kill-ring-search)
+(autload 'kill-ring-search)
 (global-set-key "\M-\C-y" 'kill-ring-search)
 (defun yank-pop-reverse ()
   (interactive)
@@ -984,7 +981,6 @@ If visual-line-mode is on, then also jump to beginning of real line."
 ;; misc stuff
 (require 'yari)        ; ri documentation tool
 (require 'ruby-block)  ; show what block an end belongs to
-(require 'rinari)      ; rails
 (ruby-block-mode t)
 (setq ruby-block-highlight-toggle t)
 ;; better indenting
@@ -1010,10 +1006,6 @@ If visual-line-mode is on, then also jump to beginning of real line."
 ;; javascript
 (require 'js2-mode)
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-
-;; highlight current symbol at point in buffer (like Eclipse)
-(require 'auto-highlight-symbol)
-(global-auto-highlight-symbol-mode 0) ; don't activate by default
 
 ;; edit symbol in multiple places simultaneously
 (require 'iedit)
@@ -1184,10 +1176,11 @@ See the variable `align-rules-list' for more details.")
 (global-set-key (kbd "C-c C-m") 'toggle-input-method)
 
 ;; ibus (works exactly like normal ibus, but has better integration)
-(require 'ibus)
-(add-hook 'after-init-hook 'ibus-mode-on)
-(global-set-key (kbd "<kanji>")   'ibus-toggle)
-(global-set-key (kbd "S-<kanji>") 'ibus-next-input-method)
+;; TODO replace this with direct mozc binding
+;; (require 'ibus)
+;; (add-hook 'after-init-hook 'ibus-mode-on)
+;; (global-set-key (kbd "<kanji>")   'ibus-toggle)
+;; (global-set-key (kbd "S-<kanji>") 'ibus-next-input-method)
 
 ;; analog to delete-file
 (defun delete-current-file ()
@@ -1337,10 +1330,10 @@ You have:
 
 ;; mark stuff like FIXME
 (require 'fic-mode)
-(add-hook 'prog-mode-hook 'fic-mode)
+(add-hook 'prog-mode-hook     'fic-mode)
 ;; misbehaving modes
 (add-hook 'enh-ruby-mode-hook 'fic-mode)
-(add-hook 'js2-mode-hook 'fic-mode)
+(add-hook 'js2-mode-hook      'fic-mode)
 
 ;; folding
 (require 'hideshow)
