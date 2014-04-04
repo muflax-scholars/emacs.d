@@ -1,4 +1,4 @@
-EMACS = emacs
+EMACS = emacs-24
 
 VERSION = 1.1.4
 PREFIX = /usr/local

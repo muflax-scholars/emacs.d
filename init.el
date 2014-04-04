@@ -984,8 +984,6 @@ If visual-line-mode is on, then also jump to beginning of real line."
 ;; misc stuff
 (require 'yari)        ; ri documentation tool
 (require 'ruby-block)  ; show what block an end belongs to
-(require 'inf-ruby)    ; run ruby in emacs buffer
-(require 'robe)        ; better code navigation and inf-ruby extensions
 (require 'rinari)      ; rails
 (ruby-block-mode t)
 (setq ruby-block-highlight-toggle t)
@@ -1004,10 +1002,6 @@ If visual-line-mode is on, then also jump to beginning of real line."
 ;; erb
 (require 'rhtml-mode)
 (add-to-list 'auto-mode-alist '("\\.erb$"     . rhtml-mode))
-;; pry
-(require 'pry)
-(define-key enh-ruby-mode-map (kbd "<S-f9>") 'pry-intercept)
-(define-key enh-ruby-mode-map (kbd "<f9>")   'pry-intercept-rerun)
 ;; auto-completion
 (add-hook 'robe-mode-hook 'robe-ac-setup)
 ;; documentation
