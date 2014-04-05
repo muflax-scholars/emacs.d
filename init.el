@@ -534,7 +534,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (setq ido-save-directory-list-file "~/.emacs.d/cache/ido.last")
 (setq ido-ignore-buffers
       '("\\` " "^\*Mess" "^\*Back" ".*Completion" "^\*Ido" "^\*trace"
-        "^\*compilation" "^\*GTAGS" "^session\.*" "^\*ECB" "^\*"))
+        "^\*compilation" "^\*GTAGS" "^session\.*" "^\*"))
 (setq ido-case-fold t) ; case insensitive
 (setq ido-enable-last-directory-history t)
 (setq ido-max-work-directory-list 30)
