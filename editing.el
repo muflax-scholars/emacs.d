@@ -104,7 +104,7 @@
               ))
 
 ;; unset unwanted default keys, so they show up in free-keys
-(loop for key in `(
+(cl-loop for key in `(
                    (,(kbd "C-x C-z")          suspend-frame)
                    (,(kbd "C-z")              suspend-frame)
                    ([(insert)]                overwrite-mode)

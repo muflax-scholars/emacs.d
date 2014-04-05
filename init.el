@@ -20,9 +20,13 @@
 (package-initialize)
 
 ;; init setup
-(require 'cl)
+(require 'cl-lib)
 (require 'setup)
 (setup-initialize)
+
+;; some generic aliases that make elisp less painful
+(defalias 'first  'cl-first)
+(defalias 'second 'cl-second)
 
 ;; themes and generic visual stuff
 (require 'look)
