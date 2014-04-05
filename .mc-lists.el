@@ -44,6 +44,7 @@
         phi-rectangle-kill-ring-save
         phi-rectangle-next-line
         phi-rectangle-yank
+        sh-assignment
         smart-beginning-of-line
         smart-end-of-line
         sp--self-insert-command
