@@ -125,7 +125,6 @@
 (require 'haskell-doc)
 (require 'haskell-indentation)
 (require 'inf-haskell)
-(require 'ghc)
 (add-hook 'haskell-mode-hook (lambda () (ghc-init)))
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
