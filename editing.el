@@ -407,8 +407,8 @@ If visual-line-mode is on, then also jump to beginning of real line."
     (deactivate-mark))
   (call-interactively 'isearch-backward-regexp))
 
-(global-set-key (kbd "C-s") 'isearch-forward-use-region)
-(global-set-key (kbd "C-r") 'isearch-backward-use-region)
+(global-set-key (kbd "C-s")   'isearch-forward-use-region)
+(global-set-key (kbd "C-r")   'isearch-backward-use-region)
 (global-set-key (kbd "C-S-s") 'isearch-forward-regexp)
 (global-set-key (kbd "C-S-r") 'isearch-backward-regexp)
 ;; make backspace more intuitive
