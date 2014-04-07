@@ -1,5 +1,10 @@
 ;; major modes
 
+;; default modes
+(setup-after "notes-mode"
+  (setq-default major-mode 'notes-mode)
+  (setq initial-major-mode 'notes-mode))
+
 ;; load raw text in a basic mode (for performance reasons)
 (add-to-list 'auto-mode-alist '("\\.log$" . fundamental-mode))
 
@@ -27,7 +32,6 @@
   (add-hook 'c++-mode-hook 'c-turn-on-eldoc-mode)
   (add-hook 'c-mode-hook 'c-turn-on-eldoc-mode))
 
-
 ;; use automatic file headers
 ;; #TODO recognize name automagically
 ;; #TODO add end-of-buffer
@@ -51,17 +55,16 @@
 ;; markdown
 (setup-lazy '(markdown-mode) "markdown-mode"
   (setq markdown-command "kramdown"))
-
 (add-to-list 'auto-mode-alist '("\\.pdc$"      . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.mkd$"      . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.md$"       . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
 
 ;; notes-mode
-(setup "notes-mode"
-  (add-to-list 'auto-mode-alist '("\\.txt$"      . notes-mode))
-  (add-to-list 'auto-mode-alist '("\\.notes$"    . notes-mode))
-  (add-to-list 'auto-mode-alist '("\\.script$"   . notes-mode)))
+(setup "notes-mode")
+(add-to-list 'auto-mode-alist '("\\.txt$"    . notes-mode))
+(add-to-list 'auto-mode-alist '("\\.notes$"  . notes-mode))
+(add-to-list 'auto-mode-alist '("\\.script$" . notes-mode))
 
 ;; yaml
 (setup-lazy '(yaml-mode) "yaml-mode"

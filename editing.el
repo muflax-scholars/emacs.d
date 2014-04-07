@@ -36,8 +36,6 @@
 
 
 ;; text stuff
-(setup-expecting "notes-mode"
-  (setq major-mode 'notes-mode))
 (setq undo-limit 1000000)
 (setq sentence-end-double-space nil)
 (column-number-mode t)
@@ -864,8 +862,7 @@ You have:
 (setup-lazy '(scratch) "scratch"
   (global-set-key (kbd "C-c C-b") 'scratch))
 
-;; don't start in lisp
-(setq initial-major-mode 'notes-mode)
+;; don't spam *Scratch*
 (setq initial-scratch-message nil)
 
 ;; increment / decrement thing at point

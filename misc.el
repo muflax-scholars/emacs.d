@@ -21,4 +21,8 @@
 ;; make sure we always know what's happening when eval-ing things
 (setq eval-expression-print-level nil)
 
+;; default modes
+(setq-default major-mode 'notes-mode)
+(setq initial-major-mode 'notes-mode)
+
 (provide 'misc)
