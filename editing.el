@@ -71,12 +71,12 @@
 (global-set-key (kbd "C-c u")     'uncomment-region)
 
 ;; code navigation
-(global-set-key (kbd "C-c n")     'next-error)
-(global-set-key (kbd "C-c p")     'previous-error)
-(global-set-key (kbd "M-t")       'find-tag)
+(global-set-key (kbd "C-c n") 'next-error)
+(global-set-key (kbd "C-c p") 'previous-error)
+(global-set-key (kbd "M-t")   'find-tag)
 
 ;; analogous to C-S-x
-(global-set-key (kbd "C-S-M-x")   'eval-buffer)
+(global-set-key (kbd "C-S-M-x") 'eval-buffer)
 
 ;; undo
 (global-set-key (kbd "C-z") 'undo-tree-undo)
@@ -114,7 +114,7 @@
 (setup-after "ace-window"
   ;; help pages don't have other input, so skip the M-g prefix
   (setup "info"
-    (define-key Info-mode-map "l" 'ac3e-link-info))
+    (define-key Info-mode-map "l" 'ace-link-info))
   (setup "help-mode"
     (define-key help-mode-map "l" 'ace-link-help)))
 
@@ -205,9 +205,8 @@
                      (global-unset-key (first key))))
 
 ;; multiple cursors
+(setq mc/list-file "~/.emacs.d/mc-lists.el")
 (setup "multiple-cursors"
-  (setq mc/list-file "~/.emacs.d/mc-lists.el")
-
   (global-set-key (kbd "C-c d")            'mc/edit-lines)
   (global-set-key (kbd "<C-down>")         'mc/mark-next-like-this)
   (global-set-key (kbd "<C-up>")           'mc/mark-previous-like-this)
@@ -225,9 +224,9 @@
 
 (setup-after "phi-search"
   (setup "phi-search-mc"
-    (define-key phi-search-default-map (kbd "<C-down>")   'phi-search-mc/mark-next)
-    (define-key phi-search-default-map (kbd "<C-up>")     'phi-search-mc/mark-previous)
-    (define-key phi-search-default-map (kbd "C-c C-k")    'phi-search-mc/mark-all)))
+    (define-key phi-search-default-map (kbd "<C-down>") 'phi-search-mc/mark-next)
+    (define-key phi-search-default-map (kbd "<C-up>")   'phi-search-mc/mark-previous)
+    (define-key phi-search-default-map (kbd "C-c C-k")  'phi-search-mc/mark-all)))
 
 ;; <ret> inserts a newline; C-j exits (a bit more convenient that way)
 (setup-after "multiple-cursors-core"
