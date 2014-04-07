@@ -9,41 +9,23 @@
   (yas-global-mode 1))
 
 ;; auto-yasnippet
-(setup "auto-yasnippet"
+(setup-after "yasnippet"
   (global-set-key (kbd "C-c ~")   'aya-create)
-  (global-set-key (kbd "C-c C-~") 'aya-expand))
+  (global-set-key (kbd "C-c C-~") 'aya-expand)
+  (setup-lazy '(aya-create aya-expand) "auto-yasnippet"))
 
 ;; auto completion
-(setup "auto-complete-config"
-  (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
+(setup-lazy '(go-mode enh-ruby-mode) "auto-complete-config"
   (add-to-list 'ac-modes 'enh-ruby-mode)
-  ;; (add-to-list 'ac-modes 'text-mode)
-  ;; (add-to-list 'ac-modes 'markdown-mode)
+  (add-to-list 'ac-modes 'go-mode)
   ;; (add-to-list 'ac-modes 'notes-mode)
-  ;; (add-to-list 'ac-modes 'org-mode)
+
+  (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
   (setq ac-comphist-file "~/.emacs.d/cache/ac-comphist.dat")
   (setq ac-auto-show-menu nil)
   (setq ac-ignore-case nil)
   (ac-config-default)
 
-  ;; disabling Yasnippet completion
-  (defun yasnippet-snippets-from-table (table)
-    (with-no-warnings
-      (let ((hashtab (ac-yasnippet-table-hash table))
-            (parent (ac-yasnippet-table-parent table))
-            candidates)
-        (maphash (lambda (key value)
-                   (push key candidates))
-                 hashtab)
-        (identity candidates)
-        )))
-  (defun yasnippet-get-all-snippets ()
-    (let (candidates)
-      (maphash
-       (lambda (kk vv) (push (yasnippet-snippets-from-table vv) candidates)) yas--tables)
-      (apply 'append candidates))
-    )
-  (setq ac-ignores (concatenate 'list ac-ignores (yasnippet-get-all-snippets)))
   ;; saner keys
   (setq ac-use-menu-map nil)
   (ac-set-trigger-key "C-t")
@@ -59,10 +41,11 @@
   (define-key ac-completing-map (kbd "M-t") 'ac-previous)
   (define-key ac-completing-map [return]    nil)
   (define-key ac-completing-map "\r"        nil)
-  (define-key ac-completing-map (kbd "C-j") 'ac-complete))
+  (define-key ac-completing-map (kbd "C-j") 'ac-complete)
+  )
 
 ;; fancy go autocompletion
-(setup-after "auto-complete"
+(setup-after "go-mode"
   (setup "go-autocomplete"))
 
 (provide 'auto-completion-nonsense)

@@ -114,7 +114,7 @@
   (volatile-highlights-mode t))
 
 ;; show #colors in matching color
-(setup "rainbow-mode")
+(setup-lazy '(rainbow-mode) "rainbow-mode")
 
 ;; blinking cursor
 (blink-cursor-mode -1)

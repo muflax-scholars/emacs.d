@@ -37,16 +37,17 @@
   (define-auto-insert "\\.go$"  "go"))
 
 ;; auctex
-(setup "latex"
-  (add-hook 'LaTeX-mode-hook 'TeX-PDF-mode))
+(setup-lazy '(latex-mode LaTeX-mode tex-mode TeX-mode) "latex")
+(add-hook 'LaTeX-mode-hook 'TeX-PDF-mode)
 
 ;; markdown
-(setup "markdown-mode"
-  (setq markdown-command "kramdown")
-  (add-to-list 'auto-mode-alist '("\\.pdc$"      . markdown-mode))
-  (add-to-list 'auto-mode-alist '("\\.mkd$"      . markdown-mode))
-  (add-to-list 'auto-mode-alist '("\\.md$"       . markdown-mode))
-  (add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode)))
+(setup-lazy '(markdown-mode) "markdown-mode"
+  (setq markdown-command "kramdown"))
+
+(add-to-list 'auto-mode-alist '("\\.pdc$"      . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.mkd$"      . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.md$"       . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
 
 ;; notes-mode
 (setup "notes-mode"
@@ -55,15 +56,15 @@
   (add-to-list 'auto-mode-alist '("\\.script$"   . notes-mode)))
 
 ;; yaml
-(setup "yaml-mode"
+(setup-lazy '(yaml-mode) "yaml-mode"
   (add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode))
-  (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode)))
+  (add-to-list 'auto-mode-alist '("\\.yml$"  . yaml-mode)))
 
 ;; org-mode (use private version)
 ;; #FIXME (tab) for org-cycle is disabled directly in the library; this should probably be some unset here.
 (setq load-path (cons "~/.emacs.d/local/org-mode/lisp" load-path))
-(setup "org"
-  (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
+(add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
+(setup-lazy '(org-mode) "org"
 
   ;; proper indentation / folding
   (setq org-startup-indented t)
@@ -116,7 +117,6 @@
 (setup-after "org-mode"
   (setup "org-indent"))
 
-
 ;; reload file when it changed (and the buffer has no changes)
 (global-auto-revert-mode 1)
 ;; also revert dired
@@ -124,12 +124,12 @@
 (setq auto-revert-verbose nil)
 
 ;; new python mode
-(setup "python"
+(setup-lazy '(python-mode) "python"
   (setq python-indent-offset 2)
   (unbreak-stupid-map python-mode-map))
 
 ;; haskell mode
-(setup "haskell-mode")
+(setup-lazy '(haskell-mode) "haskell-mode")
 (setup-after "haskell-mode"
   (setup "haskell-doc"
     (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode))
@@ -141,12 +141,11 @@
    (define-key haskell-mode-map (kbd "C-c C-?") 'haskell-process-do-info)))
 
 ;; ruby mode
+;; replace normal ruby mode
+(defalias 'ruby-mode 'enh-ruby-mode)
 ;; enhanced ruby mode
-(setup "enh-ruby-mode"
+(setup-lazy '(ruby-mode enh-ruby-mode) "enh-ruby-mode"
   (setq enh-ruby-program "~/.rbenv/shims/ruby")
-
-  ;; replace normal ruby mode
-  (defalias 'ruby-mode 'enh-ruby-mode)
 
   ;; better colors for warnings
   (defface erm-syn-warnline
@@ -165,17 +164,16 @@
   (setq ruby-indent-level tab-width)
   (setq enh-ruby-bounce-deep-indent t)
   (setq enh-ruby-deep-indent-paren nil)
-
-  ;;ruby files
-  (add-to-list 'interpreter-mode-alist '("ruby" . enh-ruby-mode))
-  (add-to-list 'auto-mode-alist '("\\.rake$"    . enh-ruby-mode))
-  (add-to-list 'auto-mode-alist '("Rakefile$"   . enh-ruby-mode))
-  (add-to-list 'auto-mode-alist '("Gemfile$"    . enh-ruby-mode))
-  (add-to-list 'auto-mode-alist '("Capfile$"    . enh-ruby-mode))
-  (add-to-list 'auto-mode-alist '("\\.builder$" . enh-ruby-mode))
-  (add-to-list 'auto-mode-alist '("\\.gemspec$" . enh-ruby-mode))
-
   )
+
+;;ruby files
+(add-to-list 'interpreter-mode-alist '("ruby" . enh-ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.rake$"    . enh-ruby-mode))
+(add-to-list 'auto-mode-alist '("Rakefile$"   . enh-ruby-mode))
+(add-to-list 'auto-mode-alist '("Gemfile$"    . enh-ruby-mode))
+(add-to-list 'auto-mode-alist '("Capfile$"    . enh-ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.builder$" . enh-ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.gemspec$" . enh-ruby-mode))
 
 (setup-after "enh-ruby-mode"
 ;; misc stuff
@@ -188,36 +186,39 @@
     (add-to-list 'auto-mode-alist '("\\.erb$"     . rhtml-mode))))
 
 ;; javascript
-(setup "js2-mode"
-  (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode)))
+(setup-lazy '(js2-mode) "js2-mode")
+(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 
 ;; shell stuff
-(setup "sh-script"
+(setup-lazy '(shell-mode) "sh-script"
   (setq sh-basic-offset tab-width))
 
 ;; nxml stuff
-(setup "nxml-mode"
+(setup-lazy '(nxml-mode) "nxml-mode"
   (setq nxml-child-indent tab-width))
 
 ;; lua
-(setup "lua-mode"
+(setup-lazy '(lua-mode) "lua-mode"
   (setq lua-indent-level 2))
 
 ;; (s)css
-(setq scss-compile-at-save nil)
-(setq css-indent-level 2)
+(setup-lazy '(scss-mode) "scss-mode"
+  (setq scss-compile-at-save nil))
+(setup-lazy '(css-mode) "css-mode"
+  (setq css-indent-level 2))
 
 ;; mark stuff like FIXME
-(setup "fic-mode"
-  (add-hook 'prog-mode-hook     'fic-mode)
-  ;; misbehaving modes
-  (add-hook 'enh-ruby-mode-hook 'fic-mode)
-  (add-hook 'js2-mode-hook      'fic-mode))
+(setup-lazy '(fic-mode) "fic-mode")
+(add-hook 'prog-mode-hook     'fic-mode)
+;; misbehaving modes
+(add-hook 'enh-ruby-mode-hook 'fic-mode)
+(add-hook 'js2-mode-hook      'fic-mode)
 
 ;; dired
 (setup-lazy '(dired-jump) "dired"
   ;; move files between split panes
   (setq dired-dwim-target t))
+(global-set-key (kbd "C-c C-j") 'dired-jump)
 (setup-after "dired"
   (setup "wdired")
   (setup "dired-x")
@@ -233,7 +234,6 @@
             wdired-abort-changes)
     (eval `(defadvice ,it (after revert-buffer activate)
              (revert-buffer))))
-  (global-set-key (kbd "C-c C-j") 'dired-jump)
   (define-key dired-mode-map (kbd "C-c C-c")  'wdired-change-to-wdired-mode)
   (define-key dired-mode-map (kbd "<insert>") 'dired-mark)
   ;; C-a goes to filename
@@ -265,7 +265,7 @@
   (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode))
 
 ;; go-lang
-(setup "go-mode"
+(setup-lazy '(go-mode) "go-mode"
   (add-hook 'before-save-hook #'gofmt-before-save)
   (setq gofmt-command "goimports")
   (unbreak-stupid-map go-mode-map)
@@ -286,7 +286,7 @@
 (add-hook 'after-save-hook 'byte-compile-current-buffer)
 
 ;; ag search
-(setup "ag"
+(setup-lazy '(ag) "ag"
   (setq ag-highlight-search t))
 
 (provide 'major-modes)

@@ -100,23 +100,25 @@
 (global-set-key (kbd "S-<f7>") 'backward-kill-word)
 
 ;; goto and hint-style navigation
-(setup "ace-jump-mode")
-(setup "ace-jump-buffer")
-(setup "ace-link")
-(setup "ace-window")
+(setup-lazy '(ace-jump-mode ace-jump-char-mode ace-jump-line-mode) "ace-jump-mode")
+(setup-lazy '(ace-jump-buffer) "ace-jump-buffer")
+(setup-lazy '(ace-link) "ace-link")
+(setup-lazy '(ace-window) "ace-window")
+
 (global-set-key (kbd "M-g M-g") 'goto-line)
 (global-set-key (kbd "M-g l")   'goto-line)
 (global-set-key (kbd "M-g b")   'ace-jump-buffer)
-(global-set-key (kbd "M-g c")   'ace-jump-char-mod)
+(global-set-key (kbd "M-g c")   'ace-jump-char-mode)
 (global-set-key (kbd "M-g g")   'ace-jump-mode)
 (global-set-key (kbd "M-g s")   'ace-jump-line-mode)
 (global-set-key (kbd "M-g w")   'ace-window)
 
-;; help pages don't have other input, so skip the M-g prefix
-(setup "info"
-  (define-key Info-mode-map "l" 'ac3e-link-info))
-(setup "help-mode"
-  (define-key help-mode-map "l" 'ace-link-help))
+(setup-after "ace-window"
+  ;; help pages don't have other input, so skip the M-g prefix
+  (setup "info"
+    (define-key Info-mode-map "l" 'ac3e-link-info))
+  (setup "help-mode"
+    (define-key help-mode-map "l" 'ace-link-help)))
 
 ;; get out of recursive edit
 (global-set-key (kbd "C-c C-g") 'abort-recursive-edit)
@@ -254,18 +256,20 @@
   (add-hook 'text-mode-hook 'turn-on-highlight-parentheses))
 
 ;; better search/replace
-(setup "visual-regexp"
-  (global-set-key (kbd "C-c r") 'vr/query-replace)
-
-  (defun vr/query-replace-from-beginning ()
-    (interactive)
-    (save-excursion
-      (goto-char (point-min))
-      (call-interactively 'vr/query-replace)))
-  (global-set-key (kbd "C-c R") 'vr/query-replace-from-beginning))
+(setup-lazy '(vr/query-replace vr/query-replace-from-beginning) "visual-regexp")
 
 (setup-after "visual-regexp"
- setup "visual-regexp-steroids")
+ (setup "visual-regexp-steroids"))
+
+(defun vr/query-replace-from-beginning ()
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (call-interactively 'vr/query-replace)))
+
+(global-set-key (kbd "C-c r") 'vr/query-replace)
+(global-set-key (kbd "C-c R") 'vr/query-replace-from-beginning)
+
 
 ;; copy end of line, like C-k
 (defun copy-line ()
@@ -319,7 +323,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (global-set-key "\C-e" 'smart-end-of-line)
 
 ;; org-mode has similar behavior built-in, so use it instead
-(setup-expecting "org-mode"
+(setup-after "org-mode"
   (setq org-special-ctrl-a/e t))
 
 (defun insert-file-name (filename &optional args)
@@ -461,50 +465,50 @@ If visual-line-mode is on, then also jump to beginning of real line."
                                   (insert "\t")))
 
 ;; replacement for orgtbl by using " | " as separator
-(setup "delim-col"
+(setup-lazy '(delimit-columns-current delimit-columns-region) "delim-col"
   (setq delimit-columns-str-separator " | ")
   (setq delimit-columns-separator " +| +")
   (setq delimit-columns-format 'separator)
-  (setq delimit-columns-extra nil)
+  (setq delimit-columns-extra nil))
 
-  (defun delimit-columns-current ()
-    "Delimit columns of current table."
-    (interactive)
+(defun delimit-columns-current ()
+  "Delimit columns of current table."
+  (interactive)
 
-    (let ((beg)
-          (end)
-          (start)
-          (regexp "^[^ \t\n]+.* | .*$"))
-      (save-excursion
-        ;; initialize region on the current line
-        (beginning-of-line)
+  (let ((beg)
+        (end)
+        (start)
+        (regexp "^[^ \t\n]+.* | .*$"))
+    (save-excursion
+      ;; initialize region on the current line
+      (beginning-of-line)
+      (setq beg (point))
+      (end-of-line)
+      (setq end (point))
+
+      (setq start beg)
+
+      ;; find beginning of block
+      (goto-char start)
+      (while (and (looking-at regexp)
+                  (not (bobp)))
         (setq beg (point))
+        (forward-line -1))
+
+      ;; find end of block
+      (goto-char start)
+      (while (and (looking-at regexp)
+                  (not (eobp)))
         (end-of-line)
         (setq end (point))
+        (forward-line 1))
+      )
 
-        (setq start beg)
-
-        ;; find beginning of block
-        (goto-char start)
-        (while (and (looking-at regexp)
-                    (not (bobp)))
-          (setq beg (point))
-          (forward-line -1))
-
-        ;; find end of block
-        (goto-char start)
-        (while (and (looking-at regexp)
-                    (not (eobp)))
-          (end-of-line)
-          (setq end (point))
-          (forward-line 1))
-        )
-
-      ;; call alignment function
-      (delimit-columns-region beg end)
-      ))
-  (global-set-key (kbd "C-c t") 'delimit-columns-current)
-  (global-set-key (kbd "C-c T") 'delimit-columns-region))
+    ;; call alignment function
+    (delimit-columns-region beg end)
+    ))
+(global-set-key (kbd "C-c t") 'delimit-columns-current)
+(global-set-key (kbd "C-c T") 'delimit-columns-region)
 
 ;; automatically indent on return, except in a few modes that have similar stuff by default
 (electric-indent-mode 1)
@@ -636,7 +640,8 @@ If visual-line-mode is on, then also jump to beginning of real line."
 
   ;; enable spell-check in certain modes
   (add-hook 'markdown-mode-hook 'turn-on-spell-check)
-  (add-hook 'org-mode-hook      'turn-on-spell-check))
+  (add-hook 'org-mode-hook      'turn-on-spell-check)
+  )
 
 ;; disable version control in emacs
 (setup "vc"
@@ -711,10 +716,10 @@ See the variable `align-rules-list' for more details.")
   (global-set-key (kbd "C-c C-=") 'align-repeat))
 
 ;; diff- mode (better colors)
-(setup "diff-mode-")
+(setup-lazy '(diff-mode) "diff-mode-")
 
 ;; a slightly saner diff command
-(setup "ediff"
+(setup-lazy '(ediff-mode) "ediff"
   (setq ediff-diff-options "-w"))
 
 ;; if no region is active, act on current line
@@ -805,7 +810,7 @@ See the variable `align-rules-list' for more details.")
   (winner-mode 1))
 
 ;; expand-region
-(setup "expand-region"
+(setup-lazy '(er/expand-region er/contract-region) "expand-region"
   (global-set-key (kbd "<C-prior>") 'er/expand-region)
   (global-set-key (kbd "<C-next>")  'er/contract-region))
 
@@ -852,25 +857,24 @@ You have:
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 ;; highlight some whitespace
-(setup "whitespace"
+(setup-lazy '(whitespace-mode global-whitespace-mode) "whitespace"
   (setq whitespace-style (quote (face tabs tab-mark))))
 
 ;; scratchpad buffers
-(setup "scratch"
-  ;; don't want to remember which key I used
-  (global-set-key (kbd "C-c C-b")   'scratch)
-  ;; don't start in lisp
-  (setq initial-major-mode 'notes-mode)
-  (setq initial-scratch-message nil))
+(setup-lazy '(scratch) "scratch"
+  (global-set-key (kbd "C-c C-b") 'scratch))
+
+;; don't start in lisp
+(setq initial-major-mode 'notes-mode)
+(setq initial-scratch-message nil)
 
 ;; increment / decrement thing at point
-(setup "increment"
+(setup-lazy '(increment-integer-at-point decrement-integer-at-point) "increment"
   (global-set-key (kbd "C-c C-+") 'increment-integer-at-point)
   (global-set-key (kbd "C-c C--") 'decrement-integer-at-point))
 
 ;; rotate / toggle text
-(setup "rotate-text"
-  (global-set-key (kbd "C-c C-t") 'rotate-text)
+(setup-lazy '(rotate-text) "rotate-text"
   (add-to-list 'rotate-text-words   '("auto" "manual"))
   (add-to-list 'rotate-text-words   '("if" "unless"))
   (add-to-list 'rotate-text-words   '("map" "each"))
@@ -881,6 +885,7 @@ You have:
   (add-to-list 'rotate-text-words   '("var" "const"))
   (add-to-list 'rotate-text-words   '("yes" "no"))
   (add-to-list 'rotate-text-symbols '("?" "!")))
+(global-set-key (kbd "C-c C-t") 'rotate-text)
 
 ;; handle camelcase better
 (global-subword-mode 1)
@@ -912,7 +917,7 @@ You have:
     (define-key global-map (kbd "C-c C-[") 'idomenu))
   (setup "imenu-anywhere"
     (define-key global-map (kbd "C-c ]")   'imenu-anywhere)
-    (define-key global-map (kbd "C-c C-]") 'imenu-anywhere))
+    (define-key global-map (kbd "C-c C-]") 'imenu-anywhere)))
 
 ;; recentering
 (setq recenter-positions '(2 middle))
@@ -1028,8 +1033,7 @@ You have:
 (add-hook 'before-save-hook 'normalize-unicode-in-buffer)
 
 ;; clean up buffers every once in a while
-(setup "midnight"
-  (midnight-delay-set 'midnight-delay "0:00am"))
+(setup-lazy '(clean-buffer-list) "midnight")
 
 ;; don't use shift to mark things; smartparens overwrites this anyway, but be explicit about it
 (setq shift-select-mode nil)
