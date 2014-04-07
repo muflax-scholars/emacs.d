@@ -7,11 +7,11 @@
 
 (require 'quail)
 (quail-define-package
-  "muflax-cyrillic" "Cyrillic (muflax)" "Я" t
-  "Support for all Cyrillic-using languages muflax cares about." nil t nil nil nil nil nil nil nil nil t)
+ "muflax-cyrillic" "Cyrillic (muflax)" "Я" t
+ "Support for all Cyrillic-using languages muflax cares about." nil t t nil nil nil nil nil nil nil t)
 
 (quail-define-rules
-  ;; straightforward mappings
+ ;; straightforward mappings
  ("A" ?А)
  ("B" ?Б)
  ("C" ?Ц)
@@ -127,8 +127,8 @@
 )
 
 (quail-define-package
-  "muflax-turkish" "Turkish (muflax)" "ı" t
-  "Turkish alphabet." nil t nil nil nil nil nil nil nil nil t)
+ "muflax-turkish" "Turkish (muflax)" "ı" t
+ "Turkish alphabet." nil t t nil nil nil nil nil nil nil t)
 
 (quail-define-rules
  ;; straightforward
@@ -198,7 +198,7 @@
 
 (quail-define-package
   "muflax-greek" "Greek (muflax)" "ω" t
-  "Support for all Greek-using languages muflax cares about." nil t nil nil nil nil nil nil nil nil t)
+  "Support for all Greek-using languages muflax cares about." nil t t nil nil nil nil nil nil nil t)
 
 (quail-define-rules
  ("A" ?Α)
@@ -257,8 +257,7 @@
 
 (quail-define-package
  "akkadian" "Akkadian" "𒀸" nil
- "A scheme for Akkadian cuneiform."
- nil t t t t nil nil nil nil nil t)
+ "A scheme for Akkadian cuneiform." nil t t t t nil nil nil nil nil t)
 (quail-define-rules
  ("a" ?𒀀)
  ("a2" ?𒀉)

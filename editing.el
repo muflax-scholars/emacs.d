@@ -81,8 +81,8 @@
 ;; undo
 (global-set-key (kbd "C-z") 'undo-tree-undo)
 (global-set-key (kbd "M-z") 'undo-tree-redo)
-(global-set-key (kbd "M-n")    'undo-tree-undo)
-(global-set-key (kbd "M-p")    'undo-tree-redo)
+(global-set-key (kbd "M-n") 'undo-tree-undo)
+(global-set-key (kbd "M-p") 'undo-tree-redo)
 
 ;; because we navigate via cursor keys, we can put something more useful on the default navigational keys
 (global-set-key (kbd "C-n") 'other-window)
