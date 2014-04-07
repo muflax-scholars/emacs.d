@@ -732,30 +732,23 @@ See the variable `align-rules-list' for more details.")
   (whole-line-or-region-mode 1))
 
 ;; tramp (remote files)
-(setup "tramp"
+(setup-after "tramp"
   (setq tramp-default-method "ssh")
   (setq tramp-persistency-file-name "~/.emacs.d/cache/tramp")
   ;; cookies
   (setq url-cookie-file "~/.emacs.d/cache/url/cookies"))
 
-;; input methods
-(setup "custom-input-methods.el"
-  (global-set-key (kbd "C-c 1") (lambda () (interactive)
-                                  (set-input-method nil)))
-  (global-set-key (kbd "C-c 2") (lambda () (interactive)
-                                  (set-input-method "muflax-cyrillic")))
-  (global-set-key (kbd "C-c 3") (lambda () (interactive)
-                                  (set-input-method "muflax-turkish")))
-  (global-set-key (kbd "C-c 4") (lambda () (interactive)
-                                  (set-input-method "muflax-greek")))
-  (global-set-key (kbd "C-c C-m") 'toggle-input-method)
-  (global-set-key (kbd "<kanji>") 'toggle-input-method))
+;; input methods, including a direct mozc binding to avoid ibus (requires mozc install)
+(setup  "custom-input-methods")
+(setup "mozc" (setq mozc-leim-title "あ"))
 
-;; direct mozc binding to avoid ibus (requires mozc install)
-(setup "mozc"
-  (setq mozc-leim-title "あ")
-  (global-set-key (kbd "C-c 5") (lambda () (interactive)
-                                  (set-input-method "japanese-mozc"))))
+(global-set-key (kbd "C-c 1") (lambda () (interactive) (set-input-method nil)))
+(global-set-key (kbd "C-c 2") (lambda () (interactive) (set-input-method "muflax-cyrillic")))
+(global-set-key (kbd "C-c 3") (lambda () (interactive) (set-input-method "muflax-turkish")))
+(global-set-key (kbd "C-c 4") (lambda () (interactive) (set-input-method "muflax-greek")))
+(global-set-key (kbd "C-c 5") (lambda () (interactive) (set-input-method "japanese-mozc")))
+(global-set-key (kbd "C-c C-m") 'toggle-input-method)
+(global-set-key (kbd "<kanji>") 'toggle-input-method)
 
 ;; analog to delete-file
 (defun delete-current-file ()
