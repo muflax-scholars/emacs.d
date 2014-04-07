@@ -103,7 +103,7 @@
 (require 'rainbow-mode)
 
 ;; blinking cursor
-;; (require 'heartbeat-cursor)
+(require 'heartbeat-cursor)
 (blink-cursor-mode -1)
 ;; (heartbeat-cursor-mode)
 ;; TODO should be a bar, as soon as multiple-coursors figures out a way to draw that
@@ -121,9 +121,6 @@
 (nyan-mode t)
 (setq nyan-bar-length 15)
 
-;; load minimap mode
-;; (require 'minimap)
-
 ;; show keystrokes in progress
 (setq echo-keystrokes 0.1)
 
@@ -134,5 +131,16 @@
 ;; don't warn about impossible undo
 (require 'warnings)
 (setq warning-suppress-types (append '(undo discard-info) warning-suppress-types))
+
+;; minimap (badly broken, but One Day(tm), man...
+;; non-annoying minimap that lacks a bunch of cool features
+;; (require 'minimap)
+
+;; minimap that flickers
+;; (require 'sublimity)
+;; (require 'sublimity)
+;; (require 'sublimity-map)
+;; (sublimity-map-set-delay 10)
+;; (sublimity-mode 1)
 
 (provide 'look)
