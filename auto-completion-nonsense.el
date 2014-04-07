@@ -60,4 +60,7 @@
 (define-key ac-completing-map "\r"        nil)
 (define-key ac-completing-map (kbd "C-j") 'ac-complete)
 
+;; fancy go autocompletion
+(require 'go-autocomplete)
+
 (provide 'auto-completion-nonsense)

@@ -1,32 +1,13 @@
-;; load path; site-lisp stores manually maintained packages
-(if (fboundp 'normal-top-level-add-subdirs-to-load-path)
-    (let* ((my-lisp-dir "~/.emacs.d/local/")
-           (default-directory my-lisp-dir))
-      (progn
-        (setq load-path (cons my-lisp-dir load-path))
-        (normal-top-level-add-subdirs-to-load-path))))
-(setq load-path (cons (expand-file-name "~/.emacs.d") load-path))
-
 ;; user data
 (setq user-mail-address "mail@muflax.com")
 (setq user-full-name "muflax")
 
-;; elpa package-repositories
-(require 'package)
-(setq package-user-dir "~/.emacs.d/packages")
-(add-to-list 'package-archives '("tromey" . "http://tromey.com/elpa/") t)
-(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
-(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
-(package-initialize)
+;; load path (the only hard-coded path, so we can use the file in external scripts without duplicating where load-paths are defined)
+(load "~/.emacs.d/load-path.el")
 
-;; init setup
-(require 'cl-lib)
+;; init setup (for faster start-up)
 (require 'setup)
 (setup-initialize)
-
-;; some generic aliases that make elisp less painful
-(defalias 'first  'cl-first)
-(defalias 'second 'cl-second)
 
 ;; themes and generic visual stuff
 (require 'look)
