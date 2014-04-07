@@ -20,8 +20,14 @@
 (defvar dark-theme   'twilight-anti-bright "Dark theme to use")
 
 (defvar use-bright-theme t "Whether to use the bright or dark theme")
-(if use-bright-theme (load-theme bright-theme t)
-  (load-theme dark-theme t))
+
+(defun load-correct-theme ()
+  "Loads appropriate theme."
+  (interactive)
+  (if use-bright-theme (load-theme bright-theme t)
+    (load-theme dark-theme t)))
+
+(load-correct-theme)
 
 (defun toggle-bright-theme ()
   "toggles between bright and dark theme"
@@ -34,6 +40,14 @@
       (setq use-bright-theme t)
       (disable-theme dark-theme)
       (load-theme bright-theme t))))
+
+;; highlight current line (face necessary so the theme can overwrite it)
+(defface hl-line '((t (:background nil)))
+  "Face to use for `hl-line-face'." :group 'hl-line)
+
+(setup "hl-line"
+  (setq hl-line-face 'hl-line)
+  (global-hl-line-mode t))
 
 ;; fonts
 (defvar small-font  "Anonymous Pro 8")
@@ -82,44 +96,38 @@
 (setq mouse-wheel-progressive-speed nil)
 (setq scroll-error-top-bottom t)
 ;; smooth scrolling with margin
-(require 'smooth-scrolling)
-(setq smooth-scroll-margin 5)
-(setq scroll-margin 0)
-(setq scroll-conservatively 10000)
-;; necessary or scrolling is really slow
-(setq-default bidi-display-reordering  nil)
-(setq auto-window-vscroll nil)
+(setup "smooth-scrolling"
+  (setq smooth-scroll-margin 5)
+  (setq scroll-margin 0)
+  (setq scroll-conservatively 10000)
+  ;; necessary or scrolling is really slow
+  (setq-default bidi-display-reordering  nil)
+  (setq auto-window-vscroll nil))
 
 ;; try to keep windows within a max margin
-(require 'automargin)
-(setq automargin-target-width 120)
-(automargin-mode)
+(setup "automargin"
+  (setq automargin-target-width 120)
+  (automargin-mode))
 
 ;; undo highlighting
-(require 'volatile-highlights)
-(volatile-highlights-mode t)
+(setup "volatile-highlights"
+  (volatile-highlights-mode t))
 
 ;; show #colors in matching color
-(require 'rainbow-mode)
+(setup "rainbow-mode")
 
 ;; blinking cursor
-(require 'heartbeat-cursor)
 (blink-cursor-mode -1)
-;; (heartbeat-cursor-mode)
+;; (setup "heartbeat-cursor"
+;;   (heartbeat-cursor-mode))
 ;; TODO should be a bar, as soon as multiple-coursors figures out a way to draw that
 ;; (setq-default cursor-type '(bar . 2))
 (setq-default cursor-type 'box)
 
-;; highlight current line
-(defface hl-line '((t (:background "Gray")))
-  "Face to use for `hl-line-face'." :group 'hl-line)
-(setq hl-line-face 'hl-line)
-(global-hl-line-mode t)
-
 ;; nyan nyan nyan
-(require 'nyan-mode)
-(nyan-mode t)
-(setq nyan-bar-length 15)
+(setup "nyan-mode"
+  (nyan-mode t)
+  (setq nyan-bar-length 15))
 
 ;; show keystrokes in progress
 (setq echo-keystrokes 0.1)
@@ -129,8 +137,8 @@
 (setq split-width-threshold 90)
 
 ;; don't warn about impossible undo
-(require 'warnings)
-(setq warning-suppress-types (append '(undo discard-info) warning-suppress-types))
+(setup "warnings"
+  (setq warning-suppress-types (append '(undo discard-info) warning-suppress-types)))
 
 ;; minimap (badly broken, but One Day(tm), man...
 ;; non-annoying minimap that lacks a bunch of cool features
@@ -144,25 +152,25 @@
 ;; (sublimity-mode 1)
 
 ;; clean up modeline and hide standard minor modes
-(require 'diminish)
-(eval-after-load "auto-complete"         '(diminish 'auto-complete-mode))
-(eval-after-load "autorevert"            '(diminish 'auto-revert-mode))
-(eval-after-load "eldoc"                 '(diminish 'eldoc-mode))
-(eval-after-load "fic-mode"              '(diminish 'fic-mode))
-(eval-after-load "haskell-doc"           '(diminish 'haskell-doc-mode))
-(eval-after-load "haskell-indentation"   '(diminish 'haskell-indentation-mode))
-(eval-after-load "hideshow"              '(diminish 'hs-minor-mode))
-(eval-after-load "highlight-parentheses" '(diminish 'highlight-parentheses-mode))
-(eval-after-load "ruby-block"            '(diminish 'ruby-block-mode))
-(eval-after-load "simple"                '(diminish 'auto-fill-function "AF"))
-(eval-after-load "simple"                '(diminish 'global-visual-line-mode))
-(eval-after-load "simple"                '(diminish 'visual-line-mode))
-(eval-after-load "smartparens"           '(diminish 'smartparens-mode))
-(eval-after-load "undo-tree"             '(diminish 'undo-tree-mode))
-(eval-after-load "volatile-highlights"   '(diminish 'volatile-highlights-mode))
-(eval-after-load "whitespace"            '(diminish 'global-whitespace-mode "WS"))
-(eval-after-load "whitespace"            '(diminish 'whitespace-mode " »"))
-(eval-after-load "whole-line-or-region"  '(diminish 'whole-line-or-region-mode))
-(eval-after-load "yasnippet"             '(diminish 'yas-minor-mode))
+(setup "diminish"
+  (setup-after "auto-complete"         (diminish 'auto-complete-mode))
+  (setup-after "autorevert"            (diminish 'auto-revert-mode))
+  (setup-after "eldoc"                 (diminish 'eldoc-mode))
+  (setup-after "fic-mode"              (diminish 'fic-mode))
+  (setup-after "haskell-doc"           (diminish 'haskell-doc-mode))
+  (setup-after "haskell-indentation"   (diminish 'haskell-indentation-mode))
+  (setup-after "hideshow"              (diminish 'hs-minor-mode))
+  (setup-after "highlight-parentheses" (diminish 'highlight-parentheses-mode))
+  (setup-after "ruby-block"            (diminish 'ruby-block-mode))
+  (setup-after "simple"                (diminish 'auto-fill-function "AF"))
+  (setup-after "simple"                (diminish 'global-visual-line-mode))
+  (setup-after "simple"                (diminish 'visual-line-mode))
+  (setup-after "smartparens"           (diminish 'smartparens-mode))
+  (setup-after "undo-tree"             (diminish 'undo-tree-mode))
+  (setup-after "volatile-highlights"   (diminish 'volatile-highlights-mode))
+  (setup-after "whitespace"            (diminish 'global-whitespace-mode "WS"))
+  (setup-after "whitespace"            (diminish 'whitespace-mode " »"))
+  (setup-after "whole-line-or-region"  (diminish 'whole-line-or-region-mode))
+  (setup-after "yasnippet"             (diminish 'yas-minor-mode)))
 
 (provide 'look)

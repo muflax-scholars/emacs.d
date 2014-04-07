@@ -10,16 +10,16 @@
 (setup-initialize)
 
 ;; themes and generic visual stuff
-(require 'look)
+(setup "look")
 
 ;; editing features
-(require 'editing)
+(setup "editing")
 
 ;; auto-completion and templates
-(require 'auto-completion-nonsense)
+(setup "auto-completion-nonsense")
 
 ;; major modes
-(require 'major-modes)
+(setup "major-modes")
 
 ;; random options
-(require 'misc)
+(setup "misc")

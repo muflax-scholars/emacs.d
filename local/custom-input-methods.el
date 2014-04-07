@@ -560,3 +560,5 @@
  ("uz2" ?𒍑)
  ("uz3" ?𒍚)
 )
+
+(provide 'custom-input-methods)

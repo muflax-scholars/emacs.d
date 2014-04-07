@@ -1,6 +1,0 @@
-#name : default
-# --
-default = {
-$0
-}
-${1:@opts} = default.merge(${2:opts})

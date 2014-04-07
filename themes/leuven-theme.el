@@ -25,24 +25,14 @@
 
 ;;; Commentary:
 
-;; This Org-enhancing color theme "leuven" ROCKS!
-;; ... and not just for Org mode.
-;;
-;; To use it, put the following in your Emacs configuration file:
-;;
-;;   (load-theme 'leuven t)
-;;
-;; Requirements: Emacs 24.
+;; Modified version of Leuven.
 
 ;;; Code:
 
 (deftheme leuven
-  "Face colors with a light background.
-Basic, Font Lock, Isearch, Gnus, Message, Diff, Ediff, Flyspell,
-Semantic, and Ansi-Color faces are included -- and much more...")
+  "Non-stupid light background.")
 
 (let ((class '((class color) (min-colors 89)))
-
       ;; Leuven generic colors
       (cancel '(:slant italic :strike-through t :foreground "gray55"))
       (clock-line '(:box (:line-width 1 :color "#335EA8") :foreground "black" :background "#EEC900"))
@@ -77,6 +67,7 @@ Semantic, and Ansi-Color faces are included -- and much more...")
 
   (custom-theme-set-faces
    'leuven
+
    `(default ((,class (:foreground "#000000" :background "#e6e6e6"))))
    `(bold ((,class (:weight bold :foreground "black"))))
    `(bold-italic ((,class (:weight bold :slant italic :foreground "black"))))
@@ -624,27 +615,15 @@ Semantic, and Ansi-Color faces are included -- and much more...")
    `(widget-single-line-field ((,class (:background "gray85"))))
    `(yas/field-debug-face ((,class (:background "ivory2"))))
    `(yas/field-highlight-face ((,class (:background "DarkSeaGreen1"))))
-   ))
+   )
 
-(custom-theme-set-variables
- 'leuven
- '(ansi-color-names-vector ["#242424" "#E5786D" "#95E454" "#CAE682"
-                            "#8AC6F2" "#333366" "#CCAA8F" "#F6F3E8"]))
+  (custom-theme-set-variables
+   'leuven
+   '(ansi-color-names-vector ["#242424" "#E5786D" "#95E454" "#CAE682"
+                              "#8AC6F2" "#333366" "#CCAA8F" "#F6F3E8"]))
+  )
 
 ;;;###autoload
-(when (and (boundp 'custom-theme-load-path)
-           load-file-name)
-  ;; add theme folder to `custom-theme-load-path' when installing over MELPA
-  (add-to-list 'custom-theme-load-path
-               (file-name-as-directory (file-name-directory load-file-name))))
-
 (provide-theme 'leuven)
-
-;; Local Variables:
-;; time-stamp-format: "%:y%02m%02d.%02H%02M"
-;; time-stamp-start: "Version: "
-;; time-stamp-end: "$"
-;; no-byte-compile: t
-;; End:
 
 ;;; leuven-theme.el ends here
