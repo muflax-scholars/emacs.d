@@ -157,6 +157,7 @@
   (setup-after "autorevert"            (diminish 'auto-revert-mode))
   (setup-after "eldoc"                 (diminish 'eldoc-mode))
   (setup-after "fic-mode"              (diminish 'fic-mode))
+  (setup-after "guide-key"             (diminish 'guide-key-mode))
   (setup-after "haskell-doc"           (diminish 'haskell-doc-mode))
   (setup-after "haskell-indentation"   (diminish 'haskell-indentation-mode))
   (setup-after "hideshow"              (diminish 'hs-minor-mode))
