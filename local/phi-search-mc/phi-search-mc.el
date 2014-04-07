@@ -28,8 +28,7 @@
 ;; Author: Akinori MUSHA <knu@iDaemons.org>
 ;; URL: https://github.com/knu/phi-search-mc.el
 ;; Created: 25 Aug 2013
-;; Version: 20131010.1958
-;; X-Original-Version: 2.0.20131010
+;; Version: 2.0.20131010
 ;; Package-Requires: ((phi-search "2.0.0") (multiple-cursors "1.2.1"))
 ;; Keywords: search, cursors
 
