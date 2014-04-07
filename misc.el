@@ -2,7 +2,7 @@
 
 ;; calendar
 (setq calendar-week-start-day 1)  ; monday
-(setq european-calendar-style 't) ; sanity
+(setq calendar-date-style 't)     ; sanity
 
 ;; custom variables because fuck emacs
 (custom-set-variables
