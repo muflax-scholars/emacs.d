@@ -309,7 +309,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
         (goto-char vispos)
       (when (= oldpos (point))
         (beginning-of-line)))))
-(global-set-key "\C-a" 'smart-beginning-of-line)
+(global-set-key (kbd "C-a") 'smart-beginning-of-line)
 
 (defun smart-end-of-line ()
   "Move point to end of visual line or, if already there, to end of logical line."
@@ -319,7 +319,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
     (end-of-visual-line)
     (when (= oldpos (point))
       (end-of-line))))
-(global-set-key "\C-e" 'smart-end-of-line)
+(global-set-key (kbd "C-e") 'smart-end-of-line)
 
 ;; org-mode has similar behavior built-in, so use it instead
 (setup-after "org-mode"
@@ -365,6 +365,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
 
 ;; smex
 (setup "smex"
+  (setq smex-save-file "~/.emacs.d/cache/smex-items")
   (smex-initialize)
   (global-set-key "\M-x" 'smex)
   (global-set-key "\M-X" 'smex-major-mode-commands))
