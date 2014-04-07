@@ -1,5 +1,18 @@
 ;; how emacs looks
 
+;; prettier defaults
+(setq inhibit-splash-screen t)
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+;; shows current selected region
+(setq-default transient-mark-mode t)
+(global-font-lock-mode t)
+(setq jit-lock-stealth-time 5)
+(setq frame-title-format "%b")
+(scroll-bar-mode -1)
+(set-scroll-bar-mode 'right)
+(set-fringe-mode '(1 . 10))
+
 ;; color themes
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 
@@ -88,19 +101,6 @@
 
 ;; show #colors in matching color
 (require 'rainbow-mode)
-
-;; prettier defaults
-(setq inhibit-splash-screen t)
-;; shows current selected region
-(setq-default transient-mark-mode t)
-(global-font-lock-mode t)
-(setq jit-lock-stealth-time 5)
-(set-scroll-bar-mode 'right)
-(setq frame-title-format "%b")
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
-(set-fringe-mode '(1 . 10))
 
 ;; blinking cursor
 ;; (require 'heartbeat-cursor)
