@@ -20,6 +20,14 @@
 (global-set-key (kbd "M-RET") 'c-indent-new-comment-line)
 (setup "guess-offset")
 
+;; eldoc for function signatures
+(setup-lazy '(c-turn-on-eldoc-mode) "c-eldoc"
+  (setq c-eldoc-buffer-regenerate-time 15))
+(setup-after "cc-mode"
+  (add-hook 'c++-mode-hook 'c-turn-on-eldoc-mode)
+  (add-hook 'c-mode-hook 'c-turn-on-eldoc-mode))
+
+
 ;; use automatic file headers
 ;; #TODO recognize name automagically
 ;; #TODO add end-of-buffer
@@ -261,7 +269,8 @@
 
 ;; eldoc, ie function signatures in the minibuffer
 (setup-lazy '(turn-on-eldoc-mode) "eldoc"
-  (setq eldoc-idle-delay 0.1)
+  (setq eldoc-idle-delay 0.1))
+(setup-after "lisp-mode"
   (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode))
 
 ;; go-lang
