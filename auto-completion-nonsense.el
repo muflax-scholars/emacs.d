@@ -15,7 +15,7 @@
   (setup-lazy '(aya-create aya-expand) "auto-yasnippet"))
 
 ;; auto completion
-(setup-lazy '(go-mode enh-ruby-mode) "auto-complete-config"
+(setup "auto-complete-config"
   (add-to-list 'ac-modes 'enh-ruby-mode)
   (add-to-list 'ac-modes 'go-mode)
   ;; (add-to-list 'ac-modes 'notes-mode)

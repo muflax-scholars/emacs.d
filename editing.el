@@ -218,9 +218,11 @@
   (global-set-key (kbd "C-c <")            'mc/mark-more-like-this-extended)
   (global-set-key (kbd "C-S-<mouse-1>")    'mc/add-cursor-on-click)
   (global-set-key (kbd "C-<down-mouse-1>") 'mc/add-cursor-on-click))
-(setup "phi-search"
-  (global-set-key (kbd "C-c C-s") 'phi-search)
-  (global-set-key (kbd "C-c C-r") 'phi-search-backward))
+
+(setup-lazy '(phi-search phi-search-backward) "phi-search")
+(global-set-key (kbd "C-c C-s") 'phi-search)
+(global-set-key (kbd "C-c C-r") 'phi-search-backward)
+
 (setup-after "phi-search"
   (setup "phi-search-mc"
     (define-key phi-search-default-map (kbd "<C-down>")   'phi-search-mc/mark-next)
