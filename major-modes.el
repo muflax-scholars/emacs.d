@@ -119,6 +119,7 @@
 ;; new python mode
 (require 'python)
 (setq python-indent-offset 2)
+(unbreak-stupid-map python-mode-map)
 
 ;; haskell mode
 (require 'haskell-mode)
