@@ -23,26 +23,3 @@
 
 ;; random options
 (require 'misc)
-
-;; clean up modeline and hide standard minor modes
-;; should be last so all modes are already loaded
-(require 'diminish)
-(diminish 'auto-complete-mode)
-(diminish 'auto-fill-function "AF")
-(diminish 'auto-revert-mode)
-(diminish 'eldoc-mode)
-(diminish 'fic-mode)
-(diminish 'global-visual-line-mode)
-(diminish 'global-whitespace-mode "WS")
-(diminish 'haskell-doc-mode)
-(diminish 'haskell-indentation-mode)
-(diminish 'highlight-parentheses-mode)
-(diminish 'hs-minor-mode)
-(diminish 'ruby-block-mode)
-(diminish 'smartparens-mode)
-(diminish 'undo-tree-mode)
-(diminish 'visual-line-mode)
-(diminish 'volatile-highlights-mode)
-(diminish 'whitespace-mode " »")
-(diminish 'whole-line-or-region-mode)
-(diminish 'yas-minor-mode)
