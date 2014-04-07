@@ -66,33 +66,60 @@
 (define-key special-event-map (kbd "<key-17>")   'ignore)
 (define-key special-event-map (kbd "<M-key-17>") 'ignore)
 
-;; generic key bindings
-(mouse-wheel-mode t)
-(global-set-key (kbd "C-c g")     'goto-line)
+;; commenting
 (global-set-key (kbd "C-c SPC")   'comment-dwim)
 (global-set-key (kbd "C-c C-SPC") 'comment-dwim)
 (global-set-key (kbd "C-c c")     'comment-region)
 (global-set-key (kbd "C-c u")     'uncomment-region)
+
+;; code navigation
 (global-set-key (kbd "C-c n")     'next-error)
 (global-set-key (kbd "C-c p")     'previous-error)
 (global-set-key (kbd "M-t")       'find-tag)
-(global-set-key (kbd "C-c i")     'indent-region)
+
 ;; analogous to C-S-x
 (global-set-key (kbd "C-S-M-x")   'eval-buffer)
 
-;; because we navigate via cursor keys, we can put something more useful on the default navigational keys
-(global-set-key (kbd "C-z")    'undo-tree-undo)
-(global-set-key (kbd "M-z")    'undo-tree-redo)
-(global-set-key (kbd "C-n")    'other-window)
-(global-set-key (kbd "C-p")    (lambda () (interactive) (other-window -1)))
+;; undo
+(global-set-key (kbd "C-z") 'undo-tree-undo)
+(global-set-key (kbd "M-z") 'undo-tree-redo)
 (global-set-key (kbd "M-n")    'undo-tree-undo)
 (global-set-key (kbd "M-p")    'undo-tree-redo)
-(global-set-key (kbd "C-f")    'forward-word)
-(global-set-key (kbd "C-b")    'backward-word)
+
+;; because we navigate via cursor keys, we can put something more useful on the default navigational keys
+(global-set-key (kbd "C-n") 'other-window)
+(global-set-key (kbd "C-p") (lambda () (interactive) (other-window -1)))
+(global-set-key (kbd "C-f") 'forward-word)
+(global-set-key (kbd "C-b") 'backward-word)
+
+;; obvious keys
 (global-set-key (kbd "<home>") 'beginning-of-buffer)
 (global-set-key (kbd "<end>")  'end-of-buffer)
+
 ;; make C-Backspace "work" in terminal
 (global-set-key (kbd "S-<f7>") 'backward-kill-word)
+
+;; goto and hint-style navigation
+(require 'ace-jump-mode)
+(require 'ace-jump-buffer)
+(require 'ace-link)
+(require 'ace-window)
+(global-set-key (kbd "M-g M-g") 'goto-line)
+(global-set-key (kbd "M-g l")   'goto-line)
+(global-set-key (kbd "M-g b")   'ace-jump-buffer)
+(global-set-key (kbd "M-g c")   'ace-jump-char-mod)
+(global-set-key (kbd "M-g g")   'ace-jump-mode)
+(global-set-key (kbd "M-g s")   'ace-jump-line-mode)
+(global-set-key (kbd "M-g w")   'ace-window)
+
+;; help pages don't have other input, so skip the M-g prefix
+(require 'info)
+(define-key Info-mode-map "l" 'ac3e-link-info)
+(require 'help-mode)
+(define-key help-mode-map "l" 'ace-link-help)
+
+;; get out of recursive edit
+(global-set-key (kbd "C-c C-g") 'abort-recursive-edit)
 
 ;; allowed key components
 (require 'free-keys)
@@ -400,6 +427,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (setq uniquify-buffer-name-style 'post-forward)
 
 ;; make mouse more usable
+(mouse-wheel-mode t)
 (setq make-pointer-invisible t)
 (setq mouse-yank-at-point t)
 
@@ -411,6 +439,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
 
 ;; indentation
 (setq-default tab-width 2)
+(global-set-key (kbd "C-c i") 'indent-region)
 ;; don't use tabs normally, except for a few special modes
 (setq-default indent-tabs-mode nil)
 (defun use-tabs () (setq indent-tabs-mode t))
@@ -763,11 +792,6 @@ See the variable `align-rules-list' for more details.")
 ;; undo window changes
 (require 'winner)
 (winner-mode 1)
-
-;; ace-jump (hint-style navigation)
-(require 'ace-jump-mode)
-(global-set-key (kbd "C-c j")   'ace-jump-mode)
-(global-set-key (kbd "C-c C-g") 'ace-jump-line-mode)
 
 ;; expand-region
 (require 'expand-region)
