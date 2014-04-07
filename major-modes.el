@@ -208,6 +208,8 @@
 (require 'dired-x)
 (require 'dired-details)
 (require 'dired-details+)
+;; don't ask for confirmation
+(setq dired-no-confirm t)
 ;; move files between split panes
 (setq dired-dwim-target t)
 ;; reload dired after making changes
