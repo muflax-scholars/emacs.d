@@ -9,8 +9,8 @@
 (global-font-lock-mode t)
 (setq jit-lock-stealth-time 5)
 (setq frame-title-format "%b")
-(scroll-bar-mode -1)
 (set-scroll-bar-mode 'right)
+(scroll-bar-mode -1)
 (set-fringe-mode '(1 . 10))
 
 ;; color themes
