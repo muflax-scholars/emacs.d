@@ -67,13 +67,7 @@
 the source file is not found.")
 
 (defvar setup-environ-warning-alist
-  '(((system-name)
-     . "Init script is not compiled with this system. Really continue ? ")
-    (window-system
-     . "Init script is not compiled with this window system. Really continue ? ")
-    (user-login-name
-     . "Init script is not compiled by this user. Really continue ? ")
-    (emacs-version
+  '((emacs-version
      . "Init script is not compiled with this version of Emacs. Really continue ? "))
   "Alist of expressions that must be evaluated to the \"equal\"
 value between compile-time and runtime, and warning message shown
