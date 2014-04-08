@@ -1052,9 +1052,30 @@ You have:
 
 ;; help for more obscure prefix keys
 (setup "guide-key"
-  (setq guide-key/guide-key-sequence '("C-x r" "C-x 4"))
+  (setq guide-key/guide-key-sequence '("C-x r" "C-x 4" "C-x c"))
   (guide-key-mode 1)
   (setq guide-key/recursive-key-sequence-flag t)
   (setq guide-key/popup-window-position 'bottom))
+
+;; helm
+(setup "helm-config")
+  ;; (helm-mode t))
+(setup-after "helm"
+  (define-key helm-map (kbd "C-w")  'subword-backward-kill)
+  (define-key helm-map (kbd "M-w")  'helm-yank-text-at-point)
+  (global-set-key (kbd "C-x c t")       'helm-cmd-t)
+  (global-set-key (kbd "C-x c g")   'helm-do-grep)
+  (global-set-key (kbd "C-x c o")   'helm-occur)
+  (global-set-key (kbd "C-x c C-o") 'helm-swoop)
+  ;; (global-set-key (kbd "M-x") 'helm-M-x)
+  (global-set-key (kbd "C-x C-f") 'helm-find-files)
+  (setq helm-ff-lynx-style-map nil
+        helm-input-idle-delay 0.1
+        helm-idle-delay 0.1
+        helm-follow-mode-persistent t ))
+
+(setup-lazy '(helm-C-x-b) "helm-C-x-b"
+  (global-set-key [remap switch-to-buffer] 'helm-C-x-b))
+
 
 (provide 'editing)
