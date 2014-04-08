@@ -1063,7 +1063,7 @@ You have:
 (setup-after "helm"
   (define-key helm-map (kbd "C-w")  'subword-backward-kill)
   (define-key helm-map (kbd "M-w")  'helm-yank-text-at-point)
-  (global-set-key (kbd "C-x c t")       'helm-cmd-t)
+  (global-set-key (kbd "C-x c t")   'helm-cmd-t)
   (global-set-key (kbd "C-x c g")   'helm-do-grep)
   (global-set-key (kbd "C-x c o")   'helm-occur)
   (global-set-key (kbd "C-x c C-o") 'helm-swoop)
@@ -1073,9 +1073,5 @@ You have:
         helm-input-idle-delay 0.1
         helm-idle-delay 0.1
         helm-follow-mode-persistent t ))
-
-(setup-lazy '(helm-C-x-b) "helm-C-x-b"
-  (global-set-key [remap switch-to-buffer] 'helm-C-x-b))
-
 
 (provide 'editing)
