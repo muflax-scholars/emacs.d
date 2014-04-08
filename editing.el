@@ -1068,7 +1068,7 @@ You have:
   (global-set-key (kbd "C-x c o")   'helm-occur)
   (global-set-key (kbd "C-x c C-o") 'helm-swoop)
   ;; (global-set-key (kbd "M-x") 'helm-M-x)
-  (global-set-key (kbd "C-x C-f") 'helm-find-files)
+  ;; (global-set-key (kbd "C-x C-f") 'helm-find-files)
   (setq helm-ff-lynx-style-map nil
         helm-input-idle-delay 0.1
         helm-idle-delay 0.1
