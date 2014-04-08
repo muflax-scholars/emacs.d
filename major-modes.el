@@ -168,8 +168,6 @@
     "Face used for marking error lines."
     :group 'enh-ruby)
   (unbreak-stupid-map enh-ruby-mode-map)
-  (define-key enh-ruby-mode-map (kbd "C-c C-n") 'enh-ruby-find-error)
-  (define-key enh-ruby-mode-map (kbd "C-c C-p") 'enh-ruby-beginning-of-defun)
 
   ;; better indenting
   (setq ruby-indent-level tab-width)
@@ -301,5 +299,15 @@
 ;; ag search
 (setup-lazy '(ag) "ag"
   (setq ag-highlight-search t))
+
+;; Flycheck for code linting
+(setup "flycheck"
+  (add-hook 'after-init-hook #'global-flycheck-mode)
+  (unbreak-stupid-map flycheck-mode-map)
+  (define-key flycheck-mode-map (kbd "C-c C-n") 'flycheck-next-error)
+  (define-key flycheck-mode-map (kbd "C-c C-p") 'flycheck-previous-error)
+  (setq flycheck-disabled-checkers '(emacs-lisp-checkdoc))
+  (setq flycheck-mode-line-lighter " !")
+  )
 
 (provide 'major-modes)
