@@ -803,9 +803,9 @@ See the variable `align-rules-list' for more details.")
   (winner-mode 1))
 
 ;; expand-region
-(setup-lazy '(er/expand-region er/contract-region) "expand-region"
-  (global-set-key (kbd "<C-prior>") 'er/expand-region)
-  (global-set-key (kbd "<C-next>")  'er/contract-region))
+(setup-lazy '(er/expand-region er/contract-region) "expand-region")
+(global-set-key (kbd "<C-prior>") 'er/expand-region)
+(global-set-key (kbd "<C-next>")  'er/contract-region)
 
 ;; make zsh aliases work
 (setup "shell-command"
