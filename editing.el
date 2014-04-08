@@ -888,7 +888,7 @@ You have:
   (add-hook 'notes-mode-hook 'hs-minor-mode))
 
 (setup-after "hideshow"
-  (setup "hideshowvis")
+  (setup-lazy '(hideshowvis-enable hideshowvis-minor-mode) "hideshowvis")
   (setup "fold-dwim"
     (define-key global-map (kbd "C-c C-f") 'fold-dwim-toggle)
     (define-key global-map (kbd "C-c f")   'fold-dwim-hide-all)

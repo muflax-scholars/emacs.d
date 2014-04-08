@@ -306,8 +306,7 @@
   (unbreak-stupid-map flycheck-mode-map)
   (define-key flycheck-mode-map (kbd "C-c C-n") 'flycheck-next-error)
   (define-key flycheck-mode-map (kbd "C-c C-p") 'flycheck-previous-error)
-  (setq flycheck-disabled-checkers '(emacs-lisp-checkdoc))
   (setq flycheck-mode-line-lighter " !")
-  )
+  (setq flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
 
 (provide 'major-modes)
