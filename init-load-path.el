@@ -25,4 +25,4 @@
   (or (display-graphic-p)
       (daemonp)))
 
-(provide 'load-path)
+(provide 'init-load-path)

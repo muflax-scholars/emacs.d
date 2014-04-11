@@ -309,4 +309,4 @@
   (setq flycheck-mode-line-lighter " !")
   (setq flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
 
-(provide 'major-modes)
+(provide 'init-major-modes)

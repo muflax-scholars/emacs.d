@@ -48,4 +48,4 @@
 (setup-after "go-mode"
   (setup "go-autocomplete"))
 
-(provide 'auto-completion-nonsense)
+(provide 'init-auto-completion-nonsense)

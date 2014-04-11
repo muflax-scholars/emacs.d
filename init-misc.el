@@ -25,4 +25,4 @@
 (setq-default major-mode 'notes-mode)
 (setq initial-major-mode 'notes-mode)
 
-(provide 'misc)
+(provide 'init-misc)

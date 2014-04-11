@@ -178,4 +178,4 @@
   (setup-after "whole-line-or-region"  (diminish 'whole-line-or-region-mode))
   (setup-after "yasnippet"             (diminish 'yas-minor-mode)))
 
-(provide 'look)
+(provide 'init-look)

@@ -1073,4 +1073,4 @@ You have:
         helm-idle-delay 0.1
         helm-follow-mode-persistent t ))
 
-(provide 'editing)
+(provide 'init-editing)
