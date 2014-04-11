@@ -1,0 +1,110 @@
+Stuff that doesn't work:
+
+[ projects
+
+- saved caches shouldn't overwrite the old ones
+- either persp-mode should work (it had funky issues with window restoration) or independent emacs instances should be fully usable and snappy
+]
+
+[ parentheses
+
+- smartparens is annoying because it's so over-bearing; it should be replaced with something simpler
+
+	I mostly just need the sexp-functions (which newer ruby-mode might make unnecessary) and the sane "(re)wrap selection with things" feature. Might just fork it and remove the annoying auto-pairing entirely.
+
+- "close all open parentheses" button that understands def-end pairs
+
+	unfinished snippet:
+  (defun close-quoted-open-paren ()
+   (interactive)
+   (let (pos closing)
+     (with-syntax-table all-paren-syntax-table2
+       (setq pos (save-excursion (up-list -1) (point)))
+       (setq closing (matching-paren (char-after pos))))
+     (and (eq (char-syntax (char-before pos)) ?\\)
+          (not (eq (char-syntax (char-before (1- pos))) ?\\))
+          (insert (char-before pos)))
+     (insert closing)))
+
+  (defun close-open-parens ()
+    (interactive)
+    (sp-up-sexp))
+    ;; (insert (save-excursion (up-list -1) (matching-paren (char-after)))))
+
+  (global-set-key (kbd "C-c )") 'close-open-parens)
+
+  (setq sp-navigate-close-if-unbalanced t)
+
+]
+
+[ file navigation
+
+- eventually, Emacs should replace mc:
+	- actions based on file extensions
+	- quick start (maybe make the init.el more modular, so terminal instances don't load look.el etc.)
+	- panes
+	- trash
+	- quick jump to terminal
+	- make zsh suspend painless, or run some eshell thingy, or something
+
+- syncing of bookmarks between zsh dirs and Emacs
+
+	snippet:
+
+  (require 'bookmark)
+  (setq enable-recursive-minibuffers t)
+  (define-key ido-file-dir-completion-map [(meta control ?b)] 'ido-goto-bookmark)
+  (defun ido-goto-bookmark (bookmark)
+    (interactive
+     (list (bookmark-completing-read "Jump to bookmark"
+      				   bookmark-current-bookmark)))
+    (unless bookmark
+      (error "No bookmark specified"))
+    (let ((filename (bookmark-get-filename bookmark)))
+      (if (file-directory-p filename)
+  	(progn
+  	  (ido-set-current-directory filename)
+  	  (setq ido-text ""))
+        (progn
+  	(ido-set-current-directory (file-name-directory filename))))
+      (setq ido-exit        'refresh
+  	  ido-text-init   ido-text
+  	  ido-rotate-temp t)
+      (exit-minibuffer)))
+]
+
+[ bugs / misc
+
+- Jumpy cursor, particularly in notes/markdown-mode. Unlikely about the mouse. auto-complete seems to make it worse, but doesn't cause it.
+
+	Stating the suspicion that it has something to do with "last line on the screen" or "being in a list", or both.
+
+- align.el uses tabs to indent when tabstops are enabled?! teh fuck align.el?! I hate you so much.
+
+- is custom org mode still necessary?
+
+- minimap is unusable at the moment, mostly because it's either slow (minimap.el version) or super flickery (sublimity version)
+
+- breadcrumbs at completely unusable and the code is a mess, but automatic "get me back to where I was a moment ago" is badly needed
+]
+
+[ git
+
+I really shouldn't use gitk and git-gui all the time. What I need:
+
+- working blame
+- working "stage this" with line selection (not just chunks)
+- fast tree navigation
+
+Mostly I'm just paralyzed by the many available options and how annoying Magit used to be when I tried it years ago. :/
+
+]
+
+[ regexes
+
+visual-regexes is cool, but is Python-based. That's mostly fine, but I either:
+
+- should switch completely to Emacs regexes, which have some cool stuff (but muh Ruby!!w!)
+- finish the Ruby port
+
+]
