@@ -20,4 +20,9 @@
 (defalias 'first  'cl-first)
 (defalias 'second 'cl-second)
 
+(defun pretty-load? ()
+  "load stuff like themes that are only meaningful in window system?"
+  (or (display-graphic-p)
+      (daemonp)))
+
 (provide 'load-path)

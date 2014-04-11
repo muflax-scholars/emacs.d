@@ -27,7 +27,8 @@
   (if use-bright-theme (load-theme bright-theme t)
     (load-theme dark-theme t)))
 
-(load-correct-theme)
+(when (pretty-load?)
+  (load-correct-theme))
 
 (defun toggle-bright-theme ()
   "toggles between bright and dark theme"
@@ -63,7 +64,9 @@
 
 (defun set-window-font ()
   (set-frame-font current-font))
-(add-hook 'after-make-window-system-frame-hooks 'set-window-font)
+
+(when (pretty-load?)
+  (set-window-font))
 
 ;; shortcut for the fonts
 (defun use-huge-font ()
@@ -107,7 +110,8 @@
 ;; try to keep windows within a max margin
 (setup "automargin"
   (setq automargin-target-width 120)
-  (automargin-mode))
+  (when (pretty-load?)
+    (automargin-mode)))
 
 ;; undo highlighting
 (setup "volatile-highlights"
