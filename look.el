@@ -127,7 +127,7 @@
 ;; nyan nyan nyan
 (setup "nyan-mode"
   (nyan-mode t)
-  (setq nyan-bar-length 15))
+  (setq nyan-bar-length 10))
 
 ;; show keystrokes in progress
 (setq echo-keystrokes 0.1)
