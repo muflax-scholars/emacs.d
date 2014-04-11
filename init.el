@@ -1,6 +1,6 @@
 ;; user data
+(setq user-full-name    "muflax")
 (setq user-mail-address "mail@muflax.com")
-(setq user-full-name "muflax")
 
 ;; load path (the only hard-coded path, so we can use the file in external scripts without duplicating where load-paths are defined)
 (load "~/.emacs.d/load-path.el")
