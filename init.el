@@ -15,6 +15,9 @@
 ;; editing features
 (setup "init-editing")
 
+;; searches, navigation and a plethora of regex engines
+(setup "init-search")
+
 ;; auto-completion and templates
 (setup "init-auto-completion-nonsense")
 
