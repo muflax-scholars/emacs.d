@@ -891,8 +891,8 @@ You have:
   (setup-lazy '(hideshowvis-enable hideshowvis-minor-mode) "hideshowvis")
   (setup "fold-dwim"
     (define-key global-map (kbd "C-c C-f") 'fold-dwim-toggle)
-    (define-key global-map (kbd "C-c f")   'fold-dwim-hide-all)
-    (define-key global-map (kbd "C-c F") 'fold-dwim-show-all)))
+    (define-key global-map (kbd "C-c f")   'hs-hide-level)
+    (define-key global-map (kbd "C-c F")   'fold-dwim-show-all)))
 
 ;; fast navigation
 (setup "imenu"
