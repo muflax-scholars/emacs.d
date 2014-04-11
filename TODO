@@ -2,8 +2,15 @@ Stuff that doesn't work:
 
 [ projects
 
-- saved caches shouldn't overwrite the old ones
-- either persp-mode should work (it had funky issues with window restoration) or independent emacs instances should be fully usable and snappy
+- Either persp-mode should work (it had funky issues with window restoration) or independent emacs instances should be fully usable and snappy.
+
+	If independent Emacs was really snappy (particularly in the shell), I could finally stop using the hacky server setup. Notably, it's missing:
+
+	- saving caches shouldn't overwrite the old ones
+	- some way to limit buffers the way persp-mode does it
+	- syncing between emacs instances should be easy - maybe the generic clipboard is good enough?
+	- startup needs to be <2s, on cli <0.5s
+	- some way to identify running instances, like names or something
 ]
 
 [ parentheses
