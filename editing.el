@@ -34,7 +34,6 @@
                                         kill-ring
                                         compile-command)))
 
-
 ;; text stuff
 (setq undo-limit 1000000)
 (setq sentence-end-double-space nil)
@@ -122,7 +121,7 @@
 (global-set-key (kbd "C-c C-g") 'abort-recursive-edit)
 
 ;; allowed key components
-(setup "free-keys"
+(setup-lazy '(free-keys) "free-keys"
   (setq free-keys-keys
         (concat "abcdefghijklmnopqrstuvwxyzßł"
                 "ABCDEFGHIJKLMNOPQRSTUVWXYZẞŁ"
