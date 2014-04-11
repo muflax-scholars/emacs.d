@@ -878,4 +878,6 @@ You have:
   (setq guide-key/recursive-key-sequence-flag t)
   (setq guide-key/popup-window-position 'bottom))
 
+(setup-lazy '(keyboard-cat-mode) "keyboard-cat-mode")
+
 (provide 'init-editing)
