@@ -23,5 +23,3 @@
 
 ;; random options
 (setup "init-misc")
-
-(setq initial-major-mode 'notes-mode)
