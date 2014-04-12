@@ -95,18 +95,6 @@ Stuff that doesn't work:
 - breadcrumbs at completely unusable and the code is a mess, but automatic "get me back to where I was a moment ago" is badly needed
 ]
 
-[ git
-
-I really shouldn't use gitk and git-gui all the time. What I need:
-
-- working blame
-- working "stage this" with line selection (not just chunks)
-- fast tree navigation
-
-Mostly I'm just paralyzed by the many available options and how annoying Magit used to be when I tried it years ago. :/
-
-]
-
 [ regexes
 
 visual-regexes is cool, but is Python-based. That's mostly fine, but I either:
