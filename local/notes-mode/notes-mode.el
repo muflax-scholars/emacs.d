@@ -369,7 +369,7 @@
   (list
    (cons notes-regex-list   '(2 notes-list-face))
    (cons notes-regex-bold   '(2 notes-bold-face))
-   (cons notes-regex-italic '(2 notes-italic-face))
+   ;; (cons notes-regex-italic '(2 notes-italic-face))
    (cons notes-regex-header '(3 notes-header-face))
 
    (cons notes-regex-placeholder-square
