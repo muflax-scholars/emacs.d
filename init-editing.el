@@ -485,10 +485,6 @@ If visual-line-mode is on, then also jump to beginning of real line."
   (add-hook 'org-mode-hook      'turn-on-spell-check)
   )
 
-;; disable version control in emacs
-(setup "vc"
-  (setq vc-handled-backends ()))
-
 ;; edit symbol in multiple places simultaneously
 (setup "iedit"
   (global-set-key (kbd "C-c ;") 'iedit-mode)

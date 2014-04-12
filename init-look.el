@@ -166,6 +166,7 @@
   (setup-after "haskell-indentation"   (diminish 'haskell-indentation-mode))
   (setup-after "hideshow"              (diminish 'hs-minor-mode))
   (setup-after "highlight-parentheses" (diminish 'highlight-parentheses-mode))
+  (setup-after "magit"                 (diminish 'magit-auto-revert-mode))
   (setup-after "ruby-block"            (diminish 'ruby-block-mode))
   (setup-after "simple"                (diminish 'auto-fill-function "AF"))
   (setup-after "simple"                (diminish 'global-visual-line-mode))

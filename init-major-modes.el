@@ -309,4 +309,34 @@
   (setq flycheck-mode-line-lighter " !")
   (setq flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
 
+;; disable version control in emacs
+(setup "vc"
+  (setq vc-handled-backends ()))
+
+;; fancy git interactions
+(setup-lazy '(magit-status) "magit"
+  (set-default 'magit-stage-all-confirm nil)
+  (set-default 'magit-unstage-all-confirm nil))
+
+(global-set-key (kbd "C-x g") 'magit-status)
+
+(setup-after "magit"
+  (defun magit-toggle-whitespace ()
+    (interactive)
+    (if (member "-w" magit-diff-options)
+        (magit-dont-ignore-whitespace)
+      (magit-ignore-whitespace)))
+
+  (defun magit-ignore-whitespace ()
+    (interactive)
+    (add-to-list 'magit-diff-options "-w")
+    (magit-refresh))
+
+  (defun magit-dont-ignore-whitespace ()
+    (interactive)
+    (setq magit-diff-options (remove "-w" magit-diff-options))
+    (magit-refresh))
+
+  (define-key magit-status-mode-map (kbd "W") 'magit-toggle-whitespace))
+
 (provide 'init-major-modes)
