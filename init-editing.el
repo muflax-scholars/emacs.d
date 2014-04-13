@@ -797,12 +797,22 @@ You have:
       (set-mark (point))
       (sp-beginning-of-sexp)
       (kill-ring-save (mark) (point))))
+
+  ;; navigation
   (define-key sp-keymap (kbd "C-c a") 'sp-beginning-of-sexp)
   (define-key sp-keymap (kbd "C-c e") 'sp-end-of-sexp)
+
+  ;; killing
   (define-key sp-keymap (kbd "C-c C-a") 'sp-kill-to-beginning-of-sexp)
   (define-key sp-keymap (kbd "C-c C-e") 'sp-kill-to-end-of-sexp)
   (define-key sp-keymap (kbd "C-c M-a") 'sp-copy-to-beginning-of-sexp)
   (define-key sp-keymap (kbd "C-c M-e") 'sp-copy-to-end-of-sexp)
+  (define-key sp-keymap (kbd "C-c M-e") 'sp-copy-to-end-of-sexp)
+
+  ;; narrowing
+  (define-key sp-keymap (kbd "C-x n (") 'sp-narrow-to-sexp)
+  (define-key sp-keymap (kbd "C-x n )") 'sp-narrow-to-sexp)
+  (define-key sp-keymap (kbd "C-x n s") 'sp-narrow-to-sexp)
 
   ;; markdown-mode
   (sp-with-modes '(markdown-mode)
