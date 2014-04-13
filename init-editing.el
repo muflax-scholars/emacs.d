@@ -810,9 +810,11 @@ You have:
   (define-key sp-keymap (kbd "C-c M-e") 'sp-copy-to-end-of-sexp)
 
   ;; narrowing
-  (define-key sp-keymap (kbd "C-x n (") 'sp-narrow-to-sexp)
-  (define-key sp-keymap (kbd "C-x n )") 'sp-narrow-to-sexp)
   (define-key sp-keymap (kbd "C-x n s") 'sp-narrow-to-sexp)
+
+  ;; TODO generalize C-( to narrow-or-region
+  (define-key sp-keymap (kbd "C-(") 'sp-narrow-to-sexp)
+  (define-key sp-keymap (kbd "C-)") 'widen)
 
   ;; markdown-mode
   (sp-with-modes '(markdown-mode)
