@@ -93,6 +93,9 @@ Stuff that doesn't work:
 - minimap is unusable at the moment, mostly because it's either slow (minimap.el version) or super flickery (sublimity version)
 
 - breadcrumbs at completely unusable and the code is a mess, but automatic "get me back to where I was a moment ago" is badly needed
+
+- fonts aren't set properly when using the server; probably just a messed up hook or font path thing
+
 ]
 
 [ regexes
