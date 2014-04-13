@@ -96,6 +96,8 @@ Stuff that doesn't work:
 
 - fonts aren't set properly when using the server; probably just a messed up hook or font path thing
 
+- before-save-hooks should have a way to turn them off; probably a minor mode
+
 ]
 
 [ regexes
