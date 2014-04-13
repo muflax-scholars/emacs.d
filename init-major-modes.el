@@ -224,10 +224,29 @@
 (add-hook 'js2-mode-hook      'fic-mode)
 
 ;; dired
-(setup-lazy '(dired-jump) "dired"
+(setup-lazy '(dired-jump dired-next dired-prev) "dired"
+
+  ;; fast navigation through files in a directory
+  ;; TODO this is super simplistic, but meh
+  (defun dired-next ()
+    (interactive)
+    (dired-jump)
+    (dired-next-line 1)
+    (dired-find-file))
+
+  (defun dired-prev ()
+    (interactive)
+    (dired-jump)
+    (dired-next-line -1)
+    (dired-find-file))
+
   ;; move files between split panes
   (setq dired-dwim-target t))
+
 (global-set-key (kbd "C-c C-j") 'dired-jump)
+(global-set-key (kbd "C-c C-n") 'dired-next)
+(global-set-key (kbd "C-c C-p") 'dired-prev)
+
 (setup-after "dired"
   (setup "wdired")
   (setup "dired-x")
@@ -319,8 +338,6 @@
 (setup "flycheck"
   (add-hook 'after-init-hook #'global-flycheck-mode)
   (unbreak-stupid-map flycheck-mode-map)
-  (define-key flycheck-mode-map (kbd "C-c C-n") 'flycheck-next-error)
-  (define-key flycheck-mode-map (kbd "C-c C-p") 'flycheck-previous-error)
   (setq flycheck-mode-line-lighter " !")
   (setq flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
 
