@@ -98,6 +98,12 @@ Stuff that doesn't work:
 
 - before-save-hooks should have a way to turn them off; probably a minor mode
 
+- delete-trailing-whitespace is super-slow and needs to be replaced
+
+- instead of normalize-unicode, we should probably turn (some? all?) diacritics into an input method, both for speed and whitespread compatibility
+
+- .dir-locals.el is super-cool and also super-retarded because it warns aobut EVERYTHING. safe-local stuff needs to go by path or something instead.
+
 ]
 
 [ regexes
