@@ -65,7 +65,7 @@
 (global-set-key (kbd "C-c R") 'vr/query-replace-from-beginning)
 
 ;; ido and smex (ido for M-x)
-(setup "ido"
+(setup "flx-ido"
   (ido-mode 1)
 
   (setq ido-enable-flex-matching t) ; fuzzy matching
