@@ -108,7 +108,18 @@ Stuff that doesn't work:
 
 - .dir-locals.el is super-cool and also super-retarded because it warns aobut EVERYTHING. safe-local stuff needs to go by path or something instead. it's probably easier to replace it with a custom minor-mode etc. that is less retarded. unfortunately, none of the existing project modes seem to conceive of wanting to run custom lisp code bundled with a project.
 
-	so I'm just gonna fork the dir-local code and advice find-file.
+	so I'm just gonna fork the dir-local code and advise find-file.
+
+	what this needs to do:
+
+	- go up and find .custom-code.el file (or stop at some reasonable point, say a .git boundary). either the files.el code works for that, or whatever projectile uses, unless it's too messy to port.
+
+	- eval the file and apply to buffer (after loading it), probably by hooking into find-file-hook (without asking stupid questions).
+
+	- provide convenient shortcuts available in the file:
+
+		- define custom macro (probably on (C-)f5 to (C-)f8)
+		- defun custom functions only available *in this buffer*, probably with something like this: <https://stackoverflow.com/questions/8008211>
 
 ]
 
