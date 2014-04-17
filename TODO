@@ -102,7 +102,13 @@ Stuff that doesn't work:
 
 - instead of normalize-unicode, we should probably turn (some? all?) diacritics into an input method, both for speed and whitespread compatibility
 
-- .dir-locals.el is super-cool and also super-retarded because it warns aobut EVERYTHING. safe-local stuff needs to go by path or something instead.
+]
+
+[ project-specific code / keybindings
+
+- .dir-locals.el is super-cool and also super-retarded because it warns aobut EVERYTHING. safe-local stuff needs to go by path or something instead. it's probably easier to replace it with a custom minor-mode etc. that is less retarded. unfortunately, none of the existing project modes seem to conceive of wanting to run custom lisp code bundled with a project.
+
+	so I'm just gonna fork the dir-local code and advice find-file.
 
 ]
 
