@@ -210,9 +210,8 @@
 ;; nested parentheses are highlighted when inside of them
 (setup "highlight-parentheses"
   (defun turn-on-highlight-parentheses () (highlight-parentheses-mode 1))
-  (add-hook 'prog-mode-hook 'turn-on-highlight-parentheses)
-  (add-hook 'enh-ruby-mode-hook 'turn-on-highlight-parentheses)
-  (add-hook 'text-mode-hook 'turn-on-highlight-parentheses))
+  (add-hook 'prog-mode-hook     'turn-on-highlight-parentheses)
+  (add-hook 'enh-ruby-mode-hook 'turn-on-highlight-parentheses))
 
 ;; copy end of line, like C-k
 (defun copy-line ()
