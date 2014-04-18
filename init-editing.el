@@ -835,11 +835,12 @@ You have:
   )
 
 ;; perspectives / workspaces (has to be loaded late)
-;; FIXME broken
+;; FIXME stupid
 ;; (setup "persp-mode"
 ;;   (setq persp-save-dir (expand-file-name "~/.emacs.d/cache/persp-confs"))
 ;;   (setq persp-set-last-persp-for-new-frames nil)
 ;;   (setq persp-auto-save-num-of-backups 10)
+;;   (setq wg-morph-on nil)
 ;;   (persp-mode t))
 
 ;; normalize unicode in buffer
