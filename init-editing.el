@@ -683,8 +683,13 @@ You have:
   (global-set-key (kbd "C-\\") 'generalized-shell-command) ; terminal bug
   )
 
-;; remove trailing whitespace on save
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
+;; remove trailing whitespace on save, unless it's a big buffer
+;; TODO make this fast so we can always run it
+(defun maybe-trim-whitespace ()
+  (when (not (> (buffer-size) 1000000))
+    (delete-trailing-whitespace)))
+
+(add-hook 'before-save-hook 'maybe-trim-whitespace)
 
 ;; highlight some whitespace
 (setup-lazy '(whitespace-mode global-whitespace-mode) "whitespace"
