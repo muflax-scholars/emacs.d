@@ -131,3 +131,15 @@ visual-regexes is cool, but is Python-based. That's mostly fine, but I either:
 - finish the Ruby port
 
 ]
+
+[ mode-line
+
+it needs to be cleaned up at some point. notably:
+
+	- move nyan-cat *after* the number, maybe even to the very end, so that tiny buffers are more useful.
+		(:eval (list (nyan-create)))
+	- clean up what part of the encoding thingies we want
+	- remove useless parentheses
+	- shorter major-mode names
+
+]
