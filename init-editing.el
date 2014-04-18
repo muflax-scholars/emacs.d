@@ -692,16 +692,16 @@ You have:
   (setq whitespace-style (quote (face tabs tab-mark))))
 
 ;; scratchpad buffers
-(setup-lazy '(scratch) "scratch"
-  (global-set-key (kbd "C-c C-b") 'scratch))
+(setup-lazy '(scratch) "scratch")
+(global-set-key (kbd "C-c C-b") 'scratch)
 
 ;; don't spam *Scratch*
 (setq initial-scratch-message nil)
 
 ;; increment / decrement thing at point
-(setup-lazy '(increment-integer-at-point decrement-integer-at-point) "increment"
-  (global-set-key (kbd "C-c C-+") 'increment-integer-at-point)
-  (global-set-key (kbd "C-c C--") 'decrement-integer-at-point))
+(setup-lazy '(increment-integer-at-point decrement-integer-at-point) "increment")
+(global-set-key (kbd "C-c C-+") 'increment-integer-at-point)
+(global-set-key (kbd "C-c C--") 'decrement-integer-at-point)
 
 ;; rotate / toggle text
 (setup-lazy '(rotate-text) "rotate-text"
