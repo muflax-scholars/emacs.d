@@ -727,6 +727,7 @@ You have:
 ;; folding
 (setup "hideshow"
   (add-hook 'enh-ruby-hook   'hs-minor-mode)
+  (add-hook 'prog-mode-hook  'hs-minor-mode)
   (add-hook 'notes-mode-hook 'hs-minor-mode))
 
 (setup-after "hideshow"
