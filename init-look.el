@@ -62,11 +62,10 @@
                    huge-font))
 (defvar current-font big-font)
 
-(defun set-window-font ()
-  (set-frame-font current-font))
+(defun set-window-font (frame)
+  (set-frame-font current-font nil (frame)))
 
-(when (pretty-load?)
-  (set-window-font))
+(add-hook 'after-make-frame-functions 'set-window-font)
 
 ;; shortcut for the fonts
 (defun use-huge-font ()
