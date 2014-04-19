@@ -4,12 +4,12 @@
 ;;   - Turkish
 ;;   - Greek (Modern)
 ;;   - Akkadian (out-dated)
+;;   - basic automatic diacritic composition (broken)
 
 (require 'quail)
 (quail-define-package
  "muflax-cyrillic" "Cyrillic (muflax)" "Я" t
  "Support for all Cyrillic-using languages muflax cares about." nil t t nil nil nil nil nil nil nil t)
-
 (quail-define-rules
  ;; straightforward mappings
  ("A" ?А)
@@ -129,7 +129,6 @@
 (quail-define-package
  "muflax-turkish" "Turkish (muflax)" "ı" t
  "Turkish alphabet." nil t t nil nil nil nil nil nil nil t)
-
 (quail-define-rules
  ;; straightforward
  ("a" ?a)
@@ -199,7 +198,6 @@
 (quail-define-package
   "muflax-greek" "Greek (muflax)" "ω" t
   "Support for all Greek-using languages muflax cares about." nil t t nil nil nil nil nil nil nil t)
-
 (quail-define-rules
  ("A" ?Α)
  ("B" ?Β)
@@ -559,5 +557,15 @@
  ("uz2" ?𒍑)
  ("uz3" ?𒍚)
 )
+
+;; FIXME not working yet, just putting a placeholder here
+(quail-define-package
+ "muflax-latin" "Latin (muflax)" "^" t
+ "Auto-convert diacritics." nil t t nil nil nil nil nil nil nil t)
+(quail-define-rules
+ ("ä" ?ä)
+ ("Ä" ?Ä)
+ )
+
 
 (provide 'custom-input-methods)
