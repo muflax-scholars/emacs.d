@@ -854,7 +854,7 @@ You have:
   "Normalize Unicode in buffer to NFKC form."
   (interactive)
   (save-excursion
-    (ucs-normalize-NFKC-region (point-min) (point-max))))
+    (ucs-normalize-NFC-region (point-min) (point-max))))
 
 ;; normalize buffer before saving
 (add-hook 'before-save-hook 'normalize-unicode-in-buffer)
