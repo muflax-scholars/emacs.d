@@ -13,6 +13,23 @@
 (scroll-bar-mode -1)
 (set-fringe-mode '(1 . 10))
 
+;; selective hooks for either terminals or X windows
+(defvar after-make-console-frame-hooks '()
+  "Hooks to run after creating a new TTY frame")
+(defvar after-make-window-system-frame-hooks '()
+  "Hooks to run after creating a new window-system frame")
+
+(defun run-after-make-frame-hooks (frame)
+  "Selectively run either `after-make-console-frame-hooks' or
+  `after-make-window-system-frame-hooks'"
+  (select-frame frame)
+  (run-hooks (if window-system
+                 'after-make-window-system-frame-hooks
+               'after-make-console-frame-hooks)))
+
+(add-hook 'after-make-frame-functions 'run-after-make-frame-hooks)
+(add-hook 'after-init-hook (lambda () (run-after-make-frame-hooks (selected-frame))))
+
 ;; color themes
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 
@@ -62,10 +79,10 @@
                    huge-font))
 (defvar current-font big-font)
 
-(defun set-window-font (frame)
-  (set-frame-font current-font nil (frame)))
+(defun set-window-font ()
+  (set-frame-font current-font))
 
-(add-hook 'after-make-frame-functions 'set-window-font)
+(add-hook 'after-make-window-system-frame-hooks 'set-window-font)
 
 ;; shortcut for the fonts
 (defun use-huge-font ()
