@@ -196,4 +196,11 @@
   (setup-after "whole-line-or-region"  (diminish 'whole-line-or-region-mode))
   (setup-after "yasnippet"             (diminish 'yas-minor-mode)))
 
+;; clean up way-too-long major modes
+(add-hook 'emacs-lisp-mode-hook (lambda () (setq mode-name "EL")))
+(setup-after "ruby-mode"
+  (add-hook 'ruby-mode-hook (lambda () (setq mode-name "RB"))))
+(setup-after "enh-ruby-mode"
+  (add-hook 'enh-ruby-mode-hook (lambda () (setq mode-name "RB+"))))
+
 (provide 'init-look)
