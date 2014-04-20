@@ -257,6 +257,7 @@
   (setup "dired-x")
   (setup "dired-details")
   (setup "dired-details+")
+  (setup "dired-open")
 
   ;; don't ask for confirmation
   (setq dired-no-confirm t)
@@ -305,7 +306,14 @@
         (progn (revert-buffer) ; otherwise just revert to re-show
                (set (make-local-variable 'dired-dotfiles-show-p) t)))))
 
-  (define-key dired-mode-map (kbd ".") 'dired-dotfiles-toggle))
+  (define-key dired-mode-map (kbd ".") 'dired-dotfiles-toggle)
+
+  ;; open by extension
+  (setq dired-open-extensions '(
+                               ("pdf"  . "zathura")
+                               ("djvu" . "zathura")
+                               ))
+  )
 
 ;; eldoc, ie function signatures in the minibuffer
 (setup-lazy '(turn-on-eldoc-mode) "eldoc"
