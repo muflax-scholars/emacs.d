@@ -243,7 +243,8 @@
   ;; move files between split panes
   (setq dired-dwim-target t)
 
-  ;; less confirmations
+  ;; don't ask for confirmation in most situations
+  (setq dired-no-confirm t)
   (setq dired-recursive-copies 'always)
   (setq dired-recursive-deletes 'top)
   )
@@ -259,8 +260,6 @@
   (setup "dired-details+")
   (setup "dired-open")
 
-  ;; don't ask for confirmation
-  (setq dired-no-confirm t)
   ;; reload dired after making changes
   (--each '(dired-do-rename
             dired-do-copy
