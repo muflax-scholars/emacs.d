@@ -819,6 +819,9 @@ With two \\[universal-argument] prefixes (i.e., when ARG is 16), decrease the in
   ;; Ruby/C-style tab width
   (setq tab-width 2)
 
+  ;; don't insert final newline by default
+  (setq require-final-newline nil)
+
   ;; comments
   (set (make-local-variable 'comment-start)      "#")
   (set (make-local-variable 'comment-start-skip) "#+ *")
