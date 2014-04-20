@@ -11,6 +11,7 @@
   (define-key yas-minor-mode-map [(tab)] nil)
   (define-key yas-minor-mode-map (kbd "TAB") nil)
   (setq yas-indent-line 'fixed)
+  (define-key yas-minor-mode-map (kbd "C-c C-o") 'yas-reload-all)
   (yas-global-mode 1))
 
 ;; auto-yasnippet
