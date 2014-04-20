@@ -173,6 +173,7 @@
 
 ;; clean up modeline and hide standard minor modes
 (setup "diminish"
+  (setup-after "abbrev"                (diminish 'abbrev-mode))
   (setup-after "auto-complete"         (diminish 'auto-complete-mode))
   (setup-after "autorevert"            (diminish 'auto-revert-mode))
   (setup-after "eldoc"                 (diminish 'eldoc-mode))
