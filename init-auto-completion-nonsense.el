@@ -2,7 +2,11 @@
 
 ;; snippets
 (setup "yasnippet"
-  (setq yas-snippet-dirs "~/.emacs.d/snippets")
+  (setq yas-snippet-dirs
+        '(
+          "~/.emacs.d/snippets"
+          "~/spoiler/languages/.snippets"
+          ))
   (define-key yas-minor-mode-map (kbd "C-o") 'yas-expand)
   (define-key yas-minor-mode-map [(tab)] nil)
   (define-key yas-minor-mode-map (kbd "TAB") nil)
