@@ -241,7 +241,12 @@
     (dired-find-file))
 
   ;; move files between split panes
-  (setq dired-dwim-target t))
+  (setq dired-dwim-target t)
+
+  ;; less confirmations
+  (setq dired-recursive-copies 'always)
+  (setq dired-recursive-deletes 'top)
+  )
 
 (global-set-key (kbd "C-c C-j") 'dired-jump)
 (global-set-key (kbd "C-c C-n") 'dired-next)
