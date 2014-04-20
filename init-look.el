@@ -202,5 +202,6 @@
   (add-hook 'ruby-mode-hook (lambda () (setq mode-name "RB"))))
 (setup-after "enh-ruby-mode"
   (add-hook 'enh-ruby-mode-hook (lambda () (setq mode-name "RB+"))))
+(add-hook 'shell-mode-hook (lambda () (setq mode-name "sh")))
 
 (provide 'init-look)
