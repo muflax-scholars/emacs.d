@@ -3,7 +3,7 @@
 ;; snippets
 (setup "yasnippet"
   (setq yas-snippet-dirs "~/.emacs.d/snippets")
-  (define-key yas-minor-mode-map (kbd "C-$") 'yas-expand)
+  (define-key yas-minor-mode-map (kbd "C-o") 'yas-expand)
   (define-key yas-minor-mode-map [(tab)] nil)
   (define-key yas-minor-mode-map (kbd "TAB") nil)
   (yas-global-mode 1))

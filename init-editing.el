@@ -384,7 +384,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
   (interactive)
   (end-of-line)
   (newline-and-indent))
-(global-set-key "\C-o" 'next-newline-and-indent)
+(global-set-key (kbd "C-O") 'next-newline-and-indent)
 
 ;; delete spaces when killing a line
 (defun kill-and-join-forward (&optional arg)
