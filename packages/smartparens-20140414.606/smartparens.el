@@ -821,14 +821,12 @@ See also `sp-skip-closing-pair'."
           (const :tag "Always skip closing delimiter if at the end of sexp" always-end)
           (const :tag "Always skip closing delimiter" always))
   :group 'smartparens)
-(make-variable-buffer-local 'sp-autoskip-closing-pair)
 
 (defcustom sp-autoskip-opening-pair nil
   "If non-nil, skip into the following string-like expression
 instead of inserting a new pair."
   :type 'boolean
   :group 'smartparens)
-(make-variable-buffer-local 'sp-autoskip-opening-pair)
 
 (defcustom sp-cancel-autoskip-on-backward-movement t
   "If non-nil, autoskip of closing pair is cancelled not only
