@@ -7,13 +7,47 @@
           "~/.emacs.d/snippets"
           "~/spoiler/languages/.snippets"
           ))
+
+  ;; saner trigger key
   (define-key yas-minor-mode-map (kbd "C-o") 'yas-expand)
+  (define-key yas-minor-mode-map (kbd "M-o") 'yas-insert-snippet)
   (define-key yas-keymap (kbd "C-o") 'yas-next-field-or-maybe-expand)
   (define-key yas-keymap (kbd "C-O") 'yas-next-field)
   (define-key yas-minor-mode-map [(tab)] nil)
   (define-key yas-minor-mode-map (kbd "TAB") nil)
-  (setq yas-indent-line 'fixed)
+  (define-key yas-keymap (kbd "<return>") 'yas/exit-all-snippets)
+
+  ;; quick reloads
   (define-key yas-minor-mode-map (kbd "C-c C-o") 'yas-reload-all)
+
+  ;; Inter-field navigation
+  (defun yas/goto-end-of-active-field ()
+    (interactive)
+    (let* ((snippet (car (yas--snippets-at-point)))
+           (position (yas--field-end (yas--snippet-active-field snippet))))
+      (if (= (point) position)
+          (move-end-of-line 1)
+        (goto-char position))))
+
+  (defun yas/goto-start-of-active-field ()
+    (interactive)
+    (let* ((snippet (car (yas--snippets-at-point)))
+           (position (yas--field-start (yas--snippet-active-field snippet))))
+      (if (= (point) position)
+          (move-beginning-of-line 1)
+        (goto-char position))))
+
+  (define-key yas-keymap (kbd "C-e") 'yas/goto-end-of-active-field)
+  (define-key yas-keymap (kbd "C-a") 'yas/goto-start-of-active-field)
+
+  ;; options
+  (setq yas-indent-line 'fixed)
+  (setq yas-verbosity 1)
+  (setq yas-wrap-around-region t)
+
+  ;; no dropdowns
+  (setq yas-prompt-functions '(yas/ido-prompt yas/completing-prompt))
+
   (yas-global-mode 1))
 
 ;; auto-yasnippet
