@@ -737,6 +737,12 @@ You have:
     (define-key global-map (kbd "C-c f")   'hs-hide-level)
     (define-key global-map (kbd "C-c F")   'fold-dwim-show-all)))
 
+;; parenthesis highlighting behavior
+(show-paren-mode 1)
+(setq blink-matching-paren-distance nil)
+(setq show-paren-style 'parenthesis)
+(setq show-paren-delay 0)
+
 ;; smart parentheses
 (setup "smartparens-config"
   (smartparens-global-mode t)
@@ -747,30 +753,22 @@ You have:
   (setq sp-autoskip-closing-pair nil)
   (setq sp-cancel-autoskip-on-backward-movement nil)
   (setq sp-autodelete-pair nil)
-  ;; parenthesis highlighting behavior
-  (show-paren-mode 1)
-  (setq blink-matching-paren-distance nil)
-  (setq show-paren-style 'parenthesis)
-  (setq show-paren-delay 0)
+
   ;; keybindings
   (define-key sp-keymap (kbd "C-M-f")         'sp-forward-sexp)
   (define-key sp-keymap (kbd "C-M-b")         'sp-backward-sexp)
   (define-key sp-keymap (kbd "M-f")           'sp-forward-symbol)
   (define-key sp-keymap (kbd "M-b")           'sp-backward-symbol)
-  (define-key sp-keymap (kbd "C-S-a")         'sp-beginning-of-sexp)
-  (define-key sp-keymap (kbd "C-S-d")         'sp-end-of-sexp)
+
   (define-key sp-keymap (kbd "C-M-k")         'sp-kill-sexp)
   (define-key sp-keymap (kbd "C-M-w")         'sp-copy-sexp)
-  (define-key sp-keymap (kbd "C-<left>")      'sp-add-to-next-sexp)
-  (define-key sp-keymap (kbd "C-<right>")     'sp-add-to-previous-sexp)
+
   (define-key sp-keymap (kbd "M-<delete>")    'sp-unwrap-sexp)
   (define-key sp-keymap (kbd "M-<backspace>") 'sp-backward-unwrap-sexp)
-  (define-key sp-keymap (kbd "C-c k")         'sp-splice-sexp)
+
   (define-key sp-keymap (kbd "C-c C-k")       'sp-rewrap-sexp)
   (define-key sp-keymap (kbd "S-<left>")      'sp-select-previous-thing)
   (define-key sp-keymap (kbd "S-<right>")     'sp-select-next-thing)
-  (define-key sp-keymap (kbd "C-c |")         'sp-split-sexp)
-  (define-key sp-keymap (kbd "C-c C-|")       'sp-join-sexp)
 
   ;; move to beginning of text on line
   (defun sp-kill-to-end-of-sexp ()
