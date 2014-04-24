@@ -141,3 +141,18 @@ it needs to be cleaned up at some point. notably:
 	- shorter major-mode names
 
 ]
+
+[ notes-mode
+
+	After using Go and gofmt for a while, I've been thoroughly convinced of the value of automatic, deterministic formatting. As concise as meaningful indentation can be, it's a pain to write, maintain (ugh copying code) and just drains attention. Go the Lisp way with paren-stacks, if you wanna be concise, maybe, but not-ever-thinking-about-formatting is just too valuable just to save a few lines sometimes.
+
+	(Also, explicit block ends make many things easier, and I'm not sure they're necessarily a bad thing, close-paren pyramids be damned.)
+
+	So notes-mode needs automatic indentation too:
+
+	- force-indent inside grab brackets
+	- [ how to indent lists?
+			I could introduce a syntax like this item. Or an "list ends here" character. Dunno yet.
+		]
+
+]
