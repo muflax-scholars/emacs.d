@@ -2,7 +2,7 @@ Stuff that doesn't work:
 
 [ projects
 
-- Either persp-mode should work (it had funky issues with window restoration) or independent emacs instances should be fully usable and snappy.
+- Either persp-mode should work or independent emacs instances should be fully usable and snappy.
 
 	If independent Emacs was really snappy (particularly in the shell), I could finally stop using the hacky server setup. Notably, it's missing:
 
@@ -47,10 +47,8 @@ Stuff that doesn't work:
 [ file navigation
 
 - eventually, Emacs should replace mc:
-	- actions based on file extensions
 	- quick start (maybe make the init.el more modular, so terminal instances don't load look.el etc.)
 	- panes
-	- trash
 	- quick jump to terminal
 	- make zsh suspend painless, or run some eshell thingy, or something
 
@@ -92,13 +90,13 @@ Stuff that doesn't work:
 
 - minimap is unusable at the moment, mostly because it's either slow (minimap.el version) or super flickery (sublimity version)
 
-- breadcrumbs at completely unusable and the code is a mess, but automatic "get me back to where I was a moment ago" is badly needed
+- breadcrumbs is completely unusable and the code is a mess, but automatic "get me back to where I was a moment ago" is badly needed
 
 - before-save-hooks should have a way to turn them off; probably a minor mode
 
 - delete-trailing-whitespace is super-slow and needs to be replaced
 
-- instead of normalize-unicode, we should probably turn (some? all?) diacritics into an input method, both for speed and whitespread compatibility
+- instead of normalize-unicode, we should probably turn (some? all?) diacritics into an input method, both for speed and general compatibility
 
 ]
 
