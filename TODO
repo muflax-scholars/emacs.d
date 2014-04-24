@@ -154,5 +154,19 @@ it needs to be cleaned up at some point. notably:
 	- [ how to indent lists?
 			I could introduce a syntax like this item. Or an "list ends here" character. Dunno yet.
 		]
+	(- something like this
+	 - maybe?
+	 -)
+
+	(- single item list
+	 -)
+
+	( 'nother style
+	)
+
+	( same style
+	- with multiple
+	- items
+	)
 
 ]
