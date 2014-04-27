@@ -894,4 +894,13 @@ You have:
 
 (setup-lazy '(keyboard-cat-mode) "keyboard-cat-mode")
 
+(defun compact-blank-lines ()
+  "replace multiple blank lines with a single one"
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (while (re-search-forward "\\(^\\s-*$\\)\n" nil t)
+      (replace-match "\n")
+      (forward-char 1))))
+
 (provide 'init-editing)
