@@ -135,10 +135,10 @@
     (deactivate-mark))
   (call-interactively 'isearch-backward-regexp))
 
-(global-set-key (kbd "C-s")   'isearch-forward-use-region)
-(global-set-key (kbd "C-r")   'isearch-backward-use-region)
-(global-set-key (kbd "C-S-s") 'isearch-forward-regexp)
-(global-set-key (kbd "C-S-r") 'isearch-backward-regexp)
+(global-set-key (kbd "C-s") 'isearch-forward-use-region)
+(global-set-key (kbd "C-r") 'isearch-backward-use-region)
+(global-set-key (kbd "C-S") 'isearch-forward-regexp)
+(global-set-key (kbd "C-R") 'isearch-backward-regexp)
 ;; make backspace more intuitive
 (define-key isearch-mode-map (kbd "<backspace>") 'isearch-del-char)
 
