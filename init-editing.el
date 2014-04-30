@@ -569,8 +569,8 @@ See the variable `align-rules-list' for more details.")
 (defun kill-without-append (&optional arg)
   "kills line (region or whole) without appending it to the last kill"
   (interactive "P")
-  (whole-line-or-region-kill-region arg)
-  (setq last-command nil))
+  (setq last-command nil)
+  (whole-line-or-region-kill-region arg))
 
 (defun blank-line ()
   "intelligently blanks the line"
