@@ -227,10 +227,6 @@
     (kill-ring-save (mark) (point))))
 (global-set-key "\M-k" 'copy-line)
 
-;; append to last kill
-;; (global-set-key (kbd "C-c C-w") (lambda () (interactive) (append-next-kill) (whole-line-or-region-kill-region 0)))
-;; (global-set-key (kbd "C-c w")   (lambda () (interactive) (append-next-kill) (whole-line-or-region-kill-ring-save)))
-
 ;; move to beginning of text on line
 (defun smart-beginning-of-line ()
   "Move point to first non-whitespace character or beginning-of-line.
@@ -405,8 +401,8 @@ If visual-line-mode is on, then also jump to beginning of real line."
   (defun literal-delete-backward-char (&optional arg)
     (interactive "P")
     (delete-backward-char 1))
-  (global-set-key (kbd "C-d") 'literal-delete-char)
-  (global-set-key (kbd "M-d") 'literal-delete-backward-char))
+  (global-set-key (kbd "<S-delete>") 'literal-delete-char)
+  (global-set-key (kbd "<S-backspace>") 'literal-delete-backward-char))
 
 ;; spell checker
 (setup "wcheck-mode"
@@ -569,6 +565,36 @@ See the variable `align-rules-list' for more details.")
           (yank whole-line-or-region-yank nil)
           ))
   (whole-line-or-region-mode 1))
+
+(defun kill-without-append (&optional arg)
+  "kills line (region or whole) without appending it to the last kill"
+  (interactive "P")
+  (whole-line-or-region-kill-region arg)
+  (setq last-command nil))
+
+(defun blank-line ()
+  "intelligently blanks the line"
+  (interactive)
+  (smart-beginning-of-line)
+  (kill-line))
+
+(defun kill-with-append (&optional arg)
+  "kills line (region or whole) and appends it to last kill"
+  (interactive "P")
+  (append-next-kill)
+  (whole-line-or-region-kill-region arg))
+
+(defun copy-with-append (&optional arg)
+  "kills line (region or whole) and appends it to last kill"
+  (interactive "P")
+  (append-next-kill)
+  (whole-line-or-region-kill-ring-save arg))
+
+(global-set-key (kbd "C-d")     'kill-without-append)
+(global-set-key (kbd "M-d")     'blank-line)
+(global-set-key (kbd "C-c C-w") 'kill-with-append)
+(global-set-key (kbd "C-c w")   'copy-with-append)
+
 
 ;; tramp (remote files)
 (setup-after "tramp"
