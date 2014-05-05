@@ -563,9 +563,12 @@
  "muflax-latin" "Latin (muflax)" "^" t
  "Auto-convert diacritics." nil t t nil nil nil nil nil nil nil t)
 (quail-define-rules
- ("ä" ?ä)
- ("Ä" ?Ä)
+ ("ä" ?ä)
+ ("Ä" ?Ä)
  )
 
-
 (provide 'custom-input-methods)
+
+;; Local Variables:
+;; before-save-hook: ()
+;; End:
