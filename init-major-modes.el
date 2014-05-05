@@ -32,6 +32,10 @@
   (add-hook 'c++-mode-hook 'c-turn-on-eldoc-mode)
   (add-hook 'c-mode-hook 'c-turn-on-eldoc-mode))
 
+;; show what function we're in
+(setup "which-func"
+  (which-function-mode 1))
+
 ;; use automatic file headers
 ;; #TODO recognize name automagically
 ;; #TODO add end-of-buffer
