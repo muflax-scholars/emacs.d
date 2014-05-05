@@ -832,7 +832,7 @@ With two \\[universal-argument] prefixes (i.e., when ARG is 16), decrease the in
   (set (make-local-variable 'font-lock-defaults)
        '(notes-mode-font-lock-keywords))
 
-  ;; no syntax can stretch multiple lines
+  ;; no syntax can stretch multiple lines, which speeds up the font-lock
   (set (make-local-variable 'font-lock-multiline) nil)
 
   ;; make filling work with lists and annotations
