@@ -67,6 +67,7 @@
 ;; ido and smex (ido for M-x)
 (setup "flx-ido"
   (ido-mode 1)
+  (flx-ido-mode 1)
 
   (setq ido-enable-flex-matching t) ; fuzzy matching
   (setq ido-use-filename-at-point nil)
