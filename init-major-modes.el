@@ -355,6 +355,7 @@
   (add-hook 'after-init-hook #'global-flycheck-mode)
   (unbreak-stupid-map flycheck-mode-map)
   (setq flycheck-mode-line-lighter " !")
+  (setq flycheck-indication-mode 'right-fringe)
   (setq flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
 
 ;; disable version control in emacs because it just bloats the mode-line
