@@ -1,0 +1,1 @@
+/home/amon/src/emacs/go-mode.el/
