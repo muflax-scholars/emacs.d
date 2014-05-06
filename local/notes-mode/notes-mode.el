@@ -591,14 +591,6 @@ Return a list of the form (begin end indent nonlist-indent). If the point is not
 
 ;; Indentation
 
-(defun notes-indent-find-next-position (cur-pos positions)
-  "Return the position after the index of CUR-POS in POSITIONS."
-  (if (not (equal cur-pos 0))
-      (while (and positions
-                  (not (equal cur-pos (car positions))))
-        (setq positions (cdr positions))))
-  (or (cadr positions) 0))
-
 (defun notes-indent-line ()
   "Indent the current line using some heuristics.
 If the _previous_ command was `notes-indent-line', then we should cycle to the next reasonable indentation position.
@@ -611,6 +603,15 @@ Otherwise, we could have been called directly by `notes-enter-key' or indirectly
         (indent-line-to (car positions))
       (indent-line-to
        (notes-indent-find-next-position cur-pos positions)))))
+
+(defun notes-indent-find-next-position (cur-pos positions)
+  "Return the position after the index of CUR-POS in POSITIONS."
+  (if (not (equal cur-pos 0))
+      (while (and positions
+                  (not (equal cur-pos (car positions))))
+        (setq positions (cdr positions))))
+  (or (cadr positions) 0))
+
 
 (defun notes-calc-indents ()
   "Return a list of indentation columns to cycle through.
