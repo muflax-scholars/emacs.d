@@ -273,7 +273,6 @@ If visual-line-mode is on, then also jump to beginning of real line."
          (insert (expand-file-name filename)))
         (t
          (insert (file-relative-name filename)))))
-(global-set-key "\C-c\C-i" 'insert-file-name)
 
 ;; unique buffer names
 (setup "uniquify"
@@ -793,19 +792,37 @@ You have:
   (setq sp-cancel-autoskip-on-backward-movement nil)
   (setq sp-autodelete-pair nil)
 
-  ;; keybindings
-  (define-key sp-keymap (kbd "C-M-f")         'sp-forward-sexp)
-  (define-key sp-keymap (kbd "C-M-b")         'sp-backward-sexp)
-  (define-key sp-keymap (kbd "M-f")           'sp-forward-symbol)
-  (define-key sp-keymap (kbd "M-b")           'sp-backward-symbol)
+  ;; navigation
+  (define-key sp-keymap (kbd "C-c a") 'sp-beginning-of-sexp)
+  (define-key sp-keymap (kbd "C-c e") 'sp-end-of-sexp)
+  (define-key sp-keymap (kbd "C-M-f") 'sp-forward-sexp)
+  (define-key sp-keymap (kbd "C-M-b") 'sp-backward-sexp)
+  (define-key sp-keymap (kbd "M-f")   'sp-forward-symbol)
+  (define-key sp-keymap (kbd "M-b")   'sp-backward-symbol)
 
-  (define-key sp-keymap (kbd "C-M-k")         'sp-kill-sexp)
-  (define-key sp-keymap (kbd "C-M-w")         'sp-copy-sexp)
+  ;; killing
+  (define-key sp-keymap (kbd "C-c C-a") 'sp-kill-to-beginning-of-sexp)
+  (define-key sp-keymap (kbd "C-c C-e") 'sp-kill-to-end-of-sexp)
+  (define-key sp-keymap (kbd "C-c M-a") 'sp-copy-to-beginning-of-sexp)
+  (define-key sp-keymap (kbd "C-c M-e") 'sp-copy-to-end-of-sexp)
+  (define-key sp-keymap (kbd "C-c M-e") 'sp-copy-to-end-of-sexp)
+  (define-key sp-keymap (kbd "C-M-k")   'sp-kill-sexp)
+  (define-key sp-keymap (kbd "C-M-w")   'sp-copy-sexp)
 
+  ;; wrapping
   (define-key sp-keymap (kbd "M-<delete>")    'sp-unwrap-sexp)
   (define-key sp-keymap (kbd "M-<backspace>") 'sp-backward-unwrap-sexp)
-
   (define-key sp-keymap (kbd "C-c C-k")       'sp-rewrap-sexp)
+
+  ;; adjusting
+  (define-key sp-keymap (kbd "C-c C-<tab>") 'sp-indent-adjust-sexp)
+  (define-key sp-keymap (kbd "C-c <tab>")   'sp-dedent-adjust-sexp)
+
+  ;; narrowing
+  (define-key sp-keymap (kbd "C-x n s") 'sp-narrow-to-sexp)
+  ;; TODO generalize C-( to narrow-or-region
+  (define-key sp-keymap (kbd "C-(")     'sp-narrow-to-sexp)
+  (define-key sp-keymap (kbd "C-)")     'widen)
 
   ;; move to beginning of text on line
   (defun sp-kill-to-end-of-sexp ()
@@ -839,24 +856,6 @@ You have:
       (set-mark (point))
       (sp-beginning-of-sexp)
       (kill-ring-save (mark) (point))))
-
-  ;; navigation
-  (define-key sp-keymap (kbd "C-c a") 'sp-beginning-of-sexp)
-  (define-key sp-keymap (kbd "C-c e") 'sp-end-of-sexp)
-
-  ;; killing
-  (define-key sp-keymap (kbd "C-c C-a") 'sp-kill-to-beginning-of-sexp)
-  (define-key sp-keymap (kbd "C-c C-e") 'sp-kill-to-end-of-sexp)
-  (define-key sp-keymap (kbd "C-c M-a") 'sp-copy-to-beginning-of-sexp)
-  (define-key sp-keymap (kbd "C-c M-e") 'sp-copy-to-end-of-sexp)
-  (define-key sp-keymap (kbd "C-c M-e") 'sp-copy-to-end-of-sexp)
-
-  ;; narrowing
-  (define-key sp-keymap (kbd "C-x n s") 'sp-narrow-to-sexp)
-
-  ;; TODO generalize C-( to narrow-or-region
-  (define-key sp-keymap (kbd "C-(") 'sp-narrow-to-sexp)
-  (define-key sp-keymap (kbd "C-)") 'widen)
 
   ;; markdown-mode
   (sp-with-modes '(markdown-mode)
