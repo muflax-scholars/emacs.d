@@ -256,6 +256,18 @@
 
 ;; Parsing
 
+(defconst notes-regex-grab-bracket-square-start
+  "^\\([ \t]*\\)\\[\\([ \t]+[^]\n]*\\)?$")
+
+(defconst notes-regex-grab-bracket-wiggly-start
+  "^\\([ \t]*\\){\\([ \t]+[^}\n]*\\)?$")
+
+(defconst notes-regex-grab-bracket-square-stop
+  "^\\([ \t]*\\)\\][ \t]*$")
+
+(defconst notes-regex-grab-bracket-wiggly-stop
+  "^\\([ \t]*\\)}[ \t]*$")
+
 (defconst notes-regex-header
   "^\\([ \t]*\\)\\([\\[{][ \t]+\\)\\(.+\\)")
 
@@ -376,27 +388,36 @@ If we are at the last line, then consider the next line to be blank."
       (forward-line 1)
       (notes-cur-line-blank-p))))
 
-(defun notes-prev-line-indent-p ()
-  "Return t if the previous line is indented and nil otherwise."
-  (save-excursion
-    (forward-line -1)
-    (goto-char (point-at-bol))
-    (if (re-search-forward "^\\s " (point-at-eol) t) t)))
-
 (defun notes-cur-line-indent ()
   "Return the number of leading whitespace characters in the current line."
   (save-excursion
     (goto-char (point-at-bol))
-    (re-search-forward "^\\s +" (point-at-eol) t)
+    (re-search-forward "^[ \t]*" (point-at-eol) t)
     (current-column)))
 
 (defun notes-prev-line-indent ()
   "Return the number of leading whitespace characters in the previous line."
   (save-excursion
-    (forward-line -1)
-    (when (notes-cur-line-blank-p)
-      (forward-line -1))
-    (notes-cur-line-indent)))
+    (cond
+     ((> (line-number-at-pos) 1)
+      (forward-line -1)
+      (while (and (notes-cur-line-blank-p) (not (bobp)))
+        (forward-line -1))
+
+      (cond
+       ;; blocks force increased indentation
+       ((re-search-forward notes-regex-grab-bracket-square-start
+                           (point-at-eol) t)
+        (- (+ (match-end 1) tab-width) 1))
+       ((re-search-forward notes-regex-grab-bracket-wiggly-start
+                           (point-at-eol) t)
+        (- (+ (match-end 1) tab-width) 1))
+
+       ;; otherwise preserve indentation
+       (t (notes-cur-line-indent))))
+
+     ;; default to 0
+     (t 0))))
 
 (defun notes-next-line-indent ()
   "Return the number of leading whitespace characters in the next line."
@@ -613,34 +634,61 @@ Otherwise, we could have been called directly by `notes-enter-key' or indirectly
   (or (cadr positions) 0))
 
 
+(defun notes-indent-of-block (pos type-of-block)
+  "Returns indentation of beginning of last block."
+  (save-excursion
+    (goto-char pos)
+
+    (let ((regex (cond
+                  ((equal type-of-block "[")
+                   notes-regex-grab-bracket-square-start)
+                  ((equal type-of-block "{")
+                   notes-regex-grab-bracket-wiggly-start))))
+
+      (catch 'break
+        (when (> (line-number-at-pos) 1)
+
+          (while (not (equal (point) (point-min)))
+            (forward-line -1)
+            (goto-char (point-at-bol))
+
+            (when (re-search-forward regex (point-at-eol) t)
+              (throw 'break (- (match-end 1) 1)))))
+
+        ;; default to 0
+        0))))
+
 (defun notes-calc-indents ()
   "Return a list of indentation columns to cycle through.
 The first element in the returned list should be considered the default indentation level."
   (let (pos prev-line-pos positions)
 
-    ;; first column
-    (setq positions (cons 0 positions))
-
-    ;; previous line indent
+    ;; figure out last line indent
     (setq prev-line-pos (notes-prev-line-indent))
-    (setq positions (cons prev-line-pos positions))
+    (setq pos
+          (save-excursion
+            (goto-char (point-at-bol))
+            (cond
+             ;; ends of block have a definite end
+             ((looking-at notes-regex-grab-bracket-square-stop)
+              (notes-indent-of-block (point) "["))
+             ((looking-at notes-regex-grab-bracket-wiggly-stop)
+              (notes-indent-of-block (point) "{"))
+
+             ;; follow last line
+             (t prev-line-pos))))
+
+    (setq positions (cons pos positions))
 
     ;; previous non-list-marker indent (+ tab-width)
     (when (setq pos (notes-prev-non-list-indent))
-      (setq positions (cons pos positions))
-      (setq positions (cons (+ pos tab-width) positions))
-      )
+      (setq positions (cons pos positions)))
 
-    ;; indentation of the previous line + tab-width
-    (if prev-line-pos
-        (setq positions (cons (+ prev-line-pos tab-width) positions))
-      (setq positions (cons tab-width positions)))
-
-    ;; indentation of the previous line - tab-width
+    ;; indentation of the previous line - tab-width (to get out of a list)
     (if (and prev-line-pos (> prev-line-pos tab-width))
         (setq positions (cons (- prev-line-pos tab-width) positions)))
 
-    ;; indentation of preceeding list item
+    ;; indentation of preceeding list item (to continue a list item)
     (setq pos
           (save-excursion
             (forward-line -1)
@@ -653,6 +701,8 @@ The first element in the returned list should be considered the default indentat
               nil)))
     (if (and pos (not (eq pos prev-line-pos)))
         (setq positions (cons pos positions)))
+
+    (message "%s" positions)
 
     (delete-dups (reverse positions))))
 
@@ -790,6 +840,10 @@ With two \\[universal-argument] prefixes (i.e., when ARG is 16), decrease the in
        '(
          (nil "^[[{] \\(.+\\)$" 1)
          ))
+
+  ;; indentation
+  (set (make-local-variable 'indent-line-function) #'notes-indent-line)
+
   )
 
 (provide 'notes-mode)
