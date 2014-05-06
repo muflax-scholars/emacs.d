@@ -375,12 +375,23 @@ If visual-line-mode is on, then also jump to beginning of real line."
   (replace-regexp "\\([^\n]\\)\n\\([^ *\\>-\n]\\)" "\\1 \\2" nil begin end))
 (global-set-key "\M-Q" 'unfill-region)
 
-;; insert new line *after* the current one
 (defun next-newline-and-indent ()
+  "Insert new line *after* the current one."
   (interactive)
   (end-of-line)
   (newline-and-indent))
 (global-set-key (kbd "C-O") 'next-newline-and-indent)
+
+(defun duplicate-line ()
+  "Duplicate current line."
+  (interactive)
+  (save-excursion
+    (setq line (thing-at-point 'line))
+    (end-of-line)
+    (forward-line)
+    (insert line))
+  (next-line))
+(global-set-key (kbd "C-<return>") 'duplicate-line)
 
 ;; delete spaces when killing a line
 (defun kill-and-join-forward (&optional arg)
