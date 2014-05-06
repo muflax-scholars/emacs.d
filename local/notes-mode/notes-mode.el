@@ -615,7 +615,6 @@ With two \\[universal-argument] prefixes (i.e., when ARG is 16), decrease the in
     (define-key map "\M-i" 'notes-shifttab)
     ;; Lists
     (define-key map (kbd "S-<return>") 'notes-insert-list-item)
-    (define-key map (kbd "C-<return>") 'notes-insert-list-item)
     ;; Misc
     (define-key map (kbd "C-v +") (lambda () (interactive) (notes-find-annotations "+")))
     (define-key map (kbd "C-v ?") (lambda () (interactive) (notes-find-annotations "?")))
