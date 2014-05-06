@@ -235,7 +235,7 @@ Move point to the first non-whitespace character on this line. If point was
 already at that position, move point to beginning of line.
 
 If visual-line-mode is on, then also jump to beginning of real line."
-  (interactive) ; Use (interactive "^") in Emacs 23 to make shift-select work
+  (interactive)
   (let ((oldpos (point))
         (vispos (point)))
 
@@ -252,7 +252,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
 
 (defun smart-end-of-line ()
   "Move point to end of visual line or, if already there, to end of logical line."
-  (interactive) ; Use (interactive "^") in Emacs 23 to make shift-select work
+  (interactive)
   (let ((oldpos (point)))
 
     (end-of-visual-line)
@@ -665,10 +665,12 @@ See the variable `align-rules-list' for more details.")
 (setup "winner"
   (winner-mode 1))
 
-;; expand-region
-(setup-lazy '(er/expand-region er/contract-region) "expand-region")
-(global-set-key (kbd "<C-prior>") 'er/expand-region)
-(global-set-key (kbd "<C-next>")  'er/contract-region)
+;; expand-region to mark stuff
+(setup  "expand-region"
+  (global-set-key (kbd "<C-prior>") 'er/expand-region)
+  (global-set-key (kbd "<C-next>")  'er/contract-region)
+  (global-set-key (kbd "S-<left>")  'er/mark-defun)
+  (global-set-key (kbd "S-<right>") 'er/mark-symbol))
 
 ;; make zsh aliases work
 (setup "shell-command"
@@ -793,8 +795,6 @@ You have:
   (define-key sp-keymap (kbd "M-<backspace>") 'sp-backward-unwrap-sexp)
 
   (define-key sp-keymap (kbd "C-c C-k")       'sp-rewrap-sexp)
-  (define-key sp-keymap (kbd "S-<left>")      'sp-select-previous-thing)
-  (define-key sp-keymap (kbd "S-<right>")     'sp-select-next-thing)
 
   ;; move to beginning of text on line
   (defun sp-kill-to-end-of-sexp ()
@@ -888,8 +888,8 @@ You have:
 ;; clean up buffers every once in a while
 (setup-lazy '(clean-buffer-list) "midnight")
 
-;; don't use shift to mark things; smartparens overwrites this anyway, but be explicit about it
-(setq shift-select-mode nil)
+;; use shift to mark things
+(setq shift-select-mode t)
 
 ;; transparently open compressed files
 (auto-compression-mode t)
