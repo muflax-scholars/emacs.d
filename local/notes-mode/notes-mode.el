@@ -554,8 +554,6 @@ The first element in the returned list should be considered the default indentat
               (- prev-line-pos tab-width))
              (t prev-line-pos))))
 
-    (message "%s" pos)
-
     pos))
 
 ;; Lists
