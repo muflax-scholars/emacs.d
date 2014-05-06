@@ -206,6 +206,12 @@
   (setq helm-input-idle-delay 0.1)
   (setq helm-idle-delay 0.1)
   (setq helm-follow-mode-persistent t)
+  (setq helm-buffers-fuzzy-matching t)
+  (setq helm-for-files-preferred-list
+    '(helm-source-buffers-list
+      helm-source-recentf
+      helm-source-file-cache
+      helm-source-files-in-current-dir))
 
   ;; always show like "current buffer | helm"
   (setq helm-split-window-default-side 'right)
