@@ -126,65 +126,26 @@
 
 (require 'font-lock)
 
-(defvar notes-italic-face 'notes-italic-face
-  "Face name to use for italic text.")
-
-(defvar notes-bold-face 'notes-bold-face
-  "Face name to use for bold text.")
-
-(defvar notes-placeholder-square-face 'notes-placeholder-square-face
-  "Face name to use for [] placeholder text.")
-
-(defvar notes-placeholder-wiggly-face 'notes-placeholder-wiggly-face
-  "Face name to use for {} placeholder text.")
-
-(defvar notes-placeholder-pointy-face 'notes-placeholder-pointy-face
-  "Face name to use for <> placeholder text.")
-
-(defvar notes-annotation-prompt-face 'notes-annotation-prompt-face
-  "Face name to use as a base for prompt annotation.")
-
-(defvar notes-annotation-reply-face 'notes-annotation-reply-face
-  "Face name to use as a base for reply annotation.")
-
-(defvar notes-annotation-quote-face 'notes-annotation-quote-face
-  "Face name to use as a base for quote annotation.")
-
-(defvar notes-annotation-abstract-face 'notes-annotation-abstract-face
-  "Face name to use as a base for abstract annotation.")
-
-(defvar notes-annotation-comment-face 'notes-annotation-comment-face
-  "Face name to use as a base for comment annotation.")
-
-(defvar notes-annotation-model-face 'notes-annotation-model-face
-  "Face name to use as a base for model annotation.")
-
-(defvar notes-annotation-wrong-face 'notes-annotation-wrong-face
-  "Face name to use as a base for wrong annotation.")
-
-(defvar notes-annotation-equivalent-face 'notes-annotation-equivalent-face
-  "Face name to use as a base for equivalent annotation.")
-
-(defvar notes-annotation-transformation-face 'notes-annotation-transformation-face
-  "Face name to use as a base for transformation annotation.")
-
-(defvar notes-bracket-face 'notes-bracket-face
-  "Face name to use as a base for grab brackets.")
-
-(defvar notes-header-face 'notes-header-face
-  "Face name to use as a base for headers.")
-
-(defvar notes-list-face 'notes-list-face
-  "Face name to use for list markers.")
-
-(defvar notes-link-face 'notes-link-face
-  "Face name to use for links.")
-
-(defvar notes-reference-face 'notes-reference-face
-  "Face name to use for references.")
-
-(defvar notes-footnote-face 'notes-footnote-face
-  "Face name to use for footnote identifiers.")
+(defvar notes-italic-face                    'notes-italic-face)
+(defvar notes-bold-face                      'notes-bold-face)
+(defvar notes-placeholder-square-face        'notes-placeholder-square-face)
+(defvar notes-placeholder-wiggly-face        'notes-placeholder-wiggly-face)
+(defvar notes-placeholder-pointy-face        'notes-placeholder-pointy-face)
+(defvar notes-annotation-prompt-face         'notes-annotation-prompt-face)
+(defvar notes-annotation-reply-face          'notes-annotation-reply-face)
+(defvar notes-annotation-quote-face          'notes-annotation-quote-face)
+(defvar notes-annotation-abstract-face       'notes-annotation-abstract-face)
+(defvar notes-annotation-comment-face        'notes-annotation-comment-face)
+(defvar notes-annotation-model-face          'notes-annotation-model-face)
+(defvar notes-annotation-wrong-face          'notes-annotation-wrong-face)
+(defvar notes-annotation-equivalent-face     'notes-annotation-equivalent-face)
+(defvar notes-annotation-transformation-face 'notes-annotation-transformation-face)
+(defvar notes-bracket-face                   'notes-bracket-face)
+(defvar notes-header-face                    'notes-header-face)
+(defvar notes-list-face                      'notes-list-face)
+(defvar notes-link-face                      'notes-link-face)
+(defvar notes-reference-face                 'notes-reference-face)
+(defvar notes-footnote-face                  'notes-footnote-face)
 
 ;; Customization
 
@@ -296,72 +257,52 @@
 ;; Parsing
 
 (defconst notes-regex-header
-  "^\\([ \t]*\\)\\([\\[{][ \t]+\\)\\(.+\\)"
-  "Regular expression for headers.")
+  "^\\([ \t]*\\)\\([\\[{][ \t]+\\)\\(.+\\)")
 
 (defconst notes-regex-annotation-abstract
-  "^\\([ \t]*\\)\\([+]\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)"
-  "Regular expression for abstract annotation.")
+  "^\\([ \t]*\\)\\([+]\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)")
 
 (defconst notes-regex-annotation-transformation
-  "^\\([ \t]*\\)\\([<>]\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)"
-  "Regular expression for transformation annotation.")
+  "^\\([ \t]*\\)\\([<>]\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)")
 
 (defconst notes-regex-annotation-comment
-  "^\\([ \t]*\\)\\([#]\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)"
-  "Regular expression for comment annotation.")
+  "^\\([ \t]*\\)\\([#]\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)")
 
 (defconst notes-regex-annotation-equivalent
-  "^\\([ \t]*\\)\\([=]\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)"
-  "Regular expression for equivalent annotation.")
+  "^\\([ \t]*\\)\\([=]\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)")
 
 (defconst notes-regex-annotation-model
-  "^\\([ \t]*\\)\\([$]\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)"
-  "Regular expression for model annotation.")
+  "^\\([ \t]*\\)\\([$]\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)")
 
 (defconst notes-regex-annotation-prompt
-  "^\\([ \t]*\\)\\([%?]\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)"
-  "Regular expression for prompt annotation.")
+  "^\\([ \t]*\\)\\([%?]\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)")
 
 (defconst notes-regex-annotation-quote
-  "^\\([ \t]*\\)\\([|]\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)"
-  "Regular expression for quote annotation.")
+  "^\\([ \t]*\\)\\([|]\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)")
 
 (defconst notes-regex-annotation-reply
-  "^\\([ \t]*\\)\\([@!]\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)"
-  "Regular expression for reply annotation.")
+  "^\\([ \t]*\\)\\([@!]\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)")
 
 (defconst notes-regex-annotation-wrong
-  "^\\([ \t]*\\)\\([*]\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)"
-  "Regular expression for annotation.")
+  "^\\([ \t]*\\)\\([*]\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)")
 
 (defconst notes-regex-list
-  "^\\([ \t]*\\)\\([0-9]+\\.\\|[-]\\)\\([ \t]+\\)"
-  "Regular expression for matching list items.")
+  "^\\([ \t]*\\)\\([0-9]+\\.\\|[-]\\)\\([ \t]+\\)")
 
 (defconst notes-regex-bold
-  "\\(^\\|[ \t]\\)\\([*]\\(.+?\\)[*]\\)"
-  "Regular expression for matching bold text.")
+  "\\(^\\|[ \t]\\)\\([*]\\(.+?\\)[*]\\)")
 
 (defconst notes-regex-italic
-  "\\(^\\|[ \t]\\)\\([/]\\(.+?\\)[/]\\)"
-  "Regular expression for matching italic text.")
+  "\\(^\\|[ \t]\\)\\([/]\\(.+?\\)[/]\\)")
 
 (defconst notes-regex-placeholder-square
-  "\\(\\(\\[\\]\\|\\[[^] \t\n][^]\n]*\\]\\)\\)"
-  "Regular expression for matching [] placeholder text.")
+  "\\(\\(\\[\\]\\|\\[[^] \t\n][^]\n]*\\]\\)\\)")
 
 (defconst notes-regex-placeholder-wiggly
-  "\\(\\({}\\|{[^} \t\n][^}\n]*}\\)\\)"
-  "Regular expression for matching {} placeholder text.")
+  "\\(\\({}\\|{[^} \t\n][^}\n]*}\\)\\)")
 
 (defconst notes-regex-placeholder-pointy
-  "\\(\\(<>\\|<[^> \t\n][^>\n]*>\\)\\)"
-  "Regular expression for matching <> placeholder text.")
-
-(defconst notes-regex-list-indent
-  "^\\([ \t]*\\)\\([0-9]+\\.\\|[-]\\)\\([ \t]+\\)"
-  "Regular expression for matching indentation of list items.")
+  "\\(\\(<>\\|<[^> \t\n][^>\n]*>\\)\\)")
 
 ;; Keywords
 
