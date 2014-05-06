@@ -206,8 +206,12 @@
   (setq helm-input-idle-delay 0.1)
   (setq helm-idle-delay 0.1)
   (setq helm-follow-mode-persistent t)
+
+  ;; always show like "current buffer | helm"
   (setq helm-split-window-default-side 'right)
-  ;; (setq helm-full-frame nil)
-  )
+  (defadvice helm-default-display-buffer
+    (before helm-fullscreen-split activate)
+    (delete-other-windows)))
+
 
 (provide 'init-search)
