@@ -328,6 +328,7 @@
 (setup-lazy '(go-mode) "go-mode"
   (add-hook 'before-save-hook #'gofmt-before-save)
   (setq gofmt-command "goimports")
+  (setq gofmt-show-errors nil)
   (unbreak-stupid-map go-mode-map)
   (define-key go-mode-map (kbd "M-t") 'godef-jump)
   (define-key go-mode-map (kbd "M-T") 'godef-jump-other-window))
