@@ -629,8 +629,8 @@ With two \\[universal-argument] prefixes (i.e., when ARG is 16), decrease the in
 ;; Mode Definition
 
 ;;;###autoload
-(define-derived-mode notes-mode text-mode "Notes"
-  "Major mode for editing Notes files."
+(define-derived-mode notes-mode text-mode "+"
+  "MAJOR mode for editing Notes files."
 
   ;; Ruby/C-style tab width
   (setq tab-width 2)
