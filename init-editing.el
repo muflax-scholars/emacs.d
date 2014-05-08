@@ -628,10 +628,12 @@ See the variable `align-rules-list' for more details.")
 (global-set-key (kbd "<kanji>") 'toggle-input-method)
 
 ;; default to the diacritic smasher
-(defun default-input-method () (set-input-method "muflax-latin"))
-(add-hook 'text-mode-hook        'default-input-method)
-(add-hook 'prog-mode-hook        'default-input-method)
-(add-hook 'minibuffer-setup-hook 'default-input-method)
+(setq default-input-method "muflax-latin")
+(defun turn-on-default-input-method ()
+  (set-input-method default-input-method))
+(add-hook 'text-mode-hook        'turn-on-default-input-method)
+(add-hook 'prog-mode-hook        'turn-on-default-input-method)
+(add-hook 'minibuffer-setup-hook 'turn-on-default-input-method)
 
 ;; analog to delete-file
 (defun delete-current-file ()
