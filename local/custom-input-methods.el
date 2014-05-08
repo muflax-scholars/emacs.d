@@ -558,6 +558,9 @@
  ("uz3" ?𒍚)
 )
 
+;; See <https://gist.github.com/muflax/93f41c835d6e951cdc94> for the necessary Emacs patch to make this work. Otherwise quail will just infini-loop when you input the diacritic.
+;; TODO Also this should include more normalized chars, maybe a generalized function?
+
 (quail-define-package
  "muflax-latin" "Latin (muflax)" "^" t
  "Auto-convert some diacritics." nil t t nil nil nil nil nil nil nil t)
