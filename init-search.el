@@ -66,7 +66,9 @@
 
 ;; ido and smex (ido for M-x)
 (setup "flx-ido"
+  (setup "ido-ubiquitous")
   (ido-mode 1)
+  (setq ido-everywhere t)
   (flx-ido-mode 1)
 
   (setq ido-enable-flex-matching t) ; fuzzy matching
@@ -87,10 +89,6 @@
   (setq ido-create-new-buffer 'always)
   (setq ido-max-directory-size 1000000) ; load bigger dirs, too
   (setq confirm-nonexistent-file-or-buffer nil))
-
-(setup-after "ido"
-  (setup "ido-ubiquitous"
-    (setq ido-everywhere t)))
 
 ;; smex
 (setup "smex"
@@ -189,9 +187,9 @@
 (add-hook 'imenu-after-jump-hook 'recenter-top-bottom)
 
 ;; helm
-(setup "helm-config")
+(setup "helm-config"
   ;; (helm-mode t))
-(setup-after "helm"
+
   (setup "helm-flycheck")
 
   (define-key helm-map (kbd "C-w")  'subword-backward-kill)
@@ -219,6 +217,5 @@
   (defadvice helm-default-display-buffer
     (before helm-fullscreen-split activate)
     (delete-other-windows)))
-
 
 (provide 'init-search)
