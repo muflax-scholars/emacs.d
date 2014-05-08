@@ -558,14 +558,17 @@
  ("uz3" ?𒍚)
 )
 
-;; FIXME not working yet, just putting a placeholder here
 (quail-define-package
  "muflax-latin" "Latin (muflax)" "^" t
- "Auto-convert diacritics." nil t t nil nil nil nil nil nil nil t)
+ "Auto-convert some diacritics." nil t t nil nil nil nil nil nil nil t)
 (quail-define-rules
- ("ä" ?ä)
- ("Ä" ?Ä)
- )
+ ("ä" ?ä)
+ ("ö" ?ö)
+ ("ü" ?ü)
+ ("Ä" ?Ä)
+ ("Ö" ?Ö)
+ ("Ü" ?Ü)
+)
 
 (provide 'custom-input-methods)
 
