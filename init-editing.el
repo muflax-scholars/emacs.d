@@ -635,6 +635,9 @@ See the variable `align-rules-list' for more details.")
 (add-hook 'prog-mode-hook        'turn-on-default-input-method)
 (add-hook 'minibuffer-setup-hook 'turn-on-default-input-method)
 
+;; don't underline partial input
+(setq input-method-highlight-flag nil)
+
 ;; analog to delete-file
 (defun delete-current-file ()
   "Delete the file associated with the current buffer."
