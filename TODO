@@ -123,7 +123,7 @@ Stuff that doesn't work:
 	[ postfix
 		diacritics-as-suffix are natural, but turn virtually all keys into incomplete commands, which has tons of minor issues. those could be fixed, but just switching to diacritics-as-prefix would auto-fix all of that.
 
-		though it would mean you now *can't* use composing diacritics as normally intended, and have "this is a special char" and "this is a char with a diacritic" distinguished in the *user* (through the input method). dunno yet.
+		though it would mean you now *can't* use composing diacritics as normally intended, and have "this is a special char" and "this is a char with a diacritic" distinguished in the *user* (through the input method). dunno yet. i mean, we could just put in dummy keys that turn "diacritic + letter" into "letter + diacritic" for those that don't have precomposed variants, but ugh.
 	]
 
 	- auto-complete is glitchy and I probably should stop using it. i really only use "what was this function called again?", for which it isn't even very good.
