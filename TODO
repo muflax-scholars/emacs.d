@@ -71,8 +71,6 @@ Stuff that doesn't work:
 
 		- before-save-hooks should have a way to turn them off; probably a minor mode
 
-		- instead of normalize-unicode, we should probably turn (some? all?) diacritics into an input method, both for speed and general compatibility
-
 ]
 
 [ project-specific code / keybindings
@@ -100,6 +98,8 @@ Stuff that doesn't work:
 	- should switch completely to Emacs regexes, which have some cool stuff (but muh Ruby!!w!)
 	- finish the Ruby port
 
+	Emacs regexps are pretty cool, but lack some important categories. Needs more work.
+
 ]
 
 [ mode-line
@@ -113,5 +113,19 @@ Stuff that doesn't work:
 	- clean up what part of the encoding thingies we want
 	- remove useless parentheses
 	- shorter major-mode names
+
+]
+
+[ input
+
+	problems with the input method:
+
+	[ postfix
+		diacritics-as-suffix are natural, but turn virtually all keys into incomplete commands, which has tons of minor issues. those could be fixed, but just switching to diacritics-as-prefix would auto-fix all of that.
+
+		though it would mean you now *can't* use composing diacritics as normally intended, and have "this is a special char" and "this is a char with a diacritic" distinguished in the *user* (through the input method). dunno yet.
+	]
+
+	- auto-complete is glitchy and I probably should stop using it. i really only use "what was this function called again?", for which it isn't even very good.
 
 ]
