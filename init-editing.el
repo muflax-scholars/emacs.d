@@ -605,7 +605,6 @@ See the variable `align-rules-list' for more details.")
 (global-set-key (kbd "C-c C-w") 'kill-with-append)
 (global-set-key (kbd "C-c w")   'copy-with-append)
 
-
 ;; tramp (remote files)
 (setup-after "tramp"
   (setq tramp-default-method "ssh")
