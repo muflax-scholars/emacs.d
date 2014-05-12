@@ -160,6 +160,7 @@
                    (,(kbd "M-`")              tmm-menubar)
                    (,(kbd "M-a")              backward-sentence)
                    (,(kbd "M-e")              forward-sentence)
+                   (,(kbd "M-l")              downcase-word)
                    (,(kbd "M-m")              back-to-indentation)
                    (,(kbd "M-o")              facemenu-keymap)
                    (,(kbd "M-r")              move-to-window-line-top-bottom)
@@ -950,5 +951,56 @@ You have:
     (while (re-search-forward "\\(^\\s-*$\\)\n" nil t)
       (replace-match "\n")
       (forward-char 1))))
+
+(defun toggle-title-case ()
+  "Toggle case of the word / region between lower case and title case."
+  (interactive)
+  (let (p1 p2 (deactivate-mark nil) (case-fold-search nil))
+    (if (region-active-p)
+        (setq p1 (region-beginning) p2 (region-end))
+      (let ((bds (bounds-of-thing-at-point 'word)))
+        (setq p1 (car bds) p2 (cdr bds))))
+
+    (when (not (eq last-command this-command))
+      (save-excursion
+        (goto-char p1)
+        (cond
+         ((looking-at "[[:lower:]]") (put this-command 'state "lower"))
+         ((looking-at "[[:upper:]]") (put this-command 'state "title"))
+         (t (put this-command 'state "lower")))))
+
+    (cond
+     ((string= "lower" (get this-command 'state))
+      (upcase-initials-region p1 p2) (put this-command 'state "title"))
+     ((string= "title" (get this-command 'state))
+      (downcase-region p1 p2) (put this-command 'state "lower")))
+    )) 
+(global-set-key (kbd "M-c") 'toggle-title-case)
+
+(defun toggle-upcase ()
+  "Toggle case of the word / region between lower case and upper case."
+  (interactive)
+  (let (p1 p2 (deactivate-mark nil) (case-fold-search nil))
+    (if (region-active-p)
+        (setq p1 (region-beginning) p2 (region-end))
+      (let ((bds (bounds-of-thing-at-point 'word)))
+        (setq p1 (car bds) p2 (cdr bds))))
+
+    (when (not (eq last-command this-command))
+      (save-excursion
+        (goto-char p1)
+        (cond
+         ((looking-at "[[:lower:]]") (put this-command 'state "lower"))
+         ((looking-at "[[:upper:]]") (put this-command 'state "upper"))
+         (t (put this-command 'state "lower")))))
+
+    (cond
+     ((string= "lower" (get this-command 'state))
+      (upcase-region p1 p2) (put this-command 'state "upper"))
+     ((string= "upper" (get this-command 'state))
+      (downcase-region p1 p2) (put this-command 'state "lower")))
+    )) 
+(global-set-key (kbd "M-u") 'toggle-upcase)
+
 
 (provide 'init-editing)
