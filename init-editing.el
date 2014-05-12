@@ -614,7 +614,7 @@ See the variable `align-rules-list' for more details.")
   (setq url-cookie-file "~/.emacs.d/cache/url/cookies"))
 
 ;; input methods, including a direct mozc binding to avoid ibus (requires mozc install)
-(setup  "custom-input-methods")
+(setup "custom-input-methods")
 (setup "mozc" (setq mozc-leim-title "あ"))
 
 (global-set-key (kbd "C-c 0") (lambda () (interactive) (set-input-method nil)))
@@ -1001,6 +1001,5 @@ You have:
       (downcase-region p1 p2) (put this-command 'state "lower")))
     )) 
 (global-set-key (kbd "M-u") 'toggle-upcase)
-
 
 (provide 'init-editing)
