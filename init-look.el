@@ -149,6 +149,9 @@
   (nyan-mode t)
   (setq nyan-bar-length 10))
 
+;; line-number-mode
+(setq line-number-display-width 1000)
+
 ;; show keystrokes in progress
 (setq echo-keystrokes 0.1)
 
