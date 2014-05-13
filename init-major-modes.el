@@ -325,6 +325,7 @@
   (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode))
 
 ;; go-lang
+(setq load-path (cons "~/.emacs.d/local/go-mode.el" load-path))
 (setup-lazy '(go-mode) "go-mode"
   (add-hook 'before-save-hook #'gofmt-before-save)
   (setq gofmt-command "goimports")
