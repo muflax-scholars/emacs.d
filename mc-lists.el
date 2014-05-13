@@ -9,6 +9,7 @@
         beginning-of-visual-line
         copy-line
         copy-with-append
+        delimit-columns-current
         downcase-region
         electric-graphviz-dot-semi
         end-of-visual-line
