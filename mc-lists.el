@@ -8,6 +8,7 @@
         align-region-or-current
         beginning-of-visual-line
         copy-line
+        copy-with-append
         downcase-region
         electric-graphviz-dot-semi
         end-of-visual-line

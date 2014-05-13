@@ -156,6 +156,9 @@
 (define-key isearch-mode-map (kbd "C-c C-SPC") 'isearch-toggle-lax-whitespace)
 (define-key isearch-mode-map (kbd "C-c C-o") 'isearch-occur)
 
+(setup "occur-x"
+  (add-hook 'occur-mode-hook 'turn-on-occur-x-mode))
+
 ;; wrap search
 (defadvice isearch-search (after isearch-no-fail activate)
   (unless isearch-success
