@@ -315,7 +315,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
   (let ((beg)
         (end)
         (start)
-        (regexp "^[^ \t\n]+.* | .*$"))
+        (regexp "^[ \t]*[^ \t\n]+.* | .*$"))
     (save-excursion
       ;; initialize region on the current line
       (beginning-of-line)
@@ -343,6 +343,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
 
     ;; call alignment function
     (delimit-columns-region beg end)
+    (delete-trailing-whitespace beg end)
     ))
 (global-set-key (kbd "C-c t") 'delimit-columns-current)
 (global-set-key (kbd "C-c T") 'delimit-columns-region)
@@ -974,7 +975,7 @@ You have:
       (upcase-initials-region p1 p2) (put this-command 'state "title"))
      ((string= "title" (get this-command 'state))
       (downcase-region p1 p2) (put this-command 'state "lower")))
-    )) 
+    ))
 (global-set-key (kbd "M-c") 'toggle-title-case)
 
 (defun toggle-upcase ()
@@ -999,7 +1000,7 @@ You have:
       (upcase-region p1 p2) (put this-command 'state "upper"))
      ((string= "upper" (get this-command 'state))
       (downcase-region p1 p2) (put this-command 'state "lower")))
-    )) 
+    ))
 (global-set-key (kbd "M-u") 'toggle-upcase)
 
 (provide 'init-editing)
