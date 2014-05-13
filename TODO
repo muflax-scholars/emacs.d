@@ -61,15 +61,17 @@ Stuff that doesn't work:
 
 		Stating the suspicion that it has something to do with "last line on the screen" or "being in a list", or both.
 
-		- align.el uses tabs to indent when tabstops are enabled?! teh fuck align.el?! I hate you so much.
+	- align.el uses tabs to indent when tabstops are enabled?! teh fuck align.el?! I hate you so much.
 
-		- is custom org mode still necessary?
+	- is custom org mode still necessary?
 
-		- minimap is unusable at the moment, mostly because it's either slow (minimap.el version) or super flickery (sublimity version)
+	- minimap is unusable at the moment, mostly because it's either slow (minimap.el version) or super flickery (sublimity version)
 
-		- breadcrumbs is completely unusable and the code is a mess, but automatic "get me back to where I was a moment ago" is badly needed
+	- breadcrumbs is completely unusable and the code is a mess, but automatic "get me back to where I was a moment ago" is badly needed
 
-		- before-save-hooks should have a way to turn them off; probably a minor mode
+	- before-save-hooks should have a way to turn them off; probably a minor mode
+
+	- there's no simple way of killing all lines with a cursor on them, and then yanking them as one nice block somewhere. probably easiest to fix by adding a custom version of yank-rectangle that doesn't overwrite stuff.
 
 ]
 
@@ -117,14 +119,6 @@ Stuff that doesn't work:
 ]
 
 [ input
-
-	problems with the input method:
-
-	[ postfix
-		diacritics-as-suffix are natural, but turn virtually all keys into incomplete commands, which has tons of minor issues. those could be fixed, but just switching to diacritics-as-prefix would auto-fix all of that.
-
-		though it would mean you now *can't* use composing diacritics as normally intended, and have "this is a special char" and "this is a char with a diacritic" distinguished in the *user* (through the input method). dunno yet. i mean, we could just put in dummy keys that turn "diacritic + letter" into "letter + diacritic" for those that don't have precomposed variants, but ugh.
-	]
 
 	- auto-complete is glitchy and I probably should stop using it. i really only use "what was this function called again?", for which it isn't even very good.
 
