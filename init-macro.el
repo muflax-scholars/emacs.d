@@ -17,5 +17,10 @@
    (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([5 return 60 32] 0 "%d")) arg)))
 (global-set-key [20 101] 'm\ add\ explanation)
 
+(fset 'm\ next\ empty\ \?
+   (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([19 63 32 36 13 134217848 114 101 99 101 110 116 101 114 return] 0 "%d")) arg)))
+(global-set-key [20 110] 'm\ add\ explanation)
+(global-set-key [f13] 'm\ next\ empty\ \?)
+
 
 (provide 'init-macro)
