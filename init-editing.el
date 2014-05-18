@@ -938,7 +938,7 @@ You have:
 
 ;; help for more obscure prefix keys
 (setup "guide-key"
-  (setq guide-key/guide-key-sequence '("C-x r" "C-x 4" "C-x c"))
+  (setq guide-key/guide-key-sequence '("C-x r" "C-x 4" "C-x c" "C-x C-k"))
   (guide-key-mode 1)
   (setq guide-key/recursive-key-sequence-flag t)
   (setq guide-key/popup-window-position 'bottom))
