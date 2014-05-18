@@ -171,6 +171,7 @@
                    (,(kbd "C-M-%")            query-replace-regexp)
                    (,(kbd "C-M-.")            find-tag-regexp)
                    (,(kbd "C-M-/")            dabbrev-completion)
+                   (,(kbd "C-t")              transpose-chars)
                    )
          collect (if (eq (key-binding (first key)) (second key))
                      (global-unset-key (first key))))
