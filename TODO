@@ -121,5 +121,6 @@ Stuff that doesn't work:
 [ input
 
 	- auto-complete is glitchy and I probably should stop using it. i really only use "what was this function called again?", for which it isn't even very good.
+	- auto-save all macros somewhere, so I can easily retrieve / rebind them later (maybe just an advice around macro naming?)
 
 ]
