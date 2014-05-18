@@ -18,6 +18,7 @@
   (setq history-length         1000)
   (setq search-ring-max        1000)
   (setq regexp-search-ring-max 1000)
+  (setq kmacro-ring-max        1000)
   (setq save-place-file "~/.emacs.d/cache/saveplace")
   (setq-default save-place t)
   (setq savehist-file "~/.emacs.d/cache/history")
