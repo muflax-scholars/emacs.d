@@ -24,5 +24,9 @@
 (global-set-key (kbd "C-t n") 'm\ next\ empty\ \?)
 (global-set-key (kbd "<f13>") 'm\ next\ empty\ \?)
 
+(fset 'm\ turn\ into\ example
+   (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([19 125 13 right 11 backspace backspace 46 1 33 32 delete 134217848 116 105 116 108 101 99 97 115 return] 0 "%d")) arg)))
+(global-set-key [20 105] 'm\ turn\ into\ example)
+
 
 (provide 'init-macro)
