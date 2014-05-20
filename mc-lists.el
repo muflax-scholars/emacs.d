@@ -11,6 +11,7 @@
         copy-with-append
         delimit-columns-current
         downcase-region
+        duplicate-line
         electric-graphviz-dot-semi
         end-of-visual-line
         enh-ruby-electric-brace
