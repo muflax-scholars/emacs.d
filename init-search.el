@@ -80,7 +80,7 @@
   (setq ido-default-buffer-method 'selected-window) ; ignore buffers in different frames
   (setq ido-save-directory-list-file "~/.emacs.d/cache/ido.last")
   (setq ido-ignore-buffers
-        '("\\` " "^\*Mess" "^\*Back" ".*Completion" "^\*Ido" "^\*trace"
+        '("\\` " "^\*Back" ".*Completion" "^\*Ido" "^\*trace"
           "^\*compilation" "^\*GTAGS" "^session\.*" "^\*"))
   (setq ido-case-fold t) ; case insensitive
   (setq ido-enable-last-directory-history t)
