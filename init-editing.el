@@ -208,7 +208,10 @@
 
 ;; undo-tree like in vim
 (setup "undo-tree"
-  (global-undo-tree-mode))
+  (global-undo-tree-mode)
+  (setq undo-tree-auto-save-history t)
+  (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/cache/undo/")))
+  (setq undo-tree-visualizer-timestamps t))
 
 ;; nested parentheses are highlighted when inside of them
 (setup "highlight-parentheses"
