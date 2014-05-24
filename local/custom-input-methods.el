@@ -774,6 +774,16 @@
  ("̀y" ?ỳ)
  )
 
+(quail-define-package
+ "muflax-lojban" "lojban" "'" t
+ "Slightly faster Lojban typing." nil t t nil nil nil nil nil nil nil t)
+(quail-define-rules
+ ;; straightforward mappings
+ ("h" ?')
+ ("H" ?')
+ )
+
+
 (provide 'custom-input-methods)
 
 ;; Local Variables:
