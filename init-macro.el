@@ -18,12 +18,6 @@
    (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([5 return 60 32] 0 "%d")) arg)))
 (global-set-key (kbd "C-t e") 'm\ add\ explanation)
 
-(fset 'm\ next\ empty\ \?
-   (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([19 63 32 36 13 134217848 114 101 99 101 110 116 101 114 return] 0 "%d")) arg)))
-(global-set-key [20 110] 'm\ add\ explanation)
-(global-set-key (kbd "C-t n") 'm\ next\ empty\ \?)
-(global-set-key (kbd "<f13>") 'm\ next\ empty\ \?)
-
 (fset 'm\ turn\ into\ example
    (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([19 125 13 right 11 backspace backspace 46 1 33 32 delete 134217848 116 105 116 108 101 99 97 115 return] 0 "%d")) arg)))
 (global-set-key [20 105] 'm\ turn\ into\ example)
