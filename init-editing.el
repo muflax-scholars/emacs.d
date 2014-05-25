@@ -67,8 +67,10 @@
 (global-set-key (kbd "C-c p") 'previous-error)
 (global-set-key (kbd "M-t")   'find-tag)
 
-;; analogous to C-S-x
-(global-set-key (kbd "C-S-M-x") 'eval-buffer)
+;; reliable keys
+(global-set-key (kbd "<f9>")  'eval-defun)
+(global-set-key (kbd "<f10>") 'eval-buffer)
+(global-set-key (kbd "<f11>") 'eval-expression)
 
 ;; undo
 (global-set-key (kbd "C-z") 'undo-tree-undo)
