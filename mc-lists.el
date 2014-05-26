@@ -13,6 +13,7 @@
         downcase-region
         duplicate-line
         electric-graphviz-dot-semi
+        end-of-buffer
         end-of-visual-line
         enh-ruby-electric-brace
         enh-ruby-find-error
