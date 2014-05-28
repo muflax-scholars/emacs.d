@@ -1037,6 +1037,20 @@ even beep.)"
     ;; Delete lines or make the "Buffer is read-only" error.
     (flush-lines regexp rstart rend interactive)))
 
+(defun copy-matching-lines (regexp &optional rstart rend interactive)
+  "Copy lines containing matches for REGEXP.
+
+See `flush-lines' or `keep-lines' for behavior of this command."
+  (interactive
+   (keep-lines-read-args "Copy lines containing match for regexp"))
+  (let ((buffer-file-name nil)) ;; HACK for `clone-buffer'
+    (with-current-buffer (clone-buffer nil nil)
+      (let ((inhibit-read-only t))
+        (keep-lines regexp rstart rend interactive)
+        (copy-region-as-kill (or rstart (line-beginning-position))
+                             (or rend (point-max))))
+      (kill-buffer))))
+
 ;; macro key bindings
 (global-set-key (kbd "C-t C-t") 'insert-kbd-macro)
 (global-set-key (kbd "C-t C-n") 'kmacro-name-last-macro)
