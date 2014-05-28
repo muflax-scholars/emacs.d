@@ -396,7 +396,9 @@ If visual-line-mode is on, then also jump to beginning of real line."
   (save-excursion
     (setq line (thing-at-point 'line))
     (end-of-line)
-    (forward-line)
+    (if (eobp)
+        (newline)
+      (forward-line))
     (insert line))
   (next-line))
 (global-set-key (kbd "C-<return>") 'duplicate-line)
