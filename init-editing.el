@@ -1037,4 +1037,9 @@ even beep.)"
     ;; Delete lines or make the "Buffer is read-only" error.
     (flush-lines regexp rstart rend interactive)))
 
+;; macro key bindings
+(global-set-key (kbd "C-t C-t") 'insert-kbd-macro)
+(global-set-key (kbd "C-t C-n") 'kmacro-name-last-macro)
+(global-set-key (kbd "C-t C-b") 'kmacro-bind-to-key)
+
 (provide 'init-editing)

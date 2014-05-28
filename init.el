@@ -26,6 +26,3 @@
 
 ;; random options
 (setup "init-misc")
-
-;; macros
-(setup "init-macro")
