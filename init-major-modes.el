@@ -300,7 +300,9 @@
                                ("pdf"  . "zathura")
                                ("djvu" . "zathura")
                                ))
-  )
+
+  ;; sort number naturally
+  (setq dired-listing-switches "--group-directories-first -v -al"))
 
 ;; eldoc, ie function signatures in the minibuffer
 (setup-lazy '(turn-on-eldoc-mode) "eldoc"
