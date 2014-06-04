@@ -27,6 +27,12 @@
                                         kill-ring
                                         compile-command)))
 
+;; save open buffers etc.
+(setup "desktop"
+  (setq desktop-path "~/.emacs.d/cache/desktop/")
+  ;; (desktop-save-mode 1)
+  )
+
 ;; text stuff
 (setq undo-limit 1000000)
 (setq sentence-end-double-space nil)
