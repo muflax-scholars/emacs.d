@@ -17,6 +17,7 @@
         end-of-visual-line
         enh-ruby-electric-brace
         enh-ruby-find-error
+        er/mark-defun
         eval-defun
         go-mode-insert-and-indent
         handle-switch-frame
