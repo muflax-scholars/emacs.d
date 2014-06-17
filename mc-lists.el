@@ -19,6 +19,7 @@
         enh-ruby-find-error
         er/mark-defun
         eval-defun
+        fold-dwim-toggle
         go-mode-insert-and-indent
         handle-switch-frame
         hungry-delete-backward
