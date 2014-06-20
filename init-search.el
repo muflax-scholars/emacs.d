@@ -168,10 +168,6 @@
     (ad-enable-advice 'isearch-search 'after 'isearch-no-fail)
     (ad-activate 'isearch-search)))
 
-;; search info
-(setup "anzu"
-  (global-anzu-mode t))
-
 ;; fast navigation
 (setup "imenu"
   (set-default 'imenu-auto-rescan t)
