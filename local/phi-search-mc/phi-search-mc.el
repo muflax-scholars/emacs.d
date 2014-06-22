@@ -1,6 +1,6 @@
 ;;; phi-search-mc.el --- multiple-cursors extension for phi-search
 ;;
-;; Copyright (c) 2013 Akinori MUSHA
+;; Copyright (c) 2013, 2014 Akinori MUSHA
 ;;
 ;; All rights reserved.
 ;;
@@ -28,7 +28,7 @@
 ;; Author: Akinori MUSHA <knu@iDaemons.org>
 ;; URL: https://github.com/knu/phi-search-mc.el
 ;; Created: 25 Aug 2013
-;; Version: 2.0.20131010
+;; Version: 2.1
 ;; Package-Requires: ((phi-search "2.0.0") (multiple-cursors "1.2.1"))
 ;; Keywords: search, cursors
 
@@ -203,9 +203,9 @@ Currently whitespace characters are taken literally, ignoring
   (interactive)
   (let ((forward isearch-forward)
         (query (cond ((eq isearch-word 'isearch-symbol-regexp)
-                      (isearch-symbol-regexp isearch-string t))
+                      (isearch-symbol-regexp isearch-string))
                      (isearch-word
-                      (word-search-regexp isearch-string t))
+                      (word-search-regexp isearch-string))
                      (isearch-regexp
                       isearch-string)
                      (t
@@ -214,7 +214,10 @@ Currently whitespace characters are taken literally, ignoring
     (isearch-exit)
     (if forward (phi-search)
       (phi-search-backward))
-    (insert query)))
+    (insert query)
+    (and isearch-word
+      (string-match "\\(\\\\_?>\\)\\'" query)
+      (backward-char (length (match-string 1 query))))))
 
 ;;;###autoload
 (defun phi-search-from-isearch-mc/mark-next (arg)
