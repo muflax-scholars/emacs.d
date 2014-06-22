@@ -36,6 +36,8 @@
         literal-delete-backward-char
         literal-delete-char
         lua-electric-match
+        md/move-lines-down
+        md/move-lines-up
         mouse-yank-primary
         move-line-down
         move-line-up
