@@ -100,6 +100,10 @@
 ;; get out of recursive edit
 (global-set-key (kbd "C-c C-g") 'abort-recursive-edit)
 
+;; save some strokes
+(global-set-key (kbd "<f2>") 'save-buffer)
+(global-set-key (kbd "S-<f2>") 'save-some-buffers)
+
 ;; allowed key components
 (setup-lazy '(free-keys) "free-keys"
   (setq free-keys-keys
