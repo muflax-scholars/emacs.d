@@ -294,6 +294,7 @@
   (setq-default dired-omit-files-p t)
   (setq dired-omit-files "^\\..*[^.]$")
   (define-key dired-mode-map (kbd ".") 'dired-omit-mode)
+  (setq dired-omit-verbose nil)
 
   ;; open by extension
   (setq dired-open-extensions '(
