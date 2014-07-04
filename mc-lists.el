@@ -62,6 +62,7 @@
         sp-beginning-of-sexp
         sp-end-of-sexp
         sp-remove-active-pair-overlay
+        sp-unwrap-sexp
         wdired-previous-line
         whole-line-or-region-comment-dwim-2
         whole-line-or-region-kill-region
