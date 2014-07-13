@@ -69,15 +69,15 @@
 
 ;; fonts
 (defvar small-font  "Anonymous Pro 8")
-(defvar normal-font "-Misc-Fixed-*-14-*-iso8859-1")
+(defvar normal-font "Fantasque Sans Mono 10")
 (defvar big-font    "Fantasque Sans Mono 11")
-(defvar huge-font   "Fantasque Sans Mono 12")
+(defvar huge-font   "Fantasque Sans Mono 13")
 (defvar font-list (list
                    small-font
                    normal-font
                    big-font
                    huge-font))
-(defvar current-font big-font)
+(defvar current-font normal-font)
 
 (defun set-window-font ()
   (set-frame-font current-font))
