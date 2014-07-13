@@ -661,6 +661,9 @@ See the variable `align-rules-list' for more details.")
 ;; don't underline partial input
 (setq input-method-highlight-flag nil)
 
+;;don't spam the minibuffer
+(setq input-method-verbose 'complex-only)
+
 ;; analog to delete-file
 (defun delete-current-file ()
   "Delete the file associated with the current buffer."
