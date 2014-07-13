@@ -70,8 +70,8 @@
 ;; fonts
 (defvar small-font  "Anonymous Pro 8")
 (defvar normal-font "-Misc-Fixed-*-14-*-iso8859-1")
-(defvar big-font    "Monaco 10")
-(defvar huge-font   "Monaco 11")
+(defvar big-font    "Fantasque Sans Mono 11")
+(defvar huge-font   "Fantasque Sans Mono 12")
 (defvar font-list (list
                    small-font
                    normal-font
