@@ -104,6 +104,10 @@
 (global-set-key (kbd "<f2>") 'save-buffer)
 (global-set-key (kbd "S-<f2>") 'save-some-buffers)
 
+;; slightly less awkward C-x / M-x keys
+(global-set-key (kbd "<menu>")    ctl-x-map)
+(global-set-key (kbd "<execute>") 'smex)
+
 ;; allowed key components
 (setup-lazy '(free-keys) "free-keys"
   (setq free-keys-keys
@@ -1008,7 +1012,7 @@ You have:
 
 ;; god-mode for sticky keys
 (setup-lazy '(god-mode god-local-mode) "god-mode")
-(global-set-key (kbd "<menu>") 'god-mode)
+;; (global-set-key (kbd "<menu>") 'god-mode)
 
 (defun kill-matching-lines (regexp &optional rstart rend interactive)
   "Kill lines containing matches for REGEXP.
