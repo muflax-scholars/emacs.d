@@ -105,8 +105,8 @@
 (global-set-key (kbd "S-<f2>") 'save-some-buffers)
 
 ;; slightly less awkward C-x / M-x keys
-(global-set-key (kbd "<menu>")    ctl-x-map)
-(global-set-key (kbd "<execute>") 'smex)
+(global-set-key (kbd "<menu>")        ctl-x-map)
+(global-set-key (kbd "<menu> <menu>") 'smex)
 
 ;; allowed key components
 (setup-lazy '(free-keys) "free-keys"
