@@ -246,9 +246,9 @@
   (setq dired-recursive-deletes 'top)
   )
 
-(global-set-key (kbd "C-c C-j") 'dired-jump)
-(global-set-key (kbd "C-c C-n") 'dired-next)
-(global-set-key (kbd "C-c C-p") 'dired-prev)
+(global-set-key (kbd "C-c C-j")   'dired-jump)
+(global-set-key (kbd "M-<next>")  'dired-next)
+(global-set-key (kbd "M-<prior>") 'dired-prev)
 
 (setup-after "dired"
   (setup "wdired")
