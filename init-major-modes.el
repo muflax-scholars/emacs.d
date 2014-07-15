@@ -393,4 +393,7 @@
 
   (define-key magit-status-mode-map (kbd "W") 'magit-toggle-whitespace))
 
+(setup-lazy '(conf-mode) "conf-mode"
+  (unbreak-stupid-map conf-mode-map))
+
 (provide 'init-major-modes)

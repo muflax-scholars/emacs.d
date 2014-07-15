@@ -108,6 +108,9 @@
 (global-set-key (kbd "<menu>")        ctl-x-map)
 (global-set-key (kbd "<menu> <menu>") 'smex)
 
+;; mark
+(global-set-key (kbd "S-<SPC>") 'set-mark-command)
+
 ;; allowed key components
 (setup-lazy '(free-keys) "free-keys"
   (setq free-keys-keys
