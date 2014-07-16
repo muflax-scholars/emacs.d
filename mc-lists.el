@@ -3,6 +3,7 @@
 
 (setq mc/cmds-to-run-for-all
       '(
+        Buffer-menu-delete
         ace-jump-done
         ace-jump-line-mode
         align-region-or-current
