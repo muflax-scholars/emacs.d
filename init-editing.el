@@ -1065,5 +1065,7 @@ See `flush-lines' or `keep-lines' for behavior of this command."
   (global-set-key (kbd "C-x 1") 'sticky-window-delete-other-windows)
   (global-set-key (kbd "C-x 9") 'sticky-window-keep-window-visible))
 
+(setup-lazy '(neotree) "neotree"
+  (setq neo-show-header nil))
 
 (provide 'init-editing)
