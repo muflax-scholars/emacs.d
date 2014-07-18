@@ -1017,10 +1017,6 @@ You have:
     ))
 (global-set-key (kbd "M-u") 'toggle-upcase)
 
-;; god-mode for sticky keys
-(setup-lazy '(god-mode god-local-mode) "god-mode")
-;; (global-set-key (kbd "<menu>") 'god-mode)
-
 (defun kill-matching-lines (regexp &optional rstart rend interactive)
   "Kill lines containing matches for REGEXP.
 
