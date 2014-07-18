@@ -104,10 +104,6 @@
 (global-set-key (kbd "<f2>") 'save-buffer)
 (global-set-key (kbd "S-<f2>") 'save-some-buffers)
 
-;; slightly less awkward C-x / M-x keys
-(global-set-key (kbd "<menu>")        ctl-x-map)
-(global-set-key (kbd "<menu> <menu>") 'smex)
-
 ;; mark
 (global-set-key (kbd "S-<SPC>") 'set-mark-command)
 
