@@ -153,6 +153,7 @@
                    (,(kbd "C-x ^")            enlarge-window)
                    (,(kbd "C-x `")            next-error)
                    (,(kbd "C-x l")            count-lines-page)
+                   (,(kbd "C-x m")            compose-mail)
                    (,(kbd "C-x v")            vc-prefix-map)
                    (,(kbd "C-x {")            shrink-window-horizontally)
                    (,(kbd "C-x }")            enlarge-window-horizontally)
