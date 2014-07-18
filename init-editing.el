@@ -1068,4 +1068,8 @@ See `flush-lines' or `keep-lines' for behavior of this command."
 (setup-lazy '(neotree) "neotree"
   (setq neo-show-header nil))
 
+(setup-lazy '(nav-minor-mode nav-global-mode) "nav-mode")
+(global-set-key (kbd "<menu>")   'nav-minor-mode)
+(global-set-key (kbd "C-<menu>") 'nav-global-mode)
+
 (provide 'init-editing)
