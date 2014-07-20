@@ -10,10 +10,10 @@
 ;; elpa package-repositories
 (require 'package)
 (setq package-user-dir "~/.emacs.d/packages")
-(add-to-list 'package-archives '("tromey" . "http://tromey.com/elpa/") t)
+(add-to-list 'package-archives '("tromey"    . "http://tromey.com/elpa/") t)
 (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
-(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
-(package-initialize)
+(add-to-list 'package-archives '("melpa"     . "http://melpa.milkbox.net/packages/") t)
+(add-to-list 'package-archives '("e6h"       . "http://www.e6h.org/packages/") t)
 
 ;; some generic aliases that make elisp less painful
 (require 'cl-lib)
