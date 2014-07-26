@@ -622,6 +622,13 @@ With two \\[universal-argument] prefixes (i.e., when ARG is 16), decrease the in
     (define-key map (kbd "C-v #") (lambda () (interactive) (notes-find-annotations "#")))
     (define-key map (kbd "C-v >") (lambda () (interactive) (notes-find-annotations ">")))
     (define-key map (kbd "C-v $") (lambda () (interactive) (notes-find-annotations "$")))
+    ;; easier to type
+    (define-key map (kbd "C-v p") (lambda () (interactive) (notes-find-annotations "+")))
+    (define-key map (kbd "C-v q") (lambda () (interactive) (notes-find-annotations "?")))
+    (define-key map (kbd "C-v e") (lambda () (interactive) (notes-find-annotations "!")))
+    (define-key map (kbd "C-v c") (lambda () (interactive) (notes-find-annotations "#")))
+    (define-key map (kbd "C-v t") (lambda () (interactive) (notes-find-annotations ">")))
+    ;; generic
     (define-key map (kbd "C-c C-v") 'notes-find-annotations)
     map)
   "Keymap for Markdown major mode.")
