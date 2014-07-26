@@ -83,4 +83,5 @@
         repeat
         smex
         use-big-font
+        where-is
         ))
