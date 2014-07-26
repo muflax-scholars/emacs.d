@@ -272,31 +272,31 @@
   "^\\([ \t]*\\)\\([\\[{][ \t]+\\)\\(.+\\)")
 
 (defconst notes-regex-annotation-abstract
-  "^\\([ \t]*\\)\\([+]\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)")
+  "^\\([ \t]*\\)\\([+]\\sw*\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)")
 
 (defconst notes-regex-annotation-transformation
-  "^\\([ \t]*\\)\\([<>]\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)")
+  "^\\([ \t]*\\)\\([<>]\\sw*\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)")
 
 (defconst notes-regex-annotation-comment
-  "^\\([ \t]*\\)\\([#]\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)")
+  "^\\([ \t]*\\)\\([#]\\sw*\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)")
 
 (defconst notes-regex-annotation-equivalent
-  "^\\([ \t]*\\)\\([=]\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)")
+  "^\\([ \t]*\\)\\([=]\\sw*\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)")
 
 (defconst notes-regex-annotation-model
-  "^\\([ \t]*\\)\\([$]\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)")
+  "^\\([ \t]*\\)\\([$]\\sw*\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)")
 
 (defconst notes-regex-annotation-prompt
-  "^\\([ \t]*\\)\\([%?]\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)")
+  "^\\([ \t]*\\)\\([%?]\\sw*\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)")
 
 (defconst notes-regex-annotation-quote
-  "^\\([ \t]*\\)\\([|]\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)")
+  "^\\([ \t]*\\)\\([|]\\sw*\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)")
 
 (defconst notes-regex-annotation-reply
-  "^\\([ \t]*\\)\\([@!]\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)")
+  "^\\([ \t]*\\)\\([@!]\\sw*\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)")
 
 (defconst notes-regex-annotation-wrong
-  "^\\([ \t]*\\)\\([*]\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)")
+  "^\\([ \t]*\\)\\([*]\\sw*\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)")
 
 (defconst notes-regex-list
   "^\\([ \t]*\\)\\([0-9]+\\.\\|[-]\\)\\([ \t]+\\)")
@@ -660,11 +660,11 @@ With two \\[universal-argument] prefixes (i.e., when ARG is 16), decrease the in
 
   ;; make filling work with lists and annotations
   (set (make-local-variable 'paragraph-start)
-       "\f\\|[ \t]*$\\|[ \t]*[*+-] \\|[ \t]*[0-9]+\\. \\|[ \t]*[$?!<>=*+#%@|] \||[\t]+")
+       "\f\\|[ \t]*$\\|[ \t]*[*+-] \\|[ \t]*[0-9]+\\. \\|[ \t]*[$?!<>=*+#%@|]\\sw* \||[\t]+")
 
   ;; FIXME this isn't a good fix, but works for now...
   (set (make-local-variable 'adaptive-fill-regexp)
-       "[ \t]*[*+-] \\|[ \t]*[0-9]+\\. \\|[ \t]*[$?!<>=*+#%@|] \\|[\t]+")
+       "[ \t]*[-] \\|[ \t]*[0-9]+\\. \\|[ \t]*[$?!<>=*+#%@|]\\sw* \\|[\t]+")
 
   ;; imenu support
   (set (make-local-variable 'imenu-generic-expression)
