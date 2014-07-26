@@ -920,7 +920,8 @@ You have:
 (add-hook 'before-save-hook 'normalize-unicode-in-buffer)
 
 ;; clean up buffers every once in a while
-(setup-lazy '(clean-buffer-list) "midnight")
+(setup "midnight"
+  (midnight-delay-set 'midnight-delay 0))
 
 ;; use shift to mark things
 (setq shift-select-mode t)
