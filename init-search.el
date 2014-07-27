@@ -53,7 +53,8 @@
 (setup-lazy '(vr/query-replace vr/query-replace-from-beginning) "visual-regexp")
 
 (setup-after "visual-regexp"
- (setup "visual-regexp-steroids"))
+  (setup "visual-regexp-steroids"
+    (setq vr/engine 'emacs)))
 
 (defun vr/query-replace-from-beginning ()
   (interactive)
