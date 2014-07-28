@@ -11,6 +11,7 @@
         copy-line
         copy-with-append
         delimit-columns-current
+        dired-back-to-start-of-files
         downcase-region
         duplicate-line
         electric-graphviz-dot-semi
