@@ -51,6 +51,7 @@
         org-self-insert-command
         orgtbl-ctrl-c-ctrl-c
         orgtbl-self-insert-command
+        package-menu-mark-unmark
         phi-rectangle-kill-region
         phi-rectangle-kill-ring-save
         phi-rectangle-next-line
