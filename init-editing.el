@@ -88,7 +88,7 @@
 
 ;; because we navigate via cursor keys, we can put something more useful on the default navigational keys
 (global-set-key (kbd "C-n") 'other-window)
-(global-set-key (kbd "C-p") (lambda () (interactive) (other-window -1)))
+(global-set-key (kbd "C-N") (lambda () (interactive) (other-window -1)))
 (global-set-key (kbd "C-f") 'forward-word)
 (global-set-key (kbd "C-b") 'backward-word)
 
@@ -203,21 +203,32 @@
 ;; multiple cursors
 (setq mc/list-file "~/.emacs.d/mc-lists.el")
 (setup "multiple-cursors"
-  (global-set-key (kbd "C-c d")            'mc/edit-lines)
+  (global-set-key (kbd "C-p l")            'mc/edit-lines)
   (global-set-key (kbd "<C-down>")         'mc/mark-next-like-this)
+  (global-set-key (kbd "<C-down>")         'mc/mark-next-word-like-this)
   (global-set-key (kbd "<C-up>")           'mc/mark-previous-like-this)
+  (global-set-key (kbd "<C-up>")           'mc/mark-previous-word-like-this)
   (global-set-key (kbd "<M-C-down>")       'mc/skip-to-next-like-this)
   (global-set-key (kbd "<M-C-up>")         'mc/skip-to-previous-like-this)
   (global-set-key (kbd "C-c C-d")          'mc/mark-all-dwim)
-  (global-set-key (kbd "C-c >")            'mc/mark-more-like-this-extended)
   (global-set-key (kbd "C-c <")            'mc/mark-more-like-this-extended)
   (global-set-key (kbd "C-S-<mouse-1>")    'mc/add-cursor-on-click)
-  (global-set-key (kbd "C-<down-mouse-1>") 'mc/add-cursor-on-click))
+  (global-set-key (kbd "C-<down-mouse-1>") 'mc/add-cursor-on-click)
+  (global-set-key (kbd "C-<down-mouse-1>") 'set-rectangular-region-anchor)
+  (global-set-key (kbd "C-<down-mouse-1>") 'mc/insert-numbers)
+  (global-set-key (kbd "C-<down-mouse-1>") 'mc/sort-regions)
+  (global-set-key (kbd "C-<down-mouse-1>") 'mc/reverse-regions)
+  )
 
 ;; <ret> inserts a newline; C-j exits (a bit more convenient that way)
 (setup-after "multiple-cursors-core"
   (define-key mc/keymap (kbd "<return>") nil)
   (define-key mc/keymap (kbd "C-j") 'multiple-cursors-mode))
+
+;; edit symbol in multiple places simultaneously
+(setup "iedit"
+  (global-set-key (kbd "C-p i") 'iedit-mode)
+  (global-set-key (kbd "C-p I") 'iedit-mode-toggle-on-function))
 
 ;; support for bookmarks (broken; resurrect this at some point...)
 ;; (require 'breadcrumb)
@@ -508,11 +519,6 @@ If visual-line-mode is on, then also jump to beginning of real line."
   (add-hook 'markdown-mode-hook 'turn-on-spell-check)
   (add-hook 'org-mode-hook      'turn-on-spell-check)
   )
-
-;; edit symbol in multiple places simultaneously
-(setup "iedit"
-  (global-set-key (kbd "C-c ;") 'iedit-mode)
-  (global-set-key (kbd "C-c C-;") 'iedit-mode-toggle-on-function))
 
 ;; align
 (setup "align"
