@@ -124,9 +124,3 @@ Stuff that doesn't work:
 	- auto-save all macros somewhere, so I can easily retrieve / rebind them later (maybe just an advice around macro naming?)
 
 ]
-
-[ rebind cursors
-	Multi-key prefix combos are awesome. Reorganize behind a single prefix:
-
-	- smartparens
-]

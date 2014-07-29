@@ -706,11 +706,14 @@ See the variable `align-rules-list' for more details.")
   (global-set-key (kbd "C-r f") 'winner-redo))
 
 ;; expand-region to mark stuff
-(setup  "expand-region"
-  (global-set-key (kbd "<C-prior>") 'er/expand-region)
-  (global-set-key (kbd "<C-next>")  'er/contract-region)
-  (global-set-key (kbd "S-<left>")  'er/mark-defun)
-  (global-set-key (kbd "S-<right>") 'er/mark-symbol))
+(setup "expand-region"
+  (global-set-key (kbd "C-<right>") 'er/expand-region)
+  (global-set-key (kbd "C-<left>")  'er/contract-region)
+  (global-set-key (kbd "M-<right>") 'er/mark-defun)
+  (global-set-key (kbd "M-<left>")  'er/mark-symbol)
+  (global-set-key (kbd "C-c s d")   'er/mark-defun)
+  (global-set-key (kbd "C-c s SPC") 'er/mark-defun)
+  (global-set-key (kbd "C-c s w>")  'er/mark-symbol))
 
 ;; make zsh aliases work
 (setup "shell-command"
@@ -841,36 +844,42 @@ You have:
   (setq sp-autodelete-pair nil)
 
   ;; navigation
-  (define-key sp-keymap (kbd "C-c a") 'sp-beginning-of-sexp)
-  (define-key sp-keymap (kbd "C-c e") 'sp-end-of-sexp)
-  (define-key sp-keymap (kbd "C-M-f") 'sp-forward-sexp)
-  (define-key sp-keymap (kbd "C-M-b") 'sp-backward-sexp)
-  (define-key sp-keymap (kbd "M-f")   'sp-forward-symbol)
-  (define-key sp-keymap (kbd "M-b")   'sp-backward-symbol)
+  (define-key sp-keymap (kbd "C-c a")         'sp-beginning-of-sexp)
+  (define-key sp-keymap (kbd "C-c e")         'sp-end-of-sexp)
+  (define-key sp-keymap (kbd "C-c s a")       'sp-beginning-of-sexp)
+  (define-key sp-keymap (kbd "C-c s e")       'sp-end-of-sexp)
+  (define-key sp-keymap (kbd "C-M-f")         'sp-forward-sexp)
+  (define-key sp-keymap (kbd "C-M-b")         'sp-backward-sexp)
+  (define-key sp-keymap (kbd "M-f")           'sp-forward-symbol)
+  (define-key sp-keymap (kbd "M-b")           'sp-backward-symbol)
 
   ;; killing
-  (define-key sp-keymap (kbd "C-c C-a") 'sp-kill-to-beginning-of-sexp)
-  (define-key sp-keymap (kbd "C-c C-e") 'sp-kill-to-end-of-sexp)
-  (define-key sp-keymap (kbd "C-c M-a") 'sp-copy-to-beginning-of-sexp)
-  (define-key sp-keymap (kbd "C-c M-e") 'sp-copy-to-end-of-sexp)
-  (define-key sp-keymap (kbd "C-c M-e") 'sp-copy-to-end-of-sexp)
-  (define-key sp-keymap (kbd "C-M-k")   'sp-kill-sexp)
-  (define-key sp-keymap (kbd "C-M-w")   'sp-copy-sexp)
+  (define-key sp-keymap (kbd "C-c s C-a")     'sp-kill-to-beginning-of-sexp)
+  (define-key sp-keymap (kbd "C-c s C-e")     'sp-kill-to-end-of-sexp)
+  (define-key sp-keymap (kbd "C-c s M-a")     'sp-copy-to-beginning-of-sexp)
+  (define-key sp-keymap (kbd "C-c s M-e")     'sp-copy-to-end-of-sexp)
+  (define-key sp-keymap (kbd "C-M-k")         'sp-kill-sexp)
+  (define-key sp-keymap (kbd "C-M-w")         'sp-copy-sexp)
+  (define-key sp-keymap (kbd "C-c s k")       'sp-kill-sexp)
+  (define-key sp-keymap (kbd "C-c s w")       'sp-copy-sexp)
 
   ;; wrapping
   (define-key sp-keymap (kbd "M-<delete>")    'sp-unwrap-sexp)
-  (define-key sp-keymap (kbd "M-<backspace>") 'sp-backward-unwrap-sexp)
-  (define-key sp-keymap (kbd "C-c C-k")       'sp-rewrap-sexp)
+  (define-key sp-keymap (kbd "C-c s u")       'sp-unwrap-sexp)
+  (define-key sp-keymap (kbd "C-c s U")       'sp-backward-unwrap-sexp)
+  (define-key sp-keymap (kbd "C-c s r")       'sp-rewrap-sexp)
 
   ;; adjusting
-  (define-key sp-keymap (kbd "C-c C-<tab>") 'sp-indent-adjust-sexp)
-  (define-key sp-keymap (kbd "C-c <tab>")   'sp-dedent-adjust-sexp)
+  (define-key sp-keymap (kbd "C-c C-<tab>")   'sp-indent-adjust-sexp)
+  (define-key sp-keymap (kbd "C-c <tab>")     'sp-dedent-adjust-sexp)
+  (define-key sp-keymap (kbd "C-c s C-<tab>") 'sp-indent-adjust-sexp)
+  (define-key sp-keymap (kbd "C-c s <tab>")   'sp-dedent-adjust-sexp)
 
   ;; narrowing
-  (define-key sp-keymap (kbd "C-x n s") 'sp-narrow-to-sexp)
+  (define-key sp-keymap (kbd "C-x n s")       'sp-narrow-to-sexp)
   ;; TODO generalize C-( to narrow-or-region
-  (define-key sp-keymap (kbd "C-(")     'sp-narrow-to-sexp)
-  (define-key sp-keymap (kbd "C-)")     'widen)
+  (define-key sp-keymap (kbd "C-(")           'sp-narrow-to-sexp)
+  (define-key sp-keymap (kbd "C-)")           'widen)
 
   ;; move to beginning of text on line
   (defun sp-kill-to-end-of-sexp ()
