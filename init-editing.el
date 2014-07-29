@@ -216,7 +216,15 @@
   (global-set-key (kbd "C-p r")            'set-rectangular-region-anchor)
   (global-set-key (kbd "C-p n")            'mc/insert-numbers)
   (global-set-key (kbd "C-p s")            'mc/sort-regions)
-  (global-set-key (kbd "C-p R")            'mc/reverse-regions))
+  (global-set-key (kbd "C-p R")            'mc/reverse-regions)
+
+  (setup "mc-extras"
+    (global-set-key (kbd "C-p c")          'mc/compare-chars-forward)
+    (global-set-key (kbd "C-p C")          'mc/compare-chars-backward)
+    (global-set-key (kbd "C-p u")          'mc/remove-current-cursor)
+    (global-set-key (kbd "C-p d")          'mc/remove-duplicated-cursors))
+  (setup "mc-jump"
+    (global-set-key (kbd "C-p g")          'mc-jump-char)))
 
 ;; <ret> inserts a newline; C-j exits (a bit more convenient that way)
 (setup-after "multiple-cursors-core"
