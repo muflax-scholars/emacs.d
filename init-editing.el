@@ -454,7 +454,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (setup "wcheck-mode"
   (setq ispell-really-hunspell t)
   (setq  wcheck-timer-idle .2)
-  (define-key global-map "\C-cs" 'wcheck-actions)
+  (define-key global-map (kbd "C-x w SPC") 'wcheck-actions)
   (setq-default
    wcheck-language "English"
    wcheck-language-data '(("English"
@@ -514,17 +514,16 @@ If visual-line-mode is on, then also jump to beginning of real line."
     (interactive)
     (setq use-spell-check t)
     (wcheck-mode 1))
-  (global-set-key (kbd "C-c <f5>")   'disable-spell-check)
-  (global-set-key (kbd "C-c C-<f5>") 'enable-spell-check)
-  (global-set-key (kbd "C-c <f6>")   'wcheck-mode)
+  (global-set-key (kbd "C-x w d") 'disable-spell-check)
+  (global-set-key (kbd "C-x w e") 'enable-spell-check)
+  (global-set-key (kbd "C-x w w") 'wcheck-mode)
 
   (defun turn-on-spell-check ()
     (if use-spell-check (wcheck-mode 1)))
 
   ;; enable spell-check in certain modes
   (add-hook 'markdown-mode-hook 'turn-on-spell-check)
-  (add-hook 'org-mode-hook      'turn-on-spell-check)
-  )
+  (add-hook 'org-mode-hook      'turn-on-spell-check))
 
 ;; align
 (setup "align"
