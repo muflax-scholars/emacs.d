@@ -125,6 +125,8 @@
                    (,(kbd "C-z")              suspend-frame)
                    ([(insert)]                overwrite-mode)
                    ([(insertchar)]            overwrite-mode)
+                   (,(kbd "C-s")              isearch-forward)
+                   (,(kbd "C-r")              isearch-backward)
                    (,(kbd "C-v")              scroll-up-command)
                    (,(kbd "M-v")              scroll-down-command)
                    (,(kbd "C-]")              abort-recursive-edit)
@@ -1057,14 +1059,20 @@ See `flush-lines' or `keep-lines' for behavior of this command."
 (global-set-key (kbd "C-t C-n") 'kmacro-name-last-macro)
 (global-set-key (kbd "C-t C-b") 'kmacro-bind-to-key)
 
-;; sticky windows
+;; sticky windows (and better shortcuts)
 (setup "sticky-windows"
-  (global-set-key (kbd "C-x 0") 'sticky-window-delete-window)
-  (global-set-key (kbd "C-x 1") 'sticky-window-delete-other-windows)
-  (global-set-key (kbd "C-x 9") 'sticky-window-keep-window-visible))
+  (global-set-key (kbd "C-s w")        'sticky-window-delete-window)
+  (global-set-key (kbd "C-s k")        'sticky-window-delete-other-windows)
+  (global-set-key (kbd "C-s C-s")      'sticky-window-delete-other-windows)
+  (global-set-key (kbd "C-s <return>") 'sticky-window-delete-other-windows)
+  (global-set-key (kbd "C-s <down>")   'split-window-below)
+  (global-set-key (kbd "C-s <right>")  'split-window-right)
+  (global-set-key (kbd "C-s s")        'split-window-sensibly)
+  (global-set-key (kbd "C-s v")        'sticky-window-keep-window-visible))
 
-(setup-lazy '(neotree) "neotree"
+(setup-lazy '(neotree neotree-toggle) "neotree"
   (setq neo-show-header nil))
+(global-set-key (kbd "C-s n") 'neotree-toggle)
 
 (setup-lazy '(nav-minor-mode nav-global-mode) "nav-mode")
 (global-set-key (kbd "<menu>")   'nav-minor-mode)

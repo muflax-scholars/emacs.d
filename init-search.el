@@ -2,7 +2,8 @@
 
 ;; more useful kill-ring
 (setup "kill-ring-search"
-  (global-set-key "\M-\C-y" 'kill-ring-search))
+  (global-set-key (kbd "M-C-y") 'kill-ring-search)
+  (global-set-key (kbd "C-r y") 'kill-ring-search))
 (defun yank-pop-reverse ()
   (interactive)
   (yank-pop -1))
@@ -30,8 +31,8 @@
     (define-key help-mode-map "l" 'ace-link-help)))
 
 (setup-lazy '(phi-search phi-search-backward) "phi-search")
-(global-set-key (kbd "C-c C-s") 'phi-search)
-(global-set-key (kbd "C-c C-r") 'phi-search-backward)
+(global-set-key (kbd "C-r p") 'phi-search)
+(global-set-key (kbd "C-r P") 'phi-search-backward)
 
 (setup-after "phi-search"
   (setup "phi-search-mc"
@@ -62,8 +63,8 @@
     (goto-char (point-min))
     (call-interactively 'vr/query-replace)))
 
-(global-set-key (kbd "C-c r") 'vr/query-replace)
-(global-set-key (kbd "C-c R") 'vr/query-replace-from-beginning)
+(global-set-key (kbd "C-r r") 'vr/query-replace)
+(global-set-key (kbd "C-r R") 'vr/query-replace-from-beginning)
 
 ;; ido and smex (ido for M-x)
 (setup "flx-ido"
@@ -135,10 +136,10 @@
     (deactivate-mark))
   (call-interactively 'isearch-backward-regexp))
 
-(global-set-key (kbd "C-s") 'isearch-forward-use-region)
-(global-set-key (kbd "C-r") 'isearch-backward-use-region)
-(global-set-key (kbd "C-S") 'isearch-forward-regexp)
-(global-set-key (kbd "C-R") 'isearch-backward-regexp)
+(global-set-key (kbd "C-r s") 'isearch-forward-use-region)
+(global-set-key (kbd "C-r b") 'isearch-backward-use-region)
+(global-set-key (kbd "C-r S") 'isearch-forward-regexp)
+(global-set-key (kbd "C-r b") 'isearch-backward-regexp)
 ;; make backspace more intuitive
 (define-key isearch-mode-map (kbd "<backspace>") 'isearch-del-char)
 
@@ -180,11 +181,11 @@
 
 (setup-after "imenu"
   (setup "idomenu"
-    (define-key global-map (kbd "C-c [")   'idomenu)
-    (define-key global-map (kbd "C-c C-[") 'idomenu))
+    (define-key global-map (kbd "C-r [") 'idomenu)
+    (define-key global-map (kbd "C-r i") 'idomenu))
   (setup "imenu-anywhere"
     (define-key global-map (kbd "C-c ]")   'imenu-anywhere)
-    (define-key global-map (kbd "C-c C-]") 'imenu-anywhere)))
+    (define-key global-map (kbd "C-c I") 'imenu-anywhere)))
 
 ;; recentering
 (setq recenter-positions '(2 middle))
