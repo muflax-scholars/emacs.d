@@ -585,9 +585,9 @@ See the variable `align-rules-list' for more details.")
     (align-regexp start end
                   (concat "\\(\\s-*\\)" regexp) 1 1 t))
 
-  (global-set-key (kbd "C-x a a") 'align-region-or-current)
+  (global-set-key (kbd "C-x a a")   'align-region-or-current)
   (global-set-key (kbd "C-x a SPC") 'align-repeat)
-  (global-set-key (kbd "C-x a r") 'align-repeat))
+  (global-set-key (kbd "C-x a r")   'align-repeat))
 
 ;; diff- mode (better colors)
 (setup-lazy '(diff-mode) "diff-mode-")
