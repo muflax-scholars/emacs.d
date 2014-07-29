@@ -82,7 +82,7 @@
   (setq ido-save-directory-list-file "~/.emacs.d/cache/ido.last")
   (setq ido-ignore-buffers
         '("\\` " "^\*Back" ".*Completion" "^\*Ido" "^\*trace"
-          "^\*compilation" "^\*GTAGS" "^session\.*"))
+          "^\*compilation" "^\*GTAGS" "^session\.*" "\.elc$"))
   (setq ido-case-fold t) ; case insensitive
   (setq ido-enable-last-directory-history t)
   (setq ido-max-work-directory-list 30)
