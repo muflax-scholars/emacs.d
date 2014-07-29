@@ -73,10 +73,12 @@
 (global-set-key (kbd "C-c p") 'previous-error)
 (global-set-key (kbd "M-t")   'find-tag)
 
-;; reliable keys
-(global-set-key (kbd "<f9>")  'eval-defun)
-(global-set-key (kbd "<f10>") 'eval-buffer)
-(global-set-key (kbd "<f11>") 'eval-expression)
+;; eval
+(global-set-key (kbd "C-x SPC d")   'eval-defun)
+(global-set-key (kbd "C-x SPC SPC") 'eval-defun)
+(global-set-key (kbd "C-x SPC b")   'eval-buffer)
+(global-set-key (kbd "C-x SPC e")   'eval-expression)
+(global-set-key (kbd "C-x SPC r")   'eval-region)
 
 ;; undo
 (global-set-key (kbd "C-z") 'undo-tree-undo)
