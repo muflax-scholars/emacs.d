@@ -103,7 +103,7 @@
 (global-set-key (kbd "C-c C-g") 'abort-recursive-edit)
 
 ;; save some strokes
-(global-set-key (kbd "<f2>") 'save-buffer)
+(global-set-key (kbd "<f2>")   'save-buffer)
 (global-set-key (kbd "S-<f2>") 'save-some-buffers)
 
 ;; mark
@@ -430,7 +430,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
   (defun literal-delete-backward-char (&optional arg)
     (interactive "P")
     (delete-backward-char 1))
-  (global-set-key (kbd "<S-delete>") 'literal-delete-char)
+  (global-set-key (kbd "<S-delete>")    'literal-delete-char)
   (global-set-key (kbd "<S-backspace>") 'literal-delete-backward-char))
 
 ;; spell checker
