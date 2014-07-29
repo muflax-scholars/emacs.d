@@ -1,0 +1,1 @@
+(define-key ${1:-mode-map} (kbd "${2:C-c}") '${3:function})$0
