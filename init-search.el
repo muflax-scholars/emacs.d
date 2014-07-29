@@ -36,9 +36,10 @@
 
 (setup-after "phi-search"
   (setup "phi-search-mc"
-    (define-key phi-search-default-map (kbd "<C-down>") 'phi-search-mc/mark-next)
-    (define-key phi-search-default-map (kbd "<C-up>")   'phi-search-mc/mark-previous)
-    (define-key phi-search-default-map (kbd "C-c C-k")  'phi-search-mc/mark-all)))
+    (define-key phi-search-default-map (kbd "<C-down>")   'phi-search-mc/mark-next)
+    (define-key phi-search-default-map (kbd "<C-up>")     'phi-search-mc/mark-previous)
+    (define-key phi-search-default-map (kbd "<C-return>") 'phi-search-mc/mark-here)
+    (define-key phi-search-default-map (kbd "C-p SPC")    'phi-search-mc/mark-all)))
 
 ;; support for bookmarks (broken; resurrect this at some point...)
 ;; (require 'breadcrumb)

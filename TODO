@@ -127,7 +127,6 @@ Stuff that doesn't work:
 [ rebind cursors
 	Multi-key prefix combos are awesome. Reorganize behind a single prefix:
 
-	- MC (also in phi-search)
 	- smartparens
 	- spell check
 	- align
