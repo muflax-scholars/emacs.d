@@ -127,8 +127,9 @@
                    (,(kbd "C-z")              suspend-frame)
                    ([(insert)]                overwrite-mode)
                    ([(insertchar)]            overwrite-mode)
-                   (,(kbd "C-s")              isearch-forward)
+                   (,(kbd "C-p")              previous-line)
                    (,(kbd "C-r")              isearch-backward)
+                   (,(kbd "C-s")              isearch-forward)
                    (,(kbd "C-v")              scroll-up-command)
                    (,(kbd "M-v")              scroll-down-command)
                    (,(kbd "C-]")              abort-recursive-edit)
@@ -215,8 +216,7 @@
   (global-set-key (kbd "C-p r")            'set-rectangular-region-anchor)
   (global-set-key (kbd "C-p n")            'mc/insert-numbers)
   (global-set-key (kbd "C-p s")            'mc/sort-regions)
-  (global-set-key (kbd "C-p R")            'mc/reverse-regions)
-  )
+  (global-set-key (kbd "C-p R")            'mc/reverse-regions))
 
 ;; <ret> inserts a newline; C-j exits (a bit more convenient that way)
 (setup-after "multiple-cursors-core"
