@@ -153,13 +153,13 @@
     (setq isearch-string string
           isearch-message (mapconcat 'isearch-text-char-description string ""))
     (isearch-search-and-update)))
-(define-key isearch-mode-map (kbd "C-c C-c") 'isearch-normalize-string)
-(define-key isearch-mode-map (kbd "C-c C-w") 'isearch-toggle-word)
-(define-key isearch-mode-map (kbd "C-c C-r") 'isearch-toggle-regexp)
-(define-key isearch-mode-map (kbd "C-c C-i") 'isearch-toggle-case-fold)
-(define-key isearch-mode-map (kbd "C-c C-s") 'isearch-toggle-symbol)
+(define-key isearch-mode-map (kbd "C-c C-c")   'isearch-normalize-string)
+(define-key isearch-mode-map (kbd "C-c C-w")   'isearch-toggle-word)
+(define-key isearch-mode-map (kbd "C-c C-r")   'isearch-toggle-regexp)
+(define-key isearch-mode-map (kbd "C-c C-i")   'isearch-toggle-case-fold)
+(define-key isearch-mode-map (kbd "C-c C-s")   'isearch-toggle-symbol)
 (define-key isearch-mode-map (kbd "C-c C-SPC") 'isearch-toggle-lax-whitespace)
-(define-key isearch-mode-map (kbd "C-c C-o") 'isearch-occur)
+(define-key isearch-mode-map (kbd "C-c C-o")   'isearch-occur)
 
 (setup "occur-x"
   (add-hook 'occur-mode-hook 'turn-on-occur-x-mode))
@@ -187,7 +187,7 @@
     (define-key global-map (kbd "C-s [") 'idomenu)
     (define-key global-map (kbd "C-s i") 'idomenu))
   (setup "imenu-anywhere"
-    (define-key global-map (kbd "C-c ]")   'imenu-anywhere)
+    (define-key global-map (kbd "C-c ]") 'imenu-anywhere)
     (define-key global-map (kbd "C-c I") 'imenu-anywhere)))
 
 ;; recentering
