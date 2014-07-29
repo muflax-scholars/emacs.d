@@ -770,10 +770,27 @@ You have:
 ;; don't spam *Scratch*
 (setq initial-scratch-message nil)
 
-;; increment / decrement thing at point
-(setup-lazy '(increment-integer-at-point decrement-integer-at-point) "increment")
-(global-set-key (kbd "C-c C-+") 'increment-integer-at-point)
-(global-set-key (kbd "C-c C--") 'decrement-integer-at-point)
+;; work with numbers at point
+(setup-lazy '(number/add
+              number/sub
+              number/multiply
+              number/divide
+              number/pad
+              number/eval) "number")
+(global-set-key (kbd "C-c m +")      'number/add)
+(global-set-key (kbd "C-c m a")      'number/add)
+(global-set-key (kbd "C-c m <up>")   (lambda () (interactive) (number/add (number-read "1"))))
+(global-set-key (kbd "C-c m -")      'number/sub)
+(global-set-key (kbd "C-c m s")      'number/sub)
+(global-set-key (kbd "C-c m <down>") (lambda () (interactive) (number/sub (number-read "1"))))
+(global-set-key (kbd "C-c m *")      'number/multiply)
+(global-set-key (kbd "C-c m m")      'number/multiply)
+(global-set-key (kbd "C-c m /")      'number/divide)
+(global-set-key (kbd "C-c m d")      'number/divide)
+(global-set-key (kbd "C-c m 0")      'number/pad)
+(global-set-key (kbd "C-c m p")      'number/pad)
+(global-set-key (kbd "C-c m =")      'number/eval)
+(global-set-key (kbd "C-c m e")      'number/eval)
 
 ;; rotate / toggle text
 (setup-lazy '(rotate-text) "rotate-text"
