@@ -396,4 +396,8 @@
 (setup-lazy '(conf-mode) "conf-mode"
   (unbreak-stupid-map conf-mode-map))
 
+(setup-lazy '(paradox-list-packages) "paradox"
+  (setq paradox-github-token t))
+(global-set-key (kbd "C-x p") 'paradox-list-packages)
+
 (provide 'init-major-modes)
