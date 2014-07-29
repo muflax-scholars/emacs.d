@@ -11,6 +11,7 @@ Stuff that doesn't work:
 	- syncing between emacs instances should be easy - maybe the generic clipboard is good enough?
 	- startup needs to be <2s, on cli <0.5s
 	- some way to identify running instances, like names or something
+
 ]
 
 [ parentheses
@@ -71,8 +72,6 @@ Stuff that doesn't work:
 
 	- before-save-hooks should have a way to turn them off; probably a minor mode
 
-	- there's no simple way of killing all lines with a cursor on them, and then yanking them as one nice block somewhere. probably easiest to fix by adding a custom version of yank-rectangle that doesn't overwrite stuff.
-
 ]
 
 [ project-specific code / keybindings
@@ -123,4 +122,13 @@ Stuff that doesn't work:
 	- auto-complete is glitchy and I probably should stop using it. i really only use "what was this function called again?", for which it isn't even very good.
 	- auto-save all macros somewhere, so I can easily retrieve / rebind them later (maybe just an advice around macro naming?)
 
+]
+
+[ rebind cursors
+	Multi-key prefix combos are awesome. Reorganize behind a single prefix:
+
+	- MC (also in phi-search)
+	- smartparens
+	- spell check
+	- align
 ]
