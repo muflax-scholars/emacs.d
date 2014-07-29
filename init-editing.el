@@ -1099,4 +1099,20 @@ See `flush-lines' or `keep-lines' for behavior of this command."
 (global-set-key (kbd "<menu>")   'nav-minor-mode)
 (global-set-key (kbd "C-<menu>") 'nav-global-mode)
 
+(defun narrow-or-widen-dwim (p)
+  "If the buffer is narrowed, it widens. Otherwise, it narrows intelligently.
+Intelligently means: region, subtree, or defun, whichever applies
+first.
+
+With prefix P, don't widen, just narrow even if buffer is already
+narrowed."
+  (interactive "P")
+  (declare (interactive-only))
+  (cond ((and (buffer-narrowed-p) (not p)) (widen))
+        ((region-active-p)
+         (narrow-to-region (region-beginning) (region-end)))
+        ((derived-mode-p 'org-mode) (org-narrow-to-subtree))
+        (t (narrow-to-defun))))
+(global-set-key (kbd "C-x n SPC") 'narrow-or-widen-dwim)
+
 (provide 'init-editing)
