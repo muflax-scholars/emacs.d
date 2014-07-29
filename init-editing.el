@@ -1052,6 +1052,7 @@ See `flush-lines' or `keep-lines' for behavior of this command."
 ;; sticky windows (and better shortcuts)
 (setup "sticky-windows"
   (global-set-key (kbd "C-s w")        'sticky-window-delete-window)
+  (global-set-key (kbd "C-s SPC")      'sticky-window-delete-window)
   (global-set-key (kbd "C-s k")        'sticky-window-delete-other-windows)
   (global-set-key (kbd "C-s C-s")      'sticky-window-delete-other-windows)
   (global-set-key (kbd "C-s <return>") 'sticky-window-delete-other-windows)
