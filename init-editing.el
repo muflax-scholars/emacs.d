@@ -390,8 +390,8 @@ If visual-line-mode is on, then also jump to beginning of real line."
     (delimit-columns-region beg end)
     (delete-trailing-whitespace beg end)
     ))
-(global-set-key (kbd "C-c t") 'delimit-columns-current)
-(global-set-key (kbd "C-c T") 'delimit-columns-region)
+(global-set-key (kbd "C-x a t") 'delimit-columns-current)
+(global-set-key (kbd "C-x a T") 'delimit-columns-region)
 
 ;; automatically indent on return, except in a few modes that have similar stuff by default
 (electric-indent-mode 1)
@@ -530,7 +530,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
   ;; definitions for ruby code
   ;; fixes the most egregious mistake in detecting regions (hashes), but should be properly generalized at some point
   (setq align-region-separate "\\(^\\s-*[{}]?\\s-*$\\)\\|\\(=\\s-*[][{}()]\\s-*$\\)")
-  (defconst align-ruby-modes '(enh-ruby-mode)
+  (defconst align-ruby-modes '(enh-ruby-mode ruby-mode)
     "align-perl-modes is a variable defined in `align.el'.")
   (defconst ruby-align-rules-list
     '((ruby-comma-delimiter
@@ -577,8 +577,6 @@ See the variable `align-rules-list' for more details.")
              (/= (point) (mark)))
         (align (point) (mark))
       (align-current)))
-  ;; align current region
-  (global-set-key (kbd "C-c =") 'align-region-or-current)
 
   ;; repeat regex (teh fuck ain't that the default?!)
   (defun align-repeat (start end regexp)
@@ -586,7 +584,10 @@ See the variable `align-rules-list' for more details.")
     (interactive "r\nsAlign regexp: ")
     (align-regexp start end
                   (concat "\\(\\s-*\\)" regexp) 1 1 t))
-  (global-set-key (kbd "C-c C-=") 'align-repeat))
+
+  (global-set-key (kbd "C-x a a") 'align-region-or-current)
+  (global-set-key (kbd "C-x a SPC") 'align-repeat)
+  (global-set-key (kbd "C-x a r") 'align-repeat))
 
 ;; diff- mode (better colors)
 (setup-lazy '(diff-mode) "diff-mode-")
