@@ -682,20 +682,22 @@ See the variable `align-rules-list' for more details.")
 
 ;; move lines like in org-mode
 (setup "move-dup"
-  (global-set-key (kbd "M-<up>")   'md/move-lines-up)
-  (global-set-key (kbd "M-<down>") 'md/move-lines-down)
+  (global-set-key (kbd "M-<up>")     'md/move-lines-up)
+  (global-set-key (kbd "M-<down>")   'md/move-lines-down)
   (global-set-key (kbd "C-<return>") 'md/duplicate-down))
 
 ;; move buffers
 (setup "buffer-move"
-  (global-set-key (kbd "<C-S-up>")    'buf-move-up)
-  (global-set-key (kbd "<C-S-down>")  'buf-move-down)
-  (global-set-key (kbd "<C-S-left>")  'buf-move-left)
-  (global-set-key (kbd "<C-S-right>") 'buf-move-right))
+  (global-set-key (kbd "<C-M-up>")    'buf-move-up)
+  (global-set-key (kbd "<C-M-down>")  'buf-move-down)
+  (global-set-key (kbd "<C-M-left>")  'buf-move-left)
+  (global-set-key (kbd "<C-M-right>") 'buf-move-right))
 
 ;; undo window changes
 (setup "winner"
-  (winner-mode 1))
+  (winner-mode 1)
+  (global-set-key (kbd "C-r b") 'winner-undo)
+  (global-set-key (kbd "C-r f") 'winner-redo))
 
 ;; expand-region to mark stuff
 (setup  "expand-region"
@@ -1057,19 +1059,18 @@ See `flush-lines' or `keep-lines' for behavior of this command."
 
 ;; sticky windows (and better shortcuts)
 (setup "sticky-windows"
-  (global-set-key (kbd "C-s w")        'sticky-window-delete-window)
-  (global-set-key (kbd "C-s SPC")      'sticky-window-delete-window)
-  (global-set-key (kbd "C-s k")        'sticky-window-delete-other-windows)
-  (global-set-key (kbd "C-s C-s")      'sticky-window-delete-other-windows)
-  (global-set-key (kbd "C-s <return>") 'sticky-window-delete-other-windows)
-  (global-set-key (kbd "C-s <down>")   'split-window-below)
-  (global-set-key (kbd "C-s <right>")  'split-window-right)
-  (global-set-key (kbd "C-s s")        'split-window-sensibly)
-  (global-set-key (kbd "C-s v")        'sticky-window-keep-window-visible))
+  (global-set-key (kbd "C-r w")        'sticky-window-delete-window)
+  (global-set-key (kbd "C-r SPC")      'sticky-window-delete-window)
+  (global-set-key (kbd "C-r k")        'sticky-window-delete-other-windows)
+  (global-set-key (kbd "C-r C-r")      'sticky-window-delete-other-windows)
+  (global-set-key (kbd "C-r <return>") 'sticky-window-delete-other-windows)
+  (global-set-key (kbd "C-r <down>")   'split-window-below)
+  (global-set-key (kbd "C-r <right>")  'split-window-right)
+  (global-set-key (kbd "C-r v")        'sticky-window-keep-window-visible))
 
 (setup-lazy '(neotree neotree-toggle) "neotree"
   (setq neo-show-header nil))
-(global-set-key (kbd "C-s n") 'neotree-toggle)
+(global-set-key (kbd "C-r n") 'neotree-toggle)
 
 (setup-lazy '(nav-minor-mode nav-global-mode) "nav-mode")
 (global-set-key (kbd "<menu>")   'nav-minor-mode)
