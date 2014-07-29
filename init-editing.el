@@ -411,19 +411,6 @@ If visual-line-mode is on, then also jump to beginning of real line."
   (newline-and-indent))
 (global-set-key (kbd "C-O") 'next-newline-and-indent)
 
-(defun duplicate-line ()
-  "Duplicate current line."
-  (interactive)
-  (save-excursion
-    (setq line (thing-at-point 'line))
-    (end-of-line)
-    (if (eobp)
-        (newline)
-      (forward-line))
-    (insert line))
-  (next-line))
-(global-set-key (kbd "C-<return>") 'duplicate-line)
-
 ;; delete spaces when killing a line
 (defun kill-and-join-forward (&optional arg)
   "If at end of line, join with following; otherwise kill line.
@@ -688,9 +675,10 @@ See the variable `align-rules-list' for more details.")
       )))
 
 ;; move lines like in org-mode
-(setup-lazy '(md/move-lines-up md/move-lines-down) "move-dup")
-(global-set-key (kbd "M-<up>")   'md/move-lines-up)
-(global-set-key (kbd "M-<down>") 'md/move-lines-down)
+(setup "move-dup"
+  (global-set-key (kbd "M-<up>")   'md/move-lines-up)
+  (global-set-key (kbd "M-<down>") 'md/move-lines-down)
+  (global-set-key (kbd "C-<return>") 'md/duplicate-down))
 
 ;; move buffers
 (setup "buffer-move"
