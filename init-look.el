@@ -127,7 +127,8 @@
 (setup "automargin"
   (setq automargin-target-width 120)
   (when (pretty-load?)
-    (automargin-mode)))
+    (automargin-mode))
+  (global-set-key (kbd "<f11>") 'automargin-mode))
 
 ;; undo highlighting
 (setup "volatile-highlights"
