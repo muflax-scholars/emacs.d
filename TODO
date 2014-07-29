@@ -72,6 +72,7 @@ Stuff that doesn't work:
 
 	- before-save-hooks should have a way to turn them off; probably a minor mode
 
+	- smart tabs as separator like in O's Sublime, based on tabs / delimit
 ]
 
 [ project-specific code / keybindings
