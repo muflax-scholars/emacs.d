@@ -359,6 +359,8 @@ If visual-line-mode is on, then also jump to beginning of real line."
 
   (let ((beg)
         (end)
+        (begline)
+        (endline)
         (start)
         (regexp "^[ \t]*[^ \t\n]+.* | .*$"))
     (save-excursion
@@ -387,7 +389,15 @@ If visual-line-mode is on, then also jump to beginning of real line."
       )
 
     ;; call alignment function
+    (setq begline (line-number-at-pos beg))
+    (setq endline (line-number-at-pos end))
     (delimit-columns-region beg end)
+    (save-excursion
+      (goto-line begline)
+      (setq beg (point))
+      (goto-line endline)
+      (end-of-line)
+      (setq end (point)))
     (delete-trailing-whitespace beg end)
     ))
 (global-set-key (kbd "C-x a t") 'delimit-columns-current)
