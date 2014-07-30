@@ -789,7 +789,8 @@ You have:
               number/multiply
               number/divide
               number/pad
-              number/eval) "number")
+              number/eval
+              number-read) "number")
 (global-set-key (kbd "C-c m +")      'number/add)
 (global-set-key (kbd "C-c m a")      'number/add)
 (global-set-key (kbd "C-c m <up>")   (lambda () (interactive) (number/add (number-read "1"))))
