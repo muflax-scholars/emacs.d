@@ -43,6 +43,7 @@
         mouse-yank-primary
         move-line-down
         move-line-up
+        mozc-handle-event
         notes-dedent-or-delete
         notes-indent-line
         org-force-self-insert
