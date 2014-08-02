@@ -85,6 +85,7 @@
         ibus-handle-event
         repeat
         smex
+        toggle-input-method
         use-big-font
         where-is
         ))
