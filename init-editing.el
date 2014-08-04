@@ -725,6 +725,9 @@ See the variable `align-rules-list' for more details.")
   (global-set-key (kbd "C-c s SPC") 'er/mark-defun)
   (global-set-key (kbd "C-c s w>")  'er/mark-symbol)
 
+  (setq expand-region-contract-fast-key "<left>")
+  (setq expand-region-reset-fast-key    "SPC")
+
   ;; notes-mode speed-up
   (defun er/add-notes-mode-expansions ()
     "Adds notes-mode expansions for buffers in notes-mode"
