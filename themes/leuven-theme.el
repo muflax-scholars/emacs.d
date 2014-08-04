@@ -109,9 +109,9 @@
    ;; Font lock faces
    `(font-lock-builtin-face ((,class (:foreground "#006FE0"))))
    `(font-lock-comment-delimiter-face ((,class (:foreground "#8D8D84")))) ; #696969
-   `(font-lock-comment-face ((,class (:slant italic :foreground "#696969" :background "#f7f7f7")))) ; #696969
+   `(font-lock-comment-face ((,class (:slant italic :foreground "#555555" :background "#f7f7f7"))))
    `(font-lock-constant-face ((,class (:foreground "#D0372D"))))
-   `(font-lock-doc-face ((,class (:foreground "#696969" :background "#f7f7f7"))))
+   `(font-lock-doc-face ((,class (:foreground "#555555" :background "#f7f7f7"))))
    `(font-lock-doc-string-face ((,class (:foreground "#008000"))))
    `(font-lock-function-name-face ((,class (:weight normal :foreground "#006699"))))
    `(font-lock-keyword-face ((,class (:bold nil :foreground "#0000FF")))) ; #3654DC
