@@ -616,20 +616,20 @@ With two \\[universal-argument] prefixes (i.e., when ARG is 16), decrease the in
     ;; Lists
     (define-key map (kbd "S-<return>") 'notes-insert-list-item)
     ;; Misc
-    (define-key map (kbd "C-v +") (lambda () (interactive) (notes-find-annotations "+")))
-    (define-key map (kbd "C-v ?") (lambda () (interactive) (notes-find-annotations "?")))
-    (define-key map (kbd "C-v !") (lambda () (interactive) (notes-find-annotations "!")))
-    (define-key map (kbd "C-v #") (lambda () (interactive) (notes-find-annotations "#")))
-    (define-key map (kbd "C-v >") (lambda () (interactive) (notes-find-annotations ">")))
-    (define-key map (kbd "C-v $") (lambda () (interactive) (notes-find-annotations "$")))
+    (define-key map (kbd "C-s v +") (lambda () (interactive) (notes-find-annotations "+")))
+    (define-key map (kbd "C-s v ?") (lambda () (interactive) (notes-find-annotations "?")))
+    (define-key map (kbd "C-s v !") (lambda () (interactive) (notes-find-annotations "!")))
+    (define-key map (kbd "C-s v #") (lambda () (interactive) (notes-find-annotations "#")))
+    (define-key map (kbd "C-s v >") (lambda () (interactive) (notes-find-annotations ">")))
+    (define-key map (kbd "C-s v $") (lambda () (interactive) (notes-find-annotations "$")))
     ;; easier to type
-    (define-key map (kbd "C-v p") (lambda () (interactive) (notes-find-annotations "+")))
-    (define-key map (kbd "C-v q") (lambda () (interactive) (notes-find-annotations "?")))
-    (define-key map (kbd "C-v e") (lambda () (interactive) (notes-find-annotations "!")))
-    (define-key map (kbd "C-v c") (lambda () (interactive) (notes-find-annotations "#")))
-    (define-key map (kbd "C-v t") (lambda () (interactive) (notes-find-annotations ">")))
+    (define-key map (kbd "C-s v p") (lambda () (interactive) (notes-find-annotations "+")))
+    (define-key map (kbd "C-s v q") (lambda () (interactive) (notes-find-annotations "?")))
+    (define-key map (kbd "C-s v e") (lambda () (interactive) (notes-find-annotations "!")))
+    (define-key map (kbd "C-s v c") (lambda () (interactive) (notes-find-annotations "#")))
+    (define-key map (kbd "C-s v t") (lambda () (interactive) (notes-find-annotations ">")))
     ;; generic
-    (define-key map (kbd "C-c C-v") 'notes-find-annotations)
+    (define-key map (kbd "C-s v v") 'notes-find-annotations)
     map)
   "Keymap for Markdown major mode.")
 
