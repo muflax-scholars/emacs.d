@@ -851,6 +851,11 @@ You have:
     (define-key global-map (kbd "C-c f")     'hs-hide-level)
     (define-key global-map (kbd "C-c F")     'fold-dwim-show-all)))
 
+(setup "yafolding"
+  (define-key global-map (kbd "C-c C-v") 'yafolding-toggle-element)
+  (define-key global-map (kbd "C-c v")   'yafolding-hide-all)
+  (define-key global-map (kbd "C-c V")   'yafolding-show-all))
+
 ;; parenthesis highlighting behavior
 (show-paren-mode 1)
 (setq blink-matching-paren-distance nil)
