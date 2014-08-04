@@ -723,7 +723,18 @@ See the variable `align-rules-list' for more details.")
   (global-set-key (kbd "M-<left>")  'er/mark-symbol)
   (global-set-key (kbd "C-c s d")   'er/mark-defun)
   (global-set-key (kbd "C-c s SPC") 'er/mark-defun)
-  (global-set-key (kbd "C-c s w>")  'er/mark-symbol))
+  (global-set-key (kbd "C-c s w>")  'er/mark-symbol)
+
+  ;; notes-mode speed-up
+  (defun er/add-notes-mode-expansions ()
+    "Adds notes-mode expansions for buffers in notes-mode"
+    (set (make-local-variable 'er/try-expand-list)
+         (default-value 'er/try-expand-list))
+    (loop for fun in '(er/mark-email er/mark-url)
+          collect (set 'er/try-expand-list
+                       (remove fun er/try-expand-list))))
+
+  (er/enable-mode-expansions 'notes-mode 'er/add-notes-mode-expansions))
 
 ;; make zsh aliases work
 (setup "shell-command"
