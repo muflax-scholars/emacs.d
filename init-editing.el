@@ -218,6 +218,8 @@
   (global-set-key (kbd "C-p s")            'mc/sort-regions)
   (global-set-key (kbd "C-p R")            'mc/reverse-regions)
 
+  (define-key mc/keymap (kbd "C-p h")      'mc-hide-unmatched-lines-mode)
+
   (setup "mc-extras"
     (global-set-key (kbd "C-p c")          'mc/compare-chars-forward)
     (global-set-key (kbd "C-p C")          'mc/compare-chars-backward)
