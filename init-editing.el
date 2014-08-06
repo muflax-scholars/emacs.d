@@ -660,14 +660,15 @@ See the variable `align-rules-list' for more details.")
 (setup "custom-input-methods")
 (setup "mozc" (setq mozc-leim-title "あ"))
 
-(global-set-key (kbd "C-c 0") (lambda () (interactive) (set-input-method nil)))
-(global-set-key (kbd "C-c 1") (lambda () (interactive) (set-input-method "muflax-latin")))
-(global-set-key (kbd "C-c 2") (lambda () (interactive) (set-input-method "muflax-cyrillic")))
-(global-set-key (kbd "C-c 3") (lambda () (interactive) (set-input-method "muflax-turkish")))
-(global-set-key (kbd "C-c 4") (lambda () (interactive) (set-input-method "muflax-greek")))
-(global-set-key (kbd "C-c 5") (lambda () (interactive) (set-input-method "japanese-mozc")))
+(global-set-key (kbd "C-x t 0") (lambda () (interactive) (set-input-method nil)))
+(global-set-key (kbd "C-x t t") (lambda () (interactive) (set-input-method "muflax-latin")))
+(global-set-key (kbd "C-x t l") (lambda () (interactive) (set-input-method "muflax-latin")))
+(global-set-key (kbd "C-x t c") (lambda () (interactive) (set-input-method "muflax-cyrillic")))
+(global-set-key (kbd "C-x t t") (lambda () (interactive) (set-input-method "muflax-turkish")))
+(global-set-key (kbd "C-x t g") (lambda () (interactive) (set-input-method "muflax-greek")))
+(global-set-key (kbd "C-x t j") (lambda () (interactive) (set-input-method "japanese-mozc")))
 
-(global-set-key (kbd "C-c C-m") 'toggle-input-method)
+(global-set-key (kbd "C-x t SPC") 'toggle-input-method)
 (global-set-key (kbd "<kanji>") 'toggle-input-method)
 
 ;; default to the diacritic smasher
