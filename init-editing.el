@@ -849,16 +849,82 @@ You have:
 
 (setup-after "hideshow"
   (setup-lazy '(hideshowvis-enable hideshowvis-minor-mode) "hideshowvis")
-  (setup "fold-dwim"
-    (define-key global-map (kbd "C-c C-f")   'fold-dwim-toggle)
-    (define-key global-map (kbd "<mouse-3>") 'fold-dwim-toggle)
-    (define-key global-map (kbd "C-c f")     'hs-hide-level)
-    (define-key global-map (kbd "C-c F")     'fold-dwim-show-all)))
+  (setup "fold-dwim")
+  (setup "yafolding")
 
-(setup "yafolding"
-  (define-key global-map (kbd "C-c C-v") 'yafolding-toggle-element)
-  (define-key global-map (kbd "C-c v")   'yafolding-hide-all)
-  (define-key global-map (kbd "C-c V")   'yafolding-show-all))
+  (setq hs-fold-level 1)
+
+  (defun hs-fold-increase ()
+    (interactive)
+    (setq hs-fold-level (1+ hs-fold-level))
+    (hs-hide-level hs-fold-level))
+
+  (defun hs-fold-decrease ()
+    (interactive)
+    (setq hs-fold-level (max (1- hs-fold-level) 1))
+    (hs-hide-level hs-fold-level))
+
+  (defun hs-fold-reset ()
+    (interactive)
+    (setq hs-fold-level 0)
+    (fold-dwim-show-all))
+
+  (defun hs-fold-levels ()
+    (interactive)
+
+    (setq hs-fold-level 1)
+    (hs-hide-level hs-fold-level)
+
+    (set-temporary-overlay-map
+     (let ((map (make-sparse-keymap)))
+       (define-key map (kbd "<right>") 'hs-fold-increase)
+       (define-key map (kbd "<left>")  'hs-fold-decrease)
+       (define-key map (kbd "SPC")     'hs-fold-reset)
+       map) t)
+    (message "<right> to fold more, <left> to fold less, SPC to reset."))
+
+  (setq whitespace-fold-level tab-width)
+
+  (defun whitespace-fold-increase ()
+    (interactive)
+    (setq whitespace-fold-level (+ whitespace-fold-level tab-width))
+    (set-selective-display whitespace-fold-level))
+
+  (defun whitespace-fold-decrease ()
+    (interactive)
+    (setq whitespace-fold-level (max (- whitespace-fold-level tab-width) tab-width))
+    (set-selective-display whitespace-fold-level))
+
+  (defun whitespace-fold-reset ()
+    (interactive)
+    (setq whitespace-fold-level 0)
+    (set-selective-display whitespace-fold-level))
+
+  (defun whitespace-fold-levels ()
+    (interactive)
+
+    (setq whitespace-fold-level tab-width)
+    (set-selective-display whitespace-fold-level)
+
+    (set-temporary-overlay-map
+     (let ((map (make-sparse-keymap)))
+       (define-key map (kbd "<right>") 'whitespace-fold-increase)
+       (define-key map (kbd "<left>")  'whitespace-fold-decrease)
+       (define-key map (kbd "SPC")     'whitespace-fold-reset)
+       map) t)
+    (message "<right> to fold more, <left> to fold less, SPC to reset."))
+
+  (define-key global-map (kbd "C-v C-f")   'fold-dwim-toggle)
+  (define-key global-map (kbd "<mouse-3>") 'fold-dwim-toggle)
+  (define-key global-map (kbd "C-v f")     'hs-fold-levels)
+  (define-key global-map (kbd "C-v F")     'fold-dwim-show-all)
+
+  (define-key global-map (kbd "C-v s")     'whitespace-fold-levels)
+  (define-key global-map (kbd "C-v S")     'whitespace-fold-reset)
+
+  (define-key global-map (kbd "C-v C-y")   'yafolding-toggle-element)
+  (define-key global-map (kbd "C-v y")     'yafolding-hide-all)
+  (define-key global-map (kbd "C-v Y")     'yafolding-show-all))
 
 ;; parenthesis highlighting behavior
 (show-paren-mode 1)
