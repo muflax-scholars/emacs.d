@@ -423,7 +423,8 @@ If visual-line-mode is on, then also jump to beginning of real line."
   (interactive)
   (yank)
   (call-interactively 'indent-region))
-(global-set-key "\C-y" 'yank-and-indent)
+(global-set-key (kbd "C-y") 'yank-and-indent)
+(global-set-key (kbd "C-Y") 'yank)
 
 ;; undo hardwrapped regions (mostly markdown)
 (defun unfill-region (begin end)
