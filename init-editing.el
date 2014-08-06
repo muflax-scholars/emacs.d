@@ -657,36 +657,36 @@ See the variable `align-rules-list' for more details.")
   (setq url-cookie-file "~/.emacs.d/cache/url/cookies"))
 
 ;; input methods, including a direct mozc binding to avoid ibus (requires mozc install)
-(setup "custom-input-methods")
-(setup "mozc" (setq mozc-leim-title "あ"))
+(setup "custom-input-methods"
+  (setup "mozc" (setq mozc-leim-title "あ"))
 
-(global-set-key (kbd "C-x t 0") (lambda () (interactive) (set-input-method nil)))
-(global-set-key (kbd "C-x t t") (lambda () (interactive) (set-input-method "muflax-latin")))
-(global-set-key (kbd "C-x t l") (lambda () (interactive) (set-input-method "muflax-latin")))
-(global-set-key (kbd "C-x t c") (lambda () (interactive) (set-input-method "muflax-cyrillic")))
-(global-set-key (kbd "C-x t t") (lambda () (interactive) (set-input-method "muflax-turkish")))
-(global-set-key (kbd "C-x t g") (lambda () (interactive) (set-input-method "muflax-greek")))
-(global-set-key (kbd "C-x t j") (lambda () (interactive) (set-input-method "japanese-mozc")))
+  (global-set-key (kbd "C-x t 0") (lambda () (interactive) (set-input-method nil)))
+  (global-set-key (kbd "C-x t t") (lambda () (interactive) (set-input-method "muflax-latin")))
+  (global-set-key (kbd "C-x t l") (lambda () (interactive) (set-input-method "muflax-latin")))
+  (global-set-key (kbd "C-x t c") (lambda () (interactive) (set-input-method "muflax-cyrillic")))
+  (global-set-key (kbd "C-x t t") (lambda () (interactive) (set-input-method "muflax-turkish")))
+  (global-set-key (kbd "C-x t g") (lambda () (interactive) (set-input-method "muflax-greek")))
+  (global-set-key (kbd "C-x t j") (lambda () (interactive) (set-input-method "japanese-mozc")))
 
-(global-set-key (kbd "C-x t SPC") 'toggle-input-method)
-(global-set-key (kbd "<kanji>") 'toggle-input-method)
+  (global-set-key (kbd "C-x t SPC") 'toggle-input-method)
+  (global-set-key (kbd "<kanji>") 'toggle-input-method)
 
-;; default to the diacritic smasher
-(setq default-input-method "muflax-latin")
-(defun turn-on-default-input-method ()
-  (set-input-method default-input-method))
-(add-hook 'text-mode-hook        'turn-on-default-input-method)
-(add-hook 'prog-mode-hook        'turn-on-default-input-method)
-(add-hook 'dired-mode-hook       'turn-on-default-input-method)
-(add-hook 'minibuffer-setup-hook 'turn-on-default-input-method)
-(add-hook 'occur-mode-hook       'turn-on-default-input-method)
-(add-hook 'phi-search-init-hook  'turn-on-default-input-method)
+  ;; default to the diacritic smasher
+  (setq default-input-method "muflax-latin")
+  (defun turn-on-default-input-method ()
+    (set-input-method default-input-method))
+  (add-hook 'text-mode-hook        'turn-on-default-input-method)
+  (add-hook 'prog-mode-hook        'turn-on-default-input-method)
+  (add-hook 'dired-mode-hook       'turn-on-default-input-method)
+  (add-hook 'minibuffer-setup-hook 'turn-on-default-input-method)
+  (add-hook 'occur-mode-hook       'turn-on-default-input-method)
+  (add-hook 'phi-search-init-hook  'turn-on-default-input-method)
 
-;; don't underline partial input
-(setq input-method-highlight-flag nil)
+  ;; don't underline partial input
+  (setq input-method-highlight-flag nil)
 
-;;don't spam the minibuffer
-(setq input-method-verbose-flag 'complex-only)
+  ;;don't spam the minibuffer
+  (setq input-method-verbose-flag 'complex-only))
 
 ;; analog to delete-file
 (defun delete-current-file ()
