@@ -1185,9 +1185,9 @@ See `flush-lines' or `keep-lines' for behavior of this command."
       (kill-buffer))))
 
 ;; macro key bindings
-(global-set-key (kbd "C-t C-t") 'insert-kbd-macro)
-(global-set-key (kbd "C-t C-n") 'kmacro-name-last-macro)
-(global-set-key (kbd "C-t C-b") 'kmacro-bind-to-key)
+(global-set-key (kbd "C-x m C-t") 'insert-kbd-macro)
+(global-set-key (kbd "C-x m C-n") 'kmacro-name-last-macro)
+(global-set-key (kbd "C-x m C-b") 'kmacro-bind-to-key)
 
 ;; sticky windows (and better shortcuts)
 (setup "sticky-windows"
