@@ -432,7 +432,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
   indented text (quotes, code) and lists intact."
   (interactive "r")
   (replace-regexp "\\([^\n]\\)\n\\([^ *\\>-\n]\\)" "\\1 \\2" nil begin end))
-(global-set-key "\M-Q" 'unfill-region)
+(global-set-key (kbd "M-Q") 'unfill-region)
 
 (defun next-newline-and-indent ()
   "Insert new line *after* the current one."
@@ -449,7 +449,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
   (if (and (eolp) (not (bolp)))
       (delete-indentation t)
     (kill-line arg)))
-(global-set-key "\C-k" 'kill-and-join-forward)
+(global-set-key (kbd "C-k") 'kill-and-join-forward)
 
 ;; delete all space before point up to beginning of line or non-whitespace char
 (setup "hungry-delete"
