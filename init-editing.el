@@ -796,7 +796,7 @@ You have:
 
 ;; scratchpad buffers
 (setup-lazy '(scratch) "scratch")
-(global-set-key (kbd "C-c C-b") 'scratch)
+(global-set-key (kbd "C-r s") 'scratch)
 
 ;; don't spam *Scratch*
 (setq initial-scratch-message nil)
