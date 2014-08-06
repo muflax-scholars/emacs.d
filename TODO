@@ -120,7 +120,12 @@ Stuff that doesn't work:
 
 [ input
 
-	- auto-complete is glitchy and I probably should stop using it. i really only use "what was this function called again?", for which it isn't even very good.
-	- auto-save all macros somewhere, so I can easily retrieve / rebind them later (maybe just an advice around macro naming?)
+	I should probably document my key binding prefixes somewhere, and make them even more systematic. Something like:
+
+	C-c (C-)$key -> mode-specific
+	(C|M)-$key   -> very common
+	C-x $key     -> uncommon
+
+	and completely remove all default maps, so this doesn't become super-messy.
 
 ]
