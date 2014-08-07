@@ -84,6 +84,7 @@
         down-list
         ibus-handle-event
         repeat
+        save-buffers-kill-terminal
         smex
         toggle-input-method
         use-big-font
