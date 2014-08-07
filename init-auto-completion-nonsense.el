@@ -11,11 +11,11 @@
   ;; saner trigger key
   (define-key yas-minor-mode-map (kbd "C-o") 'yas-expand)
   (define-key yas-minor-mode-map (kbd "M-o") 'yas-insert-snippet)
-  (define-key yas-keymap (kbd "C-o") 'yas-next-field-or-maybe-expand)
-  (define-key yas-keymap (kbd "C-O") 'yas-next-field)
-  (define-key yas-minor-mode-map [(tab)] nil)
+  (define-key yas-keymap (kbd "C-o")         'yas-next-field-or-maybe-expand)
+  (define-key yas-keymap (kbd "C-S-o")       'yas-next-field)
+  (define-key yas-keymap (kbd "<return>")    'yas/exit-all-snippets)
+  (define-key yas-minor-mode-map [(tab)]     nil)
   (define-key yas-minor-mode-map (kbd "TAB") nil)
-  (define-key yas-keymap (kbd "<return>") 'yas/exit-all-snippets)
 
   ;; quick reloads
   (define-key yas-minor-mode-map (kbd "C-c C-o") 'yas-reload-all)
