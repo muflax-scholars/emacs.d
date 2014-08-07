@@ -44,6 +44,7 @@
   (setq yas-indent-line 'fixed)
   (setq yas-verbosity 1)
   (setq yas-wrap-around-region t)
+  (setq yas-triggers-in-field t)
 
   ;; no dropdowns
   (setq yas-prompt-functions '(yas/ido-prompt yas/completing-prompt))
