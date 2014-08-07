@@ -7,7 +7,7 @@
 (defun yank-pop-reverse ()
   (interactive)
   (yank-pop -1))
-(global-set-key "\M-Y" 'yank-pop-reverse)
+(global-set-key (kbd "M-S-y") 'yank-pop-reverse)
 
 ;; goto and hint-style navigation
 (setup-lazy '(ace-jump-mode ace-jump-char-mode ace-jump-line-mode) "ace-jump-mode")
@@ -97,8 +97,8 @@
 (setup "smex"
   (setq smex-save-file "~/.emacs.d/cache/smex-items")
   (smex-initialize)
-  (global-set-key "\M-x" 'smex)
-  (global-set-key "\M-X" 'smex-major-mode-commands))
+  (global-set-key (kbd "M-x")   'smex)
+  (global-set-key (kbd "M-S-x") 'smex-major-mode-commands))
 
 ;; recent files
 (setup "recentf"

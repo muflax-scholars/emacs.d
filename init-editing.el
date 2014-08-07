@@ -423,8 +423,8 @@ If visual-line-mode is on, then also jump to beginning of real line."
   (interactive)
   (yank)
   (call-interactively 'indent-region))
-(global-set-key (kbd "C-y") 'yank-and-indent)
-(global-set-key (kbd "C-Y") 'yank)
+(global-set-key (kbd "C-y")   'yank-and-indent)
+(global-set-key (kbd "C-S-y") 'yank)
 
 ;; undo hardwrapped regions (mostly markdown)
 (defun unfill-region (begin end)
@@ -432,14 +432,14 @@ If visual-line-mode is on, then also jump to beginning of real line."
   indented text (quotes, code) and lists intact."
   (interactive "r")
   (replace-regexp "\\([^\n]\\)\n\\([^ *\\>-\n]\\)" "\\1 \\2" nil begin end))
-(global-set-key (kbd "M-Q") 'unfill-region)
+(global-set-key (kbd "M-S-q") 'unfill-region)
 
 (defun next-newline-and-indent ()
   "Insert new line *after* the current one."
   (interactive)
   (end-of-line)
   (newline-and-indent))
-(global-set-key (kbd "C-O") 'next-newline-and-indent)
+(global-set-key (kbd "C-S-o") 'next-newline-and-indent)
 
 ;; delete spaces when killing a line
 (defun kill-and-join-forward (&optional arg)

@@ -318,8 +318,8 @@
   (setq gofmt-command "goimports")
   (setq gofmt-show-errors nil)
   (unbreak-stupid-map go-mode-map)
-  (define-key go-mode-map (kbd "M-t") 'godef-jump)
-  (define-key go-mode-map (kbd "M-T") 'godef-jump-other-window))
+  (define-key go-mode-map (kbd "M-t")   'godef-jump)
+  (define-key go-mode-map (kbd "M-S-t") 'godef-jump-other-window))
 
 (setup-after "go-mode"
   (setup "go-eldoc"
