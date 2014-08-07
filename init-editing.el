@@ -87,10 +87,10 @@
 (global-set-key (kbd "M-p") 'undo-tree-redo)
 
 ;; because we navigate via cursor keys, we can put something more useful on the default navigational keys
-(global-set-key (kbd "C-n") 'other-window)
-(global-set-key (kbd "C-N") (lambda () (interactive) (other-window -1)))
-(global-set-key (kbd "C-f") 'forward-word)
-(global-set-key (kbd "C-b") 'backward-word)
+(global-set-key (kbd "C-n")   'other-window)
+(global-set-key (kbd "C-S-n") (lambda () (interactive) (other-window -1)))
+(global-set-key (kbd "C-f")   'forward-word)
+(global-set-key (kbd "C-b")   'backward-word)
 
 ;; obvious keys
 (global-set-key (kbd "<home>") 'beginning-of-buffer)
