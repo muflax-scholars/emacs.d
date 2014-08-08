@@ -8,6 +8,9 @@
         ace-jump-line-mode
         align-region-or-current
         beginning-of-visual-line
+        c-electric-colon
+        c-electric-pound
+        c-electric-semi&comma
         copy-line
         copy-with-append
         delimit-columns-current
@@ -73,6 +76,7 @@
         whole-line-or-region-comment-dwim-2
         whole-line-or-region-kill-region
         whole-line-or-region-kill-ring-save
+        whole-line-or-region-yank
         yank-and-indent
         yas-expand
         ))
