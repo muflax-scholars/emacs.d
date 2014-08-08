@@ -11,14 +11,15 @@
   nil " »»" nav-mode-map :global t)
 
 ;; simple navigation
-(define-key nav-mode-map (kbd "l") 'previous-line)
+(define-key nav-mode-map (kbd "i") 'previous-line)
 (define-key nav-mode-map (kbd "a") 'next-line)
-(define-key nav-mode-map (kbd "i") 'left-char)
+(define-key nav-mode-map (kbd "u") 'left-char)
 (define-key nav-mode-map (kbd "e") 'right-char)
 
-(define-key nav-mode-map (kbd "u") 'scroll-down-command)
-(define-key nav-mode-map (kbd "o") 'scroll-up-command)
+(define-key nav-mode-map (kbd "p") 'scroll-up-command)
+(define-key nav-mode-map (kbd "|") 'scroll-down-command)
 
+(define-key nav-mode-map (kbd "o") 'other-window)
 (define-key nav-mode-map (kbd "n") 'other-window)
 (define-key nav-mode-map (kbd "r") (lambda () (interactive) (other-window -1)))
 
