@@ -60,7 +60,7 @@
   :group 'convenience)
 
 (defface minimap-font-face
-  '((default :family "Droid Sans Mono" :height 5))
+  '((default :family "Fantasque Sans Mono" :height 5))
   "Face used for text in minimap buffer, notably the font family and height.
 This height should be really small.  You probably want to use a
 TrueType font for this.  After changing this, you should
