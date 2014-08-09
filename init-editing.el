@@ -110,7 +110,7 @@
 (global-set-key (kbd "S-<SPC>") 'set-mark-command)
 
 ;; make DEL always work like intended
-(setq normal-erase-is-backspace t)
+(normal-erase-is-backspace-mode 1)
 
 ;; allowed key components
 (setup-lazy '(free-keys) "free-keys"
