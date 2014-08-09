@@ -38,6 +38,7 @@
         indent-region
         kill-and-join-forward
         kill-without-append
+        kmacro-end-or-call-macro
         literal-delete-backward-char
         literal-delete-char
         lua-electric-match
