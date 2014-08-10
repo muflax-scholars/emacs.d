@@ -64,6 +64,10 @@
 (add-to-list 'auto-mode-alist '("\\.md$"       . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
 
+(setup-lazy '(nix-mode) "nix-mode"
+  (add-to-list 'auto-mode-alist '("\\.nix" . nix-mode)))
+
+
 ;; notes-mode
 (setup "notes-mode")
 (add-to-list 'auto-mode-alist '("\\.txt$"    . notes-mode))
