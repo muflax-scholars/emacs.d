@@ -405,17 +405,8 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (global-set-key (kbd "C-x a t") 'delimit-columns-current)
 (global-set-key (kbd "C-x a T") 'delimit-columns-region)
 
-;; automatically indent on return, except in a few modes that have similar stuff by default
+;; automatically indent on return
 (electric-indent-mode 1)
-;; TODO should be a generic macro or something
-(defun no-electric-indent-yaml ()
-  (electric-indent-mode -1)
-  (define-key yaml-mode-map [(return)] 'newline-and-indent))
-(add-hook 'yaml-mode-hook 'no-electric-indent-yaml)
-(defun no-electric-indent-python ()
-  (electric-indent-mode -1)
-  (define-key python-mode-map [(return)] 'newline-and-indent))
-(add-hook 'python-mode-hook 'no-electric-indent-python)
 
 ;; also indent when yanked
 (defun yank-and-indent ()
