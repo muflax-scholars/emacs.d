@@ -834,14 +834,15 @@ You have:
 
 ;; folding
 (setup "hideshow"
-  (add-hook 'enh-ruby-hook   'hs-minor-mode)
-  (add-hook 'prog-mode-hook  'hs-minor-mode)
-  (add-hook 'notes-mode-hook 'hs-minor-mode))
-
-(setup-after "hideshow"
   (setup-lazy '(hideshowvis-enable hideshowvis-minor-mode) "hideshowvis")
   (setup "fold-dwim")
   (setup "yafolding")
+
+  (add-hook 'enh-ruby-hook   'hs-minor-mode)
+  (add-hook 'prog-mode-hook  'hs-minor-mode)
+  (add-hook 'notes-mode-hook 'hs-minor-mode)
+
+  (setq hs-isearch-open t)
 
   (setq hs-fold-level 1)
 
