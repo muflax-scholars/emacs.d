@@ -675,6 +675,10 @@ With two \\[universal-argument] prefixes (i.e., when ARG is 16), decrease the in
   ;; indentation
   (set (make-local-variable 'indent-line-function) #'notes-indent-line)
 
+  ;; folding
+  (add-to-list 'hs-special-modes-alist
+               '(notes-mode "^[ \t]*[[{]" "^[ \t]*[\\]}]"))
+
   )
 
 (provide 'notes-mode)
