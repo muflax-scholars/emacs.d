@@ -11,10 +11,17 @@
   nil " »»" nav-mode-map :global t)
 
 ;; simple navigation
-(define-key nav-mode-map (kbd "i") 'previous-line)
-(define-key nav-mode-map (kbd "a") 'next-line)
-(define-key nav-mode-map (kbd "u") 'left-char)
-(define-key nav-mode-map (kbd "e") 'right-char)
+(define-key nav-mode-map (kbd "i") 'backward-sentence)
+(define-key nav-mode-map (kbd "a") 'forward-sentence)
+(define-key nav-mode-map (kbd "u") 'backward-word)
+(define-key nav-mode-map (kbd "e") 'forward-word)
+
+;; forward-button 	forward-char 	forward-comment
+;; forward-line 	forward-list 	forward-page
+;; forward-paragraph 	forward-point 	forward-same-syntax
+;; forward-sentence 	forward-sexp 	forward-symbol
+;; forward-thing 	forward-to-indentation 	forward-visible-line
+;; forward-whitespace 	forward-word
 
 (define-key nav-mode-map (kbd "p") 'scroll-up-command)
 (define-key nav-mode-map (kbd "|") 'scroll-down-command)
