@@ -15,13 +15,12 @@
 (setup-lazy '(ace-link) "ace-link")
 (setup-lazy '(ace-window) "ace-window")
 
-(global-set-key (kbd "M-g M-g") 'goto-line)
-(global-set-key (kbd "M-g l")   'goto-line)
-(global-set-key (kbd "M-g b")   'ace-jump-buffer)
-(global-set-key (kbd "M-g c")   'ace-jump-char-mode)
-(global-set-key (kbd "M-g g")   'ace-jump-mode)
-(global-set-key (kbd "M-g s")   'ace-jump-line-mode)
-(global-set-key (kbd "M-g w")   'ace-window)
+(global-set-key (kbd "C-s g n") 'goto-line)
+(global-set-key (kbd "C-s g b") 'ace-jump-buffer)
+(global-set-key (kbd "C-s g c") 'ace-jump-char-mode)
+(global-set-key (kbd "C-s g g") 'ace-jump-mode)
+(global-set-key (kbd "C-s g l") 'ace-jump-line-mode)
+(global-set-key (kbd "C-s g w") 'ace-window)
 
 (setup-after "ace-window"
   ;; help pages don't have other input, so skip the M-g prefix
