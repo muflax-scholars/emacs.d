@@ -10,10 +10,18 @@
 (global-set-key (kbd "M-S-y") 'yank-pop-reverse)
 
 ;; goto and hint-style navigation
-(setup-lazy '(ace-jump-mode ace-jump-char-mode ace-jump-line-mode) "ace-jump-mode")
+(setup-lazy '(ace-jump-mode ace-jump-char-mode ace-jump-line-mode) "ace-jump-mode"
+  (setq ace-jump-mode-scope 'window)
+
+  ;; use saner keys, and order
+  (setq ace-jump-mode-move-keys
+        (loop for c in (split-string "enaritoschwklgvfudzbpmjyxq" "" t)
+              collect (string-to-char c)))
+  )
+
 (setup-lazy '(ace-jump-buffer) "ace-jump-buffer")
-(setup-lazy '(ace-link) "ace-link")
-(setup-lazy '(ace-window) "ace-window")
+(setup-lazy '(ace-link)        "ace-link")
+(setup-lazy '(ace-window)      "ace-window")
 
 (global-set-key (kbd "C-s g n") 'goto-line)
 (global-set-key (kbd "C-s g b") 'ace-jump-buffer)
