@@ -677,7 +677,7 @@ With two \\[universal-argument] prefixes (i.e., when ARG is 16), decrease the in
 
   ;; folding
   (add-to-list 'hs-special-modes-alist
-               '(notes-mode "^[ \t]*[[{]" "^[ \t]*[\\]}]"))
+               '(notes-mode "[[{]" "[\\]}]"))
 
   )
 
