@@ -58,66 +58,6 @@
 (set-selection-coding-system 'utf-8) ; please
 (prefer-coding-system        'utf-8) ; with sugar on top
 
-;; fix mod4 bug
-(define-key special-event-map (kbd "<key-17>")   'ignore)
-(define-key special-event-map (kbd "<M-key-17>") 'ignore)
-
-;; commenting
-(global-set-key (kbd "C-c SPC")   'comment-dwim)
-(global-set-key (kbd "C-c C-SPC") 'comment-dwim)
-(global-set-key (kbd "C-c c")     'comment-region)
-(global-set-key (kbd "C-c u")     'uncomment-region)
-
-;; code navigation
-(global-set-key (kbd "C-c n") 'next-error)
-(global-set-key (kbd "C-c p") 'previous-error)
-(global-set-key (kbd "M-t")   'find-tag)
-
-;; eval
-(global-set-key (kbd "C-x SPC d")   'eval-defun)
-(global-set-key (kbd "C-x SPC SPC") 'eval-defun)
-(global-set-key (kbd "C-x SPC b")   'eval-buffer)
-(global-set-key (kbd "C-x SPC e")   'eval-expression)
-(global-set-key (kbd "C-x SPC r")   'eval-region)
-
-;; debug
-(global-set-key (kbd "C-x d d") 'edebug-defun)
-(global-set-key (kbd "C-x d s") 'profiler-start)
-(global-set-key (kbd "C-x d r") 'profiler-report)
-(global-set-key (kbd "C-x d g") 'profiler-stop)
-
-;; undo
-(global-set-key (kbd "C-z") 'undo-tree-undo)
-(global-set-key (kbd "M-z") 'undo-tree-redo)
-(global-set-key (kbd "M-n") 'undo-tree-undo)
-(global-set-key (kbd "M-p") 'undo-tree-redo)
-
-;; because we navigate via cursor keys, we can put something more useful on the default navigational keys
-(global-set-key (kbd "C-n")   'other-window)
-(global-set-key (kbd "C-S-n") (lambda () (interactive) (other-window -1)))
-(global-set-key (kbd "C-f")   'forward-word)
-(global-set-key (kbd "C-b")   'backward-word)
-
-;; obvious keys
-(global-set-key (kbd "<home>") 'beginning-of-buffer)
-(global-set-key (kbd "<end>")  'end-of-buffer)
-
-;; make C-Backspace "work" in terminal
-(global-set-key (kbd "S-<f7>") 'backward-kill-word)
-
-;; get out of recursive edit
-(global-set-key (kbd "C-c C-g") 'abort-recursive-edit)
-
-;; save some strokes
-(global-set-key (kbd "<f2>")   'save-buffer)
-(global-set-key (kbd "S-<f2>") 'save-some-buffers)
-
-;; mark
-(global-set-key (kbd "S-<SPC>") 'set-mark-command)
-
-;; make DEL always work like intended
-(normal-erase-is-backspace-mode 1)
-
 ;; allowed key components
 (setup-lazy '(free-keys) "free-keys"
   (setq free-keys-keys
@@ -207,6 +147,66 @@
                    )
          collect (if (eq (key-binding (first key)) (second key))
                      (global-unset-key (first key))))
+
+;; fix mod4 bug
+(define-key special-event-map (kbd "<key-17>")   'ignore)
+(define-key special-event-map (kbd "<M-key-17>") 'ignore)
+
+;; commenting
+(global-set-key (kbd "C-c SPC")   'comment-dwim)
+(global-set-key (kbd "C-c C-SPC") 'comment-dwim)
+(global-set-key (kbd "C-c c")     'comment-region)
+(global-set-key (kbd "C-c u")     'uncomment-region)
+
+;; code navigation
+(global-set-key (kbd "C-c n") 'next-error)
+(global-set-key (kbd "C-c p") 'previous-error)
+(global-set-key (kbd "M-t")   'find-tag)
+
+;; eval
+(global-set-key (kbd "C-x SPC d")   'eval-defun)
+(global-set-key (kbd "C-x SPC SPC") 'eval-defun)
+(global-set-key (kbd "C-x SPC b")   'eval-buffer)
+(global-set-key (kbd "C-x SPC e")   'eval-expression)
+(global-set-key (kbd "C-x SPC r")   'eval-region)
+
+;; debug
+(global-set-key (kbd "C-x d d") 'edebug-defun)
+(global-set-key (kbd "C-x d s") 'profiler-start)
+(global-set-key (kbd "C-x d r") 'profiler-report)
+(global-set-key (kbd "C-x d g") 'profiler-stop)
+
+;; undo
+(global-set-key (kbd "C-z") 'undo-tree-undo)
+(global-set-key (kbd "M-z") 'undo-tree-redo)
+(global-set-key (kbd "M-n") 'undo-tree-undo)
+(global-set-key (kbd "M-p") 'undo-tree-redo)
+
+;; because we navigate via cursor keys, we can put something more useful on the default navigational keys
+(global-set-key (kbd "C-n")   'other-window)
+(global-set-key (kbd "C-S-n") (lambda () (interactive) (other-window -1)))
+(global-set-key (kbd "C-f")   'forward-word)
+(global-set-key (kbd "C-b")   'backward-word)
+
+;; obvious keys
+(global-set-key (kbd "<home>") 'beginning-of-buffer)
+(global-set-key (kbd "<end>")  'end-of-buffer)
+
+;; make C-Backspace "work" in terminal
+(global-set-key (kbd "S-<f7>") 'backward-kill-word)
+
+;; get out of recursive edit
+(global-set-key (kbd "C-c C-g") 'abort-recursive-edit)
+
+;; save some strokes
+(global-set-key (kbd "<f2>")   'save-buffer)
+(global-set-key (kbd "S-<f2>") 'save-some-buffers)
+
+;; mark
+(global-set-key (kbd "S-<SPC>") 'set-mark-command)
+
+;; make DEL always work like intended
+(normal-erase-is-backspace-mode 1)
 
 ;; multiple cursors
 (setq mc/list-file "~/.emacs.d/mc-lists.el")
