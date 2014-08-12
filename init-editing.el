@@ -910,6 +910,7 @@ You have:
   (define-key global-map (kbd "<mouse-3>") 'fold-dwim-toggle)
   (define-key global-map (kbd "C-v f")     'hs-fold-levels)
   (define-key global-map (kbd "C-v F")     'fold-dwim-show-all)
+  (define-key global-map (kbd "C-v SPC")   'fold-dwim-show-all)
 
   (define-key global-map (kbd "C-v s")     'whitespace-fold-levels)
   (define-key global-map (kbd "C-v S")     'whitespace-fold-reset)
