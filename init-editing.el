@@ -80,6 +80,12 @@
 (global-set-key (kbd "C-x SPC e")   'eval-expression)
 (global-set-key (kbd "C-x SPC r")   'eval-region)
 
+;; debug
+(global-set-key (kbd "C-x d d") 'edebug-defun)
+(global-set-key (kbd "C-x d s") 'profiler-start)
+(global-set-key (kbd "C-x d r") 'profiler-report)
+(global-set-key (kbd "C-x d g") 'profiler-stop)
+
 ;; undo
 (global-set-key (kbd "C-z") 'undo-tree-undo)
 (global-set-key (kbd "M-z") 'undo-tree-redo)
@@ -156,6 +162,7 @@
                    (,(kbd "C-x ]")            forward-page)
                    (,(kbd "C-x ^")            enlarge-window)
                    (,(kbd "C-x `")            next-error)
+                   (,(kbd "C-x d")            dired)
                    (,(kbd "C-x l")            count-lines-page)
                    (,(kbd "C-x m")            compose-mail)
                    (,(kbd "C-x v")            vc-prefix-map)
