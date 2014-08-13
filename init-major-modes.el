@@ -228,12 +228,14 @@
   (defun dired-next ()
     (interactive)
     (dired-jump)
+    (revert-buffer)
     (dired-next-line 1)
     (dired-find-file))
 
   (defun dired-prev ()
     (interactive)
     (dired-jump)
+    (revert-buffer)
     (dired-next-line -1)
     (dired-find-file))
 
@@ -247,8 +249,8 @@
   )
 
 (global-set-key (kbd "C-c C-j")   'dired-jump)
-(global-set-key (kbd "M-<next>")  'dired-next)
-(global-set-key (kbd "M-<prior>") 'dired-prev)
+(global-set-key (kbd "C-<next>")  'dired-next)
+(global-set-key (kbd "C-<prior>") 'dired-prev)
 
 (setup-after "dired"
   (setup "wdired")
