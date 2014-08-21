@@ -898,4 +898,7 @@ narrowed."
         ((derived-mode-p 'org-mode) (org-narrow-to-subtree))
         (t (narrow-to-defun))))
 
+;; help extension
+(setup "help-fns+")
+
 (provide 'init-editing)
