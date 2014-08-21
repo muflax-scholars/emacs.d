@@ -20,6 +20,7 @@
 (require 'cl-lib)
 (defalias 'first  'cl-first)
 (defalias 'second 'cl-second)
+(defalias 'rest   'cl-rest)
 
 (defun pretty-load? ()
   "load stuff like themes that are only meaningful in window system?"
