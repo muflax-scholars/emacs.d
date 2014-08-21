@@ -855,23 +855,25 @@ You have:
 
   (defun hs-fold-increase ()
     (interactive)
-    (setq hs-fold-level (1+ hs-fold-level))
+    (set (make-local-variable 'hs-fold-level)
+         (1+ hs-fold-level))
     (hs-hide-level hs-fold-level))
 
   (defun hs-fold-decrease ()
     (interactive)
-    (setq hs-fold-level (max (1- hs-fold-level) 1))
+    (set (make-local-variable 'hs-fold-level)
+         (max (1- hs-fold-level) 1))
     (hs-hide-level hs-fold-level))
 
   (defun hs-fold-reset ()
     (interactive)
-    (setq hs-fold-level 0)
+    (set (make-local-variable 'hs-fold-level) 0)
     (fold-dwim-show-all))
 
   (defun hs-fold-levels ()
     (interactive)
 
-    (setq hs-fold-level 1)
+    (set (make-local-variable 'hs-fold-level) 1)
     (hs-hide-level hs-fold-level)
 
     (set-temporary-overlay-map
@@ -886,23 +888,25 @@ You have:
 
   (defun whitespace-fold-increase ()
     (interactive)
-    (setq whitespace-fold-level (+ whitespace-fold-level tab-width))
+    (set (make-local-variable 'whitspace-fold-level)
+         (+ whitespace-fold-level tab-width))
     (set-selective-display whitespace-fold-level))
 
   (defun whitespace-fold-decrease ()
     (interactive)
-    (setq whitespace-fold-level (max (- whitespace-fold-level tab-width) tab-width))
+    (set (make-local-variable 'whitspace-fold-level)
+         (max (- whitespace-fold-level tab-width) tab-width))
     (set-selective-display whitespace-fold-level))
 
   (defun whitespace-fold-reset ()
     (interactive)
-    (setq whitespace-fold-level 0)
+    (set (make-local-variable 'whitspace-fold-level) 0)
     (set-selective-display whitespace-fold-level))
 
   (defun whitespace-fold-levels ()
     (interactive)
 
-    (setq whitespace-fold-level tab-width)
+    (set (make-local-variable 'whitspace-fold-level) tab-width)
     (set-selective-display whitespace-fold-level)
 
     (set-temporary-overlay-map
