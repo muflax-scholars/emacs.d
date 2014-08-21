@@ -8,10 +8,6 @@
 ;; load raw text in a basic mode (for performance reasons)
 (add-to-list 'auto-mode-alist '("\\.log$" . fundamental-mode))
 
-;; fuck you, you key-stealing whore
-(defun unbreak-stupid-map (stupid-map)
-  (define-key stupid-map (kbd "C-c") nil))
-
 ;; associate non-standardish interpreters with modes
 (add-to-list 'interpreter-mode-alist '("python2" . python-mode))
 (add-to-list 'interpreter-mode-alist '("python3" . python-mode))
@@ -22,7 +18,6 @@
 
 ;; c style (1TBS, but guess offsets for other files)
 (setq c-default-style "k&r" c-basic-offset tab-width)
-(global-set-key (kbd "M-RET") 'c-indent-new-comment-line)
 (setup "guess-offset")
 
 ;; eldoc for function signatures
@@ -113,12 +108,12 @@
   (add-to-list 'org-src-lang-modes '("p"    . python))
   (setq org-src-fontify-natively t)
   (setq org-confirm-babel-evaluate nil)
-  ;; keybindings
-  (org-defkey org-mode-map "\C-c\C-t" (lambda () (interactive) (org-todo "TODO")))
-  (org-defkey org-mode-map "\C-c\C-w" (lambda () (interactive) (org-todo "WAITING")))
-  (org-defkey org-mode-map "\C-c\C-d" (lambda () (interactive) (org-todo "DONE")))
+
   ;; shortcut for C-u C-c C-l
-  (defun org-insert-file-link () (interactive) (org-insert-link '(4)))
+  (defun org-insert-file-link ()
+    (interactive)
+    (org-insert-link '(4)))
+
   ;; some templates
   (setcdr (assoc "c" org-structure-template-alist)
           '("#+BEGIN_COMMENT\n?\n#+END_COMMENT"))
@@ -140,8 +135,7 @@
 
 ;; new python mode
 (setup-lazy '(python-mode) "python"
-  (setq python-indent-offset 2)
-  (unbreak-stupid-map python-mode-map))
+  (setq python-indent-offset 2))
 
 ;; haskell mode
 (setup-lazy '(haskell-mode) "haskell-mode")
@@ -151,9 +145,7 @@
  (setup "haskell-indentation"
    (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation))
  (setup "inf-haskell"
-   (add-hook 'inferior-haskell-mode-hook 'turn-on-ghci-completion)
-   (define-key haskell-mode-map (kbd "C-c ?")   'haskell-process-do-type)
-   (define-key haskell-mode-map (kbd "C-c C-?") 'haskell-process-do-info)))
+   (add-hook 'inferior-haskell-mode-hook 'turn-on-ghci-completion)))
 
 ;; ruby mode
 ;; replace normal ruby mode
@@ -164,8 +156,6 @@
 
   ;; flycheck covers errors anyway
   (setq enh-ruby-check-syntax nil)
-
-  (unbreak-stupid-map enh-ruby-mode-map)
 
   ;; better indenting
   (setq ruby-indent-level tab-width)
@@ -182,13 +172,16 @@
 (add-to-list 'auto-mode-alist '("\\.gemspec$" . enh-ruby-mode))
 
 (setup-after "enh-ruby-mode"
-;; misc stuff
-  (setup "yari"       ; ri documentation tool
-    (define-key enh-ruby-mode-map (kbd "C-c ?") 'yari))
-  (setup "ruby-block" ; show what block an end belongs to
+  ;; ri documentation tool
+  (setup "yari")
+
+  ;; show what block an end belongs to
+  (setup "ruby-block"
     (ruby-block-mode t)
     (setq ruby-block-highlight-toggle t))
-  (setup "rhtml-mode" ; erb
+
+  ;; erb
+  (setup "rhtml-mode"
     (add-to-list 'auto-mode-alist '("\\.erb$"     . rhtml-mode))))
 
 ;; javascript
@@ -248,10 +241,6 @@
   (setq dired-recursive-deletes 'top)
   )
 
-(global-set-key (kbd "C-c C-j")   'dired-jump)
-(global-set-key (kbd "C-<next>")  'dired-next)
-(global-set-key (kbd "C-<prior>") 'dired-prev)
-
 (setup-after "dired"
   (setup "wdired")
   (setup "dired-x")
@@ -266,36 +255,23 @@
             wdired-abort-changes)
     (eval `(defadvice ,it (after revert-buffer activate)
              (revert-buffer))))
-  (define-key dired-mode-map (kbd "C-c C-c")  'wdired-change-to-wdired-mode)
-  (define-key dired-mode-map (kbd "<insert>") 'dired-mark)
-  ;; C-a goes to filename
   (defun dired-back-to-start-of-files ()
     (interactive)
     (backward-char (- (current-column) 2)))
-  (define-key dired-mode-map (kbd "C-a") 'dired-back-to-start-of-files)
-  (define-key wdired-mode-map (kbd "C-a") 'dired-back-to-start-of-files)
-  ;; M-up goes to first file
+
   (defun dired-back-to-top ()
     (interactive)
     (beginning-of-buffer)
     (dired-next-line 4))
-  (define-key dired-mode-map (vector 'remap 'beginning-of-buffer) 'dired-back-to-top)
-  (define-key wdired-mode-map (vector 'remap 'beginning-of-buffer) 'dired-back-to-top)
-  (define-key dired-mode-map (vector 'remap 'smart-up) 'dired-back-to-top)
-  ;; M-down goes to last file
+
   (defun dired-jump-to-bottom ()
     (interactive)
     (end-of-buffer)
     (dired-next-line -1))
-  (define-key dired-mode-map (vector 'remap 'end-of-buffer) 'dired-jump-to-bottom)
-  (define-key dired-mode-map (vector 'remap 'smart-down) 'dired-jump-to-bottom)
-  (define-key wdired-mode-map (vector 'remap 'end-of-buffer) 'dired-jump-to-bottom)
-
 
   ;; use omit-mode to hide dotfiles
   (setq-default dired-omit-files-p t)
   (setq dired-omit-files "^\\..*[^.]$")
-  (define-key dired-mode-map (kbd ".") 'dired-omit-mode)
   (setq dired-omit-verbose nil)
 
   ;; open by extension
@@ -318,10 +294,7 @@
 (setup-lazy '(go-mode) "go-mode"
   (add-hook 'before-save-hook #'gofmt-before-save)
   (setq gofmt-command "goimports")
-  (setq gofmt-show-errors nil)
-  (unbreak-stupid-map go-mode-map)
-  (define-key go-mode-map (kbd "M-t")   'godef-jump)
-  (define-key go-mode-map (kbd "M-S-t") 'godef-jump-other-window))
+  (setq gofmt-show-errors nil))
 
 (setup-after "go-mode"
   (setup "go-eldoc"
@@ -344,7 +317,6 @@
 ;; Flycheck for code linting
 (setup "flycheck"
   (add-hook 'after-init-hook #'global-flycheck-mode)
-  (unbreak-stupid-map flycheck-mode-map)
   (setq flycheck-mode-line-lighter " !")
   (setq flycheck-indication-mode 'right-fringe)
   (setq flycheck-display-errors-function nil)
@@ -371,12 +343,6 @@
     (kill-buffer)
     (jump-to-register :magit-fullscreen))
 
-  ;; needed because of fullscreen override
-  (define-key magit-status-mode-map (kbd "q") 'magit-quit-session))
-
-(global-set-key (kbd "C-x g") 'magit-status)
-
-(setup-after "magit"
   (defun magit-toggle-whitespace ()
     (interactive)
     (if (member "-w" magit-diff-options)
@@ -392,15 +358,12 @@
     (interactive)
     (setq magit-diff-options (remove "-w" magit-diff-options))
     (magit-refresh))
+  )
 
-  (define-key magit-status-mode-map (kbd "W") 'magit-toggle-whitespace))
-
-(setup-lazy '(conf-mode) "conf-mode"
-  (unbreak-stupid-map conf-mode-map))
+(setup-lazy '(conf-mode) "conf-mode")
 
 (setup-lazy '(paradox-list-packages) "paradox"
   (setq paradox-github-token t))
-(global-set-key (kbd "C-x p") 'paradox-list-packages)
 
 (setup-lazy '(nix-mode) "nix-mode"
   (add-to-list 'auto-mode-alist '("\\.nix" . nix-mode)))

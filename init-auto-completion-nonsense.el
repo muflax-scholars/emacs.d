@@ -8,19 +8,7 @@
           "~/spoiler/languages/.snippets"
           ))
 
-  ;; saner trigger key
-  (define-key yas-minor-mode-map (kbd "C-o") 'yas-expand)
-  (define-key yas-minor-mode-map (kbd "M-o") 'yas-insert-snippet)
-  (define-key yas-keymap (kbd "C-o")         'yas-next-field-or-maybe-expand)
-  (define-key yas-keymap (kbd "C-S-o")       'yas-next-field)
-  (define-key yas-keymap (kbd "<return>")    'yas/exit-all-snippets)
-  (define-key yas-minor-mode-map [(tab)]     nil)
-  (define-key yas-minor-mode-map (kbd "TAB") nil)
-
-  ;; quick reloads
-  (define-key yas-minor-mode-map (kbd "C-c C-o") 'yas-reload-all)
-
-  ;; Inter-field navigation
+  ;; inter-field navigation
   (defun yas/goto-end-of-active-field ()
     (interactive)
     (let* ((snippet (car (yas--snippets-at-point)))
@@ -37,9 +25,6 @@
           (move-beginning-of-line 1)
         (goto-char position))))
 
-  (define-key yas-keymap (kbd "C-e") 'yas/goto-end-of-active-field)
-  (define-key yas-keymap (kbd "C-a") 'yas/goto-start-of-active-field)
-
   ;; options
   (setq yas-indent-line 'fixed)
   (setq yas-verbosity 1)
@@ -53,8 +38,6 @@
 
 ;; auto-yasnippet
 (setup-after "yasnippet"
-  (global-set-key (kbd "C-c ~")   'aya-create)
-  (global-set-key (kbd "C-c C-~") 'aya-expand)
   (setup-lazy '(aya-create aya-expand) "auto-yasnippet"))
 
 ;; auto completion
@@ -67,24 +50,7 @@
   (setq ac-comphist-file "~/.emacs.d/cache/ac-comphist.dat")
   (setq ac-auto-show-menu nil)
   (setq ac-ignore-case nil)
-  (ac-config-default)
-
-  ;; saner keys
-  (setq ac-use-menu-map nil)
-  (ac-set-trigger-key "C-t")
-  (global-set-key (kbd "C-t") 'ac-trigger-key-command)
-  (define-key ac-completing-map "\t"        nil)
-  (define-key ac-completing-map [tab]       nil)
-  (define-key ac-completing-map (kbd "<Tab>") nil)
-  (define-key ac-completing-map [up]        nil)
-  (define-key ac-completing-map [down]      nil)
-  (define-key ac-completing-map (kbd "M-n") nil)
-  (define-key ac-completing-map (kbd "M-p") nil)
-  (define-key ac-completing-map (kbd "C-t") 'ac-next)
-  (define-key ac-completing-map (kbd "M-t") 'ac-previous)
-  (define-key ac-completing-map [return]    nil)
-  (define-key ac-completing-map "\r"        nil)
-  (define-key ac-completing-map (kbd "C-j") 'ac-complete))
+  (ac-config-default))
 
 ;; fancy go autocompletion
 (setup-after "go-mode"

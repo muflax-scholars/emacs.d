@@ -1,13 +1,11 @@
 ;; searches and a plethora of regex engines
 
 ;; more useful kill-ring
-(setup "kill-ring-search"
-  (global-set-key (kbd "M-C-y") 'kill-ring-search)
-  (global-set-key (kbd "C-s y") 'kill-ring-search))
+(setup "kill-ring-search")
+
 (defun yank-pop-reverse ()
   (interactive)
   (yank-pop -1))
-(global-set-key (kbd "M-S-y") 'yank-pop-reverse)
 
 ;; goto and hint-style navigation
 (setup-lazy '(ace-jump-mode ace-jump-char-mode ace-jump-line-mode) "ace-jump-mode"
@@ -23,30 +21,7 @@
 (setup-lazy '(ace-link)        "ace-link")
 (setup-lazy '(ace-window)      "ace-window")
 
-(global-set-key (kbd "C-s g n") 'goto-line)
-(global-set-key (kbd "C-s g b") 'ace-jump-buffer)
-(global-set-key (kbd "C-s g c") 'ace-jump-char-mode)
-(global-set-key (kbd "C-s g g") 'ace-jump-mode)
-(global-set-key (kbd "C-s g l") 'ace-jump-line-mode)
-(global-set-key (kbd "C-s g w") 'ace-window)
-
-(setup-after "ace-window"
-  ;; help pages don't have other input, so skip the M-g prefix
-  (setup "info"
-    (define-key Info-mode-map "l" 'ace-link-info))
-  (setup "help-mode"
-    (define-key help-mode-map "l" 'ace-link-help)))
-
 (setup-lazy '(phi-search phi-search-backward) "phi-search")
-(global-set-key (kbd "C-s p") 'phi-search)
-(global-set-key (kbd "C-s P") 'phi-search-backward)
-
-(setup-after "phi-search"
-  (setup "phi-search-mc"
-    (define-key phi-search-default-map (kbd "<C-down>")   'phi-search-mc/mark-next)
-    (define-key phi-search-default-map (kbd "<C-up>")     'phi-search-mc/mark-previous)
-    (define-key phi-search-default-map (kbd "<C-return>") 'phi-search-mc/mark-here)
-    (define-key phi-search-default-map (kbd "C-p SPC")    'phi-search-mc/mark-all)))
 
 ;; support for bookmarks (broken; resurrect this at some point...)
 ;; (require 'breadcrumb)
@@ -71,9 +46,6 @@
     (goto-char (point-min))
     (call-interactively 'vr/query-replace)))
 
-(global-set-key (kbd "C-s r") 'vr/query-replace)
-(global-set-key (kbd "C-s R") 'vr/query-replace-from-beginning)
-
 ;; ido and smex (ido for M-x)
 (setup "flx-ido"
   (setup "ido-ubiquitous")
@@ -84,7 +56,6 @@
   (setq ido-enable-flex-matching t) ; fuzzy matching
   (setq ido-use-filename-at-point nil)
   (setq ido-use-url-at-point nil)
-  (global-set-key "\C-x\M-f" 'find-file-at-point)
   (setq ido-use-virtual-buffers t)
   (setq ido-default-file-method 'selected-window) ; ignore buffers in different frames
   (setq ido-default-buffer-method 'selected-window) ; ignore buffers in different frames
@@ -103,9 +74,7 @@
 ;; smex
 (setup "smex"
   (setq smex-save-file "~/.emacs.d/cache/smex-items")
-  (smex-initialize)
-  (global-set-key (kbd "M-x")   'smex)
-  (global-set-key (kbd "M-S-x") 'smex-major-mode-commands))
+  (smex-initialize))
 
 ;; recent files
 (setup "recentf"
@@ -123,7 +92,7 @@
     (let ((file (ido-completing-read "Choose recent file: " recentf-list nil t)))
       (when file
         (find-file file))))
-  (global-set-key "\C-x\C-r" 'recentf-ido-find-file))
+  )
 
 ;; use regexp search and selected region (if any) by default
 (defun region-as-string ()
@@ -144,15 +113,6 @@
     (deactivate-mark))
   (call-interactively 'isearch-backward-regexp))
 
-(global-set-key (kbd "C-s s")   'isearch-forward-use-region)
-(global-set-key (kbd "C-s b")   'isearch-backward-use-region)
-(global-set-key (kbd "C-s S")   'isearch-forward-regexp)
-(global-set-key (kbd "C-s b")   'isearch-backward-regexp)
-(global-set-key (kbd "C-s C-s") 'isearch-forward-use-region)
-(global-set-key (kbd "C-s C-r") 'isearch-backward-use-region)
-;; make backspace more intuitive
-(define-key isearch-mode-map (kbd "<backspace>") 'isearch-del-char)
-
 ;; normalize search string so unicode diacritics work normally
 (defun isearch-normalize-string ()
   (interactive)
@@ -160,13 +120,6 @@
     (setq isearch-string string
           isearch-message (mapconcat 'isearch-text-char-description string ""))
     (isearch-search-and-update)))
-(define-key isearch-mode-map (kbd "C-c C-c")   'isearch-normalize-string)
-(define-key isearch-mode-map (kbd "C-c C-w")   'isearch-toggle-word)
-(define-key isearch-mode-map (kbd "C-c C-r")   'isearch-toggle-regexp)
-(define-key isearch-mode-map (kbd "C-c C-i")   'isearch-toggle-case-fold)
-(define-key isearch-mode-map (kbd "C-c C-s")   'isearch-toggle-symbol)
-(define-key isearch-mode-map (kbd "C-c C-SPC") 'isearch-toggle-lax-whitespace)
-(define-key isearch-mode-map (kbd "C-c C-o")   'isearch-occur)
 
 (setup "occur-x"
   (add-hook 'occur-mode-hook 'turn-on-occur-x-mode))
@@ -190,12 +143,8 @@
     (setq imenu--index-alist nil)))
 
 (setup-after "imenu"
-  (setup "idomenu"
-    (define-key global-map (kbd "C-s [") 'idomenu)
-    (define-key global-map (kbd "C-s i") 'idomenu))
-  (setup "imenu-anywhere"
-    (define-key global-map (kbd "C-c ]") 'imenu-anywhere)
-    (define-key global-map (kbd "C-c I") 'imenu-anywhere)))
+  (setup "idomenu")
+  (setup "imenu-anywhere"))
 
 ;; recentering
 (setq recenter-positions '(2 middle))
@@ -207,15 +156,6 @@
 
   (setup "helm-flycheck")
 
-  (define-key helm-map (kbd "C-w")  'subword-backward-kill)
-  (define-key helm-map (kbd "M-w")  'helm-yank-text-at-point)
-  (global-set-key (kbd "C-x c t")   'helm-cmd-t)
-  (global-set-key (kbd "C-x c g")   'helm-do-grep)
-  (global-set-key (kbd "C-x c o")   'helm-occur)
-  (global-set-key (kbd "C-x c e")   'helm-flycheck)
-  (global-set-key (kbd "C-x c C-o") 'helm-swoop)
-  ;; (global-set-key (kbd "M-x") 'helm-M-x)
-  ;; (global-set-key (kbd "C-x C-f") 'helm-find-files)
   (setq helm-ff-lynx-style-map nil)
   (setq helm-input-idle-delay 0.1)
   (setq helm-idle-delay 0.1)

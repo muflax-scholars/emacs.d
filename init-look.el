@@ -105,10 +105,6 @@
   (interactive)
   (setq current-font small-font)
   (set-window-font))
-(global-set-key (kbd "C-c <f1>") 'use-small-font)
-(global-set-key (kbd "C-c <f2>") 'use-normal-font)
-(global-set-key (kbd "C-c <f3>") 'use-big-font)
-(global-set-key (kbd "C-c <f4>") 'use-huge-font)
 
 ;; scrolling
 (setq scroll-preserve-screen-position t)
@@ -127,8 +123,7 @@
 (setup "automargin"
   (setq automargin-target-width 120)
   (when (pretty-load?)
-    (automargin-mode))
-  (global-set-key (kbd "<f11>") 'automargin-mode))
+    (automargin-mode)))
 
 ;; undo highlighting
 (setup "volatile-highlights"

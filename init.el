@@ -9,6 +9,9 @@
 (require 'setup)
 (setup-initialize)
 
+;; key bindings
+(setup "init-keys")
+
 ;; themes and generic visual stuff
 (setup "init-look")
 
