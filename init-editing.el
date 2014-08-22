@@ -465,7 +465,21 @@ See the variable `align-rules-list' for more details.")
   (setq input-method-highlight-flag nil)
 
   ;;don't spam the minibuffer
-  (setq input-method-verbose-flag 'complex-only))
+  (setq input-method-verbose-flag 'complex-only)
+
+  (defun clear-input-method ()
+    (interactive) (set-input-method nil))
+  (defun set-input-method-muflax-latin ()
+    (interactive) (set-input-method "muflax-latin"))
+  (defun set-input-method-muflax-cyrillic ()
+    (interactive) (set-input-method "muflax-cyrillic"))
+  (defun set-input-method-muflax-turkish ()
+    (interactive) (set-input-method "muflax-turkish"))
+  (defun set-input-method-muflax-greek ()
+    (interactive) (set-input-method "muflax-greek"))
+  (defun set-input-method-japanese-mozc ()
+    (interactive) (set-input-method "japanese-mozc"))
+  )
 
 ;; analog to delete-file
 (defun delete-current-file ()
@@ -561,13 +575,13 @@ You have:
 (setq initial-scratch-message nil)
 
 ;; work with numbers at point
-(setup-lazy '(number/add
-              number/sub
-              number/multiply
-              number/divide
-              number/pad
-              number/eval
-              number-read) "number")
+(setup "number"
+  (defun number/increment ()
+    (interactive)
+    (number/add (number-read "1")))
+  (defun number/decrement ()
+    (interactive)
+    (number/subtract (number-read "1"))))
 
 ;; rotate / toggle text
 (setup-lazy '(rotate-text) "rotate-text"
