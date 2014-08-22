@@ -87,6 +87,7 @@
         align-current
         bc-set
         down-list
+        find-tag
         ibus-handle-event
         repeat
         save-buffers-kill-terminal
