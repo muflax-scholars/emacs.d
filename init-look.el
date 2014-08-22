@@ -121,9 +121,7 @@
 
 ;; try to keep windows within a max margin
 (setup "automargin"
-  (setq automargin-target-width 120)
-  (when (pretty-load?)
-    (automargin-mode)))
+  (setq automargin-target-width 120))
 
 ;; undo highlighting
 (setup "volatile-highlights"
