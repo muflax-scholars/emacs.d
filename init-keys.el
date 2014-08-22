@@ -93,7 +93,7 @@
   (mangle-keys 'copy-keymap-by-keys from to))
 
 ;; keep an accessible backup in case shit breaks badly
-(setq old-global-map (copy-keymap global-map))
+(setq old-global-map (copy-keymap (current-global-map)))
 
 (defun overshadowed-terminal-command (command alt-key)
   "Executes COMMAND when called outside a terminal, or the command under ALT-KEY if we're in a terminal and can't normally reach that key. That obviously shadows the original COMMAND, but at least you get to use ALT-KEY normally."
@@ -463,18 +463,18 @@
 (global-set-key (kbd "C-c C-t") 'rotate-text)
 
 ;; folding
-(define-key global-map (kbd "C-v C-f")   'fold-dwim-toggle)
-(define-key global-map (kbd "<mouse-3>") 'fold-dwim-toggle)
-(define-key global-map (kbd "C-v f")     'hs-fold-levels)
-(define-key global-map (kbd "C-v F")     'fold-dwim-show-all)
-(define-key global-map (kbd "C-v SPC")   'fold-dwim-show-all)
+(global-set-key (kbd "C-v C-f")   'fold-dwim-toggle)
+(global-set-key (kbd "<mouse-3>") 'fold-dwim-toggle)
+(global-set-key (kbd "C-v f")     'hs-fold-levels)
+(global-set-key (kbd "C-v F")     'fold-dwim-show-all)
+(global-set-key (kbd "C-v SPC")   'fold-dwim-show-all)
 
-(define-key global-map (kbd "C-v s")     'whitespace-fold-levels)
-(define-key global-map (kbd "C-v S")     'whitespace-fold-reset)
+(global-set-key (kbd "C-v s")     'whitespace-fold-levels)
+(global-set-key (kbd "C-v S")     'whitespace-fold-reset)
 
-(define-key global-map (kbd "C-v C-y")   'yafolding-toggle-element)
-(define-key global-map (kbd "C-v y")     'yafolding-hide-all)
-(define-key global-map (kbd "C-v Y")     'yafolding-show-all)
+(global-set-key (kbd "C-v C-y")   'yafolding-toggle-element)
+(global-set-key (kbd "C-v y")     'yafolding-hide-all)
+(global-set-key (kbd "C-v Y")     'yafolding-show-all)
 
 (setup-after "smartparens-config"
   ;; navigation
