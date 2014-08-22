@@ -1,87 +1,180 @@
 ;; key bindings
 
-;; unset all default keys
+;; define what keys we're gonna open up for mangling later
+(setq assignable-normal-keys
+      (split-string (concat
+                     "abcdefghijklmnopqrstuvwxyzß"
+                     "ABCDEFGHIJKLMNOPQRSTUVWXYZẞ"
+                     "1234567890"
+                     "!@#$%^&*()-=[]{};'\\:\"|,./<>?`~_+"
+                     ) "" t))
+
+(setq assignable-special-keys
+      ;; keys that kbd needs to figure out
+      '("<f1>"  "<f6>"  "<f11>" "<f16>"
+        "<f2>"  "<f7>"  "<f12>" "<f17>"
+        "<f3>"  "<f8>"  "<f13>" "<f18>"
+        "<f4>"  "<f9>"  "<f14>" "<f19>"
+        "<f5>"  "<f10>" "<f15>" "<f20>"
+
+        "<mouse-1>" "<down-mouse-1>" "<drag-mouse-1>" "<double-mouse-1>"
+        "<mouse-2>" "<down-mouse-2>" "<drag-mouse-2>" "<double-mouse-2>"
+        "<mouse-3>" "<down-mouse-3>" "<drag-mouse-3>" "<double-mouse-3>"
+        "<mouse-4>" "<down-mouse-4>" "<drag-mouse-4>" "<double-mouse-4>"
+        "<mouse-5>" "<down-mouse-5>" "<drag-mouse-5>" "<double-mouse-5>"
+        "<mouse-6>" "<down-mouse-6>" "<drag-mouse-6>" "<double-mouse-6>"
+        "<mouse-7>" "<down-mouse-7>" "<drag-mouse-7>" "<double-mouse-7>"
+        "<mouse-8>" "<down-mouse-8>" "<drag-mouse-8>" "<double-mouse-8>"
+        "<mouse-9>" "<down-mouse-9>" "<drag-mouse-9>" "<double-mouse-9>"
+
+        "<up>" "<down>" "<left>" "<right>"
+        "<next>" "<prior>" "<home>" "<end>"
+        "<backspace>" "<delete>" "<insert>" "<insertchar>"
+        "<ret>" "<return>" "<tab>" "<escape>"
+        "<menu>" "<kanji>"
+
+        "SPC" "TAB" "DEL" "ESC"
+        ))
+
+(setq assignable-normal-modifiers
+      ;; valid for all keys
+      '(""
+        "C-" "C-S-"
+        "M-" "M-S-"
+        "C-M-" "C-M-S-"))
+
+(setq assignable-special-modifiers
+      ;; only valid with special keys
+      '("S-"))
+
+(defun unset-keymap-by-keys (keys modifiers keymap)
+  "unset all mod+keys in given keymap"
+  (let ((full-key))
+
+    (loop for modifier in modifiers collect
+          (loop for key in keys collect
+                (progn
+                  (setq full-key (kbd (concat modifier key)))
+                  (define-key keymap full-key nil))))))
+
+(defun copy-keymap-by-keys (keys modifiers from to)
+  "copies over all mod+keys from one keymap to another"
+  (let ((full-key)
+        (command))
+
+    (loop for modifier in modifiers collect
+          (loop for key in keys collect
+                (progn
+                  (setq full-key (kbd (concat modifier key)))
+                  (setq command (lookup-key from full-key))
+                  (when command
+                    (define-key to full-key command)))))))
+
+(defun mangle-keys (command &rest maps)
+  "operate on all assignable keys in a given keymap"
+  (apply command
+         (append
+          assignable-normal-keys
+          assignable-special-keys)
+         assignable-normal-modifiers
+         maps)
+
+  (apply command
+         assignable-special-keys
+         assignable-special-modifiers
+         maps))
+
+(defun unset-complete-keymap (map)
+  "unset all assignable keys in given keymap"
+  (mangle-keys 'unset-keymap-by-keys map))
+
+(defun copy-complete-keymap (from to)
+  "copies over all assignable keys from one keymap to another"
+  (mangle-keys 'copy-keymap-by-keys from to))
+
+;; keep an accessible backup in case shit breaks badly
+(setq old-global-map (copy-keymap global-map))
 
 ;; unset unwanted default keys, so they show up in free-keys
-(cl-loop for key in `(
-                      (,(kbd "C-x C-z")          suspend-frame)
-                      (,(kbd "C-z")              suspend-frame)
-                      ([(insert)]                overwrite-mode)
-                      ([(insertchar)]            overwrite-mode)
-                      (,(kbd "C-p")              previous-line)
-                      (,(kbd "C-r")              isearch-backward)
-                      (,(kbd "C-s")              isearch-forward)
-                      (,(kbd "C-v")              scroll-up-command)
-                      (,(kbd "M-v")              scroll-down-command)
-                      (,(kbd "C-]")              abort-recursive-edit)
-                      (,(kbd "C-@")              set-mark-command)
-                      (,(kbd "<C-down-mouse-1>") mouse-buffer-menu)
-                      (,(kbd "<C-down-mouse-2>") facemenu-menu)
-                      (,(kbd "<S-down-mouse-1>") mouse-appearance-menu)
-                      (,(kbd "C-x C-t")          transpose-lines)
-                      (,(kbd "C-x C-q")          read-only-mode)
-                      (,(kbd "C-x C-o")          delete-blank-lines)
-                      (,(kbd "C-x C-n")          set-goal-column)
-                      (,(kbd "C-x TAB")          indent-rigidly)
-                      (,(kbd "C-x C-e")          eval-last-sexp)
-                      (,(kbd "C-x C-d")          list-directory)
-                      (,(kbd "C-x C-@")          pop-global-mark)
-                      (,(kbd "C-x SPC")          gud-break)
-                      (,(kbd "C-x #")            server-edit)
-                      (,(kbd "C-x $")            set-selective-display)
-                      (,(kbd "C-x '")            expand-abbrev)
-                      (,(kbd "C-x <")            scroll-left)
-                      (,(kbd "C-x =")            what-cursor-position)
-                      (,(kbd "C-x >")            scroll-right)
-                      (,(kbd "C-x [")            backward-page)
-                      (,(kbd "C-x ]")            forward-page)
-                      (,(kbd "C-x ^")            enlarge-window)
-                      (,(kbd "C-x `")            next-error)
-                      (,(kbd "C-x d")            dired)
-                      (,(kbd "C-x l")            count-lines-page)
-                      (,(kbd "C-x m")            compose-mail)
-                      (,(kbd "C-x v")            vc-prefix-map)
-                      (,(kbd "C-x {")            shrink-window-horizontally)
-                      (,(kbd "C-x }")            enlarge-window-horizontally)
-                      (,(kbd "C-M-@")            mark-sexp)
-                      (,(kbd "C-M-d")            down-list)
-                      (,(kbd "C-M-l")            reposition-window)
-                      (,(kbd "C-M-n")            forward-list)
-                      (,(kbd "C-M-p")            backward-list)
-                      (,(kbd "C-M-t")            transpose-sexps)
-                      (,(kbd "C-M-u")            backward-up-list)
-                      (,(kbd "C-M-v")            scroll-other-window)
-                      (,(kbd "C-M-\\")           indent-region)
-                      (,(kbd "M-$")              ispell-word)
-                      (,(kbd "M-%")              query-replace)
-                      (,(kbd "M-'")              abbrev-prefix-mark)
-                      (,(kbd "M-(")              insert-parentheses)
-                      (,(kbd "M-)")              move-past-close-and-reindent)
-                      (,(kbd "M-*")              pop-tag-mark)
-                      (,(kbd "M-.")              find-tag)
-                      (,(kbd "M-,")              tags-loop-continue)
-                      (,(kbd "M-/")              dabbrev-expand)
-                      (,(kbd "M-=")              count-words-region)
-                      (,(kbd "M-@")              mark-word)
-                      (,(kbd "M-\\")             delete-horizontal-space)
-                      (,(kbd "M-`")              tmm-menubar)
-                      (,(kbd "M-a")              backward-sentence)
-                      (,(kbd "M-e")              forward-sentence)
-                      (,(kbd "M-l")              downcase-word)
-                      (,(kbd "M-m")              back-to-indentation)
-                      (,(kbd "M-o")              facemenu-keymap)
-                      (,(kbd "M-r")              move-to-window-line-top-bottom)
-                      (,(kbd "M-{")              backward-paragraph)
-                      (,(kbd "M-}")              forward-paragraph)
-                      (,(kbd "M-~")              not-modified)
-                      (,(kbd "C-M-S-v")          scroll-other-window-down)
-                      (,(kbd "C-M-%")            query-replace-regexp)
-                      (,(kbd "C-M-.")            find-tag-regexp)
-                      (,(kbd "C-M-/")            dabbrev-completion)
-                      (,(kbd "C-t")              transpose-chars)
-                      )
-         collect (if (eq (key-binding (first key)) (second key))
-                     (global-unset-key (first key))))
+(loop for key in `(
+                   (,(kbd "C-x C-z")          suspend-frame)
+                   (,(kbd "C-z")              suspend-frame)
+                   ([(insert)]                overwrite-mode)
+                   ([(insertchar)]            overwrite-mode)
+                   (,(kbd "C-p")              previous-line)
+                   (,(kbd "C-r")              isearch-backward)
+                   (,(kbd "C-s")              isearch-forward)
+                   (,(kbd "C-v")              scroll-up-command)
+                   (,(kbd "M-v")              scroll-down-command)
+                   (,(kbd "C-]")              abort-recursive-edit)
+                   (,(kbd "C-@")              set-mark-command)
+                   (,(kbd "<C-down-mouse-1>") mouse-buffer-menu)
+                   (,(kbd "<C-down-mouse-2>") facemenu-menu)
+                   (,(kbd "<S-down-mouse-1>") mouse-appearance-menu)
+                   (,(kbd "C-x C-t")          transpose-lines)
+                   (,(kbd "C-x C-q")          read-only-mode)
+                   (,(kbd "C-x C-o")          delete-blank-lines)
+                   (,(kbd "C-x C-n")          set-goal-column)
+                   (,(kbd "C-x TAB")          indent-rigidly)
+                   (,(kbd "C-x C-e")          eval-last-sexp)
+                   (,(kbd "C-x C-d")          list-directory)
+                   (,(kbd "C-x C-@")          pop-global-mark)
+                   (,(kbd "C-x SPC")          gud-break)
+                   (,(kbd "C-x #")            server-edit)
+                   (,(kbd "C-x $")            set-selective-display)
+                   (,(kbd "C-x '")            expand-abbrev)
+                   (,(kbd "C-x <")            scroll-left)
+                   (,(kbd "C-x =")            what-cursor-position)
+                   (,(kbd "C-x >")            scroll-right)
+                   (,(kbd "C-x [")            backward-page)
+                   (,(kbd "C-x ]")            forward-page)
+                   (,(kbd "C-x ^")            enlarge-window)
+                   (,(kbd "C-x `")            next-error)
+                   (,(kbd "C-x d")            dired)
+                   (,(kbd "C-x l")            count-lines-page)
+                   (,(kbd "C-x m")            compose-mail)
+                   (,(kbd "C-x v")            vc-prefix-map)
+                   (,(kbd "C-x {")            shrink-window-horizontally)
+                   (,(kbd "C-x }")            enlarge-window-horizontally)
+                   (,(kbd "C-M-@")            mark-sexp)
+                   (,(kbd "C-M-d")            down-list)
+                   (,(kbd "C-M-l")            reposition-window)
+                   (,(kbd "C-M-n")            forward-list)
+                   (,(kbd "C-M-p")            backward-list)
+                   (,(kbd "C-M-t")            transpose-sexps)
+                   (,(kbd "C-M-u")            backward-up-list)
+                   (,(kbd "C-M-v")            scroll-other-window)
+                   (,(kbd "C-M-\\")           indent-region)
+                   (,(kbd "M-$")              ispell-word)
+                   (,(kbd "M-%")              query-replace)
+                   (,(kbd "M-'")              abbrev-prefix-mark)
+                   (,(kbd "M-(")              insert-parentheses)
+                   (,(kbd "M-)")              move-past-close-and-reindent)
+                   (,(kbd "M-*")              pop-tag-mark)
+                   (,(kbd "M-.")              find-tag)
+                   (,(kbd "M-,")              tags-loop-continue)
+                   (,(kbd "M-/")              dabbrev-expand)
+                   (,(kbd "M-=")              count-words-region)
+                   (,(kbd "M-@")              mark-word)
+                   (,(kbd "M-\\")             delete-horizontal-space)
+                   (,(kbd "M-`")              tmm-menubar)
+                   (,(kbd "M-a")              backward-sentence)
+                   (,(kbd "M-e")              forward-sentence)
+                   (,(kbd "M-l")              downcase-word)
+                   (,(kbd "M-m")              back-to-indentation)
+                   (,(kbd "M-o")              facemenu-keymap)
+                   (,(kbd "M-r")              move-to-window-line-top-bottom)
+                   (,(kbd "M-{")              backward-paragraph)
+                   (,(kbd "M-}")              forward-paragraph)
+                   (,(kbd "M-~")              not-modified)
+                   (,(kbd "C-M-S-v")          scroll-other-window-down)
+                   (,(kbd "C-M-%")            query-replace-regexp)
+                   (,(kbd "C-M-.")            find-tag-regexp)
+                   (,(kbd "C-M-/")            dabbrev-completion)
+                   (,(kbd "C-t")              transpose-chars)
+                   )
+      collect (if (eq (key-binding (first key)) (second key))
+                  (global-unset-key (first key))))
 
 ;; fix mod4 bug
 (define-key special-event-map (kbd "<key-17>")   'ignore)
@@ -102,12 +195,7 @@
 
 (setup-lazy '(free-keys) "free-keys"
   ;; allowed key components
-  (setq free-keys-keys
-        (concat "abcdefghijklmnopqrstuvwxyzßł"
-                "ABCDEFGHIJKLMNOPQRSTUVWXYZẞŁ"
-                "1234567890"
-                "!@#$%^&*()-=[]{};'\\:\"|,./<>?`~_+"
-                )))
+  (setq free-keys-keys (apply 'concat assignable-normal-keys)))
 
 ;; help for more obscure prefix keys
 (setup "guide-key"
