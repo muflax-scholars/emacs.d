@@ -129,3 +129,9 @@ Stuff that doesn't work:
 	and completely remove all default maps, so this doesn't become super-messy.
 
 ]
+
+[ reorganize how buffers are used
+	It might be useful to no longer have ido auto-open old files so we have a clean buffer list, and instead start using recentf.
+
+	Or use a helm variant, once they finally make flx work.
+]
