@@ -21,6 +21,7 @@
 (defalias 'first  'cl-first)
 (defalias 'second 'cl-second)
 (defalias 'rest   'cl-rest)
+(defalias 'loop   'cl-loop)
 
 (defun pretty-load? ()
   "load stuff like themes that are only meaningful in window system?"
