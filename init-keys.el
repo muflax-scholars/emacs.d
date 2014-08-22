@@ -95,6 +95,23 @@
 ;; keep an accessible backup in case shit breaks badly
 (setq old-global-map (copy-keymap global-map))
 
+(defun overshadowed-terminal-command (command alt-key)
+  "Executes COMMAND when called outside a terminal, or the command under ALT-KEY if we're in a terminal and can't normally reach that key. That obviously shadows the original COMMAND, but at least you get to use ALT-KEY normally."
+  (interactive)
+  (if (display-graphic-p)
+      (call-interactively command)
+    (progn
+      (setq command (lookup-key (current-global-map) (kbd alt-key)))
+      (when command
+        (call-interactively command)))))
+
+(defun repeat-command (command)
+  "Call command, and immediately go into repeat mode."
+  (interactive)
+  (let ((repeat-message-function  'ignore))
+    (setq last-repeatable-command  command)
+    (repeat nil)))
+
 ;; unset unwanted default keys, so they show up in free-keys
 (loop for key in `(
                    (,(kbd "C-x C-z")          suspend-frame)
