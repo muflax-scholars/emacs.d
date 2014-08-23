@@ -395,6 +395,12 @@ See the variable `align-rules-list' for more details.")
     (interactive "r\nsAlign regexp: ")
     (align-regexp start end
                   (concat "\\(\\s-*\\)" regexp) 1 1 t))
+
+  (defun align-whitespace (start end)
+    "Align region by whitespace."
+    (interactive "r")
+    (align-regexp start end (concat "\\(\\s-*\\)" "\\s-") 1 0 t))
+
   )
 
 ;; diff- mode (better colors)
