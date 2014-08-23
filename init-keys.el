@@ -223,23 +223,77 @@
   (define-prefix-command command)
   (define-key map (kbd key) command))
 
+;; global keys
 (set-prefix-key (current-global-map) "C-p" 'mc-prefix-map)
 (set-prefix-key (current-global-map) "C-r" 'window-prefix-map)
 (set-prefix-key (current-global-map) "C-v" 'folding-prefix-map)
-(set-prefix-key (current-global-map) "C-s"   'search-prefix-map)
+(set-prefix-key (current-global-map) "C-s" 'search-prefix-map)
 
-(set-prefix-key ctl-x-map            "SPC" 'eval-prefix-map)
-(set-prefix-key ctl-x-map            "a"   'align-prefix-map)
-(set-prefix-key ctl-x-map            "c"   'helm-prefix-map)
-(set-prefix-key ctl-x-map            "d"   'debug-prefix-map)
-(set-prefix-key ctl-x-map            "m"   'macro-prefix-map)
-(set-prefix-key ctl-x-map            "t"   'input-prefix-map)
-(set-prefix-key ctl-x-map            "w"   'spell-check-prefix-map)
+;; less commonly used functions
+(define-key     ctl-x-map  (kbd "C-r") 'recentf-ido-find-file)
+(define-key     ctl-x-map  (kbd "M-f") 'find-file-at-point)
+(set-prefix-key ctl-x-map       "SPC"  'eval-prefix-map)
+(set-prefix-key ctl-x-map       "a"    'align-prefix-map)
+(set-prefix-key ctl-x-map       "c"    'helm-prefix-map)
+(set-prefix-key ctl-x-map       "d"    'debug-prefix-map)
+(define-key     ctl-x-map  (kbd "g")   'magit-status)
+(set-prefix-key ctl-x-map       "m"    'macro-prefix-map)
+(define-key     ctl-x-map  (kbd "p")   'paradox-list-packages)
+(set-prefix-key ctl-x-map       "t"    'input-prefix-map)
+(set-prefix-key ctl-x-map       "w"    'spell-check-prefix-map)
 
-(set-prefix-key mode-specific-map    "m"   'number-prefix-map )
-(set-prefix-key mode-specific-map    "s"   'sexp-prefix-map)
+;; mode-specific stuff
+(set-prefix-key mode-specific-map "m" 'number-prefix-map )
+(set-prefix-key mode-specific-map "s" 'sexp-prefix-map)
 
-(set-prefix-key search-prefix-map    "g"   'jump-prefix-map)
+;; search
+(define-key     search-prefix-map (kbd "C-r") 'isearch-backward-use-region)
+(define-key     search-prefix-map (kbd "C-s") 'isearch-forward-use-region)
+(define-key     search-prefix-map (kbd "SPC") 'er/mark-defun)
+(define-key     search-prefix-map (kbd "b")   'isearch-backward-regexp)
+(define-key     search-prefix-map (kbd "B")   'isearch-backward-use-region)
+(define-key     search-prefix-map (kbd "d")   'er/mark-defun)
+(set-prefix-key search-prefix-map      "g"    'jump-prefix-map)
+(define-key     search-prefix-map (kbd "i")   'idomenu)
+(define-key     search-prefix-map (kbd "I")   'imenu-anywhere)
+(define-key     search-prefix-map (kbd "p")   'phi-search)
+(define-key     search-prefix-map (kbd "P")   'phi-search-backward)
+(define-key     search-prefix-map (kbd "r")   'vr/query-replace)
+(define-key     search-prefix-map (kbd "R")   'vr/query-replace-from-beginning)
+(define-key     search-prefix-map (kbd "s")   'isearch-forward-use-region)
+(define-key     search-prefix-map (kbd "S")   'isearch-forward-regexp)
+(define-key     search-prefix-map (kbd "w")   'er/mark-symbol)
+(define-key     search-prefix-map (kbd "y")   'kill-ring-search)
+(define-key     search-prefix-map (kbd "[")   'idomenu)
+(define-key     search-prefix-map (kbd "]")   'imenu-anywhere)
+
+;; ace-jump
+(define-key jump-prefix-map (kbd "b") 'ace-jump-buffer)
+(define-key jump-prefix-map (kbd "c") 'ace-jump-char-mode)
+(define-key jump-prefix-map (kbd "g") 'ace-jump-mode)
+(define-key jump-prefix-map (kbd "l") 'ace-jump-line-mode)
+(define-key jump-prefix-map (kbd "n") 'goto-line)
+(define-key jump-prefix-map (kbd "w") 'ace-window)
+
+;; with active search
+(setup-after "phi-search"
+  (setup "phi-search-mc"
+    (define-key phi-search-default-map (kbd "<C-down>")   'phi-search-mc/mark-next)
+    (define-key phi-search-default-map (kbd "<C-up>")     'phi-search-mc/mark-previous)
+    (define-key phi-search-default-map (kbd "<C-return>") 'phi-search-mc/mark-here)
+    (define-key phi-search-default-map (kbd "C-p SPC")    'phi-search-mc/mark-all)))
+
+(setup-after "isearch"
+  ;; make backspace more intuitive
+  (define-key isearch-mode-map (kbd "<backspace>") 'isearch-del-char)
+
+  (define-key isearch-mode-map (kbd "C-c C-c")   'isearch-normalize-string)
+  (define-key isearch-mode-map (kbd "C-c C-w")   'isearch-toggle-word)
+  (define-key isearch-mode-map (kbd "C-c C-r")   'isearch-toggle-regexp)
+  (define-key isearch-mode-map (kbd "C-c C-i")   'isearch-toggle-case-fold)
+  (define-key isearch-mode-map (kbd "C-c C-s")   'isearch-toggle-symbol)
+  (define-key isearch-mode-map (kbd "C-c C-SPC") 'isearch-toggle-lax-whitespace)
+  (define-key isearch-mode-map (kbd "C-c C-o")   'isearch-occur))
 
 ;; commenting
 (define-key mode-specific-map (kbd "SPC")   'comment-dwim)
@@ -463,10 +517,6 @@
 (global-set-key (kbd "M-<right>") 'er/mark-defun)
 (global-set-key (kbd "M-<left>")  'er/mark-symbol)
 
-(define-key search-prefix-map (kbd "d")   'er/mark-defun)
-(define-key search-prefix-map (kbd "SPC") 'er/mark-defun)
-(define-key search-prefix-map (kbd "w>")  'er/mark-symbol)
-
 ;; shell commands
 (global-set-key (kbd "C-|")  'generalized-shell-command)
 (global-set-key (kbd "C-\\") 'generalized-shell-command) ; terminal bug
@@ -564,62 +614,9 @@
 ;; narrowing
 (define-key narrow-map (kbd "SPC") 'narrow-or-widen-dwim)
 
-;; yank search
-(define-key search-prefix-map (kbd "y") 'kill-ring-search)
-
-;; ace-jump
-(define-key jump-prefix-map (kbd "n") 'goto-line)
-(define-key jump-prefix-map (kbd "b") 'ace-jump-buffer)
-(define-key jump-prefix-map (kbd "c") 'ace-jump-char-mode)
-(define-key jump-prefix-map (kbd "g") 'ace-jump-mode)
-(define-key jump-prefix-map (kbd "l") 'ace-jump-line-mode)
-(define-key jump-prefix-map (kbd "w") 'ace-window)
-
-;; search
-(define-key search-prefix-map (kbd "p")   'phi-search)
-(define-key search-prefix-map (kbd "P")   'phi-search-backward)
-(define-key search-prefix-map (kbd "s")   'isearch-forward-use-region)
-(define-key search-prefix-map (kbd "b")   'isearch-backward-use-region)
-(define-key search-prefix-map (kbd "S")   'isearch-forward-regexp)
-(define-key search-prefix-map (kbd "b")   'isearch-backward-regexp)
-(define-key search-prefix-map (kbd "C-s") 'isearch-forward-use-region)
-(define-key search-prefix-map (kbd "C-r") 'isearch-backward-use-region)
-
-(setup-after "phi-search"
-  (setup "phi-search-mc"
-    (define-key phi-search-default-map (kbd "<C-down>")   'phi-search-mc/mark-next)
-    (define-key phi-search-default-map (kbd "<C-up>")     'phi-search-mc/mark-previous)
-    (define-key phi-search-default-map (kbd "<C-return>") 'phi-search-mc/mark-here)
-    (define-key phi-search-default-map (kbd "C-p SPC")    'phi-search-mc/mark-all)))
-
-(setup-after "isearch"
-  ;; make backspace more intuitive
-  (define-key isearch-mode-map (kbd "<backspace>") 'isearch-del-char)
-
-  (define-key isearch-mode-map (kbd "C-c C-c")   'isearch-normalize-string)
-  (define-key isearch-mode-map (kbd "C-c C-w")   'isearch-toggle-word)
-  (define-key isearch-mode-map (kbd "C-c C-r")   'isearch-toggle-regexp)
-  (define-key isearch-mode-map (kbd "C-c C-i")   'isearch-toggle-case-fold)
-  (define-key isearch-mode-map (kbd "C-c C-s")   'isearch-toggle-symbol)
-  (define-key isearch-mode-map (kbd "C-c C-SPC") 'isearch-toggle-lax-whitespace)
-  (define-key isearch-mode-map (kbd "C-c C-o")   'isearch-occur))
-
-;; regex
-(define-key search-prefix-map (kbd "r") 'vr/query-replace)
-(define-key search-prefix-map (kbd "R") 'vr/query-replace-from-beginning)
-
 ;; M-x
 (global-set-key (kbd "M-x")   'smex)
 (global-set-key (kbd "M-S-x") 'smex-major-mode-commands)
-
-;; open files
-(define-key ctl-x-map (kbd "M-f") 'find-file-at-point)
-(define-key ctl-x-map (kbd "C-r") 'recentf-ido-find-file)
-
-(define-key search-prefix-map (kbd "[") 'idomenu)
-(define-key search-prefix-map (kbd "i") 'idomenu)
-(define-key mode-specific-map (kbd "]") 'imenu-anywhere)
-(define-key mode-specific-map (kbd "I") 'imenu-anywhere)
 
 ;; helm
 (setup-after "helm"
@@ -678,15 +675,9 @@
   (define-key go-mode-map (kbd "M-t")   'godef-jump)
   (define-key go-mode-map (kbd "M-S-t") 'godef-jump-other-window))
 
-;; magit
-(define-key ctl-x-map (kbd "g") 'magit-status)
-
 (setup-after "magit"
   ;; needed because of fullscreen override
   (define-key magit-status-mode-map (kbd "q") 'magit-quit-session)
   (define-key magit-status-mode-map (kbd "W") 'magit-toggle-whitespace))
-
-;; package list
-(define-key ctl-x-map (kbd "p") 'paradox-list-packages)
 
 (provide 'init-keys)
