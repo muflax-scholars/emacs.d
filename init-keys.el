@@ -213,10 +213,12 @@
   (setq free-keys-keys (apply 'concat assignable-normal-keys)))
 
 ;; built-ins prefix maps restated for clarity
+(defvar global-map)
 (defvar old-global-map (copy-keymap global-map) "accessible backup in case shit breaks badly")
 (defvar ctl-x-map)
 (defvar help-map)
 (defvar mode-specific-map)
+(defvar universal-argument-map)
 
 ;; define prefix keys
 (defun set-prefix-key (map key command)
