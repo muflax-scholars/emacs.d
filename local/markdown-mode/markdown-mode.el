@@ -1027,14 +1027,13 @@ Otherwise, do normal delete by repeating
     ;; Indentation
     (define-key map (kbd "<backspace>") 'markdown-dedent-or-delete)
     ;; Visibility cycling
-    (define-key map "\C-i" 'markdown-cycle)
-    (define-key map "\M-i" 'markdown-shifttab)
+    (define-key map (kbd "TAB")   'markdown-cycle)
+    (define-key map (kbd "M-TAB") 'markdown-shifttab)
     ;; Lists
-    (define-key map "\C-c\C-cn" 'markdown-cleanup-list-numbers)
-    (define-key map (kbd "M-<up>") 'markdown-metaup)
-    (define-key map (kbd "M-<down>") 'markdown-metadown)
-    (define-key map (kbd "M-<left>") 'markdown-metaleft)
-    (define-key map (kbd "M-<right>") 'markdown-metaright)
+    (define-key map (kbd "M-<up>")     'markdown-metaup)
+    (define-key map (kbd "M-<down>")   'markdown-metadown)
+    (define-key map (kbd "M-<left>")   'markdown-metaleft)
+    (define-key map (kbd "M-<right>")  'markdown-metaright)
     (define-key map (kbd "M-<return>") 'markdown-insert-list-item)
     map)
   "Keymap for Markdown major mode.")

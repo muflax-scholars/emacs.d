@@ -26,9 +26,9 @@
 (define-key nav-mode-map (kbd "p") 'scroll-up-command)
 (define-key nav-mode-map (kbd "|") 'scroll-down-command)
 
-(define-key nav-mode-map (kbd "o") 'other-window)
-(define-key nav-mode-map (kbd "n") 'other-window)
-(define-key nav-mode-map (kbd "r") (lambda () (interactive) (other-window -1)))
+(define-key nav-mode-map (kbd "o") 'focus-next-window)
+(define-key nav-mode-map (kbd "n") 'focus-next-window)
+(define-key nav-mode-map (kbd "r") 'focus-prev-window)
 
 ;; editing
 (define-key nav-mode-map (kbd "c") 'kill-and-join-forward)
