@@ -226,7 +226,7 @@
 (set-prefix-key (current-global-map) "C-p" 'mc-prefix-map)
 (set-prefix-key (current-global-map) "C-r" 'window-prefix-map)
 (set-prefix-key (current-global-map) "C-v" 'folding-prefix-map)
-(set-prefix-key (current-global-map) "s"   'search-prefix-map)
+(set-prefix-key (current-global-map) "C-s"   'search-prefix-map)
 
 (set-prefix-key ctl-x-map            "SPC" 'eval-prefix-map)
 (set-prefix-key ctl-x-map            "a"   'align-prefix-map)
