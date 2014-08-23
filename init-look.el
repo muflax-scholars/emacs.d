@@ -195,11 +195,14 @@
   (setup-after "yasnippet"             (diminish 'yas-minor-mode)))
 
 ;; clean up way-too-long major modes
-(add-hook 'emacs-lisp-mode-hook (lambda () (setq mode-name "EL")))
-(setup-after "ruby-mode"
-  (add-hook 'ruby-mode-hook (lambda () (setq mode-name "RB"))))
-(setup-after "enh-ruby-mode"
-  (add-hook 'enh-ruby-mode-hook (lambda () (setq mode-name "RB+"))))
-(add-hook 'sh-mode-hook (lambda () (setq mode-name "sh")))
+(defmacro rename-modeline (package-name mode new-name)
+  `(eval-after-load ,package-name
+     '(defadvice ,mode (after rename-modeline activate)
+        (setq mode-name ,new-name))))
+
+(rename-modeline "lisp-mode"     emacs-lisp-mode "EL")
+(rename-modeline "sh-script"     sh-mode         "sh")
+(rename-modeline "ruby-mode"     ruby-mode       "RB")
+(rename-modeline "enh-ruby-mode" enh-ruby-mode   "RB+")
 
 (provide 'init-look)
