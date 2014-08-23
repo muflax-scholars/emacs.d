@@ -485,13 +485,20 @@ See the variable `align-rules-list' for more details.")
 (defun delete-current-file ()
   "Delete the file associated with the current buffer."
   (interactive)
-  (let (currentFile)
-    (setq currentFile (buffer-file-name))
-    (when (y-or-n-p (concat "Delete file: " currentFile))
+  (let ((current-file (buffer-file-name)))
+    (when (y-or-n-p (concat "Delete file: " current-file))
       (kill-buffer (current-buffer))
-      (delete-file currentFile)
-      (message (concat "Deleted file: " currentFile))
-      )))
+      (delete-file current-file)
+      (message (concat "Deleted file: " current-file)))))
+
+(defun reload-current-file ()
+  "Close the current buffer and re-open it. Typically used to quickly clear buffer variables and overlays."
+  (interactive)
+  (let ((current-file (buffer-file-name)))
+    ;; makes only sense if there's no file associated with the buffer
+    (when current-file
+      (when (kill-buffer (current-buffer))
+        (find-file current-file)))))
 
 ;; move lines like in org-mode
 (setup "move-dup")
