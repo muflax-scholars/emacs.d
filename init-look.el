@@ -27,8 +27,11 @@
                  'after-make-window-system-frame-hooks
                'after-make-console-frame-hooks)))
 
+(defun run-after-make-frame-hooks-current-frame ()
+  (run-after-make-frame-hooks (selected-frame)))
+
 (add-hook 'after-make-frame-functions 'run-after-make-frame-hooks)
-(add-hook 'after-init-hook (lambda () (run-after-make-frame-hooks (selected-frame))))
+(add-hook 'after-init-hook 'run-after-make-frame-hooks-current-frame)
 
 ;; color themes
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
