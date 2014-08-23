@@ -272,8 +272,8 @@
 (global-set-key (kbd "M-p") 'undo-tree-redo)
 
 ;; because we navigate via cursor keys, we can put something more useful on the default navigational keys
-(global-set-key (kbd "C-n")   'other-window)
-(global-set-key (kbd "C-S-n") (lambda () (interactive) (other-window -1)))
+(global-set-key (kbd "C-n")   'focus-next-window)
+(global-set-key (kbd "C-S-n") 'focus-prev-window)
 (global-set-key (kbd "C-f")   'forward-word)
 (global-set-key (kbd "C-b")   'backward-word)
 
@@ -406,8 +406,8 @@
 (global-set-key (kbd "<C-M-right>") 'buf-move-right)
 
 ;; insert literal tab
-(global-set-key (kbd "<C-tab>") (lambda () (interactive)
-                                  (insert "\t")))
+(global-set-key (kbd "<C-tab>") 'literal-tab)
+
 ;; navigation
 (global-set-key (kbd "C-a") 'smart-beginning-of-line)
 (global-set-key (kbd "C-e") 'smart-end-of-line)
@@ -636,9 +636,9 @@
 
 ;; org-mode
 (setup-after "org"
-  (org-defkey org-mode-map (kbd "C-c C-t") (lambda () (interactive) (org-todo "TODO")))
-  (org-defkey org-mode-map (kbd "C-c C-w") (lambda () (interactive) (org-todo "WAITING")))
-  (org-defkey org-mode-map (kbd "C-c C-d") (lambda () (interactive) (org-todo "DONE"))))
+  (org-defkey org-mode-map (kbd "C-c C-t") 'org-todo-todo)
+  (org-defkey org-mode-map (kbd "C-c C-w") 'org-todo-waiting)
+  (org-defkey org-mode-map (kbd "C-c C-d") 'org-todo-done))
 
 ;; haskell
 (setup-after "haskell-mode"

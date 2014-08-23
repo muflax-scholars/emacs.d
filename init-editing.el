@@ -922,4 +922,15 @@ narrowed."
 ;; help extension
 (setup "help-fns+")
 
+;; navigate windows
+(defalias 'focus-next-window 'other-window)
+(defun focus-prev-window ()
+  (interactive)
+  (other-window -1))
+
+;; alternative to C-q TAB for easier keybindings
+(defun literal-tab ()
+  (interactive)
+  (insert "\t"))
+
 (provide 'init-editing)

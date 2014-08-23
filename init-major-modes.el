@@ -121,6 +121,19 @@
                '("r"
                  "#+BEGIN_SRC ruby\n?\n#+END_SRC"
                  "<src lang=\"ruby\">\n\n</src>"))
+
+  (defun org-todo-todo ()
+    (interactive)
+    (org-todo "TODO"))
+
+  (defun org-todo-waiting ()
+    (interactive)
+    (org-todo "WAITING"))
+
+  (defun org-todo-done ()
+    (interactive)
+    (org-todo "DONE"))
+
   )
 
 ;; loaded so that we can diminish it later
