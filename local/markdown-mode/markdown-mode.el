@@ -1218,7 +1218,7 @@ a list."
 ;; The following visibility cycling code was taken from org-mode
 ;; by Carsten Dominik and adapted for markdown-mode.
 
-; TODO better display, maybe some additional fold marker? 
+; TODO better display, maybe some additional fold marker?
 
 (defvar markdown-cycle-global-status 1)
 (defvar markdown-cycle-subtree-status nil)
