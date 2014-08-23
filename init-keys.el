@@ -98,7 +98,7 @@
   (if (display-graphic-p)
       (call-interactively command)
     (progn
-      (setq command (lookup-key (current-global-map) (kbd alt-key)))
+      (setq command (lookup-key global-map (kbd alt-key)))
       (when command
         (call-interactively command)))))
 
@@ -213,7 +213,7 @@
   (setq free-keys-keys (apply 'concat assignable-normal-keys)))
 
 ;; built-ins prefix maps restated for clarity
-(defvar old-global-map (copy-keymap (current-global-map)) "accessible backup in case shit breaks badly")
+(defvar old-global-map (copy-keymap global-map) "accessible backup in case shit breaks badly")
 (defvar ctl-x-map)
 (defvar help-map)
 (defvar mode-specific-map)
@@ -223,461 +223,418 @@
   (define-prefix-command command)
   (define-key map (kbd key) command))
 
+(defun key-def (map key command &optional type)
+  "Short, unified key definition."
+  (interactive)
+  (case type
+    ('prefix
+     (set-prefix-key map key command))
+    (t
+     (define-key map (kbd key) command))))
+
 ;; global keys
-(set-prefix-key (current-global-map) "C-p" 'mc-prefix-map)
-(set-prefix-key (current-global-map) "C-r" 'window-prefix-map)
-(set-prefix-key (current-global-map) "C-v" 'folding-prefix-map)
-(set-prefix-key (current-global-map) "C-s" 'search-prefix-map)
+(key-def global-map "C-S-<mouse-1>"    'mc/add-cursor-on-click)
+(key-def global-map "C-<down-mouse-1>" 'mc/add-cursor-on-click)
+
+(key-def global-map "<mouse-3>" 'fold-dwim-toggle)
+
+(key-def global-map "<C-down>"  'mc/mark-next-like-this)
+(key-def global-map "<C-up>"    'mc/mark-previous-like-this)
+(key-def global-map "C-<left>"  'er/contract-region)
+(key-def global-map "C-<right>" 'er/expand-region)
+
+(key-def global-map "M-<down>"  'md/move-lines-down)
+(key-def global-map "M-<left>"  'er/mark-symbol)
+(key-def global-map "M-<right>" 'er/mark-defun)
+(key-def global-map "M-<up>"    'md/move-lines-up)
+
+(key-def global-map "C-<next>"  'dired-next)
+(key-def global-map "C-<prior>" 'dired-prev)
+
+(key-def global-map "C-<menu>"   'nav-global-mode)
+(key-def global-map "C-<return>" 'md/duplicate-down)
+(key-def global-map "<C-tab>"    'literal-tab)
+
+(key-def global-map "M-<delete>" 'sp-unwrap-sexp)
+
+(key-def global-map "<f2>"   'save-buffer)
+(key-def global-map "S-<f2>" 'save-some-buffers)
+(key-def global-map "S-<f7>" 'backward-kill-word) ; make C-Backspace "work" in terminal
+(key-def global-map "<f11>"  'automargin-mode)
+(key-def global-map "<home>" 'beginning-of-buffer)
+(key-def global-map "<end>"  'end-of-buffer)
+(key-def global-map "<menu>" 'nav-minor-mode)
+
+(key-def global-map "S-<SPC>"       'set-mark-command)
+(key-def global-map "<S-delete>"    'literal-delete-char)
+(key-def global-map "<S-backspace>" 'literal-delete-backward-char)
+
+(key-def global-map "C-("  'sp-narrow-to-sexp)
+(key-def global-map "C-)"  'widen)
+(key-def global-map "C-|"  'generalized-shell-command)
+(key-def global-map "C-\\" 'generalized-shell-command) ; terminal bug
+
+(key-def global-map "C-a"   'smart-beginning-of-line)
+(key-def global-map "C-b"   'backward-word)
+(key-def global-map "C-d"   'kill-without-append)
+(key-def global-map "C-e"   'smart-end-of-line)
+(key-def global-map "C-f"   'forward-word)
+(key-def global-map "C-k"   'kill-and-join-forward)
+(key-def global-map "C-n"   'focus-next-window)
+(key-def global-map "C-S-n" 'focus-prev-window)
+(key-def global-map "C-o"   'yas-expand)
+(key-def global-map "C-S-o" 'next-newline-and-indent)
+(key-def global-map "C-p"   'mc-prefix-map      'prefix)
+(key-def global-map "C-r"   'window-prefix-map  'prefix)
+(key-def global-map "C-s"   'search-prefix-map  'prefix)
+(key-def global-map "C-t"   'ac-trigger-key-command)
+(key-def global-map "C-v"   'folding-prefix-map 'prefix)
+(key-def global-map "C-y"   'yank-and-indent)
+(key-def global-map "C-S-y" 'yank)
+(key-def global-map "C-z"   'undo-tree-undo)
+
+(key-def global-map "M-b"   'sp-backward-symbol)
+(key-def global-map "M-c"   'toggle-title-case)
+(key-def global-map "M-d"   'blank-line)
+(key-def global-map "M-f"   'sp-forward-symbol)
+(key-def global-map "M-k"   'copy-line)
+(key-def global-map "M-n"   'undo-tree-undo)
+(key-def global-map "M-o"   'yas-insert-snippet)
+(key-def global-map "M-p"   'undo-tree-redo)
+(key-def global-map "M-S-q" 'unfill-region)
+(key-def global-map "M-t"   'find-tag)
+(key-def global-map "M-u"   'toggle-upcase)
+(key-def global-map "M-x"   'smex)
+(key-def global-map "M-S-x" 'smex-major-mode-commands)
+(key-def global-map "M-S-y" 'yank-pop-reverse)
+(key-def global-map "M-z"   'undo-tree-redo)
+
+(key-def global-map "C-M-b" 'sp-backward-sexp)
+(key-def global-map "C-M-f" 'sp-forward-sexp)
+(key-def global-map "C-M-k" 'sp-kill-sexp)
+(key-def global-map "C-M-w" 'sp-copy-sexp)
+
 
 ;; less commonly used functions
-(define-key     ctl-x-map  (kbd "C-r") 'recentf-ido-find-file)
-(define-key     ctl-x-map  (kbd "M-f") 'find-file-at-point)
-(set-prefix-key ctl-x-map       "SPC"  'eval-prefix-map)
-(set-prefix-key ctl-x-map       "a"    'align-prefix-map)
-(set-prefix-key ctl-x-map       "c"    'helm-prefix-map)
-(set-prefix-key ctl-x-map       "d"    'debug-prefix-map)
-(define-key     ctl-x-map  (kbd "g")   'magit-status)
-(set-prefix-key ctl-x-map       "m"    'macro-prefix-map)
-(define-key     ctl-x-map  (kbd "p")   'paradox-list-packages)
-(set-prefix-key ctl-x-map       "t"    'input-prefix-map)
-(set-prefix-key ctl-x-map       "w"    'spell-check-prefix-map)
+(key-def ctl-x-map "C-r" 'recentf-ido-find-file)
+(key-def ctl-x-map "SPC" 'eval-prefix-map        'prefix)
+(key-def ctl-x-map "M-f" 'find-file-at-point)
+(key-def ctl-x-map "a"   'align-prefix-map       'prefix)
+(key-def ctl-x-map "c"   'helm-prefix-map        'prefix)
+(key-def ctl-x-map "d"   'debug-prefix-map       'prefix)
+(key-def ctl-x-map "g"   'magit-status)
+(key-def ctl-x-map "m"   'macro-prefix-map       'prefix)
+(key-def ctl-x-map "p"   'paradox-list-packages)
+(key-def ctl-x-map "t"   'input-prefix-map       'prefix)
+(key-def ctl-x-map "w"   'spell-check-prefix-map 'prefix)
 
 ;; mode-specific stuff
-(set-prefix-key mode-specific-map "m" 'number-prefix-map )
-(set-prefix-key mode-specific-map "s" 'sexp-prefix-map)
+(key-def mode-specific-map "C-<tab>" 'sp-indent-adjust-sexp)
+(key-def mode-specific-map "<tab>"   'sp-dedent-adjust-sexp)
+
+(key-def mode-specific-map "<f1>" 'use-small-font)
+(key-def mode-specific-map "<f2>" 'use-normal-font)
+(key-def mode-specific-map "<f3>" 'use-big-font)
+(key-def mode-specific-map "<f4>" 'use-huge-font)
+
+(key-def mode-specific-map "C-~"   'aya-expand)
+(key-def mode-specific-map "C-SPC" 'comment-dwim)
+(key-def mode-specific-map "C-g"   'abort-recursive-edit)
+(key-def mode-specific-map "C-j"   'dired-jump)
+(key-def mode-specific-map "C-o"   'yas-reload-all)
+(key-def mode-specific-map "C-t"   'rotate-text)
+(key-def mode-specific-map "C-w"   'kill-with-append)
+
+(key-def mode-specific-map "SPC" 'comment-dwim)
+(key-def mode-specific-map "~"   'aya-create)
+(key-def mode-specific-map "c"   'comment-region)
+(key-def mode-specific-map "i"   'indent-region)
+(key-def mode-specific-map "m"   'number-prefix-map 'prefix)
+(key-def mode-specific-map "n"   'next-error)
+(key-def mode-specific-map "p"   'previous-error)
+(key-def mode-specific-map "s"   'sexp-prefix-map   'prefix)
+(key-def mode-specific-map "u"   'uncomment-region)
+(key-def mode-specific-map "w"   'copy-with-append)
 
 ;; search
-(define-key     search-prefix-map (kbd "C-r") 'isearch-backward-use-region)
-(define-key     search-prefix-map (kbd "C-s") 'isearch-forward-use-region)
-(define-key     search-prefix-map (kbd "SPC") 'er/mark-defun)
-(define-key     search-prefix-map (kbd "b")   'isearch-backward-regexp)
-(define-key     search-prefix-map (kbd "B")   'isearch-backward-use-region)
-(define-key     search-prefix-map (kbd "d")   'er/mark-defun)
-(set-prefix-key search-prefix-map      "g"    'jump-prefix-map)
-(define-key     search-prefix-map (kbd "i")   'idomenu)
-(define-key     search-prefix-map (kbd "I")   'imenu-anywhere)
-(define-key     search-prefix-map (kbd "p")   'phi-search)
-(define-key     search-prefix-map (kbd "P")   'phi-search-backward)
-(define-key     search-prefix-map (kbd "r")   'vr/query-replace)
-(define-key     search-prefix-map (kbd "R")   'vr/query-replace-from-beginning)
-(define-key     search-prefix-map (kbd "s")   'isearch-forward-use-region)
-(define-key     search-prefix-map (kbd "S")   'isearch-forward-regexp)
-(define-key     search-prefix-map (kbd "w")   'er/mark-symbol)
-(define-key     search-prefix-map (kbd "y")   'kill-ring-search)
-(define-key     search-prefix-map (kbd "[")   'idomenu)
-(define-key     search-prefix-map (kbd "]")   'imenu-anywhere)
+(key-def search-prefix-map "C-r" 'isearch-backward-use-region)
+(key-def search-prefix-map "C-s" 'isearch-forward-use-region)
+(key-def search-prefix-map "SPC" 'er/mark-defun)
+(key-def search-prefix-map "b"   'isearch-backward-regexp)
+(key-def search-prefix-map "B"   'isearch-backward-use-region)
+(key-def search-prefix-map "d"   'er/mark-defun)
+(key-def search-prefix-map "g"   'jump-prefix-map 'prefix)
+(key-def search-prefix-map "i"   'idomenu)
+(key-def search-prefix-map "I"   'imenu-anywhere)
+(key-def search-prefix-map "p"   'phi-search)
+(key-def search-prefix-map "P"   'phi-search-backward)
+(key-def search-prefix-map "r"   'vr/query-replace)
+(key-def search-prefix-map "R"   'vr/query-replace-from-beginning)
+(key-def search-prefix-map "s"   'isearch-forward-use-region)
+(key-def search-prefix-map "S"   'isearch-forward-regexp)
+(key-def search-prefix-map "w"   'er/mark-symbol)
+(key-def search-prefix-map "y"   'kill-ring-search)
+(key-def search-prefix-map "["   'idomenu)
+(key-def search-prefix-map "]"   'imenu-anywhere)
 
 ;; ace-jump
-(define-key jump-prefix-map (kbd "b") 'ace-jump-buffer)
-(define-key jump-prefix-map (kbd "c") 'ace-jump-char-mode)
-(define-key jump-prefix-map (kbd "g") 'ace-jump-mode)
-(define-key jump-prefix-map (kbd "l") 'ace-jump-line-mode)
-(define-key jump-prefix-map (kbd "n") 'goto-line)
-(define-key jump-prefix-map (kbd "w") 'ace-window)
+(key-def jump-prefix-map "b" 'ace-jump-buffer)
+(key-def jump-prefix-map "c" 'ace-jump-char-mode)
+(key-def jump-prefix-map "g" 'ace-jump-mode)
+(key-def jump-prefix-map "l" 'ace-jump-line-mode)
+(key-def jump-prefix-map "n" 'goto-line)
+(key-def jump-prefix-map "w" 'ace-window)
 
 ;; with active search
 (setup-after "phi-search"
   (setup "phi-search-mc"
-    (define-key phi-search-default-map (kbd "<C-down>")   'phi-search-mc/mark-next)
-    (define-key phi-search-default-map (kbd "<C-up>")     'phi-search-mc/mark-previous)
-    (define-key phi-search-default-map (kbd "<C-return>") 'phi-search-mc/mark-here)
-    (define-key phi-search-default-map (kbd "C-p SPC")    'phi-search-mc/mark-all)))
+    (key-def phi-search-default-map "<C-down>"   'phi-search-mc/mark-next)
+    (key-def phi-search-default-map "<C-up>"     'phi-search-mc/mark-previous)
+    (key-def phi-search-default-map "<C-return>" 'phi-search-mc/mark-here)
+    (key-def phi-search-default-map "C-p SPC"    'phi-search-mc/mark-all)))
 
 (setup-after "isearch"
   ;; make backspace more intuitive
-  (define-key isearch-mode-map (kbd "<backspace>") 'isearch-del-char)
+  (key-def isearch-mode-map "<backspace>" 'isearch-del-char)
 
-  (define-key isearch-mode-map (kbd "C-c C-c")   'isearch-normalize-string)
-  (define-key isearch-mode-map (kbd "C-c C-w")   'isearch-toggle-word)
-  (define-key isearch-mode-map (kbd "C-c C-r")   'isearch-toggle-regexp)
-  (define-key isearch-mode-map (kbd "C-c C-i")   'isearch-toggle-case-fold)
-  (define-key isearch-mode-map (kbd "C-c C-s")   'isearch-toggle-symbol)
-  (define-key isearch-mode-map (kbd "C-c C-SPC") 'isearch-toggle-lax-whitespace)
-  (define-key isearch-mode-map (kbd "C-c C-o")   'isearch-occur))
-
-;; commenting
-(define-key mode-specific-map (kbd "SPC")   'comment-dwim)
-(define-key mode-specific-map (kbd "C-SPC") 'comment-dwim)
-(define-key mode-specific-map (kbd "c")     'comment-region)
-(define-key mode-specific-map (kbd "u")     'uncomment-region)
-
-;; code navigation
-(define-key mode-specific-map (kbd "n") 'next-error)
-(define-key mode-specific-map (kbd "p") 'previous-error)
-(global-set-key (kbd "M-t") 'find-tag)
+  (key-def isearch-mode-map "C-c C-SPC" 'isearch-toggle-lax-whitespace)
+  (key-def isearch-mode-map "C-c C-c"   'isearch-normalize-string)
+  (key-def isearch-mode-map "C-c C-i"   'isearch-toggle-case-fold)
+  (key-def isearch-mode-map "C-c C-o"   'isearch-occur)
+  (key-def isearch-mode-map "C-c C-r"   'isearch-toggle-regexp)
+  (key-def isearch-mode-map "C-c C-s"   'isearch-toggle-symbol)
+  (key-def isearch-mode-map "C-c C-w"   'isearch-toggle-word)
+  )
 
 ;; eval
-(define-key eval-prefix-map (kbd "d")   'eval-defun)
-(define-key eval-prefix-map (kbd "SPC") 'eval-defun)
-(define-key eval-prefix-map (kbd "b")   'eval-buffer)
-(define-key eval-prefix-map (kbd "e")   'eval-expression)
-(define-key eval-prefix-map (kbd "r")   'eval-region)
+(key-def eval-prefix-map "SPC" 'eval-defun)
+(key-def eval-prefix-map "b"   'eval-buffer)
+(key-def eval-prefix-map "d"   'eval-defun)
+(key-def eval-prefix-map "e"   'eval-expression)
+(key-def eval-prefix-map "r"   'eval-region)
 
 ;; debug
-(define-key debug-prefix-map (kbd "d") 'edebug-defun)
-(define-key debug-prefix-map (kbd "s") 'profiler-start)
-(define-key debug-prefix-map (kbd "r") 'profiler-report)
-(define-key debug-prefix-map (kbd "g") 'profiler-stop)
-
-;; undo
-(global-set-key (kbd "C-z") 'undo-tree-undo)
-(global-set-key (kbd "M-z") 'undo-tree-redo)
-(global-set-key (kbd "M-n") 'undo-tree-undo)
-(global-set-key (kbd "M-p") 'undo-tree-redo)
-
-;; because we navigate via cursor keys, we can put something more useful on the default navigational keys
-(global-set-key (kbd "C-n")   'focus-next-window)
-(global-set-key (kbd "C-S-n") 'focus-prev-window)
-(global-set-key (kbd "C-f")   'forward-word)
-(global-set-key (kbd "C-b")   'backward-word)
-
-;; obvious keys
-(global-set-key (kbd "<home>") 'beginning-of-buffer)
-(global-set-key (kbd "<end>")  'end-of-buffer)
-
-;; make C-Backspace "work" in terminal
-(global-set-key (kbd "S-<f7>") 'backward-kill-word)
-
-;; get out of recursive edit
-(define-key mode-specific-map (kbd "C-g") 'abort-recursive-edit)
-
-;; save some strokes
-(global-set-key (kbd "<f2>")   'save-buffer)
-(global-set-key (kbd "S-<f2>") 'save-some-buffers)
-
-;; mark
-(global-set-key (kbd "S-<SPC>") 'set-mark-command)
-
-;; font switches
-(define-key mode-specific-map (kbd "<f1>") 'use-small-font)
-(define-key mode-specific-map (kbd "<f2>") 'use-normal-font)
-(define-key mode-specific-map (kbd "<f3>") 'use-big-font)
-(define-key mode-specific-map (kbd "<f4>") 'use-huge-font)
-
-;; better fullscreen toggle
-(global-set-key (kbd "<f11>") 'automargin-mode)
+(key-def debug-prefix-map "d" 'edebug-defun)
+(key-def debug-prefix-map "g" 'profiler-stop)
+(key-def debug-prefix-map "r" 'profiler-report)
+(key-def debug-prefix-map "s" 'profiler-start)
 
 (setup-after "yasnippet"
   ;; saner trigger key
   (define-key yas-minor-mode-map [(tab)]     nil)
   (define-key yas-minor-mode-map (kbd "TAB") nil)
 
-  (define-key yas-minor-mode-map (kbd "C-o") 'yas-expand)
-  (define-key yas-minor-mode-map (kbd "M-o") 'yas-insert-snippet)
-
-  (define-key yas-keymap (kbd "C-o")      'yas-next-field-or-maybe-expand)
-  (define-key yas-keymap (kbd "C-S-o")    'yas-next-field)
-  (define-key yas-keymap (kbd "<return>") 'yas/exit-all-snippets)
-  (define-key yas-keymap (kbd "C-e")      'yas/goto-end-of-active-field)
-  (define-key yas-keymap (kbd "C-a")      'yas/goto-start-of-active-field)
-
-  ;; quick reloads
-  (define-key yas-minor-mode-map (kbd "C-c C-o") 'yas-reload-all))
-
-;; auto-yasnippet
-(define-key mode-specific-map (kbd "~")   'aya-create)
-(define-key mode-specific-map (kbd "C-~") 'aya-expand)
+  (key-def yas-keymap "C-o"      'yas-next-field-or-maybe-expand)
+  (key-def yas-keymap "C-S-o"    'yas-next-field)
+  (key-def yas-keymap "<return>" 'yas/exit-all-snippets)
+  (key-def yas-keymap "C-a"      'yas/goto-start-of-active-field)
+  (key-def yas-keymap "C-e"      'yas/goto-end-of-active-field))
 
 ;; auto-completion
 (setup-after "auto-complete-config"
-  ;; saner keys
   (setq ac-use-menu-map nil)
   (ac-set-trigger-key "C-t")
-  (global-set-key (kbd "C-t") 'ac-trigger-key-command)
-  (define-key ac-completing-map "\t"        nil)
-  (define-key ac-completing-map [tab]       nil)
+
+  ;; unset stupid keys
+  (define-key ac-completing-map "\t"          nil)
+  (define-key ac-completing-map [tab]         nil)
   (define-key ac-completing-map (kbd "<Tab>") nil)
-  (define-key ac-completing-map [up]        nil)
-  (define-key ac-completing-map [down]      nil)
-  (define-key ac-completing-map (kbd "M-n") nil)
-  (define-key ac-completing-map (kbd "M-p") nil)
-  (define-key ac-completing-map (kbd "C-t") 'ac-next)
-  (define-key ac-completing-map (kbd "M-t") 'ac-previous)
-  (define-key ac-completing-map [return]    nil)
-  (define-key ac-completing-map "\r"        nil)
-  (define-key ac-completing-map (kbd "C-j") 'ac-complete))
+  (define-key ac-completing-map [up]          nil)
+  (define-key ac-completing-map [down]        nil)
+  (define-key ac-completing-map (kbd "M-n")   nil)
+  (define-key ac-completing-map (kbd "M-p")   nil)
+  (define-key ac-completing-map [return]      nil)
+  (define-key ac-completing-map "\r"          nil)
 
-;; multiple-cursors
-(global-set-key (kbd "<C-down>")         'mc/mark-next-like-this)
-(global-set-key (kbd "<C-up>")           'mc/mark-previous-like-this)
-(global-set-key (kbd "C-S-<mouse-1>")    'mc/add-cursor-on-click)
-(global-set-key (kbd "C-<down-mouse-1>") 'mc/add-cursor-on-click)
+  (key-def ac-completing-map "C-t" 'ac-next)
+  (key-def ac-completing-map "M-t" 'ac-previous)
+  (key-def ac-completing-map "C-j" 'ac-complete))
 
-(define-key mc-prefix-map (kbd "l")   'mc/edit-lines)
-(define-key mc-prefix-map (kbd "f")   'mc/skip-to-next-like-this)
-(define-key mc-prefix-map (kbd "b")   'mc/skip-to-previous-like-this)
-(define-key mc-prefix-map (kbd "SPC") 'mc/mark-all-dwim)
-(define-key mc-prefix-map (kbd "m")   'mc/mark-more-like-this-extended)
-(define-key mc-prefix-map (kbd "r")   'set-rectangular-region-anchor)
-(define-key mc-prefix-map (kbd "n")   'mc/insert-numbers)
-(define-key mc-prefix-map (kbd "s")   'mc/sort-regions)
-(define-key mc-prefix-map (kbd "R")   'mc/reverse-regions)
-(define-key mc-prefix-map (kbd "c")   'mc/compare-chars-forward)
-(define-key mc-prefix-map (kbd "C")   'mc/compare-chars-backward)
-(define-key mc-prefix-map (kbd "u")   'mc/remove-current-cursor)
-(define-key mc-prefix-map (kbd "d")   'mc/remove-duplicated-cursors)
-(define-key mc-prefix-map (kbd "g")   'mc-jump-char)
+;; multiple cursors
+(key-def mc-prefix-map "SPC" 'mc/mark-all-dwim)
+(key-def mc-prefix-map "b"   'mc/skip-to-previous-like-this)
+(key-def mc-prefix-map "C"   'mc/compare-chars-backward)
+(key-def mc-prefix-map "c"   'mc/compare-chars-forward)
+(key-def mc-prefix-map "d"   'mc/remove-duplicated-cursors)
+(key-def mc-prefix-map "f"   'mc/skip-to-next-like-this)
+(key-def mc-prefix-map "g"   'mc-jump-char)
+(key-def mc-prefix-map "i"   'iedit-mode)
+(key-def mc-prefix-map "I"   'iedit-mode-toggle-on-function)
+(key-def mc-prefix-map "l"   'mc/edit-lines)
+(key-def mc-prefix-map "m"   'mc/mark-more-like-this-extended)
+(key-def mc-prefix-map "n"   'mc/insert-numbers)
+(key-def mc-prefix-map "R"   'mc/reverse-regions)
+(key-def mc-prefix-map "r"   'set-rectangular-region-anchor)
+(key-def mc-prefix-map "s"   'mc/sort-regions)
+(key-def mc-prefix-map "u"   'mc/remove-current-cursor)
 
 (setup-after "multiple-cursors-core"
   ;; <ret> inserts a newline; C-j exits (a bit more convenient that way)
-  (define-key mc/keymap (kbd "<return>") nil)
-  (define-key mc/keymap (kbd "C-j")      'multiple-cursors-mode)
+  (key-def mc/keymap "<return>" nil)
+  (key-def mc/keymap "C-j"      'multiple-cursors-mode)
 
-  (define-key mc/keymap (kbd "C-p h") 'mc-hide-unmatched-lines-mode))
-
-(define-key mc-prefix-map (kbd "i") 'iedit-mode)
-(define-key mc-prefix-map (kbd "I") 'iedit-mode-toggle-on-function)
-
-;; editing
-(global-set-key (kbd "M-k")           'copy-line)
-(global-set-key (kbd "C-y")           'yank-and-indent)
-(global-set-key (kbd "C-S-y")         'yank)
-(global-set-key (kbd "M-S-y")         'yank-pop-reverse)
-(global-set-key (kbd "C-S-o")         'next-newline-and-indent)
-(global-set-key (kbd "C-k")           'kill-and-join-forward)
-(global-set-key (kbd "<S-delete>")    'literal-delete-char)
-(global-set-key (kbd "<S-backspace>") 'literal-delete-backward-char)
-(global-set-key (kbd "C-d")           'kill-without-append)
-(global-set-key (kbd "M-d")           'blank-line)
-
-(define-key mode-specific-map (kbd "i")   'indent-region)
-(define-key mode-specific-map (kbd "C-w") 'kill-with-append)
-(define-key mode-specific-map (kbd "w")   'copy-with-append)
+  (key-def mc/keymap "C-p h" 'mc-hide-unmatched-lines-mode))
 
 ;; handle comments
 (setup-after "cc-mode"
-  (define-key c-mode-map (kbd "M-RET") 'c-indent-new-comment-line))
+  (key-def c-mode-map "M-RET" 'c-indent-new-comment-line))
 
 ;; move lines like in org-mode
-(global-set-key (kbd "M-<up>")     'md/move-lines-up)
-(global-set-key (kbd "M-<down>")   'md/move-lines-down)
-(global-set-key (kbd "C-<return>") 'md/duplicate-down)
 
 ;; move buffers
-(global-set-key (kbd "<C-M-up>")    'buf-move-up)
-(global-set-key (kbd "<C-M-down>")  'buf-move-down)
-(global-set-key (kbd "<C-M-left>")  'buf-move-left)
-(global-set-key (kbd "<C-M-right>") 'buf-move-right)
-
-;; insert literal tab
-(global-set-key (kbd "<C-tab>") 'literal-tab)
-
-;; navigation
-(global-set-key (kbd "C-a") 'smart-beginning-of-line)
-(global-set-key (kbd "C-e") 'smart-end-of-line)
+(key-def global-map "<C-M-up>"    'buf-move-up)
+(key-def global-map "<C-M-down>"  'buf-move-down)
+(key-def global-map "<C-M-left>"  'buf-move-left)
+(key-def global-map "<C-M-right>" 'buf-move-right)
 
 ;; aligning things
-(define-key align-prefix-map (kbd "a")   'align-region-or-current)
-(define-key align-prefix-map (kbd "SPC") 'align-repeat)
-(define-key align-prefix-map (kbd "r")   'align-repeat)
-;; aligning tables
-(define-key align-prefix-map (kbd "t") 'delimit-columns-current)
-(define-key align-prefix-map (kbd "T") 'delimit-columns-region)
-
-;; undo hardwrapped regions (mostly markdown)
-(global-set-key (kbd "M-S-q") 'unfill-region)
+(key-def align-prefix-map "SPC" 'align-repeat)
+(key-def align-prefix-map "a"   'align-region-or-current)
+(key-def align-prefix-map "r"   'align-repeat)
+(key-def align-prefix-map "t"   'delimit-columns-current)
+(key-def align-prefix-map "T"   'delimit-columns-region)
+(key-def align-prefix-map "w"   'align-whitespace)
 
 ;; spell-check
-(define-key spell-check-prefix-map (kbd "SPC") 'wcheck-actions)
-(define-key spell-check-prefix-map (kbd "d")   'disable-spell-check)
-(define-key spell-check-prefix-map (kbd "e")   'enable-spell-check)
-(define-key spell-check-prefix-map (kbd "w")   'wcheck-mode)
-
-;; aligning
+(key-def spell-check-prefix-map "SPC" 'wcheck-actions)
+(key-def spell-check-prefix-map "d"   'disable-spell-check)
+(key-def spell-check-prefix-map "e"   'enable-spell-check)
+(key-def spell-check-prefix-map "w"   'wcheck-mode)
 
 ;; input methods
-(global-set-key (kbd "<kanji>") 'toggle-input-method)
+(key-def global-map "<kanji>" 'toggle-input-method)
 
-(define-key input-prefix-map (kbd "0")   'clear-input-method)
-(define-key input-prefix-map (kbd "t")   'set-input-method-muflax-latin)
-(define-key input-prefix-map (kbd "l")   'set-input-method-muflax-latin)
-(define-key input-prefix-map (kbd "c")   'set-input-method-muflax-cyrillic)
-(define-key input-prefix-map (kbd "t")   'set-input-method-muflax-turkish)
-(define-key input-prefix-map (kbd "g")   'set-input-method-muflax-greek)
-(define-key input-prefix-map (kbd "j")   'set-input-method-japanese-mozc)
-(define-key input-prefix-map (kbd "SPC") 'toggle-input-method)
+(key-def input-prefix-map "SPC" 'toggle-input-method)
+(key-def input-prefix-map "0"   'clear-input-method)
+(key-def input-prefix-map "c"   'set-input-method-muflax-cyrillic)
+(key-def input-prefix-map "g"   'set-input-method-muflax-greek)
+(key-def input-prefix-map "j"   'set-input-method-japanese-mozc)
+(key-def input-prefix-map "l"   'set-input-method-muflax-latin)
+(key-def input-prefix-map "m"   'set-input-method-muflax-latin)
+(key-def input-prefix-map "t"   'set-input-method-muflax-turkish)
 
 ;; window config
-(define-key window-prefix-map (kbd "b")        'winner-undo)
-(define-key window-prefix-map (kbd "f")        'winner-redo)
-(define-key window-prefix-map (kbd "w")        'sticky-window-delete-window)
-(define-key window-prefix-map (kbd "SPC")      'sticky-window-delete-window)
-(define-key window-prefix-map (kbd "k")        'sticky-window-delete-other-windows)
-(define-key window-prefix-map (kbd "C-r")      'sticky-window-delete-other-windows)
-(define-key window-prefix-map (kbd "<return>") 'sticky-window-delete-other-windows)
-(define-key window-prefix-map (kbd "<down>")   'split-window-below)
-(define-key window-prefix-map (kbd "<right>")  'split-window-right)
-(define-key window-prefix-map (kbd "v")        'sticky-window-keep-window-visible)
-(define-key window-prefix-map (kbd "n")        'neotree-toggle)
-(define-key window-prefix-map (kbd "s")        'scratch)
-
-;; expand region
-(global-set-key (kbd "C-<right>") 'er/expand-region)
-(global-set-key (kbd "C-<left>")  'er/contract-region)
-(global-set-key (kbd "M-<right>") 'er/mark-defun)
-(global-set-key (kbd "M-<left>")  'er/mark-symbol)
-
-;; shell commands
-(global-set-key (kbd "C-|")  'generalized-shell-command)
-(global-set-key (kbd "C-\\") 'generalized-shell-command) ; terminal bug
+(key-def window-prefix-map "<down>"   'split-window-below)
+(key-def window-prefix-map "<right>"  'split-window-right)
+(key-def window-prefix-map "<return>" 'sticky-window-delete-other-windows)
+(key-def window-prefix-map "C-r"      'sticky-window-delete-other-windows)
+(key-def window-prefix-map "SPC"      'sticky-window-delete-window)
+(key-def window-prefix-map "b"        'winner-undo)
+(key-def window-prefix-map "f"        'winner-redo)
+(key-def window-prefix-map "k"        'sticky-window-delete-other-windows)
+(key-def window-prefix-map "n"        'neotree-toggle)
+(key-def window-prefix-map "s"        'scratch)
+(key-def window-prefix-map "v"        'sticky-window-keep-window-visible)
+(key-def window-prefix-map "w"        'sticky-window-delete-window)
 
 ;; arithmetic
-(define-key number-prefix-map (kbd "<up>")   'number/increment)
-(define-key number-prefix-map (kbd "<down>") 'number/decrement)
-(define-key number-prefix-map (kbd "+")      'number/add)
-(define-key number-prefix-map (kbd "a")      'number/add)
-(define-key number-prefix-map (kbd "-")      'number/sub)
-(define-key number-prefix-map (kbd "s")      'number/sub)
-(define-key number-prefix-map (kbd "*")      'number/multiply)
-(define-key number-prefix-map (kbd "m")      'number/multiply)
-(define-key number-prefix-map (kbd "/")      'number/divide)
-(define-key number-prefix-map (kbd "d")      'number/divide)
-(define-key number-prefix-map (kbd "0")      'number/pad)
-(define-key number-prefix-map (kbd "p")      'number/pad)
-(define-key number-prefix-map (kbd "=")      'number/eval)
-(define-key number-prefix-map (kbd "e")      'number/eval)
-
-;; rotate text
-(define-key mode-specific-map (kbd "C-t") 'rotate-text)
+(key-def number-prefix-map "<up>"   'number/increment)
+(key-def number-prefix-map "<down>" 'number/decrement)
+(key-def number-prefix-map "+"      'number/add)
+(key-def number-prefix-map "-"      'number/sub)
+(key-def number-prefix-map "*"      'number/multiply)
+(key-def number-prefix-map "/"      'number/divide)
+(key-def number-prefix-map "="      'number/eval)
+(key-def number-prefix-map "0"      'number/pad)
+(key-def number-prefix-map "a"      'number/add)
+(key-def number-prefix-map "d"      'number/divide)
+(key-def number-prefix-map "e"      'number/eval)
+(key-def number-prefix-map "m"      'number/multiply)
+(key-def number-prefix-map "p"      'number/pad)
+(key-def number-prefix-map "s"      'number/sub)
 
 ;; folding
-(global-set-key (kbd "<mouse-3>") 'fold-dwim-toggle)
+(key-def folding-prefix-map "C-f" 'fold-dwim-toggle)
+(key-def folding-prefix-map "C-y" 'yafolding-toggle-element)
+(key-def folding-prefix-map "SPC" 'fold-dwim-show-all)
+(key-def folding-prefix-map "f"   'hs-fold-levels)
+(key-def folding-prefix-map "F"   'fold-dwim-show-all)
+(key-def folding-prefix-map "s"   'whitespace-fold-levels)
+(key-def folding-prefix-map "S"   'whitespace-fold-reset)
+(key-def folding-prefix-map "y"   'yafolding-hide-all)
+(key-def folding-prefix-map "Y"   'yafolding-show-all)
 
-(define-key folding-prefix-map (kbd "C-f") 'fold-dwim-toggle)
-(define-key folding-prefix-map (kbd "f")   'hs-fold-levels)
-(define-key folding-prefix-map (kbd "F")   'fold-dwim-show-all)
-(define-key folding-prefix-map (kbd "SPC") 'fold-dwim-show-all)
+;; smartparens
+(key-def sexp-prefix-map "C-<tab>" 'sp-indent-adjust-sexp)
+(key-def sexp-prefix-map "<tab>"   'sp-dedent-adjust-sexp)
 
-(define-key folding-prefix-map (kbd "s")   'whitespace-fold-levels)
-(define-key folding-prefix-map (kbd "S")   'whitespace-fold-reset)
-
-(define-key folding-prefix-map (kbd "C-y") 'yafolding-toggle-element)
-(define-key folding-prefix-map (kbd "y")   'yafolding-hide-all)
-(define-key folding-prefix-map (kbd "Y")   'yafolding-show-all)
-
-(setup-after "smartparens-config"
-  ;; navigation
-  (define-key sp-keymap (kbd "C-M-f") 'sp-forward-sexp)
-  (define-key sp-keymap (kbd "C-M-b") 'sp-backward-sexp)
-  (define-key sp-keymap (kbd "M-f")   'sp-forward-symbol)
-  (define-key sp-keymap (kbd "M-b")   'sp-backward-symbol)
-
-  (define-key sexp-prefix-map (kbd "a") 'sp-beginning-of-sexp)
-  (define-key sexp-prefix-map (kbd "e") 'sp-end-of-sexp)
-
-  ;; killing
-  (define-key sp-keymap (kbd "C-M-k") 'sp-kill-sexp)
-  (define-key sp-keymap (kbd "C-M-w") 'sp-copy-sexp)
-
-  (define-key sexp-prefix-map (kbd "C-a") 'sp-kill-to-beginning-of-sexp)
-  (define-key sexp-prefix-map (kbd "C-e") 'sp-kill-to-end-of-sexp)
-  (define-key sexp-prefix-map (kbd "M-a") 'sp-copy-to-beginning-of-sexp)
-  (define-key sexp-prefix-map (kbd "M-e") 'sp-copy-to-end-of-sexp)
-  (define-key sexp-prefix-map (kbd "k")   'sp-kill-sexp)
-  (define-key sexp-prefix-map (kbd "w")   'sp-copy-sexp)
-
-  ;; wrapping
-  (define-key sp-keymap (kbd "M-<delete>") 'sp-unwrap-sexp)
-
-  (define-key sexp-prefix-map (kbd "u") 'sp-unwrap-sexp)
-  (define-key sexp-prefix-map (kbd "U") 'sp-backward-unwrap-sexp)
-  (define-key sexp-prefix-map (kbd "r") 'sp-rewrap-sexp)
-
-  ;; adjusting
-  (define-key sp-keymap (kbd "C-c C-<tab>") 'sp-indent-adjust-sexp)
-  (define-key sp-keymap (kbd "C-c <tab>")   'sp-dedent-adjust-sexp)
-
-  (define-key sexp-prefix-map (kbd "C-<tab>") 'sp-indent-adjust-sexp)
-  (define-key sexp-prefix-map (kbd "<tab>")   'sp-dedent-adjust-sexp)
-
-  ;; narrowing
-  (define-key narrow-map (kbd "s") 'sp-narrow-to-sexp)
-
-  ;; TODO generalize C-( to narrow-or-region
-  (define-key sp-keymap (kbd "C-(") 'sp-narrow-to-sexp)
-  (define-key sp-keymap (kbd "C-)") 'widen)
-  )
-
-;; case changes
-(global-set-key (kbd "M-c") 'toggle-title-case)
-(global-set-key (kbd "M-u") 'toggle-upcase)
-
-;; macro
-(define-key macro-prefix-map (kbd "C-t") 'insert-kbd-macro)
-(define-key macro-prefix-map (kbd "C-n") 'kmacro-name-last-macro)
-(define-key macro-prefix-map (kbd "C-b") 'kmacro-bind-to-key)
-
-;; faster navigation experimentation
-(global-set-key (kbd "<menu>")   'nav-minor-mode)
-(global-set-key (kbd "C-<menu>") 'nav-global-mode)
+(key-def sexp-prefix-map "C-a" 'sp-kill-to-beginning-of-sexp)
+(key-def sexp-prefix-map "C-e" 'sp-kill-to-end-of-sexp)
+(key-def sexp-prefix-map "M-a" 'sp-copy-to-beginning-of-sexp)
+(key-def sexp-prefix-map "M-e" 'sp-copy-to-end-of-sexp)
+(key-def sexp-prefix-map "a"   'sp-beginning-of-sexp)
+(key-def sexp-prefix-map "e"   'sp-end-of-sexp)
+(key-def sexp-prefix-map "k"   'sp-kill-sexp)
+(key-def sexp-prefix-map "r"   'sp-rewrap-sexp)
+(key-def sexp-prefix-map "u"   'sp-unwrap-sexp)
+(key-def sexp-prefix-map "U"   'sp-backward-unwrap-sexp)
+(key-def sexp-prefix-map "w"   'sp-copy-sexp)
 
 ;; narrowing
-(define-key narrow-map (kbd "SPC") 'narrow-or-widen-dwim)
+(key-def narrow-map "SPC" 'narrow-or-widen-dwim)
+(key-def narrow-map "s"   'sp-narrow-to-sexp)
 
-;; M-x
-(global-set-key (kbd "M-x")   'smex)
-(global-set-key (kbd "M-S-x") 'smex-major-mode-commands)
+;; macro
+(key-def macro-prefix-map "C-b" 'kmacro-bind-to-key)
+(key-def macro-prefix-map "C-n" 'kmacro-name-last-macro)
+(key-def macro-prefix-map "C-t" 'insert-kbd-macro)
 
 ;; helm
 (setup-after "helm"
-  (define-key helm-map (kbd "C-w") 'subword-backward-kill)
-  (define-key helm-map (kbd "M-w") 'helm-yank-text-at-point))
+  (key-def helm-map "C-w" 'subword-backward-kill)
+  (key-def helm-map "M-w" 'helm-yank-text-at-point))
 
-(define-key helm-prefix-map (kbd "t")   'helm-cmd-t)
-(define-key helm-prefix-map (kbd "g")   'helm-do-grep)
-(define-key helm-prefix-map (kbd "o")   'helm-occur)
-(define-key helm-prefix-map (kbd "e")   'helm-flycheck)
-(define-key helm-prefix-map (kbd "C-o") 'helm-swoop)
-;; (global-set-key (kbd "M-x") 'helm-M-x)
-;; (define-key helm-prefix-map (kbd "f") 'helm-find-files)
+;; (key-def global-map "M-x" 'helm-M-x)
+
+(key-def helm-prefix-map "C-o" 'helm-swoop)
+(key-def helm-prefix-map "e"   'helm-flycheck)
+;; (key-def helm-prefix-map "f"   'helm-find-files)
+(key-def helm-prefix-map "g"   'helm-do-grep)
+(key-def helm-prefix-map "o"   'helm-occur)
+(key-def helm-prefix-map "t"   'helm-cmd-t)
 
 ;; org-mode
 (setup-after "org"
+  (org-defkey org-mode-map (kbd "C-c C-d") 'org-todo-done)
   (org-defkey org-mode-map (kbd "C-c C-t") 'org-todo-todo)
-  (org-defkey org-mode-map (kbd "C-c C-w") 'org-todo-waiting)
-  (org-defkey org-mode-map (kbd "C-c C-d") 'org-todo-done))
+  (org-defkey org-mode-map (kbd "C-c C-w") 'org-todo-waiting))
 
 ;; haskell
 (setup-after "haskell-mode"
-  (define-key haskell-mode-map (kbd "C-c ?")   'haskell-process-do-type)
-  (define-key haskell-mode-map (kbd "C-c C-?") 'haskell-process-do-info))
+  (key-def haskell-mode-map "C-c ?"   'haskell-process-do-type)
+  (key-def haskell-mode-map "C-c C-?" 'haskell-process-do-info))
 
 ;; ruby
 (setup-after "enh-ruby-mode"
-  (define-key enh-ruby-mode-map (kbd "C-c ?") 'yari))
-
-;; dired
-(define-key mode-specific-map (kbd "C-j") 'dired-jump)
-(global-set-key (kbd "C-<next>")          'dired-next)
-(global-set-key (kbd "C-<prior>")         'dired-prev)
+  (key-def enh-ruby-mode-map "C-c ?" 'yari))
 
 (setup-after "dired"
-  (define-key dired-mode-map (kbd "C-c C-c")  'wdired-change-to-wdired-mode)
-  (define-key dired-mode-map (kbd "<insert>") 'dired-mark)
-  (define-key dired-mode-map (kbd ".")        'dired-omit-mode)
+  (key-def dired-mode-map "C-c C-c"  'wdired-change-to-wdired-mode)
+  (key-def dired-mode-map "<insert>" 'dired-mark)
+  (key-def dired-mode-map "."        'dired-omit-mode)
 
   ;; C-a goes to filename
-  (define-key dired-mode-map  (kbd "C-a") 'dired-back-to-start-of-files)
-  (define-key wdired-mode-map (kbd "C-a") 'dired-back-to-start-of-files)
+  (key-def dired-mode-map  "C-a" 'dired-back-to-start-of-files)
+  (key-def wdired-mode-map "C-a" 'dired-back-to-start-of-files)
 
   ;; M-up goes to first file
-  (define-key dired-mode-map  (vector 'remap 'beginning-of-buffer) 'dired-back-to-top)
-  (define-key wdired-mode-map (vector 'remap 'beginning-of-buffer) 'dired-back-to-top)
-  (define-key dired-mode-map  (vector 'remap 'smart-up)            'dired-back-to-top)
+  (key-def dired-mode-map  or 'remap 'beginning-of-buffer 'dired-back-to-top)
+  (key-def wdired-mode-map or 'remap 'beginning-of-buffer 'dired-back-to-top)
+  (key-def dired-mode-map  or 'remap 'smart-up            'dired-back-to-top)
 
   ;; M-down goes to last file
-  (define-key dired-mode-map  (vector 'remap 'end-of-buffer) 'dired-jump-to-bottom)
-  (define-key dired-mode-map  (vector 'remap 'smart-down)    'dired-jump-to-bottom)
-  (define-key wdired-mode-map (vector 'remap 'end-of-buffer) 'dired-jump-to-bottom))
+  (key-def dired-mode-map  or 'remap 'end-of-buffer 'dired-jump-to-bottom)
+  (key-def dired-mode-map  or 'remap 'smart-down    'dired-jump-to-bottom)
+  (key-def wdired-mode-map or 'remap 'end-of-buffer 'dired-jump-to-bottom))
 
 ;; golang
 (setup-after "go-mode"
-  (define-key go-mode-map (kbd "M-t")   'godef-jump)
-  (define-key go-mode-map (kbd "M-S-t") 'godef-jump-other-window))
+  (key-def go-mode-map "M-t"   'godef-jump)
+  (key-def go-mode-map "M-S-t" 'godef-jump-other-window))
 
 (setup-after "magit"
   ;; needed because of fullscreen override
-  (define-key magit-status-mode-map (kbd "q") 'magit-quit-session)
-  (define-key magit-status-mode-map (kbd "W") 'magit-toggle-whitespace))
+  (key-def magit-status-mode-map "q" 'magit-quit-session)
+  (key-def magit-status-mode-map "W" 'magit-toggle-whitespace))
 
 (provide 'init-keys)
