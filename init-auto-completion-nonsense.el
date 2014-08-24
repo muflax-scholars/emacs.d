@@ -25,6 +25,17 @@
           (move-beginning-of-line 1)
         (goto-char position))))
 
+  (defun yas-choose-from-file (filename)
+    "Loads choices for 'yas-choose-value' from file, treating each line as an option."
+    (if (file-exists-p filename)
+        (yas-choose-value (read-lines filename))
+      '("")))
+
+  (defun yas-choose-from-command (command)
+    "Loads choices for 'yas-choose-value' from shell command, treating each line as an option."
+
+    (yas-choose-value (split-string (shell-command-to-string command) "\n" t)))
+
   ;; options
   (setq yas-indent-line 'fixed)
   (setq yas-verbosity 1)
