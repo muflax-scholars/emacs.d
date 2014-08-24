@@ -50,7 +50,8 @@
 (setup "flx-ido"
   (setup "ido-ubiquitous")
   (ido-mode 1)
-  (setq ido-everywhere t)
+  (ido-everywhere 1)
+  (ido-ubiquitous-mode 1)
   (flx-ido-mode 1)
 
   (setq ido-enable-flex-matching t) ; fuzzy matching
