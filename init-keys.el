@@ -50,7 +50,7 @@
 (defadvice kbd (before simplified-shifted-keys (keys) activate)
   (let ((case-fold-search nil))
     (setq keys (replace-regexp-in-string
-                "-\\([A-Z]\\)\\([ ]\\|$\\)"
+                "C-\\([A-Z]\\)\\([ ]\\|$\\)"
                 "S-\\1" keys t nil 1))))
 
 (defun unset-keymap-by-keys (keys modifiers keymap)
