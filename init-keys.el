@@ -434,13 +434,13 @@
 (key-def ctl-x-map "w"   'spell-check-prefix-map 'prefix)
 
 ;; mode-specific stuff
-(key-def mode-specific-map "C-<tab>" 'sp-indent-adjust-sexp)
-(key-def mode-specific-map "<tab>"   'sp-dedent-adjust-sexp)
-
 (key-def mode-specific-map "<f1>" 'use-small-font)
 (key-def mode-specific-map "<f2>" 'use-normal-font)
 (key-def mode-specific-map "<f3>" 'use-big-font)
 (key-def mode-specific-map "<f4>" 'use-huge-font)
+
+(key-def mode-specific-map "C-<tab>" 'sp-indent-adjust-sexp)
+(key-def mode-specific-map "<tab>"   'sp-dedent-adjust-sexp)
 
 (key-def mode-specific-map "C-~"   'aya-expand)
 (key-def mode-specific-map "C-SPC" 'comment-dwim)
@@ -660,7 +660,6 @@
 ;; smartparens
 (key-def sexp-prefix-map "C-<tab>" 'sp-indent-adjust-sexp)
 (key-def sexp-prefix-map "<tab>"   'sp-dedent-adjust-sexp)
-
 (key-def sexp-prefix-map "C-a" 'sp-kill-to-beginning-of-sexp)
 (key-def sexp-prefix-map "C-e" 'sp-kill-to-end-of-sexp)
 (key-def sexp-prefix-map "M-a" 'sp-copy-to-beginning-of-sexp)
