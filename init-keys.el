@@ -430,6 +430,8 @@
 (key-def ctl-x-map "g"   'magit-status)
 (key-def ctl-x-map "m"   'macro-prefix-map       'prefix)
 (key-def ctl-x-map "p"   'paradox-list-packages)
+(key-def ctl-x-map "r"   'rectangle-prefix-map   'prefix)
+(key-def ctl-x-map "R"   'register-prefix-map    'prefix)
 (key-def ctl-x-map "t"   'input-prefix-map       'prefix)
 (key-def ctl-x-map "w"   'spell-check-prefix-map 'prefix)
 
@@ -621,6 +623,7 @@
 (key-def window-prefix-map "<right>"  'split-window-right)
 (key-def window-prefix-map "<return>" 'sticky-window-delete-other-windows)
 (key-def window-prefix-map "C-r"      'sticky-window-delete-other-windows)
+(key-def window-prefix-map "S-SPC"    'kill-buffer-and-window)
 (key-def window-prefix-map "SPC"      'sticky-window-delete-window)
 (key-def window-prefix-map "b"        'winner-undo)
 (key-def window-prefix-map "f"        'winner-redo)
@@ -749,5 +752,31 @@
   ;; needed because of fullscreen override
   (key-def magit-status-mode-map "q" 'magit-quit-session)
   (key-def magit-status-mode-map "W" 'magit-toggle-whitespace))
+
+;; rectangle selection
+(key-def rectangle-prefix-map "M-w" 'copy-rectangle-as-kill)
+(key-def rectangle-prefix-map "c"   'clear-rectangle)
+(key-def rectangle-prefix-map "d"   'delete-rectangle)
+(key-def rectangle-prefix-map "k"   'kill-rectangle)
+(key-def rectangle-prefix-map "n"   'rectangle-number-lines)
+(key-def rectangle-prefix-map "o"   'open-rectangle)
+(key-def rectangle-prefix-map "r"   'copy-rectangle-to-register)
+(key-def rectangle-prefix-map "t"   'string-rectangle)
+(key-def rectangle-prefix-map "y"   'yank-rectangle)
+
+;; registers (still unused)
+(key-def register-prefix-map "SPC" 'point-to-register)
+(key-def register-prefix-map "+"   'increment-register)
+(key-def register-prefix-map "b"   'bookmark-jump)
+(key-def register-prefix-map "f"   'frame-configuration-to-register)
+(key-def register-prefix-map "g"   'insert-register)
+(key-def register-prefix-map "i"   'insert-register)
+(key-def register-prefix-map "j"   'jump-to-register)
+(key-def register-prefix-map "l"   'bookmark-bmenu-list)
+(key-def register-prefix-map "m"   'bookmark-set)
+(key-def register-prefix-map "n"   'number-to-register)
+(key-def register-prefix-map "s"   'copy-to-register)
+(key-def register-prefix-map "w"   'window-configuration-to-register)
+(key-def register-prefix-map "x"   'copy-to-register)
 
 (provide 'init-keys)
