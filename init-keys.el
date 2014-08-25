@@ -339,9 +339,13 @@
 ;; punctuation keys
 (key-def global-map "C-("  'sp-narrow-to-sexp)
 (key-def global-map "C-)"  'widen)
-(key-def global-map "C-|"  'generalized-shell-command)
-(key-def global-map "C-\\" 'generalized-shell-command) ; terminal bug, same as C-|
 (key-def global-map "C--"  'negative-argument)
+(key-def global-map "C-\\" 'generalized-shell-command) ; terminal bug, same as C-|
+(key-def global-map "C-|"  'generalized-shell-command)
+
+(key-def global-map "M--" 'negative-argument)
+(key-def global-map "M-^" 'delete-indentation)
+(key-def global-map "M-|" 'shell-command-on-region)
 
 ;; numbers
 (key-def global-map "C-0"  'digit-argument)
@@ -354,6 +358,16 @@
 (key-def global-map "C-7"  'digit-argument)
 (key-def global-map "C-8"  'digit-argument)
 (key-def global-map "C-9"  'digit-argument)
+(key-def global-map "M-0"  'digit-argument)
+(key-def global-map "M-1"  'digit-argument)
+(key-def global-map "M-2"  'digit-argument)
+(key-def global-map "M-3"  'digit-argument)
+(key-def global-map "M-4"  'digit-argument)
+(key-def global-map "M-5"  'digit-argument)
+(key-def global-map "M-6"  'digit-argument)
+(key-def global-map "M-7"  'digit-argument)
+(key-def global-map "M-8"  'digit-argument)
+(key-def global-map "M-9"  'digit-argument)
 
 ;; alphabet
 (key-def global-map "C-a" 'smart-beginning-of-line)
@@ -389,15 +403,20 @@
 (key-def global-map "M-c" 'toggle-title-case)
 (key-def global-map "M-d" 'blank-line)
 (key-def global-map "M-f" 'sp-forward-symbol)
+(key-def global-map "M-h" 'mark-paragraph)
+(key-def global-map "M-j" 'indent-new-comment-line)
 (key-def global-map "M-k" 'copy-line)
 (key-def global-map "M-n" 'undo-tree-undo)
 (key-def global-map "M-o" 'yas-insert-snippet)
 (key-def global-map "M-p" 'undo-tree-redo)
+(key-def global-map "M-q" 'fill-region)
 (key-def global-map "M-Q" 'unfill-region)
 (key-def global-map "M-t" 'find-tag)
 (key-def global-map "M-u" 'toggle-upcase)
+(key-def global-map "M-w" 'kill-ring-save)
 (key-def global-map "M-x" 'smex)
 (key-def global-map "M-X" 'smex-major-mode-commands)
+(key-def global-map "M-y" 'yank-pop)
 (key-def global-map "M-Y" 'yank-pop-reverse)
 (key-def global-map "M-z" 'undo-tree-redo)
 
@@ -446,12 +465,15 @@
 (key-def search-prefix-map "C-r" 'isearch-backward-use-region)
 (key-def search-prefix-map "C-s" 'isearch-forward-use-region)
 (key-def search-prefix-map "SPC" 'er/mark-defun)
+(key-def search-prefix-map "*"   'isearch-forward-symbol)
 (key-def search-prefix-map "b"   'isearch-backward-regexp)
 (key-def search-prefix-map "B"   'isearch-backward-use-region)
 (key-def search-prefix-map "d"   'er/mark-defun)
 (key-def search-prefix-map "g"   'jump-prefix-map 'prefix)
 (key-def search-prefix-map "i"   'idomenu)
 (key-def search-prefix-map "I"   'imenu-anywhere)
+(key-def search-prefix-map "o"   'occur)
+(key-def search-prefix-map "p"   'phi-search)
 (key-def search-prefix-map "p"   'phi-search)
 (key-def search-prefix-map "P"   'phi-search-backward)
 (key-def search-prefix-map "r"   'vr/query-replace)
@@ -653,7 +675,11 @@
 
 ;; narrowing
 (key-def narrow-map "SPC" 'narrow-or-widen-dwim)
+(key-def narrow-map "d"   'narrow-to-defun)
+(key-def narrow-map "n"   'narrow-to-region)
+(key-def narrow-map "p"   'narrow-to-page)
 (key-def narrow-map "s"   'sp-narrow-to-sexp)
+(key-def narrow-map "w"   'widen)
 
 ;; macro
 (key-def macro-prefix-map "C-b" 'kmacro-bind-to-key)
