@@ -239,8 +239,11 @@
   (interactive)
 
   (case type
+    ;; Creates a prefix map for the key.
     ('prefix
      (set-prefix-key map key command))
+
+    ;; C-i is indistinguishable from <tab> in a terminal, so pressing C-i in a terminal just invokes whatever is under <tab>. Otherwise you'd lose <tab> entirely there, and it's more important than C-i. This section automagically makes that work, by invoking ALT-KEY's command in a terminal instead.
     ('terminal
      (let ((new-key (s-replace "C-" "H-" key)))
        ;; move the key out of the way
@@ -250,6 +253,8 @@
        (define-key map (kbd new-key)
          (eval `(lambda () (interactive)
                   (overshadowed-terminal-command ',command ,alt-key))))))
+
+    ;; Plain key with a simple command.
     (t
      (define-key map (kbd key) command))))
 
