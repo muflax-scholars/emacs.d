@@ -345,7 +345,6 @@
 ;; Flycheck for code linting
 (setup "flycheck"
   (add-hook 'after-init-hook #'global-flycheck-mode)
-  (setq flycheck-mode-line-lighter " !")
   (setq flycheck-indication-mode 'right-fringe)
   (setq flycheck-display-errors-function nil)
   (setq flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
