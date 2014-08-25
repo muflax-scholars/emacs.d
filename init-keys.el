@@ -114,124 +114,6 @@
     (setq last-repeatable-command  command)
     (repeat nil)))
 
-;; unset unwanted default keys
-(loop for key in `(
-                   (,(kbd "C-x C-z")          suspend-frame)
-                   (,(kbd "C-z")              suspend-frame)
-                   ([(insert)]                overwrite-mode)
-                   ([(insertchar)]            overwrite-mode)
-                   (,(kbd "C-p")              previous-line)
-                   (,(kbd "C-r")              isearch-backward)
-                   (,(kbd "C-s")              isearch-forward)
-                   (,(kbd "C-v")              scroll-up-command)
-                   (,(kbd "M-v")              scroll-down-command)
-                   (,(kbd "C-]")              abort-recursive-edit)
-                   (,(kbd "C-@")              set-mark-command)
-                   (,(kbd "<C-down-mouse-1>") mouse-buffer-menu)
-                   (,(kbd "<C-down-mouse-2>") facemenu-menu)
-                   (,(kbd "<S-down-mouse-1>") mouse-appearance-menu)
-                   (,(kbd "C-x C-t")          transpose-lines)
-                   (,(kbd "C-x C-q")          read-only-mode)
-                   (,(kbd "C-x C-o")          delete-blank-lines)
-                   (,(kbd "C-x C-n")          set-goal-column)
-                   (,(kbd "C-x TAB")          indent-rigidly)
-                   (,(kbd "C-x C-e")          eval-last-sexp)
-                   (,(kbd "C-x C-d")          list-directory)
-                   (,(kbd "C-x C-@")          pop-global-mark)
-                   (,(kbd "C-x SPC")          gud-break)
-                   (,(kbd "C-x #")            server-edit)
-                   (,(kbd "C-x $")            set-selective-display)
-                   (,(kbd "C-x '")            expand-abbrev)
-                   (,(kbd "C-x <")            scroll-left)
-                   (,(kbd "C-x =")            what-cursor-position)
-                   (,(kbd "C-x >")            scroll-right)
-                   (,(kbd "C-x [")            backward-page)
-                   (,(kbd "C-x ]")            forward-page)
-                   (,(kbd "C-x ^")            enlarge-window)
-                   (,(kbd "C-x `")            next-error)
-                   (,(kbd "C-x d")            dired)
-                   (,(kbd "C-x l")            count-lines-page)
-                   (,(kbd "C-x m")            compose-mail)
-                   (,(kbd "C-x v")            vc-prefix-map)
-                   (,(kbd "C-x {")            shrink-window-horizontally)
-                   (,(kbd "C-x }")            enlarge-window-horizontally)
-                   (,(kbd "C-M-@")            mark-sexp)
-                   (,(kbd "C-M-d")            down-list)
-                   (,(kbd "C-M-l")            reposition-window)
-                   (,(kbd "C-M-n")            forward-list)
-                   (,(kbd "C-M-p")            backward-list)
-                   (,(kbd "C-M-t")            transpose-sexps)
-                   (,(kbd "C-M-u")            backward-up-list)
-                   (,(kbd "C-M-v")            scroll-other-window)
-                   (,(kbd "C-M-\\")           indent-region)
-                   (,(kbd "M-$")              ispell-word)
-                   (,(kbd "M-%")              query-replace)
-                   (,(kbd "M-'")              abbrev-prefix-mark)
-                   (,(kbd "M-(")              insert-parentheses)
-                   (,(kbd "M-)")              move-past-close-and-reindent)
-                   (,(kbd "M-*")              pop-tag-mark)
-                   (,(kbd "M-.")              find-tag)
-                   (,(kbd "M-,")              tags-loop-continue)
-                   (,(kbd "M-/")              dabbrev-expand)
-                   (,(kbd "M-=")              count-words-region)
-                   (,(kbd "M-@")              mark-word)
-                   (,(kbd "M-\\")             delete-horizontal-space)
-                   (,(kbd "M-`")              tmm-menubar)
-                   (,(kbd "M-a")              backward-sentence)
-                   (,(kbd "M-e")              forward-sentence)
-                   (,(kbd "M-l")              downcase-word)
-                   (,(kbd "M-m")              back-to-indentation)
-                   (,(kbd "M-o")              facemenu-keymap)
-                   (,(kbd "M-r")              move-to-window-line-top-bottom)
-                   (,(kbd "M-{")              backward-paragraph)
-                   (,(kbd "M-}")              forward-paragraph)
-                   (,(kbd "M-~")              not-modified)
-                   (,(kbd "C-M-V")            scroll-other-window-down)
-                   (,(kbd "C-M-%")            query-replace-regexp)
-                   (,(kbd "C-M-.")            find-tag-regexp)
-                   (,(kbd "C-M-/")            dabbrev-completion)
-                   (,(kbd "C-t")              transpose-chars)
-                   )
-      collect (if (eq (key-binding (first key)) (second key))
-                  (global-unset-key (first key))))
-
-;; un-fuck-up with a shotgun modes that steal C-c badly
-(defun unbreak-stupid-map (stupid-map)
-  (define-key stupid-map (kbd "C-c") nil))
-
-(setup-after "python"        (unbreak-stupid-map python-mode-map))
-(setup-after "enh-ruby-mode" (unbreak-stupid-map enh-ruby-mode-map))
-(setup-after "go-mode"       (unbreak-stupid-map go-mode-map))
-(setup-after "flycheck"      (unbreak-stupid-map flycheck-mode-map))
-(setup-after "conf-mode"     (unbreak-stupid-map conf-mode-map))
-
-;; fix mod4 bug
-(define-key special-event-map (kbd "<key-17>")   'ignore)
-(define-key special-event-map (kbd "<M-key-17>") 'ignore)
-
-;; un-connect terminal keys
-;; (setq local-function-key-map (delq '(kp-tab . [9]) local-function-key-map))
-
-;; find unused keys
-(setup-lazy '(free-keys) "free-keys"
-  ;; allowed key components
-  (setq free-keys-keys (apply 'concat assignable-normal-keys)))
-
-;; built-ins prefix maps restated for clarity
-(defvar global-map)
-(defvar old-global-map            nil "accessible backup in case shit breaks badly")
-(defvar old-reassigned-global-map nil "all keys that got (potentially) re-assigned")
-(defvar ctl-x-map)
-(defvar help-map)
-(defvar mode-specific-map)
-(defvar universal-argument-map)
-(defvar narrow-map)
-
-;; make a backup
-(setq old-global-map (copy-keymap global-map))
-(setq old-reassigned-global-map (make-sparse-keymap))
-(copy-complete-keymap global-map old-reassigned-global-map)
-
 ;; define prefix keys
 (defun set-prefix-key (map key command)
   (define-prefix-command command)
@@ -260,6 +142,49 @@
     ;; Plain key with a simple command.
     (t
      (define-key map (kbd key) command))))
+
+;; un-fuck-up with a shotgun modes that steal C-c badly
+(defun unbreak-stupid-map (stupid-map)
+  (define-key stupid-map (kbd "C-c") nil))
+
+(setup-after "python"        (unbreak-stupid-map python-mode-map))
+(setup-after "enh-ruby-mode" (unbreak-stupid-map enh-ruby-mode-map))
+(setup-after "go-mode"       (unbreak-stupid-map go-mode-map))
+(setup-after "flycheck"      (unbreak-stupid-map flycheck-mode-map))
+(setup-after "conf-mode"     (unbreak-stupid-map conf-mode-map))
+
+;; fix mod4 bug
+(define-key special-event-map (kbd "<key-17>")   'ignore)
+(define-key special-event-map (kbd "<M-key-17>") 'ignore)
+
+;; find unused keys
+(setup-lazy '(free-keys) "free-keys"
+  ;; allowed key components
+  (setq free-keys-keys (apply 'concat assignable-normal-keys)))
+
+;; built-ins prefix maps restated for clarity
+(defvar global-map)
+(defvar old-global-map            nil "accessible backup in case shit breaks badly")
+(defvar old-reassigned-global-map nil "all keys that got (potentially) re-assigned")
+(defvar ctl-x-map)
+(defvar help-map)
+(defvar mode-specific-map)
+(defvar universal-argument-map)
+(defvar narrow-map)
+
+;; make a backup
+(setq old-global-map (copy-keymap global-map))
+(setq old-reassigned-global-map (make-sparse-keymap))
+(copy-complete-keymap global-map old-reassigned-global-map)
+
+;; unset a lot of default keys so we can properly re-assign them later
+(loop for map in `(
+                   ,global-map
+                   ,ctl-x-map
+                   ,mode-specific-map
+                   ,narrow-map
+                   )
+      collect (unset-complete-keymap map))
 
 ;; global keys
 
@@ -306,14 +231,16 @@
 
 (key-def global-map "<end>"    'end-of-buffer)
 (key-def global-map "<home>"   'beginning-of-buffer)
+(key-def global-map "<next>"   'scroll-up)
+(key-def global-map "<prior>"  'scroll-down)
 
 ;; special keys
 (key-def global-map "C-<backspace>" 'backward-kill-word)
 (key-def global-map "C-<delete>"    'kill-word)
-(key-def global-map "C-<menu>"   'nav-global-mode)
-(key-def global-map "C-<return>" 'md/duplicate-down)
-(key-def global-map "C-<tab>"    'literal-tab)
-(key-def global-map "C-SPC"      'set-mark-command)
+(key-def global-map "C-<menu>"      'nav-global-mode)
+(key-def global-map "C-RET"         'md/duplicate-down)
+(key-def global-map "C-SPC"         'set-mark-command)
+(key-def global-map "C-TAB"         'literal-tab)
 
 (key-def global-map "M-<delete>" 'sp-unwrap-sexp)
 
@@ -334,8 +261,10 @@
 (key-def global-map "S-<insert>"     'whole-line-or-region-yank)
 (key-def global-map "S-<insertchar>" 'whole-line-or-region-yank)
 
+(key-def global-map "RET"   'newline)
 (key-def global-map "SPC"   'self-insert-command)
 (key-def global-map "S-SPC" 'set-mark-command)
+(key-def global-map "TAB"   'indent-for-tab-command)
 
 ;; punctuation keys
 (key-def global-map "C-("  'sp-narrow-to-sexp)
@@ -396,6 +325,7 @@
 (key-def global-map "C-u" 'universal-argument)
 (key-def global-map "C-v" 'folding-prefix-map 'prefix)
 (key-def global-map "C-w" 'kill-region)
+(key-def global-map "C-x" 'Control-X-prefix)
 (key-def global-map "C-y" 'yank-and-indent)
 (key-def global-map "C-Y" 'yank)
 (key-def global-map "C-z" 'undo-tree-undo)
