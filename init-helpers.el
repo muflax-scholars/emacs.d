@@ -1,5 +1,7 @@
 ;; misc helper functions
 
+(setup "s")
+
 (defun read-lines (filename)
   "Return a list of lines of a file at FILENAME."
   (with-temp-buffer

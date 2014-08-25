@@ -9,7 +9,7 @@
 (require 'setup)
 (setup-initialize)
 
-;; helper functions
+;; helper functions (should be early)
 (setup "init-helpers")
 
 ;; key bindings
