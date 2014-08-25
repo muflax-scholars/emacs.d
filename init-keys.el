@@ -261,9 +261,10 @@
      (define-key map (kbd key) command))))
 
 ;; global keys
+
+;; mouse
 (key-def global-map "C-S-<mouse-1>"    'mc/add-cursor-on-click)
 (key-def global-map "C-<down-mouse-1>" 'mc/add-cursor-on-click)
-
 (key-def global-map "<double-mouse-1>" 'mouse-set-point)
 (key-def global-map "<down-mouse-1>"   'mouse-drag-region)
 (key-def global-map "<drag-mouse-1>"   'mouse-set-region)
@@ -273,72 +274,76 @@
 (key-def global-map "<mouse-4>"        'mwheel-scroll)
 (key-def global-map "<mouse-5>"        'mwheel-scroll)
 
+;; navigation keys
 (key-def global-map "C-<down>"  'mc/mark-next-like-this)
 (key-def global-map "C-<left>"  'er/contract-region)
 (key-def global-map "C-<right>" 'er/expand-region)
 (key-def global-map "C-<up>"    'mc/mark-previous-like-this)
-
-(key-def global-map "M-<down>"  'md/move-lines-down)
-(key-def global-map "M-<left>"  'er/mark-symbol)
-(key-def global-map "M-<right>" 'er/mark-defun)
-(key-def global-map "M-<up>"    'md/move-lines-up)
 
 (key-def global-map "C-<end>"   'end-of-buffer)
 (key-def global-map "C-<home>"  'beginning-of-buffer)
 (key-def global-map "C-<next>"  'dired-next)
 (key-def global-map "C-<prior>" 'dired-prev)
 
+(key-def global-map "M-<down>"  'md/move-lines-down)
+(key-def global-map "M-<left>"  'er/mark-symbol)
+(key-def global-map "M-<right>" 'er/mark-defun)
+(key-def global-map "M-<up>"    'md/move-lines-up)
+
 (key-def global-map "M-<next>"  'scroll-other-window)
 (key-def global-map "M-<prior>" 'scroll-other-window-down)
-
-(key-def global-map "C-<menu>"   'nav-global-mode)
-(key-def global-map "C-<return>" 'md/duplicate-down)
-(key-def global-map "C-<tab>"    'literal-tab)
-(key-def global-map "C-SPC"      'set-mark-command)
-
-(key-def global-map "C-<backspace>" 'backward-kill-word)
-(key-def global-map "C-<delete>"    'kill-word)
-
-(key-def global-map "M-<delete>" 'sp-unwrap-sexp)
 
 (key-def global-map "C-M-<down>"  'buf-move-down)
 (key-def global-map "C-M-<left>"  'buf-move-left)
 (key-def global-map "C-M-<right>" 'buf-move-right)
 (key-def global-map "C-M-<up>"    'buf-move-up)
 
-(key-def global-map "<f1>"   'help-command)
-(key-def global-map "<f2>"   'save-buffer)
-(key-def global-map "<f3>"   'kmacro-start-macro-or-insert-counter)
-(key-def global-map "<f4>"   'kmacro-end-or-call-macro)
-(key-def global-map "<f11>"  'automargin-mode)
-(key-def global-map "S-<f2>" 'save-some-buffers)
-(key-def global-map "S-<f7>" 'backward-kill-word) ; make C-Backspace "work" in terminal
-
 (key-def global-map "<down>"  'next-line)
 (key-def global-map "<left>"  'left-char)
 (key-def global-map "<right>" 'right-char)
 (key-def global-map "<up>"    'previous-line)
 
-(key-def global-map "<delete>" 'delete-char) ; make DEL always work like intended
 (key-def global-map "<end>"    'end-of-buffer)
 (key-def global-map "<home>"   'beginning-of-buffer)
-(key-def global-map "<kanji>"  'toggle-input-method)
-(key-def global-map "<menu>"   'nav-minor-mode)
 
+;; special keys
+(key-def global-map "C-<backspace>" 'backward-kill-word)
+(key-def global-map "C-<delete>"    'kill-word)
+(key-def global-map "C-<menu>"   'nav-global-mode)
+(key-def global-map "C-<return>" 'md/duplicate-down)
+(key-def global-map "C-<tab>"    'literal-tab)
+(key-def global-map "C-SPC"      'set-mark-command)
+
+(key-def global-map "M-<delete>" 'sp-unwrap-sexp)
+
+(key-def global-map "<f1>"        'help-command)
+(key-def global-map "<f2>"        'save-buffer)
+(key-def global-map "<f3>"        'kmacro-start-macro-or-insert-counter)
+(key-def global-map "<f4>"        'kmacro-end-or-call-macro)
+(key-def global-map "<f11>"       'automargin-mode)
+(key-def global-map "<backspace>" 'delete-backward-char)
+(key-def global-map "<delete>"    'delete-char) ; make DEL always work like intended
+(key-def global-map "<kanji>"     'toggle-input-method)
+(key-def global-map "<menu>"      'nav-minor-mode)
+
+(key-def global-map "S-<f2>" 'save-some-buffers)
+(key-def global-map "S-<f7>" 'backward-kill-word) ; make C-Backspace "work" in terminal
 (key-def global-map "S-<backspace>"  'literal-delete-backward-char)
 (key-def global-map "S-<delete>"     'literal-delete-char)
 (key-def global-map "S-<insert>"     'whole-line-or-region-yank)
 (key-def global-map "S-<insertchar>" 'whole-line-or-region-yank)
-(key-def global-map "S-SPC"          'set-mark-command)
 
-(key-def global-map "SPC" 'self-insert-command)
+(key-def global-map "SPC"   'self-insert-command)
+(key-def global-map "S-SPC" 'set-mark-command)
 
+;; punctuation keys
 (key-def global-map "C-("  'sp-narrow-to-sexp)
 (key-def global-map "C-)"  'widen)
 (key-def global-map "C-|"  'generalized-shell-command)
 (key-def global-map "C-\\" 'generalized-shell-command) ; terminal bug, same as C-|
 (key-def global-map "C--"  'negative-argument)
 
+;; numbers
 (key-def global-map "C-0"  'digit-argument)
 (key-def global-map "C-1"  'digit-argument)
 (key-def global-map "C-2"  'digit-argument)
@@ -350,6 +355,7 @@
 (key-def global-map "C-8"  'digit-argument)
 (key-def global-map "C-9"  'digit-argument)
 
+;; alphabet
 (key-def global-map "C-a" 'smart-beginning-of-line)
 (key-def global-map "C-b" 'backward-word)
 (key-def global-map "C-c" 'mode-specific-command-prefix)
