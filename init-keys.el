@@ -681,9 +681,15 @@
 (key-def narrow-map "w"   'widen)
 
 ;; macro
-(key-def macro-prefix-map "C-b" 'kmacro-bind-to-key)
-(key-def macro-prefix-map "C-n" 'kmacro-name-last-macro)
-(key-def macro-prefix-map "C-t" 'insert-kbd-macro)
+(key-def macro-prefix-map "a" 'kmacro-add-counter)
+(key-def macro-prefix-map "b" 'kmacro-bind-to-key)
+(key-def macro-prefix-map "c" 'kmacro-set-counter)
+(key-def macro-prefix-map "e" 'edit-kbd-macro)
+(key-def macro-prefix-map "l" 'kmacro-edit-lossage)
+(key-def macro-prefix-map "m" 'kmacro-end-or-call-macro-repeat)
+(key-def macro-prefix-map "n" 'kmacro-name-last-macro)
+(key-def macro-prefix-map "s" 'kmacro-start-macro-or-insert-counter)
+(key-def macro-prefix-map "t" 'insert-kbd-macro)
 
 ;; helm
 (setup-after "helm"
