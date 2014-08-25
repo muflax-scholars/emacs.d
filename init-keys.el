@@ -242,9 +242,14 @@
     ('prefix
      (set-prefix-key map key command))
     ('terminal
-     (define-key map (kbd key)
-       (eval `(lambda () (interactive)
-                (overshadowed-terminal-command ',command ,alt-key)))))
+     (let ((new-key (s-replace "C-" "H-" key)))
+       ;; move the key out of the way
+       (define-key input-decode-map (kbd key) (kbd new-key))
+
+       ;; split the command so it still works in a terminal
+       (define-key map (kbd new-key)
+         (eval `(lambda () (interactive)
+                  (overshadowed-terminal-command ',command ,alt-key))))))
     (t
      (define-key map (kbd key) command))))
 
@@ -288,13 +293,17 @@
 (key-def global-map "C-("  'sp-narrow-to-sexp)
 (key-def global-map "C-)"  'widen)
 (key-def global-map "C-|"  'generalized-shell-command)
-(key-def global-map "C-\\" 'generalized-shell-command) ; terminal bug
+(key-def global-map "C-\\" 'generalized-shell-command) ; terminal bug, same as C-|
 
 (key-def global-map "C-a" 'smart-beginning-of-line)
 (key-def global-map "C-b" 'backward-word)
+(key-def global-map "C-c" 'mode-specific-command-prefix)
 (key-def global-map "C-d" 'kill-without-append)
 (key-def global-map "C-e" 'smart-end-of-line)
 (key-def global-map "C-f" 'forward-word)
+(key-def global-map "C-g" 'keyboard-quit) ; also change quit-char if you wanna move it
+(key-def global-map "C-h" 'help-command)
+(key-def global-map "C-i" 'indent-for-tab-command 'terminal "TAB")
 (key-def global-map "C-k" 'kill-and-join-forward)
 (key-def global-map "C-n" 'focus-next-window)
 (key-def global-map "C-N" 'focus-prev-window)
