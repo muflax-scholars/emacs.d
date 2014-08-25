@@ -401,11 +401,6 @@
 (key-def global-map "M-Y" 'yank-pop-reverse)
 (key-def global-map "M-z" 'undo-tree-redo)
 
-(key-def global-map "C-M-b" 'sp-backward-sexp)
-(key-def global-map "C-M-f" 'sp-forward-sexp)
-(key-def global-map "C-M-k" 'sp-kill-sexp)
-(key-def global-map "C-M-w" 'sp-copy-sexp)
-
 ;; less commonly used functions
 (key-def ctl-x-map "C-r" 'recentf-ido-find-file)
 (key-def ctl-x-map "M-f" 'find-file-at-point)
