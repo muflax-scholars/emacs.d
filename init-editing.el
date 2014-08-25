@@ -540,13 +540,6 @@ See the variable `align-rules-list' for more details.")
   (shell-command-completion-mode)
 
   ;; better handling than M-| / M-!
-  (defun chomp (str)
-    "Chomp leading and tailing whitespace from STR."
-    (while (string-match "\\`\n+\\|^\\s-+\\|\\s-+$\\|\n+\\'"
-                         str)
-      (setq str (replace-match "" t t str)))
-    str)
-
   (defun generalized-shell-command (command arg)
     "Unifies `shell-command' and `shell-command-on-region'.
 You have:

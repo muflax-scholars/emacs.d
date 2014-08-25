@@ -75,11 +75,11 @@
 (defvar normal-font "Fantasque Sans Mono 10")
 (defvar big-font    "Fantasque Sans Mono 11")
 (defvar huge-font   "Fantasque Sans Mono 13")
-(defvar font-list (list
-                   small-font
-                   normal-font
-                   big-font
-                   huge-font))
+(defvar font-list '(
+                    small-font
+                    normal-font
+                    big-font
+                    huge-font))
 (defvar current-font normal-font)
 
 (defun set-window-font ()
@@ -87,27 +87,15 @@
 
 (add-hook 'after-make-window-system-frame-hooks 'set-window-font)
 
-;; shortcut for the fonts
-(defun use-huge-font ()
-  "use huge font"
-  (interactive)
-  (setq current-font huge-font)
-  (set-window-font))
-(defun use-big-font ()
-  "use big font"
-  (interactive)
-  (setq current-font big-font)
-  (set-window-font))
-(defun use-normal-font ()
-  "use normal font"
-  (interactive)
-  (setq current-font normal-font)
-  (set-window-font))
-(defun use-small-font ()
-  "use small font"
-  (interactive)
-  (setq current-font small-font)
-  (set-window-font))
+;; shortcut functions for the fonts
+(defmacro use-font (font)
+  `(defun ,(intern (format "use-%s" font)) ()
+     ,(format "Use font set in '%s'" font)
+     (interactive)
+     (setq current-font ,font)
+     (set-window-font)))
+
+(loop for font in font-list collect (eval `(use-font ,font)))
 
 ;; scrolling
 (setq scroll-preserve-screen-position t)

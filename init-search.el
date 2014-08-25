@@ -95,10 +95,6 @@
   )
 
 ;; use regexp search and selected region (if any) by default
-(defun region-as-string ()
-  (buffer-substring (region-beginning)
-                    (region-end)))
-
 (defun isearch-forward-use-region ()
   (interactive)
   (when (region-active-p)
