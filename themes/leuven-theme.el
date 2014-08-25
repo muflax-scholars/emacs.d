@@ -83,6 +83,8 @@
    `(isearch ((,class (:weight bold :foreground "#00AA00" :background "#99FF99"))))
    `(isearch-fail ((,class (:weight bold :foreground "black" :background "#FF9999"))))
    `(lazy-highlight ((,class (:weight bold :foreground "#990099" :background "#FF66FF"))))
+   `(phi-search-match-face ((,class (:weight bold :foreground "#990099" :background "#FF66FF"))))
+   `(phi-search-selection-face ((,class (:weight bold :foreground "#00AA00" :background "#99FF99"))))
    `(trailing-whitespace ((,class (:background "#F6EBFE"))))
    `(whitespace-hspace ((,class (:foreground "#D2D2D2"))))
    `(whitespace-indentation ((,class (:foreground "firebrick" :background "yellow"))))

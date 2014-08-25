@@ -75,6 +75,16 @@
   "keymap for the phi-search prompt buffers"
   :group 'phi-search)
 
+;; + faces
+
+(make-face 'phi-search-match-face)
+(set-face-attribute 'phi-search-match-face nil
+                    :background "#194854")
+
+(make-face 'phi-search-selection-face)
+(set-face-attribute 'phi-search-selection-face nil
+                    :background "#594854")
+
 ;; + utilities
 
 (defun phi-search--search-backward (query limit &optional filter inclusive)
@@ -198,7 +208,7 @@ this value must be nil, if nothing is matched.")
   (while (and (phi-search--search-backward query limit
                                            phi-search--filter-function)
               (let ((ov (make-overlay (match-beginning 0) (match-end 0))))
-                (overlay-put ov 'face 'isearch)
+                (overlay-put ov 'face 'phi-search-match-face)
                 (add-to-list 'phi-search--overlays ov)
                 (or unlimited
                     (< (length phi-search--overlays) phi-search-limit))))))
@@ -211,11 +221,11 @@ this value must be nil, if nothing is matched.")
     (when phi-search--selection
       (phi-search--open-invisible-temporary t)
       (overlay-put (nth phi-search--selection phi-search--overlays)
-                   'face 'isearch))
+                   'face 'phi-search-match-face))
     ;; select new item if there
     (let ((ov (nth n phi-search--overlays)))
       (setq phi-search--selection n)
-      (overlay-put ov 'face 'lazy-highlight)
+      (overlay-put ov 'face 'phi-search-selection-face)
       (goto-char (overlay-end ov))
       (phi-search--open-invisible-temporary nil)
       (point))))

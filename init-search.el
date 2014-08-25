@@ -21,7 +21,12 @@
 (setup-lazy '(ace-link)        "ace-link")
 (setup-lazy '(ace-window)      "ace-window")
 
-(setup-lazy '(phi-search phi-search-backward) "phi-search")
+(setup-lazy '(phi-search phi-search-backward) "phi-search"
+  ;; override phi-search's face definition because it force-sets them
+  (set-face-attribute 'phi-search-selection-face nil :background
+                      (face-attribute 'isearch :background nil))
+  (set-face-attribute 'phi-search-match-face nil :background
+                      (face-attribute 'lazy-highlight :background nil)))
 
 ;; support for bookmarks (broken; resurrect this at some point...)
 ;; (require 'breadcrumb)
