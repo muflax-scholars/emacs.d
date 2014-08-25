@@ -38,14 +38,13 @@
 
 (setq assignable-normal-modifiers
       ;; valid for all keys
-      '(""
-        "C-" "C-S-"
+      '("C-" "C-S-"
         "M-" "M-S-"
         "C-M-" "C-M-S-"))
 
 (setq assignable-special-modifiers
       ;; only valid with special keys
-      '("S-"))
+      '("" "S-"))
 
 ;; C-A and C-S-A should be synonymous (despite terminal limitations)
 (defadvice kbd (before simplified-shifted-keys (keys) activate)
