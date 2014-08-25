@@ -66,14 +66,12 @@
 (add-to-list 'auto-mode-alist '("\\.script$" . notes-mode))
 
 ;; yaml
-(setup-lazy '(yaml-mode) "yaml-mode"
-  (add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode))
-  (add-to-list 'auto-mode-alist '("\\.yml$"  . yaml-mode)))
+(setup-lazy '(yaml-mode) "yaml-mode")
+(add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode))
+(add-to-list 'auto-mode-alist '("\\.yml$"  . yaml-mode))
 
 ;; org-mode (use private version)
 ;; #FIXME (tab) for org-cycle is disabled directly in the library; this should probably be some unset here.
-(setq load-path (cons "~/.emacs.d/local/org-mode/lisp" load-path))
-(add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
 (setup-lazy '(org-mode) "org"
 
   ;; proper indentation / folding
@@ -135,6 +133,7 @@
     (org-todo "DONE"))
 
   )
+(add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
 
 ;; loaded so that we can diminish it later
 (setup-after "org-mode"
@@ -164,7 +163,7 @@
 ;; replace normal ruby mode
 (defalias 'ruby-mode 'enh-ruby-mode)
 ;; enhanced ruby mode
-(setup-lazy '(ruby-mode enh-ruby-mode) "enh-ruby-mode"
+(setup-lazy '(ruby-mode enh-ruby-mode rhtml-mode) "enh-ruby-mode"
   (setq enh-ruby-program "~/.rbenv/shims/ruby")
 
   ;; flycheck covers errors anyway
@@ -194,8 +193,8 @@
     (setq ruby-block-highlight-toggle t))
 
   ;; erb
-  (setup "rhtml-mode"
-    (add-to-list 'auto-mode-alist '("\\.erb$"     . rhtml-mode))))
+  (setup "rhtml-mode"))
+(add-to-list 'auto-mode-alist '("\\.erb$"     . rhtml-mode))
 
 ;; javascript
 (setup-lazy '(js2-mode) "js2-mode")
@@ -378,7 +377,7 @@
 (setup-lazy '(paradox-list-packages) "paradox"
   (setq paradox-github-token t))
 
-(setup-lazy '(nix-mode) "nix-mode"
-  (add-to-list 'auto-mode-alist '("\\.nix" . nix-mode)))
+(setup-lazy '(nix-mode) "nix-mode")
+(add-to-list 'auto-mode-alist '("\\.nix" . nix-mode))
 
 (provide 'init-major-modes)
