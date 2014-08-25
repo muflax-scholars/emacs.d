@@ -67,4 +67,11 @@
 (setup-after "go-mode"
   (setup "go-autocomplete"))
 
+;; abbrev-mode
+(setup-after "abbrev"
+  (setq abbrev-file-name "~/.emacs.d/abbrev_defs")
+  (setq save-abbrevs 'silently)
+  (when (file-exists-p abbrev-file-name)
+    (quietly-read-abbrev-file)))
+
 (provide 'init-auto-completion-nonsense)
