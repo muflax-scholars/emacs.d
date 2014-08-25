@@ -620,7 +620,9 @@
 
 ;; window config
 (key-def window-prefix-map "<down>"   'split-window-below)
+(key-def window-prefix-map "<left>"   'split-window-left)
 (key-def window-prefix-map "<right>"  'split-window-right)
+(key-def window-prefix-map "<up>"     'split-window-above)
 (key-def window-prefix-map "<return>" 'sticky-window-delete-other-windows)
 (key-def window-prefix-map "C-r"      'sticky-window-delete-other-windows)
 (key-def window-prefix-map "S-SPC"    'kill-buffer-and-window)

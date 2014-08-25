@@ -928,6 +928,17 @@ narrowed."
   (interactive)
   (other-window -1))
 
+(setup-after "buffer-move"
+  (defun split-window-above ()
+    (interactive)
+    (split-window-below)
+    (buf-move-down))
+
+  (defun split-window-left ()
+    (interactive)
+    (split-window-right)
+    (buf-move-right)))
+
 ;; alternative to C-q TAB for easier keybindings
 (defun literal-tab ()
   (interactive)
