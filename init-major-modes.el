@@ -70,27 +70,43 @@
 (add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode))
 (add-to-list 'auto-mode-alist '("\\.yml$"  . yaml-mode))
 
-;; org-mode (use private version)
-;; #FIXME (tab) for org-cycle is disabled directly in the library; this should probably be some unset here.
+;; org-mode
 (setup-lazy '(org-mode) "org"
-
   ;; proper indentation / folding
   (setq org-startup-indented t)
   (setq org-hide-leading-stars t)
   (setq org-indent-indentation-per-level 2)
   (setq org-startup-folded 'content)
-  (setq org-blank-before-new-entry '(
-                                     (heading . nil)
+  (setq org-blank-before-new-entry '((heading . nil)
                                      (plain-list-item . auto)))
+  (setq org-M-RET-may-split-line nil)
+
+  ;; unset annoying keys
+  (define-key org-mouse-map      [(tab)]         nil)
+  (define-key org-goto-map       [(tab)]         nil)
+  (define-key orgstruct-mode-map [(tab)]         nil)
+  (define-key orgstruct-mode-map (kbd "C-i")     nil)
+  (define-key org-mode-map       [(tab)]         nil)
+  (define-key org-mode-map       [(control tab)] nil)
+  (define-key org-mode-map       (kbd "M-t")     nil)
+  (define-key org-mode-map       [S-iso-lefttab] nil)
+  (define-key org-mode-map       [(shift tab)]   nil)
+  (define-key org-mode-map       [backtab]       nil)
+  (define-key org-mode-map       [?\e (tab)]     nil)
+
   ;; tag column
   (setq org-tags-column -70)
+
   ;; dependencies
   (setq org-enforce-todo-dependencies t)
+
   ;; todo states
   (setq org-todo-keywords
         '((sequence "TODO(t)" "|" "WAITING(w)" "DONE(d)")))
+
   ;; priorities
   (setq org-default-priority 67) ;C
+
   ;; code block
   (org-babel-do-load-languages
    'org-babel-load-languages
