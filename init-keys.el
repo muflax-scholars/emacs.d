@@ -212,9 +212,6 @@
 ;; un-connect terminal keys
 ;; (setq local-function-key-map (delq '(kp-tab . [9]) local-function-key-map))
 
-;; make DEL always work like intended
-(normal-erase-is-backspace-mode 1)
-
 ;; find unused keys
 (setup-lazy '(free-keys) "free-keys"
   ;; allowed key components
@@ -300,6 +297,8 @@
 (key-def global-map "S-<delete>"    'literal-delete-char)
 (key-def global-map "S-<backspace>" 'literal-delete-backward-char)
 
+(key-def global-map "<delete>" 'delete-char) ; make DEL always work like intended
+
 (key-def global-map "C-("  'sp-narrow-to-sexp)
 (key-def global-map "C-)"  'widen)
 (key-def global-map "C-|"  'generalized-shell-command)
@@ -348,7 +347,6 @@
 (key-def global-map "C-M-f" 'sp-forward-sexp)
 (key-def global-map "C-M-k" 'sp-kill-sexp)
 (key-def global-map "C-M-w" 'sp-copy-sexp)
-
 
 ;; less commonly used functions
 (key-def ctl-x-map "C-r" 'recentf-ido-find-file)
