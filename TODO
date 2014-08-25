@@ -16,11 +16,7 @@ Stuff that doesn't work:
 
 [ parentheses
 
-	- smartparens is annoying because it's so over-bearing; it should be replaced with something simpler
-
-		I mostly just need the sexp-functions (which newer ruby-mode might make unnecessary) and the sane "(re)wrap selection with things" feature. Might just fork it and remove the annoying auto-pairing entirely.
-
-		- "close all open parentheses" button that understands def-end pairs
+	- "close all open parentheses" button that understands def-end pairs
 
 		unfinished snippet:
 	  (defun close-quoted-open-paren ()
@@ -47,12 +43,11 @@ Stuff that doesn't work:
 
 [ file navigation
 
-	[ eventually, Emacs should replace mc
-		- quick start (maybe make the init.el more modular, so terminal instances don't load look.el etc.)
-		- panes
-		- quick jump to terminal
-		- make zsh suspend painless, or run some eshell thingy, or something
-	]
+	eventually, Emacs should replace mc
+	- quick start (maybe make the init.el more modular, so terminal instances don't load look.el etc.)
+	- panes
+	- quick jump to terminal
+	- make zsh suspend painless, or run some eshell thingy, or something
 
 ]
 
@@ -63,8 +58,6 @@ Stuff that doesn't work:
 		Stating the suspicion that it has something to do with "last line on the screen" or "being in a list", or both.
 
 	- align.el uses tabs to indent when tabstops are enabled?! teh fuck align.el?! I hate you so much.
-
-	- is custom org mode still necessary?
 
 	- minimap is unusable at the moment, mostly because it's either slow (minimap.el version) or super flickery (sublimity version)
 
@@ -100,7 +93,7 @@ Stuff that doesn't work:
 	- should switch completely to Emacs regexes, which have some cool stuff (but muh Ruby!!w!)
 	- finish the Ruby port
 
-	Emacs regexps are pretty cool, but lack some important categories. Needs more work.
+	Emacs regexps are pretty cool, but lack some important categories. Needs more work. Might be fixable via rx instead, and aggressive shortcutting.
 
 ]
 
@@ -114,19 +107,6 @@ Stuff that doesn't work:
 
 	- clean up what part of the encoding thingies we want
 	- remove useless parentheses
-	- shorter major-mode names
-
-]
-
-[ input
-
-	I should probably document my key binding prefixes somewhere, and make them even more systematic. Something like:
-
-	C-c (C-)$key -> mode-specific
-	(C|M)-$key   -> very common
-	C-x $key     -> uncommon
-
-	and completely remove all default maps, so this doesn't become super-messy.
 
 ]
 
@@ -134,4 +114,16 @@ Stuff that doesn't work:
 	It might be useful to no longer have ido auto-open old files so we have a clean buffer list, and instead start using recentf.
 
 	Or use a helm variant, once they finally make flx work.
+]
+
+[ company-mode
+	Might be worth it to switch to company-mode if that makes extensions simpler to write.
+
+]
+
+[ input
+	Drastically simplify muflax-latin to what I actually use, and figure out a standard "this is a prefix for typing complex characters" character.
+
+	And then finally move numbers on Mod4's right hand.
+
 ]
