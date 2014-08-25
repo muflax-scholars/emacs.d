@@ -222,11 +222,17 @@
 
 ;; built-ins prefix maps restated for clarity
 (defvar global-map)
-(defvar old-global-map (copy-keymap global-map) "accessible backup in case shit breaks badly")
+(defvar old-global-map            nil "accessible backup in case shit breaks badly")
+(defvar old-reassigned-global-map nil "all keys that got (potentially) re-assigned")
 (defvar ctl-x-map)
 (defvar help-map)
 (defvar mode-specific-map)
 (defvar universal-argument-map)
+
+;; make a backup
+(setq old-global-map (copy-keymap global-map))
+(setq old-reassigned-global-map (make-sparse-keymap))
+(copy-complete-keymap global-map old-reassigned-global-map)
 
 ;; define prefix keys
 (defun set-prefix-key (map key command)
