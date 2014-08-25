@@ -38,6 +38,7 @@
 (setq sentence-end-double-space nil)
 (column-number-mode t)
 (setq-default indicate-empty-lines t)
+(setq message-log-max 100000)
 
 ;; don't hard-wrap text, but use nice virtual wrapping
 (setup "adaptive-wrap"
