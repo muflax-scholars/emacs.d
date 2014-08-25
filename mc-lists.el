@@ -88,6 +88,7 @@
         bc-set
         down-list
         find-tag
+        focus-next-window
         ibus-handle-event
         repeat
         save-buffers-kill-terminal
