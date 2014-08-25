@@ -101,7 +101,6 @@
 
 (defun overshadowed-terminal-command (command alt-key)
   "Executes COMMAND when called outside a terminal, or the command under ALT-KEY if we're in a terminal and can't normally reach that key. That obviously shadows the original COMMAND, but at least you get to use ALT-KEY normally."
-  (interactive)
   (if (display-graphic-p)
       (call-interactively command)
     (progn
@@ -211,6 +210,9 @@
 (define-key special-event-map (kbd "<key-17>")   'ignore)
 (define-key special-event-map (kbd "<M-key-17>") 'ignore)
 
+;; un-connect terminal keys
+;; (setq local-function-key-map (delq '(kp-tab . [9]) local-function-key-map))
+
 ;; make DEL always work like intended
 (normal-erase-is-backspace-mode 1)
 
@@ -232,12 +234,17 @@
   (define-prefix-command command)
   (define-key map (kbd key) command))
 
-(defun key-def (map key command &optional type)
+(defun key-def (map key command &optional type alt-key)
   "Short, unified key definition."
   (interactive)
+
   (case type
     ('prefix
      (set-prefix-key map key command))
+    ('terminal
+     (define-key map (kbd key)
+       (eval `(lambda () (interactive)
+                (overshadowed-terminal-command ',command ,alt-key)))))
     (t
      (define-key map (kbd key) command))))
 
