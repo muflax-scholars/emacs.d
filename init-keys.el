@@ -459,13 +459,34 @@
   ;; make backspace more intuitive
   (key-def isearch-mode-map "<backspace>" 'isearch-del-char)
 
-  (key-def isearch-mode-map "C-c C-SPC" 'isearch-toggle-lax-whitespace)
-  (key-def isearch-mode-map "C-c C-c"   'isearch-normalize-string)
-  (key-def isearch-mode-map "C-c C-i"   'isearch-toggle-case-fold)
-  (key-def isearch-mode-map "C-c C-o"   'isearch-occur)
-  (key-def isearch-mode-map "C-c C-r"   'isearch-toggle-regexp)
-  (key-def isearch-mode-map "C-c C-s"   'isearch-toggle-symbol)
-  (key-def isearch-mode-map "C-c C-w"   'isearch-toggle-word)
+  (key-def isearch-mode-map "C-c C-c" 'isearch-normalize-string)
+  (key-def isearch-mode-map "C-c SPC" 'isearch-toggle-lax-whitespace)
+  (key-def isearch-mode-map "C-c c"   'isearch-toggle-case-fold)
+  (key-def isearch-mode-map "C-c i"   'isearch-toggle-case-fold)
+  (key-def isearch-mode-map "C-c o"   'isearch-occur)
+  (key-def isearch-mode-map "C-c r"   'isearch-toggle-regexp)
+  (key-def isearch-mode-map "C-c s"   'isearch-toggle-symbol)
+  (key-def isearch-mode-map "C-c w"   'isearch-toggle-word)
+
+  (key-def isearch-mode-map "C-r"  'isearch-repeat-backward)
+  (key-def isearch-mode-map "C-s"  'isearch-repeat-forward)
+  (key-def isearch-mode-map "C-w"  'isearch-yank-word-or-char)
+  (key-def isearch-mode-map "C-y"  'isearch-yank-kill)
+  (key-def isearch-mode-map "C-\\" 'isearch-toggle-input-method)
+  )
+
+(setup-after "replace" ;; occur
+  (key-def occur-mode-map "C-c C-c" 'occur-edit-mode)
+  (key-def occur-mode-map "C-c C-f" 'next-error-follow-minor-mode)
+
+  (key-def occur-mode-map "C-o" 'occur-mode-display-occurrence)
+  (key-def occur-mode-map "RET" 'occur-mode-goto-occurrence)
+  (key-def occur-mode-map "c"   'clone-buffer)
+  (key-def occur-mode-map "e"   'occur-edit-mode)
+  (key-def occur-mode-map "n"   'occur-next)
+  (key-def occur-mode-map "o"   'occur-mode-goto-occurrence-other-window)
+  (key-def occur-mode-map "p"   'occur-prev)
+  (key-def occur-mode-map "r"   'occur-rename-buffer)
   )
 
 ;; eval
