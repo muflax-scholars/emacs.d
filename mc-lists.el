@@ -41,6 +41,7 @@
         kmacro-end-or-call-macro
         literal-delete-backward-char
         literal-delete-char
+        literal-tab
         lua-electric-match
         md/move-lines-down
         md/move-lines-up
