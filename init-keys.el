@@ -54,17 +54,19 @@
                 "S-\\1" keys t nil 1))))
 
 (defun unset-keymap-by-keys (keys modifiers keymap)
-  "unset all mod+keys in given keymap"
+  "Unsets all MODIFIERS + KEYS in KEYMAP, except for self-insert-commands, which you probably want."
   (let ((full-key))
 
     (loop for modifier in modifiers collect
           (loop for key in keys collect
                 (progn
                   (setq full-key (kbd (concat modifier key)))
-                  (define-key keymap full-key nil))))))
+                  (unless (eq (lookup-key keymap full-key)
+                              'self-insert-command)
+                    (define-key keymap full-key nil)))))))
 
 (defun copy-keymap-by-keys (keys modifiers from to)
-  "copies over all mod+keys from one keymap to another"
+  "Copies all MODIFIERS + KEYS from one keymap (FROM) to another (TO)."
   (let ((full-key)
         (command))
 
@@ -164,18 +166,11 @@
 
 ;; built-ins prefix maps restated for clarity
 (defvar global-map)
-(defvar old-global-map            nil "accessible backup in case shit breaks badly")
-(defvar old-reassigned-global-map nil "all keys that got (potentially) re-assigned")
 (defvar ctl-x-map)
 (defvar help-map)
 (defvar mode-specific-map)
 (defvar universal-argument-map)
 (defvar narrow-map)
-
-;; make a backup
-(setq old-global-map (copy-keymap global-map))
-(setq old-reassigned-global-map (make-sparse-keymap))
-(copy-complete-keymap global-map old-reassigned-global-map)
 
 ;; unset a lot of default keys so we can properly re-assign them later
 (loop for map in `(
