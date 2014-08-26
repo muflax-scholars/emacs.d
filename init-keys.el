@@ -262,11 +262,10 @@
 (key-def global-map "S-<insert>"     'whole-line-or-region-yank)
 (key-def global-map "S-<insertchar>" 'whole-line-or-region-yank)
 
-(key-def global-map "<return>" 'newline)
-(key-def global-map "<tab>"    'indent-for-tab-command)
-
+(key-def global-map "RET"   'newline)
 (key-def global-map "SPC"   'self-insert-command)
 (key-def global-map "S-SPC" 'set-mark-command)
+(key-def global-map "TAB"   'indent-for-tab-command)
 
 ;; punctuation keys
 (key-def global-map "C-("  'sp-narrow-to-sexp)
