@@ -238,9 +238,10 @@
 (key-def global-map "C-<backspace>" 'backward-kill-word)
 (key-def global-map "C-<delete>"    'kill-word)
 (key-def global-map "C-<menu>"      'nav-global-mode)
-(key-def global-map "C-RET"         'md/duplicate-down)
-(key-def global-map "C-SPC"         'set-mark-command)
-(key-def global-map "C-TAB"         'literal-tab)
+(key-def global-map "C-<return>"    'md/duplicate-down)
+(key-def global-map "C-<tab>"       'literal-tab)
+
+(key-def global-map "C-SPC" 'set-mark-command)
 
 (key-def global-map "M-<delete>" 'sp-unwrap-sexp)
 
@@ -254,17 +255,18 @@
 (key-def global-map "<kanji>"     'toggle-input-method)
 (key-def global-map "<menu>"      'nav-minor-mode)
 
-(key-def global-map "S-<f2>" 'save-some-buffers)
-(key-def global-map "S-<f7>" 'backward-kill-word) ; make C-Backspace "work" in terminal
+(key-def global-map "S-<f2>"         'save-some-buffers)
+(key-def global-map "S-<f7>"         'backward-kill-word) ; make C-Backspace "work" in terminal
 (key-def global-map "S-<backspace>"  'literal-delete-backward-char)
 (key-def global-map "S-<delete>"     'literal-delete-char)
 (key-def global-map "S-<insert>"     'whole-line-or-region-yank)
 (key-def global-map "S-<insertchar>" 'whole-line-or-region-yank)
 
-(key-def global-map "RET"   'newline)
+(key-def global-map "<return>" 'newline)
+(key-def global-map "<tab>"    'indent-for-tab-command)
+
 (key-def global-map "SPC"   'self-insert-command)
 (key-def global-map "S-SPC" 'set-mark-command)
-(key-def global-map "TAB"   'indent-for-tab-command)
 
 ;; punctuation keys
 (key-def global-map "C-("  'sp-narrow-to-sexp)
