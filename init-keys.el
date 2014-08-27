@@ -595,6 +595,7 @@
 (key-def window-prefix-map "C-r"      'sticky-window-delete-other-windows)
 (key-def window-prefix-map "S-SPC"    'kill-buffer-and-window)
 (key-def window-prefix-map "SPC"      'sticky-window-delete-window)
+(key-def window-prefix-map "="        'balance-windows)
 (key-def window-prefix-map "b"        'winner-undo)
 (key-def window-prefix-map "f"        'winner-redo)
 (key-def window-prefix-map "k"        'sticky-window-delete-other-windows)
