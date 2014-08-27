@@ -226,8 +226,8 @@
 
 (key-def global-map "<end>"    'end-of-buffer)
 (key-def global-map "<home>"   'beginning-of-buffer)
-(key-def global-map "<next>"   'scroll-up)
-(key-def global-map "<prior>"  'scroll-down)
+(key-def global-map "<next>"   'scroll-up-command)
+(key-def global-map "<prior>"  'scroll-down-command)
 
 ;; special keys
 (key-def global-map "C-<backspace>" 'backward-kill-word)
