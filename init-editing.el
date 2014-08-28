@@ -63,7 +63,22 @@
 (setq mc/list-file "~/.emacs.d/mc-lists.el")
 (setup "multiple-cursors"
   (setup "mc-extras")
-  (setup "mc-jump"))
+  (setup "mc-jump")
+
+  (defun mc/many-to-one-yank ()
+    "Yanks killed lines from multiple cursors into one position. Less messy than yank-rectangle."
+    (interactive)
+    (with-temp-buffer
+      (yank-rectangle)
+      (kill-ring-save (point-min) (point-max)))
+    (yank))
+
+  (defun mc/many-to-one-yank-indent ()
+    "Yanks killed lines from multiple cursors into one position, and indents. See 'mc/many-to-one-yank'."
+    (interactive)
+    (mc/many-to-one-yank)
+    (call-interactively 'indent-region))
+  )
 
 ;; edit symbol in multiple places simultaneously
 (setup-lazy '(iedit-mode iedit-mode-toggle-on-function) "iedit")

@@ -548,6 +548,8 @@
 (key-def mc-prefix-map "r"   'set-rectangular-region-anchor)
 (key-def mc-prefix-map "s"   'mc/sort-regions)
 (key-def mc-prefix-map "u"   'mc/remove-current-cursor)
+(key-def mc-prefix-map "y"   'mc/many-to-one-yank-indent)
+(key-def mc-prefix-map "Y"   'mc/many-to-one-yank)
 
 (setup-after "multiple-cursors-core"
   ;; <ret> inserts a newline; C-j exits (a bit more convenient that way)
