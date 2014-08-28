@@ -1,5 +1,8 @@
 ;; searches and a plethora of regex engines
 
+;; general options
+(setq case-fold-search nil)
+
 ;; more useful kill-ring
 (setup "kill-ring-search")
 
