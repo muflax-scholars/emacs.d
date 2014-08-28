@@ -20,5 +20,21 @@
   (buffer-substring (region-beginning)
                     (region-end)))
 
+(defun word-or-region ()
+  "Returns word boundary or selected region."
+  (let (beg
+        end
+        (deactivate-mark nil)
+        (case-fold-search nil))
+
+    (if (region-active-p)
+        (setq beg (region-beginning)
+              end (region-end))
+      (let ((bounds (bounds-of-thing-at-point 'word)))
+        (setq beg (first bounds)
+              end (rest bounds))))
+
+    (list beg end)))
+
 
 (provide 'init-helpers)

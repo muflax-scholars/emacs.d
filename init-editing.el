@@ -829,15 +829,10 @@ You have:
 (defun toggle-title-case ()
   "Toggle case of the word / region between lower case and title case."
   (interactive)
-  (let (p1 p2 (deactivate-mark nil) (case-fold-search nil))
-    (if (region-active-p)
-        (setq p1 (region-beginning) p2 (region-end))
-      (let ((bds (bounds-of-thing-at-point 'word)))
-        (setq p1 (car bds) p2 (cdr bds))))
-
+  (let (region (word-or-region))
     (when (not (eq last-command this-command))
       (save-excursion
-        (goto-char p1)
+        (goto-char (first region))
         (cond
          ((looking-at "[[:lower:]]") (put this-command 'state "lower"))
          ((looking-at "[[:upper:]]") (put this-command 'state "title"))
@@ -845,23 +840,20 @@ You have:
 
     (cond
      ((string= "lower" (get this-command 'state))
-      (upcase-initials-region p1 p2) (put this-command 'state "title"))
+      (apply 'upcase-initials-region region)
+      (put this-command 'state "title"))
      ((string= "title" (get this-command 'state))
-      (downcase-region p1 p2) (put this-command 'state "lower")))
+      (apply 'downcase-region region)
+      (put this-command 'state "lower")))
     ))
 
 (defun toggle-upcase ()
   "Toggle case of the word / region between lower case and upper case."
   (interactive)
-  (let (p1 p2 (deactivate-mark nil) (case-fold-search nil))
-    (if (region-active-p)
-        (setq p1 (region-beginning) p2 (region-end))
-      (let ((bds (bounds-of-thing-at-point 'word)))
-        (setq p1 (car bds) p2 (cdr bds))))
-
+  (let (region (word-or-region))
     (when (not (eq last-command this-command))
       (save-excursion
-        (goto-char p1)
+        (goto-char (first region))
         (cond
          ((looking-at "[[:lower:]]") (put this-command 'state "lower"))
          ((looking-at "[[:upper:]]") (put this-command 'state "upper"))
@@ -869,10 +861,29 @@ You have:
 
     (cond
      ((string= "lower" (get this-command 'state))
-      (upcase-region p1 p2) (put this-command 'state "upper"))
+      (apply 'upcase-region region)
+      (put this-command 'state "upper"))
      ((string= "upper" (get this-command 'state))
-      (downcase-region p1 p2) (put this-command 'state "lower")))
-    ))
+      (apply 'downcase-region region)
+      (put this-command 'state "lower")))))
+
+
+
+(defun title-case-word-or-region ()
+  "Transform word/region into title case."
+  (interactive)
+  (apply 'upcase-initials-region (word-or-region)))
+
+(defun upcase-word-or-region ()
+  "Transform word/region into title case."
+  (interactive)
+  (apply 'upcase-region (word-or-region)))
+
+(defun downcase-word-or-region ()
+  "Transform word/region into title case."
+  (interactive)
+  (apply 'downcase-region (word-or-region)))
+
 
 (defun kill-matching-lines (regexp &optional rstart rend interactive)
   "Kill lines containing matches for REGEXP.

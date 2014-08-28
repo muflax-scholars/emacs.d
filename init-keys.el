@@ -327,7 +327,6 @@
 (key-def global-map "C-z" 'undo-tree-undo)
 
 (key-def global-map "M-b" 'sp-backward-symbol)
-(key-def global-map "M-c" 'toggle-title-case)
 (key-def global-map "M-d" 'blank-line)
 (key-def global-map "M-f" 'sp-forward-symbol)
 (key-def global-map "M-h" 'mark-paragraph)
@@ -339,7 +338,6 @@
 (key-def global-map "M-q" 'fill-region)
 (key-def global-map "M-Q" 'unfill-region)
 (key-def global-map "M-t" 'find-tag)
-(key-def global-map "M-u" 'toggle-upcase)
 (key-def global-map "M-w" 'kill-ring-save)
 (key-def global-map "M-x" 'smex)
 (key-def global-map "M-X" 'smex-major-mode-commands)
@@ -366,7 +364,7 @@
 (key-def ctl-x-map "+"   'balance-windows)
 (key-def ctl-x-map "a"   'align-prefix-map       'prefix)
 (key-def ctl-x-map "b"   'switch-to-buffer)
-(key-def ctl-x-map "c"   'helm-prefix-map        'prefix)
+(key-def ctl-x-map "c"   'case-prefix-map        'prefix)
 (key-def ctl-x-map "d"   'debug-prefix-map       'prefix)
 (key-def ctl-x-map "g"   'magit-status)
 (key-def ctl-x-map "h"   'mark-whole-buffer)
@@ -379,6 +377,7 @@
 (key-def ctl-x-map "s"   'save-some-buffers)
 (key-def ctl-x-map "t"   'input-prefix-map       'prefix)
 (key-def ctl-x-map "w"   'spell-check-prefix-map 'prefix)
+(key-def ctl-x-map "x"   'helm-prefix-map        'prefix)
 (key-def ctl-x-map "z"   'repeat)
 (key-def ctl-x-map "Z"   'repeat-complex-command)
 
@@ -751,5 +750,13 @@
 (key-def register-prefix-map "s"   'copy-to-register)
 (key-def register-prefix-map "w"   'window-configuration-to-register)
 (key-def register-prefix-map "x"   'copy-to-register)
+
+;; case changes
+(key-def case-prefix-map "SPC" 'toggle-title-case)
+(key-def case-prefix-map "c"   'toggle-upcase)
+(key-def case-prefix-map "u"   'upcase-word-or-region)
+(key-def case-prefix-map "d"   'downcase-word-or-region)
+(key-def case-prefix-map "t"   'title-case-word-or-region)
+(key-def case-prefix-map "T"   'toggle-title-case)
 
 (provide 'init-keys)
