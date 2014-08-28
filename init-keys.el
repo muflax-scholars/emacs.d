@@ -173,12 +173,12 @@
 (defvar narrow-map)
 
 ;; unset a lot of default keys so we can properly re-assign them later
-(loop for map in `(
-                   ,global-map
-                   ,ctl-x-map
-                   ,mode-specific-map
-                   ,narrow-map
-                   )
+(loop for map in (list
+                  global-map
+                  ctl-x-map
+                  mode-specific-map
+                  narrow-map
+                  )
       collect (unset-complete-keymap map))
 
 ;; global keys
@@ -238,7 +238,8 @@
 
 (key-def global-map "C-SPC" 'set-mark-command)
 
-(key-def global-map "M-<delete>" 'sp-unwrap-sexp)
+(key-def global-map "M-<backspace>" 'sp-unwrap-sexp)
+(key-def global-map "M-<delete>"    'sp-unwrap-sexp)
 
 (key-def global-map "<f1>"        'help-command)
 (key-def global-map "<f2>"        'save-buffer)
