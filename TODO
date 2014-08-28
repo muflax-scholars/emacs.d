@@ -93,7 +93,7 @@ Stuff that doesn't work:
 	- should switch completely to Emacs regexes, which have some cool stuff (but muh Ruby!!w!)
 	- finish the Ruby port
 
-	Emacs regexps are pretty cool, but lack some important categories. Needs more work. Might be fixable via rx instead, and aggressive shortcutting.
+	Emacs regexps are pretty cool, but lack some important categories. Needs more work. Might be fixable via rx/ample-rx instead, and aggressive shortcutting.
 
 ]
 
@@ -125,5 +125,13 @@ Stuff that doesn't work:
 	Drastically simplify muflax-latin to what I actually use, and figure out a standard "this is a prefix for typing complex characters" character.
 
 	And then finally move numbers on Mod4's right hand.
+
+]
+
+[ update to 24.4
+	- possibly change load-path so init*.el is in local/init
+	- horizontal scroll disable
+	- sub/superword mode
+	- recompile packages
 
 ]
