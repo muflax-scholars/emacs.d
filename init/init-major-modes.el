@@ -397,7 +397,7 @@
 (add-to-list 'auto-mode-alist '("\\.nix" . nix-mode))
 
 (setup-lazy '(slime) "slime"
-  (load (expand-file-name "~/local/quicklisp/slime-helper.el"))
+  ;; (load (expand-file-name "~/local/quicklisp/slime-helper.el"))
   (setq inferior-lisp-program "sbcl")
   (setq slime-contribs '(slime-fancy)))
 
