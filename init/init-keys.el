@@ -320,7 +320,7 @@
 (key-def global-map "C-s" 'search-prefix-map  'prefix)
 (key-def global-map "C-t" 'ac-trigger-key-command)
 (key-def global-map "C-u" 'universal-argument)
-(key-def global-map "C-v" 'folding-prefix-map 'prefix)
+(key-def global-map "C-v" 'visual-prefix-map  'prefix)
 (key-def global-map "C-w" 'kill-region)
 (key-def global-map "C-x" 'Control-X-prefix)
 (key-def global-map "C-y" 'yank-and-indent)
@@ -623,16 +623,17 @@
 (key-def number-prefix-map "p"      'number/pad)
 (key-def number-prefix-map "s"      'number/sub)
 
-;; folding
-(key-def folding-prefix-map "C-f" 'fold-dwim-toggle)
-(key-def folding-prefix-map "C-y" 'yafolding-toggle-element)
-(key-def folding-prefix-map "SPC" 'fold-dwim-show-all)
-(key-def folding-prefix-map "f"   'hs-fold-levels)
-(key-def folding-prefix-map "F"   'fold-dwim-show-all)
-(key-def folding-prefix-map "s"   'whitespace-fold-levels)
-(key-def folding-prefix-map "S"   'whitespace-fold-reset)
-(key-def folding-prefix-map "y"   'yafolding-hide-all)
-(key-def folding-prefix-map "Y"   'yafolding-show-all)
+;; visual display
+(key-def visual-prefix-map "C-f" 'fold-dwim-toggle)
+(key-def visual-prefix-map "C-y" 'yafolding-toggle-element)
+(key-def visual-prefix-map "SPC" 'fold-dwim-show-all)
+(key-def visual-prefix-map "f"   'hs-fold-levels)
+(key-def visual-prefix-map "F"   'fold-dwim-show-all)
+(key-def visual-prefix-map "s"   'whitespace-fold-levels)
+(key-def visual-prefix-map "S"   'whitespace-fold-reset)
+(key-def visual-prefix-map "y"   'yafolding-hide-all)
+(key-def visual-prefix-map "Y"   'yafolding-show-all)
+(key-def visual-prefix-map "w"   'whitespace-mode)
 
 ;; smartparens
 (key-def sexp-prefix-map "C-<tab>" 'sp-indent-adjust-sexp)
