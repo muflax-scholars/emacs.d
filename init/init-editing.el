@@ -884,7 +884,6 @@ You have:
   (interactive)
   (apply 'downcase-region (word-or-region)))
 
-
 (defun kill-matching-lines (regexp &optional rstart rend interactive)
   "Kill lines containing matches for REGEXP.
 
@@ -969,5 +968,16 @@ narrowed."
 (defun literal-tab ()
   (interactive)
   (insert "\t"))
+
+(defun toggle-subword-mode ()
+  "Switch between subword/superword-mode."
+  (interactive)
+  (if global-subword-mode
+      (if (fboundp 'global-superword-mode)
+          (global-superword-mode 1)
+        (global-subword-mode -1))
+    (global-subword-mode 1)))
+
+
 
 (provide 'init-editing)

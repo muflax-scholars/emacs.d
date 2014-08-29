@@ -586,6 +586,7 @@
 (key-def input-prefix-map "j"   'set-input-method-japanese-mozc)
 (key-def input-prefix-map "l"   'set-input-method-muflax-latin)
 (key-def input-prefix-map "m"   'set-input-method-muflax-latin)
+(key-def input-prefix-map "s"   'toggle-subword-mode )
 (key-def input-prefix-map "t"   'set-input-method-muflax-turkish)
 
 ;; window config
