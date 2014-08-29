@@ -3,7 +3,7 @@
 (setq user-mail-address "mail@muflax.com")
 
 ;; load path (the only hard-coded path, so we can use the file in external scripts without duplicating where load-paths are defined)
-(load "~/.emacs.d/init-load-path.el")
+(load "~/.emacs.d/init/init-load-path.el")
 
 ;; init setup (for faster start-up)
 (require 'setup)

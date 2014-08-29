@@ -1,6 +1,14 @@
 ;; misc helper functions
 
+(require 'cl-lib)
 (setup "s")
+
+;; some generic aliases that make elisp less painful
+(defalias 'first  'cl-first)
+(defalias 'second 'cl-second)
+(defalias 'rest   'cl-rest)
+(defalias 'loop   'cl-loop)
+(defalias 'case   'cl-case)
 
 (defun read-lines (filename)
   "Return a list of lines of a file at FILENAME."
@@ -36,5 +44,9 @@
 
     (list beg end)))
 
+(defun pretty-load? ()
+  "load stuff like themes that are only meaningful in window system?"
+  (or (display-graphic-p)
+      (daemonp)))
 
 (provide 'init-helpers)

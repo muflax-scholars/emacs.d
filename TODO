@@ -129,7 +129,6 @@ Stuff that doesn't work:
 ]
 
 [ update to 24.4
-	- possibly change load-path so init*.el is in local/init
 	- horizontal scroll disable
 	- sub/superword mode
 	- recompile packages
