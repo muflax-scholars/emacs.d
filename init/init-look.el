@@ -182,6 +182,8 @@
   (setup-after "simple"                (diminish 'global-visual-line-mode))
   (setup-after "simple"                (diminish 'visual-line-mode))
   (setup-after "smartparens"           (diminish 'smartparens-mode))
+  (setup-after "subword"               (diminish 'subword-mode))
+  (setup-after "subword"               (diminish 'superword-mode))
   (setup-after "undo-tree"             (diminish 'undo-tree-mode))
   (setup-after "volatile-highlights"   (diminish 'volatile-highlights-mode))
   (setup-after "whitespace"            (diminish 'global-whitespace-mode "WS"))
