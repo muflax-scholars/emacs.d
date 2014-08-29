@@ -181,6 +181,7 @@
   (setup-after "simple"                (diminish 'auto-fill-function "AF"))
   (setup-after "simple"                (diminish 'global-visual-line-mode))
   (setup-after "simple"                (diminish 'visual-line-mode))
+  (setup-after "slime"                 (diminish 'slime-mode))
   (setup-after "smartparens"           (diminish 'smartparens-mode))
   (setup-after "subword"               (diminish 'subword-mode))
   (setup-after "subword"               (diminish 'superword-mode))
