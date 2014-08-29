@@ -16,6 +16,7 @@
         delimit-columns-current
         dired-back-to-start-of-files
         downcase-region
+        downcase-word-or-region
         duplicate-line
         electric-graphviz-dot-semi
         end-of-buffer

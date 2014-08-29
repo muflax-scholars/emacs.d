@@ -757,6 +757,7 @@
 (key-def case-prefix-map "c"   'toggle-upcase)
 (key-def case-prefix-map "u"   'upcase-word-or-region)
 (key-def case-prefix-map "d"   'downcase-word-or-region)
+(key-def case-prefix-map "l"   'downcase-word-or-region)
 (key-def case-prefix-map "t"   'title-case-word-or-region)
 (key-def case-prefix-map "T"   'toggle-title-case)
 
