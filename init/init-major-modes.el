@@ -357,6 +357,7 @@
 (setup-lazy '(magit-status) "magit"
   (set-default 'magit-stage-all-confirm nil)
   (set-default 'magit-unstage-all-confirm nil)
+  (setq magit-log-cutoff-length 10000)
 
   ;; full screen magit-status
   (defadvice magit-status (around magit-fullscreen activate)
