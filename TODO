@@ -121,13 +121,6 @@ Stuff that doesn't work:
 
 ]
 
-[ input
-	Drastically simplify muflax-latin to what I actually use, and figure out a standard "this is a prefix for typing complex characters" character.
-
-	And then finally move numbers on Mod4's right hand.
-
-]
-
 [ update to 24.4
 	- recompile packages
 
