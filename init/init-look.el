@@ -9,9 +9,13 @@
 (global-font-lock-mode t)
 (setq jit-lock-stealth-time 5)
 (setq frame-title-format "%b")
+
+;; scroll bar
 (set-scroll-bar-mode 'right)
 (scroll-bar-mode -1)
 (set-fringe-mode '(1 . 10))
+(when (fboundp 'horizontal-scroll-bar-mode)
+  (horizontal-scroll-bar-mode -1))
 
 ;; selective hooks for either terminals or X windows
 (defvar after-make-console-frame-hooks '()
