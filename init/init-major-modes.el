@@ -163,7 +163,8 @@
 
 ;; new python mode
 (setup-lazy '(python-mode) "python"
-  (setq python-indent-offset 2))
+  (setq python-indent-offset 2)
+  (add-hook 'python-mode-hook (lambda () (setq tab-width 2))))
 
 ;; haskell mode
 (setup-lazy '(haskell-mode) "haskell-mode")
