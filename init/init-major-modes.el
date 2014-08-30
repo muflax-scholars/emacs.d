@@ -338,6 +338,11 @@
       (byte-compile-file buffer-file-name)))
   (add-hook 'after-save-hook 'byte-compile-current-buffer))
 
+(setup-after "emacs-lisp-mode"
+  ;; highlight cl-lib constructions
+  (setup "cl-lib-highlight")
+  (cl-lib-highlight-initialize))
+
 ;; ag search
 (setup-lazy '(ag) "ag"
   (setq ag-highlight-search t))
