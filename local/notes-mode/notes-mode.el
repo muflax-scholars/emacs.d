@@ -257,10 +257,10 @@
 ;; Parsing
 
 (defconst notes-regex-grab-bracket-square-start
-  "^\\([ \t]*\\)\\[\\([ \t]+[^]\n]*\\)?$")
+  "^\\([ \t]*\\)\\[\\([ \t]+[^\n]*\\)?$")
 
 (defconst notes-regex-grab-bracket-wiggly-start
-  "^\\([ \t]*\\){\\([ \t]+[^}\n]*\\)?$")
+  "^\\([ \t]*\\){\\([ \t]+[^\n]*\\)?$")
 
 (defconst notes-regex-grab-bracket-square-stop
   "^\\([ \t]*\\)\\][ \t]*$")
@@ -322,8 +322,6 @@
   (list
    (cons notes-regex-list   '(2 notes-list-face))
    (cons notes-regex-bold   '(2 notes-bold-face))
-   ;; (cons notes-regex-italic '(2 notes-italic-face))
-   (cons notes-regex-header '(3 notes-header-face))
 
    (cons notes-regex-placeholder-square
          '(1 notes-placeholder-square-face))
@@ -331,6 +329,10 @@
          '(1 notes-placeholder-wiggly-face))
    (cons notes-regex-placeholder-pointy
          '(1 notes-placeholder-pointy-face))
+
+   (cons notes-regex-header
+         '((2 notes-header-face)
+           (3 notes-header-face keep)))
 
    (cons notes-regex-annotation-abstract
          '((2 notes-annotation-abstract-face)
