@@ -557,7 +557,7 @@
 )
 
 (quail-define-package
- "muflax-latin" "Latin (muflax)" "^" nil
+ "muflax-latin" "Latin (muflax)" "·" nil
  "Handle the common special characters I use that don't justify their own language mode." nil t t nil nil nil nil nil nil nil t)
 (quail-define-rules
  ;; German
