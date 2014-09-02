@@ -710,13 +710,15 @@ You have:
 ;; smart parentheses
 (setup "smartparens-config"
   (smartparens-global-mode t)
-  (setq sp-autoescape-string-quote nil)
   (setq sp-highlight-pair-overlay nil)
+
+  ;; don't do any insertion/deletion magic
+  (setq sp-autoescape-string-quote nil)
   (setq sp-autoinsert-pair nil)
-  (setq sp-autoskip-opening-pair nil)
-  (setq sp-autoskip-closing-pair nil)
   (setq sp-cancel-autoskip-on-backward-movement nil)
   (setq sp-autodelete-pair nil)
+  (set-default 'sp-autoskip-opening-pair nil)
+  (set-default 'sp-autoskip-closing-pair nil)
 
   ;; move to beginning of text on line
   (defun sp-kill-to-end-of-sexp ()
