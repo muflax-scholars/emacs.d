@@ -61,6 +61,7 @@
   (setq ac-comphist-file "~/.emacs.d/cache/ac-comphist.dat")
   (setq ac-auto-show-menu nil)
   (setq ac-ignore-case nil)
+  (setq ac-quick-help-delay 0.1)
   (ac-config-default))
 
 ;; fancy go autocompletion
