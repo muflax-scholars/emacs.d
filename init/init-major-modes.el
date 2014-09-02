@@ -60,7 +60,8 @@
 (add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
 
 ;; notes-mode
-(setup "notes-mode")
+(setup "notes-mode"
+  (add-hook 'notes-mode-hook 'whitespace-mode))
 (add-to-list 'auto-mode-alist '("\\.txt$"    . notes-mode))
 (add-to-list 'auto-mode-alist '("\\.notes$"  . notes-mode))
 (add-to-list 'auto-mode-alist '("\\.script$" . notes-mode))
