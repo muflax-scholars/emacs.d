@@ -83,7 +83,7 @@
     (add-to-list 'ac-modes 'geiser-repl-mode)))
 
 ;; common lisp repl
-(setup-after "slime"
+(setup-after "lisp-mode"
   (setup "ac-slime"
     (add-hook 'slime-mode-hook      'set-up-slime-ac)
     (add-hook 'slime-repl-mode-hook 'set-up-slime-ac)

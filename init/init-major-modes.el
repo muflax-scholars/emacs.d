@@ -402,17 +402,28 @@
 (add-to-list 'auto-mode-alist '("\\.nix" . nix-mode))
 
 ;; common lisp
-(setup-lazy '(slime) "slime"
-  (setq quicklisp-helper-path "~/local/quicklisp/slime-helper.el")
-  (when (file-exists-p (expand-file-name quicklisp-helper-path))
-    (load (expand-file-name quicklisp-helper-path)))
+(setup-after "lisp-mode"
+  (setup "slime"
+    (setq slime-lisp-implementations
+      '((ccl ("ccl"))
+        (sbcl ("sbcl" "--noinform") :coding-system utf-8-unix)))
+    (setq slime-default-lisp 'sbcl)
+    (setq inferior-lisp-program "sbcl")
 
-  (setq inferior-lisp-program "sbcl")
-  (setq slime-contribs '(slime-fancy))
-  (setq slime-enable-evaluate-in-emacs t)
-  (setq slime-autodoc-use-multiline-p t)
-  (setq slime-auto-start 'always)
-  )
+    (setq quicklisp-helper-path "~/local/quicklisp/slime-helper.el")
+    (when (file-exists-p (expand-file-name quicklisp-helper-path))
+      (load (expand-file-name quicklisp-helper-path)))
+
+    (setq slime-contribs '(slime-fancy))
+    (setq slime-enable-evaluate-in-emacs t)
+    (setq slime-autodoc-use-multiline-p t)
+    (setq slime-auto-start 'always)
+    (setq slime-repl-history-file "~/.emacs.d/cache/slime_history")
+
+    (add-hook 'lisp-mode-hook (lambda ()
+                                (unless (slime-connected-p)
+                                  (save-excursion (slime)))))
+    ))
 
 (add-to-list 'auto-mode-alist '("\\.sbclrc$" . lisp-mode))
 (add-to-list 'auto-mode-alist '("\\.cl$"     . lisp-mode))
