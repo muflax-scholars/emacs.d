@@ -30,7 +30,10 @@
 ;;; Code:
 
 (deftheme leuven
-  "Non-stupid light background.")
+  "Non-stupid light background."
+
+  ;; Create faces even if they don't exist yet.
+  (put 'leuven 'theme-immediate t))
 
 (let ((class '((class color) (min-colors 89)))
       ;; Leuven generic colors

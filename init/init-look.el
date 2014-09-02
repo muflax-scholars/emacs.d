@@ -39,6 +39,7 @@
 
 ;; color themes
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
+(setup "leuven-theme") ; force-load it here so we have all faces set up
 
 (defvar bright-theme 'leuven               "Bright theme to use")
 (defvar dark-theme   'twilight-anti-bright "Dark theme to use")
@@ -66,12 +67,8 @@
       (disable-theme dark-theme)
       (load-theme bright-theme t))))
 
-;; highlight current line (face necessary so the theme can overwrite it)
-(defface hl-line '((t (:background nil)))
-  "Face to use for `hl-line-face'." :group 'hl-line)
-
+;; highlight current line
 (setup "hl-line"
-  (setq hl-line-face 'hl-line)
   (global-hl-line-mode t))
 
 ;; fonts
