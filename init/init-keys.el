@@ -700,6 +700,7 @@
   (key-def enh-ruby-mode-map "C-c ?" 'yari))
 
 (setup-after "dired"
+  (setup-after "wdired"
   (key-def dired-mode-map "C-c C-c"  'wdired-change-to-wdired-mode)
   (key-def dired-mode-map "<insert>" 'dired-mark)
   (key-def dired-mode-map "."        'dired-omit-mode)
@@ -709,14 +710,14 @@
   (key-def wdired-mode-map "C-a" 'dired-back-to-start-of-files)
 
   ;; M-up goes to first file
-  (key-def dired-mode-map  or 'remap 'beginning-of-buffer 'dired-back-to-top)
-  (key-def wdired-mode-map or 'remap 'beginning-of-buffer 'dired-back-to-top)
-  (key-def dired-mode-map  or 'remap 'smart-up            'dired-back-to-top)
+  (define-key dired-mode-map  [remap beginning-of-buffer] 'dired-back-to-top)
+  (define-key wdired-mode-map [remap beginning-of-buffer] 'dired-back-to-top)
+  (define-key dired-mode-map  [remap smart-up]            'dired-back-to-top)
 
   ;; M-down goes to last file
-  (key-def dired-mode-map  or 'remap 'end-of-buffer 'dired-jump-to-bottom)
-  (key-def dired-mode-map  or 'remap 'smart-down    'dired-jump-to-bottom)
-  (key-def wdired-mode-map or 'remap 'end-of-buffer 'dired-jump-to-bottom))
+  (define-key dired-mode-map  [remap end-of-buffer] 'dired-jump-to-bottom)
+  (define-key dired-mode-map  [remap smart-down]    'dired-jump-to-bottom)
+  (define-key wdired-mode-map [remap end-of-buffer] 'dired-jump-to-bottom)))
 
 ;; golang
 (setup-after "go-mode"
