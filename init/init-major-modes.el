@@ -442,6 +442,7 @@
     (add-hook 'racket-mode-hook 'geiser-mode--maybe-activate))
   )
 (add-to-list 'auto-mode-alist '("\\.scm$" . scheme-mode))
+(add-to-list 'auto-mode-alist '("\\.ss$"  . scheme-mode))
 (add-to-list 'auto-mode-alist '("\\.rkt$" . racket-mode))
 
 
