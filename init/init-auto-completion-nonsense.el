@@ -74,6 +74,7 @@
   (when (file-exists-p abbrev-file-name)
     (quietly-read-abbrev-file)))
 
+;; racket repl
 (setup-after "racket-mode"
   (setup "ac-geiser"
     (add-hook    'geiser-mode-hook      'ac-geiser-setup)
@@ -81,6 +82,12 @@
     (add-to-list 'ac-modes 'racket-mode)
     (add-to-list 'ac-modes 'geiser-repl-mode)))
 
-
+;; common lisp repl
+(setup-after "slime"
+  (setup "ac-slime"
+    (add-hook 'slime-mode-hook      'set-up-slime-ac)
+    (add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
+    (add-to-list 'ac-modes 'common-lisp-mode)
+    (add-to-list 'ac-modes 'slime-repl-mode)))
 
 (provide 'init-auto-completion-nonsense)

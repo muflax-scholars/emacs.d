@@ -401,10 +401,21 @@
 (setup-lazy '(nix-mode) "nix-mode")
 (add-to-list 'auto-mode-alist '("\\.nix" . nix-mode))
 
+;; common lisp
 (setup-lazy '(slime) "slime"
-  ;; (load (expand-file-name "~/local/quicklisp/slime-helper.el"))
+  (setq quicklisp-helper-path "~/local/quicklisp/slime-helper.el")
+  (when (file-exists-p (expand-file-name quicklisp-helper-path))
+    (load (expand-file-name quicklisp-helper-path)))
+
   (setq inferior-lisp-program "sbcl")
-  (setq slime-contribs '(slime-fancy)))
+  (setq slime-contribs '(slime-fancy))
+  (setq slime-enable-evaluate-in-emacs t)
+  (setq slime-autodoc-use-multiline-p t)
+  (setq slime-auto-start 'always)
+  )
+
+(add-to-list 'auto-mode-alist '("\\.sbclrc$" . lisp-mode))
+(add-to-list 'auto-mode-alist '("\\.cl$"     . lisp-mode))
 
 ;; racket
 (setup "racket-mode"
@@ -419,6 +430,7 @@
 
     (add-hook 'racket-mode-hook 'geiser-mode--maybe-activate))
   )
+(add-to-list 'auto-mode-alist '("\\.scm$" . scheme-mode))
 (add-to-list 'auto-mode-alist '("\\.rkt$" . racket-mode))
 
 
