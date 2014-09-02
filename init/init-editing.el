@@ -588,8 +588,8 @@ You have:
 (add-hook 'before-save-hook 'maybe-trim-whitespace)
 
 ;; highlight some whitespace
-(setup-lazy '(whitespace-mode global-whitespace-mode) "whitespace"
-  (setq whitespace-style (quote (face tabs tab-mark))))
+(setup "whitespace"
+  (setq whitespace-style '(face tabs tab-mark)))
 
 ;; scratchpad buffers
 (setup-lazy '(scratch) "scratch")
