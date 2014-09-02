@@ -406,4 +406,20 @@
   (setq inferior-lisp-program "sbcl")
   (setq slime-contribs '(slime-fancy)))
 
+;; racket
+(setup "racket-mode"
+  (setup "geiser-mode"
+    (setq geiser-active-implementations '(racket))
+    (setq geiser-default-implementation 'racket)
+    (setq geiser-autodoc-delay 0.1)
+    (setq geiser-repl-history-filename "~/.emacs.d/cache/geiser_history")
+    (setq geiser-repl-company-p nil)
+    (setq geiser-mode-company-p nil)
+    (setq geiser-mode-start-repl-p t)
+
+    (add-hook 'racket-mode-hook 'geiser-mode--maybe-activate))
+  )
+(add-to-list 'auto-mode-alist '("\\.rkt$" . racket-mode))
+
+
 (provide 'init-major-modes)
