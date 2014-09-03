@@ -160,6 +160,22 @@
 ;; (sublimity-map-set-delay 10)
 ;; (sublimity-mode 1)
 
+;; highlight some whitespace
+(setup "whitespace"
+  (setq whitespace-style '(face tabs tab-mark))
+  (setq whitespace-display-mappings
+        `(
+          (space-mark   ?\s    [?\u00B7] [?.]) ; space      - centered dot
+          (space-mark   ?\xA0  [?\u00A4] [?_]) ; hard space - currency
+          (newline-mark ?\n    [?$ ?\n])       ; eol        - dollar sign
+
+          ;; consistent spacing of tab
+          (tab-mark ?\t ; tab - bar
+                    [?\| ,@(make-list (1- tab-width) ?\s)]
+                    [?\| ,@(make-list (1- tab-width) ?\s)])
+          )))
+
+
 ;; clean up modeline and hide standard minor modes
 (setup "diminish"
   (setup-after "abbrev"                (diminish 'abbrev-mode))

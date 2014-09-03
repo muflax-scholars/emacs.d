@@ -92,8 +92,8 @@
    `(whitespace-hspace ((,class (:foreground "#D2D2D2"))))
    `(whitespace-indentation ((,class (:foreground "firebrick" :background "yellow"))))
    `(whitespace-line ((,class (:foreground "#CC0000" :background "#FFFF88"))))
-   `(whitespace-space ((,class (:foreground "#a0a0a0"))))
-   `(whitespace-tab ((,class (:foreground "#a0a0a0"))))
+   `(whitespace-space ((,class (:foreground "#b0b0b0"))))
+   `(whitespace-tab ((,class (:foreground "#b0b0b0"))))
    `(whitespace-trailing ((,class (:weight bold :foreground "yellow" :background "red1"))))
 
    ;; Mode line faces
