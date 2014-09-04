@@ -556,7 +556,7 @@ The first element in the returned list should be considered the default indentat
               (- prev-line-pos tab-width))
              (t prev-line-pos))))
 
-    pos))
+    (max pos 0)))
 
 ;; Lists
 
