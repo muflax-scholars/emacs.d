@@ -976,5 +976,13 @@ narrowed."
     (global-subword-mode 1)))
 
 
+(defvar elastic-tab-align-modes '()
+  "modes that align elastic tabstops during indent")
+
+;; elastic tabstops
+(setup "elastic-tabstops"
+  (defadvice indent-for-tab-command (after elastic-tabstops activate)
+    (when (member major-mode elastic-tab-align-modes)
+      (elastic-align-current))))
 
 (provide 'init-editing)

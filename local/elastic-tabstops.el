@@ -5,6 +5,7 @@
 ;; bugs:
 ;; - can't add spaces in current cell
 ;; - newline broken at EOF
+;; - doesn't work nicely with indent
 
 (eval-when-compile 'cl-lib)
 (eval-when-compile 'dash)
