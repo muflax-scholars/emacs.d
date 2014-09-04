@@ -3,10 +3,8 @@
 ;; works (kinda) like Elastic Tabstops in Sublime
 
 ;; bugs:
-;; - can't add spaces without problems
-;; - adjusting of last cell doesn't work
+;; - can't add spaces in current cell
 ;; - newline broken at EOF
-;; - wonky with saving and stuff; maybe use a different hook
 
 (eval-when-compile 'cl-lib)
 (eval-when-compile 'dash)
@@ -39,6 +37,13 @@
 
         ;; add to list and proceed
         (setq last   (match-end 0)
+              widths (cons width widths)))
+
+      ;; add last item, if possible
+      (when (< (point) end)
+        (goto-char end)
+        (skip-chars-backward " \t")
+        (setq width  (- (point) last)
               widths (cons width widths))))
 
     (nreverse widths)))
@@ -112,10 +117,7 @@
   (when scope
     (let ((beg    (elastic-scope-beg          scope))
           (target (elastic-scope-target       scope))
-          (lines  (elastic-scope-widths-lines scope))
-          (orig-line (line-number-at-pos))
-          (orig-pos (point))
-          )
+          (lines  (elastic-scope-widths-lines scope)))
 
       (save-excursion
         (goto-char beg)
@@ -127,21 +129,20 @@
               ;; get into position
               (forward-char (first it))
 
-              ;; add correct number of spaces
-              (setq diff (- (rest it) (first it)))
-              (insert-char ?\s diff)
-
               ;; delete any other spaces
               (setq start (point))
-              (skip-chars-forward "^\t")
+              (skip-chars-forward "^\t\n")
+              (delete-region start (point))
 
-              (unless (and (= (line-number-at-pos) orig-line)
-                           (and (>= orig-pos start)
-                                (<= orig-pos (point))))
-                (delete-region start (point)))
+              ;; not yet in the last cell
+              (when (= (following-char) ?\t)
+                ;; add correct number of spaces
+                (setq diff (- (rest it) (first it)))
+                (insert-char ?\s diff)
 
-              ;; skip tab
-              (forward-char 1)))
+                ;; get into position for the next cell
+                (forward-char 1))))
+
 
           ;; get ready for next line
           (forward-line 1))
@@ -174,7 +175,6 @@
 
 (defun elastic-align-change-hook (beg end len)
   "Called by the change hook."
-  (message "%d %d %d" beg end len)
   (save-excursion
     (elastic-align-region beg end)))
 
