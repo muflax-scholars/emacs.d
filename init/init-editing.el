@@ -180,8 +180,6 @@ If visual-line-mode is on, then also jump to beginning of real line."
   (interactive)
   (save-buffer))
 
-;; indentation
-(setq-default tab-width 2)
 ;; don't use tabs normally, except for a few special modes
 (setq-default indent-tabs-mode nil)
 (defun use-tabs () (setq indent-tabs-mode t))

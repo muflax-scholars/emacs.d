@@ -10,6 +10,9 @@
 (setq jit-lock-stealth-time 5)
 (setq frame-title-format "%b")
 
+;; indentation
+(setq-default tab-width 2)
+
 ;; scroll bar
 (set-scroll-bar-mode 'right)
 (scroll-bar-mode -1)
