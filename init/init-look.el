@@ -175,7 +175,6 @@
                     [?\| ,@(make-list (1- tab-width) ?\s)])
           )))
 
-
 ;; clean up modeline and hide standard minor modes
 (setup "diminish"
   (setup-after "abbrev"                (diminish 'abbrev-mode))
@@ -201,7 +200,7 @@
   (setup-after "undo-tree"             (diminish 'undo-tree-mode))
   (setup-after "volatile-highlights"   (diminish 'volatile-highlights-mode))
   (setup-after "whitespace"            (diminish 'global-whitespace-mode "WS"))
-  (setup-after "whitespace"            (diminish 'whitespace-mode " »"))
+  (setup-after "whitespace"            (diminish 'whitespace-mode " |"))
   (setup-after "whole-line-or-region"  (diminish 'whole-line-or-region-mode))
   (setup-after "yasnippet"             (diminish 'yas-minor-mode)))
 
