@@ -654,7 +654,7 @@ With two \\[universal-argument] prefixes (i.e., when ARG is 16), decrease the in
   ;; imenu support
   (set (make-local-variable 'imenu-generic-expression)
        '(
-         (nil "^[[{] \\(.+\\)$" 1)
+         (nil "^[\t]*[[] \\(.+\\)$" 1)
          ))
 
   ;; indentation
