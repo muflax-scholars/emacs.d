@@ -612,7 +612,6 @@ With two \\[universal-argument] prefixes (i.e., when ARG is 16), decrease the in
 
 (defvar notes-mode-map
   (let ((map (make-keymap)))
-    (define-key map (kbd "TAB")        'notes-indent-line)
     (define-key map (kbd "M-TAB")      'notes-shifttab)
     (define-key map (kbd "S-<return>") 'notes-insert-list-item)
     map)
