@@ -190,7 +190,9 @@
   ;; better indenting
   (setq ruby-indent-level tab-width)
   (setq enh-ruby-bounce-deep-indent t)
-  (setq enh-ruby-deep-indent-paren nil))
+  (setq enh-ruby-deep-indent-paren nil)
+
+  (add-hook 'enh-ruby-mode-hook 'whitespace-mode))
 
 ;;ruby files
 (add-to-list 'interpreter-mode-alist '("ruby" . enh-ruby-mode))
@@ -317,7 +319,8 @@
 (setup-lazy '(turn-on-eldoc-mode) "eldoc"
   (setq eldoc-idle-delay 0.1))
 (setup-after "lisp-mode"
-  (add-hook 'lisp-mode-hook 'turn-on-eldoc-mode))
+  (add-hook 'lisp-mode-hook 'turn-on-eldoc-mode)
+  (add-hook 'lisp-mode-hook 'whitespace-mode))
 
 ;; go-lang
 (setup-lazy '(go-mode) "go-mode"

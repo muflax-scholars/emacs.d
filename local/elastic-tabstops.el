@@ -6,6 +6,8 @@
 ;; - can't add spaces in current cell
 ;; - newline broken at EOF
 ;; - doesn't work nicely with indent
+;; - delete should be smart: first only delete to [\t\n], second delete these too
+
 
 (eval-when-compile 'cl-lib)
 (eval-when-compile 'dash)
@@ -14,9 +16,9 @@
 (defconst elastic-line-separator-regexp "[ ]*[\t]")
 
 (cl-defstruct elastic-scope
-  beg end      ; size of the scope
-  widths-lines ; width of each cell in each line
-  target)      ; target width of each cell
+  beg end     	; size of the scope
+  widths-lines	; width of each cell in each line
+  target)     	; target width of each cell
 
 (defun elastic-tabs-width-of-line ()
   "Returns list of cell widths in current line."
@@ -28,41 +30,42 @@
 
     (save-excursion
       (beginning-of-line)
-      (setq start (point))
-      (setq last start)
+      (setq start	(point))
+      (setq last 	start)
 
-      ;; width starts after the tab, and ends before the (spaces) and tab
+      ;; width starts after the tab, and ends before the (spaces and) tab
       (while (re-search-forward elastic-line-separator-regexp end t)
         ;; calculate width
         (setq width (- (match-beginning 0) last))
 
         ;; add to list and proceed
-        (setq last   (match-end 0)
-              widths (cons width widths)))
+        (setq last  	(match-end 0)
+              widths	(cons width widths)))
 
-      ;; add last item, if possible
-      (when (< (point) end)
+      ;; add last item, if possible and we have at least one other field
+      (when (and (< (point) end)
+                 widths)
         (goto-char end)
         (skip-chars-backward " \t")
-        (setq width  (- (point) last)
-              widths (cons width widths))))
+        (setq width 	(- (point) last)
+              widths	(cons width widths))))
 
     (nreverse widths)))
 
 (defun elastic-calc-max (a b)
   "Returns list of size (max a b) with the max-value of both list at that position."
-  (let ((a-val  (first a))
-        (b-val  (first b))
-        (a-rest (rest a))
-        (b-rest (rest b))
+  (let ((a-val 	(first a))
+        (b-val 	(first b))
+        (a-rest	(rest a))
+        (b-rest	(rest b))
         ret)
     (while (or a-val b-val)
       (setq ret (cons (max (or a-val 0) (or b-val 0)) ret)
             ;; eat the list
-            a-val  (first a-rest)
-            b-val  (first b-rest)
-            a-rest (rest a-rest)
-            b-rest (rest b-rest)))
+            a-val 	(first a-rest)
+            b-val 	(first b-rest)
+            a-rest	(rest a-rest)
+            b-rest	(rest b-rest)))
 
     (nreverse ret)))
 
@@ -80,9 +83,9 @@
 
       (while (and (setq widths-line (elastic-tabs-width-of-line))
                   (not (bobp)))
-        (setq beg          (point)
-              widths-lines (cons widths-line widths-lines)
-              target       (elastic-calc-max widths-line target))
+        (setq beg         	(point)
+              widths-lines	(cons widths-line widths-lines)
+              target      	(elastic-calc-max widths-line target))
         (forward-line -1))
       (setq end (point-at-eol)))
 
@@ -96,8 +99,8 @@
 
         (while (and (setq widths-line (elastic-tabs-width-of-line))
                     (not (eobp)))
-          (setq widths-lines (cons widths-line widths-lines)
-                target       (elastic-calc-max widths-line target))
+          (setq widths-lines	(cons widths-line widths-lines)
+                target      	(elastic-calc-max widths-line target))
           (forward-line 1))
 
         ;; put it back in normal order (and note the end)
@@ -106,19 +109,19 @@
 
     ;; return scope
     (if beg
-        (make-elastic-scope :beg          beg
-                            :end          end
-                            :widths-lines widths-lines
-                            :target       target)
+        (make-elastic-scope :beg         	beg
+                            :end         	end
+                            :widths-lines	widths-lines
+                            :target      	target)
       nil)))
 
 (defun elastic-align-block (scope)
   "align given block"
 
   (when scope
-    (let ((beg    (elastic-scope-beg          scope))
-          (target (elastic-scope-target       scope))
-          (lines  (elastic-scope-widths-lines scope)))
+    (let ((beg   	(elastic-scope-beg         	scope))
+          (target	(elastic-scope-target      	scope))
+          (lines 	(elastic-scope-widths-lines	scope)))
 
       (save-excursion
         (goto-char beg)
@@ -184,8 +187,8 @@
   nil " »" nil
 
   (if elastic-tabstops-minor-mode
-      (add-hook  'after-change-functions 'elastic-align-change-hook t t)
-    (remove-hook 'after-change-functions 'elastic-align-change-hook t)))
+      (add-hook 	'after-change-functions 'elastic-align-change-hook t t)
+    (remove-hook	'after-change-functions 'elastic-align-change-hook t)))
 
 (provide 'elastic-tabstops)
 ;;; elastic-tabstops.el ends here

@@ -976,13 +976,27 @@ narrowed."
     (global-subword-mode 1)))
 
 
-(defvar elastic-tab-align-modes '()
+(defvar elastic-tab-align-modes '(emacs-lisp-mode)
   "modes that align elastic tabstops during indent")
 
 ;; elastic tabstops
 (setup "elastic-tabstops"
-  (defadvice indent-for-tab-command (after elastic-tabstops activate)
-    (when (member major-mode elastic-tab-align-modes)
-      (elastic-align-current))))
+  (defmacro elastic-advice-command (command-name)
+    `(defadvice ,command-name (after elastic-tabstops activate)
+       (when (member major-mode elastic-tab-align-modes)
+         (elastic-align-current))))
+
+  ;; FIXME should be smarter and hijack the command's arguments
+  (defmacro elastic-advice-command-region (command-name)
+    `(defadvice ,command-name (after elastic-tabstops activate)
+       (when (member major-mode elastic-tab-align-modes)
+         (elastic-align-region (point) (mark)))))
+
+  (elastic-advice-command       	indent-for-tab-command)
+  (elastic-advice-command       	literal-tab)
+  (elastic-advice-command-region	indent-region)
+
+  )
+
 
 (provide 'init-editing)
