@@ -3,8 +3,10 @@
 ;; works (kinda) like Elastic Tabstops in Sublime
 
 ;; bugs:
-;; - can't add spaces
+;; - can't add spaces without problems
 ;; - adjusting of last cell doesn't work
+;; - newline broken at EOF
+;; - wonky with saving and stuff; maybe use a different hook
 
 (eval-when-compile 'cl-lib)
 (eval-when-compile 'dash)
@@ -22,6 +24,7 @@
   (let (widths
         start
         last
+        width
         (end (point-at-eol)))
 
     (save-excursion
@@ -31,9 +34,12 @@
 
       ;; width starts after the tab, and ends before the (spaces) and tab
       (while (re-search-forward elastic-line-separator-regexp end t)
-        (setq widths (cons (- (match-beginning 0) last)
-                           widths)
-              last (match-end 0))))
+        ;; calculate width
+        (setq width (- (match-beginning 0) last))
+
+        ;; add to list and proceed
+        (setq last   (match-end 0)
+              widths (cons width widths))))
 
     (nreverse widths)))
 
@@ -106,7 +112,10 @@
   (when scope
     (let ((beg    (elastic-scope-beg          scope))
           (target (elastic-scope-target       scope))
-          (lines  (elastic-scope-widths-lines scope)))
+          (lines  (elastic-scope-widths-lines scope))
+          (orig-line (line-number-at-pos))
+          (orig-pos (point))
+          )
 
       (save-excursion
         (goto-char beg)
@@ -125,7 +134,11 @@
               ;; delete any other spaces
               (setq start (point))
               (skip-chars-forward "^\t")
-              (delete-region start (point))
+
+              (unless (and (= (line-number-at-pos) orig-line)
+                           (and (>= orig-pos start)
+                                (<= orig-pos (point))))
+                (delete-region start (point)))
 
               ;; skip tab
               (forward-char 1)))
@@ -162,7 +175,8 @@
 (defun elastic-align-change-hook (beg end len)
   "Called by the change hook."
   (message "%d %d %d" beg end len)
-  (elastic-align-region beg end))
+  (save-excursion
+    (elastic-align-region beg end)))
 
 (define-minor-mode elastic-tabstops-minor-mode
   "Automatically adjusts elastic tabstops as you type."
