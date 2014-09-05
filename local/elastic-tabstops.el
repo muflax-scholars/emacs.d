@@ -6,8 +6,6 @@
 ;; - can't add spaces in current cell
 ;; - newline broken at EOF
 ;; - doesn't work nicely with indent
-;; - delete should be smart: first only delete to [\t\n], second delete these too
-
 
 (eval-when-compile 'cl-lib)
 (eval-when-compile 'dash)
