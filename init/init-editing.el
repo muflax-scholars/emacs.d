@@ -1000,6 +1000,7 @@ narrowed."
 
   (elastic-advice-command       	indent-for-tab-command)
   (elastic-advice-command       	literal-tab)
+  (elastic-advice-command       	indent-according-to-mode)
   (elastic-advice-command-region	indent-region)
   )
 

@@ -391,10 +391,10 @@ If we are at the last line, then consider the next line to be blank."
       (notes-cur-line-blank-p))))
 
 (defun notes-cur-line-indent ()
-  "Return the number of leading whitespace characters in the current line."
+  "Return the number of tab indentations in the current line."
   (save-excursion
     (goto-char (point-at-bol))
-    (re-search-forward "^[ \t]*" (point-at-eol) t)
+    (re-search-forward "^[\t]*" (point-at-eol) t)
     (current-column)))
 
 (defun notes-prev-line-indent ()
@@ -533,9 +533,14 @@ Return a list of the form (begin end indent nonlist-indent). If the point is not
 ;; Indentation
 
 (defun notes-indent-line ()
-  "Indent the current line using some heuristics."
+  "Indent the current line using some heuristics, trying to preserve any elastic tabstops."
   (interactive)
-  (indent-line-to (notes-calc-indent)))
+  (beginning-of-line)
+  (skip-chars-forward "\t")
+  (delete-region (point-at-bol) (point))
+
+  (beginning-of-line)
+  (indent-to (notes-calc-indent)))
 
 (defun notes-calc-indent ()
   "Return a list of indentation columns to cycle through.
@@ -587,7 +592,7 @@ With two \\[universal-argument] prefixes (i.e., when ARG is 16), decrease the in
               (insert "1. ")
             ;; travel up to the last item and pick the correct number.  If the argument was nil, "new-indent = item-indent" is the same, so we don't need special treatment. Neat.
             (save-excursion
-              (while (not (looking-at "^[ \t]*\\([0-9]+\\)\\."))
+              (while (not (looking-at "^[\t]*\\([0-9]+\\)\\."))
                 (forward-line -1)))
             (insert (concat (int-to-string
                              (1+ (string-to-number (match-string 1))))
@@ -604,7 +609,7 @@ With two \\[universal-argument] prefixes (i.e., when ARG is 16), decrease the in
   (let ((pattern (thing-at-point 'word)))
     (setq pattern (read-from-minibuffer "Pattern: " pattern))
     (occur (concat
-            "^[ \t]*" (regexp-quote style)
+            "^[\t]*" (regexp-quote style)
             ".*" (ucs-normalize-NFKC-string pattern) ".*$")))
   )
 
