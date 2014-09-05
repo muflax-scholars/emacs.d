@@ -26,6 +26,7 @@
         er/mark-defun
         eval-defun
         fold-dwim-toggle
+        generalized-shell-command
         go-mode-insert-and-indent
         handle-switch-frame
         hungry-delete-backward
