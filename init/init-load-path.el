@@ -7,16 +7,17 @@
         (setq load-path (cons my-lisp-dir load-path))
         (normal-top-level-add-subdirs-to-load-path))))
 ;; init has the startup scripts
-(setq load-path (cons (expand-file-name "~/.emacs.d/init") load-path))
-(setq load-path (cons (expand-file-name "~/.emacs.d/themes") load-path))
+(setq load-path (cons (expand-file-name "~/.emacs.d/init")  	load-path))
+(setq load-path (cons (expand-file-name "~/.emacs.d/themes")	load-path))
 
 ;; elpa package-repositories
 (require 'package)
 (setq package-user-dir "~/.emacs.d/packages")
-(add-to-list 'package-archives '("tromey"    . "http://tromey.com/elpa/") t)
-(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
-(add-to-list 'package-archives '("melpa"     . "http://melpa.milkbox.net/packages/") t)
-(add-to-list 'package-archives '("SC"        . "http://joseito.republika.pl/sunrise-commander/") t)
+(add-to-list 'package-archives '("tromey"   	. "http://tromey.com/elpa/")                       	t)
+(add-to-list 'package-archives '("marmalade"	. "http://marmalade-repo.org/packages/")           	t)
+(add-to-list 'package-archives '("melpa"    	. "http://melpa.milkbox.net/packages/")            	t)
+(add-to-list 'package-archives '("SC"       	. "http://joseito.republika.pl/sunrise-commander/")	t)
+
 (package-initialize)
 
 (provide 'init-load-path)

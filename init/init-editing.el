@@ -14,15 +14,17 @@
 (setup "saveplace"
   ;; save minibuffer history
   (savehist-mode 1)
-  (setq kill-ring-max          1000)
-  (setq history-length         1000)
-  (setq search-ring-max        1000)
-  (setq regexp-search-ring-max 1000)
-  (setq kmacro-ring-max        1000)
-  (setq comint-input-ring-size 1000)
-  (setq save-place-file "~/.emacs.d/cache/saveplace")
+  (setq kill-ring-max         	1000)
+  (setq history-length        	1000)
+  (setq search-ring-max       	1000)
+  (setq regexp-search-ring-max	1000)
+  (setq kmacro-ring-max       	1000)
+  (setq comint-input-ring-size	1000)
+
+  (setq save-place-file	"~/.emacs.d/cache/saveplace")
+  (setq savehist-file  	"~/.emacs.d/cache/history")
+
   (setq-default save-place t)
-  (setq savehist-file "~/.emacs.d/cache/history")
   (setq savehist-additional-variables '(search-ring
                                         regexp-search-ring
                                         kill-ring
@@ -35,11 +37,11 @@
   )
 
 ;; text stuff
-(setq undo-limit 1000000)
+(setq undo-limit     	1000000)
+(setq message-log-max	100000)
 (setq sentence-end-double-space nil)
 (column-number-mode t)
 (setq-default indicate-empty-lines t)
-(setq message-log-max 100000)
 
 ;; don't hard-wrap text, but use nice virtual wrapping
 (setup "adaptive-wrap"
@@ -49,16 +51,16 @@
   (setq visual-line-fringe-indicators '(nil right-curly-arrow)))
 
 ;; enable useful command
-(put 'narrow-to-region 'disabled nil)
-(put 'downcase-region  'disabled nil)
-(put 'upcase-region    'disabled nil)
+(put 'narrow-to-region	'disabled nil)
+(put 'downcase-region 	'disabled nil)
+(put 'upcase-region   	'disabled nil)
 
 ;; UTF-8 please
-(setq locale-coding-system   'utf-8) ; pretty
-(set-terminal-coding-system  'utf-8) ; pretty
-(set-keyboard-coding-system  'utf-8) ; pretty
-(set-selection-coding-system 'utf-8) ; please
-(prefer-coding-system        'utf-8) ; with sugar on top
+(setq locale-coding-system  	'utf-8) ; pretty
+(set-terminal-coding-system 	'utf-8) ; pretty
+(set-keyboard-coding-system 	'utf-8) ; pretty
+(set-selection-coding-system	'utf-8) ; please
+(prefer-coding-system       	'utf-8) ; with sugar on top
 
 ;; multiple cursors
 (setq mc/list-file "~/.emacs.d/mc-lists.el")
@@ -104,8 +106,8 @@
 ;; nested parentheses are highlighted when inside of them
 (setup "highlight-parentheses"
   (defun turn-on-highlight-parentheses () (highlight-parentheses-mode 1))
-  (add-hook 'prog-mode-hook     'turn-on-highlight-parentheses)
-  (add-hook 'enh-ruby-mode-hook 'turn-on-highlight-parentheses))
+  (add-hook 'prog-mode-hook    	'turn-on-highlight-parentheses)
+  (add-hook 'enh-ruby-mode-hook	'turn-on-highlight-parentheses))
 
 ;; copy end of line, like C-k
 (defun copy-line ()
@@ -288,23 +290,23 @@ If visual-line-mode is on, then also jump to beginning of real line."
   (setq-default
    wcheck-language "English"
    wcheck-language-data '(("English"
-                           (program . "/usr/bin/enchant")
-                           (args . ("-l" "-d" "en_US"))
-                           (action-program . "/usr/bin/enchant")
-                           (action-args "-a" "-d" "en_US")
-                           (action-parser . enchant-suggestions-menu))
+                           (program       	. "/usr/bin/enchant")
+                           (args          	. ("-l" "-d" "en_US"))
+                           (action-program	. "/usr/bin/enchant")
+                           (action-args   	. ("-a" "-d" "en_US"))
+                           (action-parser 	. enchant-suggestions-menu))
                           ("German"
-                           (program . "/usr/bin/enchant")
-                           (args . ("-l" "-d" "de"))
-                           (action-program . "/usr/bin/enchant")
-                           (action-args "-a" "-d" "de")
-                           (action-parser . enchant-suggestions-menu))
+                           (program       	. "/usr/bin/enchant")
+                           (args          	. ("-l" "-d" "de"))
+                           (action-program	. "/usr/bin/enchant")
+                           (action-args   	. ("-a" "-d" "de"))
+                           (action-parser 	. enchant-suggestions-menu))
                           ("French"
-                           (program . "/usr/bin/enchant")
-                           (args . ("-l" "-d" "fr"))
-                           (action-program . "/usr/bin/enchant")
-                           (action-args "-a" "-d" "fr")
-                           (action-parser . enchant-suggestions-menu))
+                           (program       	. "/usr/bin/enchant")
+                           (args          	. ("-l" "-d" "fr"))
+                           (action-program	. "/usr/bin/enchant")
+                           (action-args   	. ("-a" "-d" "fr"))
+                           (action-parser 	. enchant-suggestions-menu))
                           ))
   ;; add to dictionary functionality
   (defun enchant-suggestions-menu (marked-text)
@@ -348,8 +350,8 @@ If visual-line-mode is on, then also jump to beginning of real line."
     (if use-spell-check (wcheck-mode 1)))
 
   ;; enable spell-check in certain modes
-  (add-hook 'markdown-mode-hook 'turn-on-spell-check)
-  (add-hook 'org-mode-hook      'turn-on-spell-check))
+  (add-hook 'markdown-mode-hook	'turn-on-spell-check)
+  (add-hook 'org-mode-hook     	'turn-on-spell-check))
 
 ;; align
 (setup "align"
@@ -360,22 +362,22 @@ If visual-line-mode is on, then also jump to beginning of real line."
     "align-perl-modes is a variable defined in `align.el'.")
   (defconst ruby-align-rules-list
     '((ruby-comma-delimiter
-       (regexp . ",\\(\\s-*\\)[^/ \t\n]")
-       (modes . '(enh-ruby-mode))
-       (repeat . t))
+       (regexp	. ",\\(\\s-*\\)[^/ \t\n]")
+       (modes 	. '(enh-ruby-mode))
+       (repeat	. t))
       (ruby-string-after-func
-       (regexp . "^\\s-*[a-zA-Z0-9.:?_]+\\(\\s-+\\)['\"]\\w+['\"]")
-       (modes . '(enh-ruby-mode))
-       (repeat . t))
+       (regexp	. "^\\s-*[a-zA-Z0-9.:?_]+\\(\\s-+\\)['\"]\\w+['\"]")
+       (modes 	. '(enh-ruby-mode))
+       (repeat	. t))
       (ruby-symbol-after-func
-       (regexp . "^\\s-*[a-zA-Z0-9.:?_]+\\(\\s-+\\):\\w+")
-       (modes . '(enh-ruby-mode))))
+       (regexp	. "^\\s-*[a-zA-Z0-9.:?_]+\\(\\s-+\\):\\w+")
+       (modes 	. '(enh-ruby-mode))))
     "Alignment rules specific to the ruby mode.
 See the variable `align-rules-list' for more details.")
-  (add-to-list 'align-perl-modes         'enh-ruby-mode)
-  (add-to-list 'align-dq-string-modes    'enh-ruby-mode)
-  (add-to-list 'align-sq-string-modes    'enh-ruby-mode)
-  (add-to-list 'align-open-comment-modes 'enh-ruby-mode)
+  (add-to-list 'align-perl-modes        	'enh-ruby-mode)
+  (add-to-list 'align-dq-string-modes   	'enh-ruby-mode)
+  (add-to-list 'align-sq-string-modes   	'enh-ruby-mode)
+  (add-to-list 'align-open-comment-modes	'enh-ruby-mode)
   (dolist (it ruby-align-rules-list)
     (add-to-list 'align-rules-list it))
   ;; haskell alignments
@@ -472,6 +474,11 @@ See the variable `align-rules-list' for more details.")
   (setq url-cookie-file "~/.emacs.d/cache/url/cookies"))
 
 ;; input methods, including a direct mozc binding to avoid ibus (requires mozc install)
+(defmacro set-input-method-fun (name)
+  `(defun ,(intern (format "set-input-method-%s" name)) ()
+     (interactive)
+     (set-input-method name)))
+
 (setup "custom-input-methods"
   (setup "mozc" (setq mozc-leim-title "あ"))
 
@@ -479,12 +486,12 @@ See the variable `align-rules-list' for more details.")
   (setq default-input-method "muflax-latin")
   (defun turn-on-default-input-method ()
     (set-input-method default-input-method))
-  (add-hook 'text-mode-hook        'turn-on-default-input-method)
-  (add-hook 'prog-mode-hook        'turn-on-default-input-method)
-  (add-hook 'dired-mode-hook       'turn-on-default-input-method)
-  (add-hook 'minibuffer-setup-hook 'turn-on-default-input-method)
-  (add-hook 'occur-mode-hook       'turn-on-default-input-method)
-  (add-hook 'phi-search-init-hook  'turn-on-default-input-method)
+  (add-hook 'text-mode-hook       	'turn-on-default-input-method)
+  (add-hook 'prog-mode-hook       	'turn-on-default-input-method)
+  (add-hook 'dired-mode-hook      	'turn-on-default-input-method)
+  (add-hook 'minibuffer-setup-hook	'turn-on-default-input-method)
+  (add-hook 'occur-mode-hook      	'turn-on-default-input-method)
+  (add-hook 'phi-search-init-hook 	'turn-on-default-input-method)
 
   ;; don't underline partial input
   (setq input-method-highlight-flag nil)
@@ -494,17 +501,12 @@ See the variable `align-rules-list' for more details.")
 
   (defun clear-input-method ()
     (interactive) (set-input-method nil))
-  (defun set-input-method-muflax-latin ()
-    (interactive) (set-input-method "muflax-latin"))
-  (defun set-input-method-muflax-cyrillic ()
-    (interactive) (set-input-method "muflax-cyrillic"))
-  (defun set-input-method-muflax-turkish ()
-    (interactive) (set-input-method "muflax-turkish"))
-  (defun set-input-method-muflax-greek ()
-    (interactive) (set-input-method "muflax-greek"))
-  (defun set-input-method-japanese-mozc ()
-    (interactive) (set-input-method "japanese-mozc"))
-  )
+
+  (set-input-method-fun "muflax-latin")
+  (set-input-method-fun "muflax-cyrillic")
+  (set-input-method-fun "muflax-turkish")
+  (set-input-method-fun "muflax-greek")
+  (set-input-method-fun "japanese-mozc"))
 
 ;; analog to delete-file
 (defun delete-current-file ()
@@ -562,10 +564,10 @@ See the variable `align-rules-list' for more details.")
   (defun generalized-shell-command (command arg)
     "Unifies `shell-command' and `shell-command-on-region'.
 You have:
-- (no arg) run command and place output
-- (C-u)    ... don't chomp output
-- (region) replace region with output from command
-- (C-u region) ... and print to minibuffer" ;; TODO: make this also chomp
+- (no arg)    	run command and place output
+- (C-u)       	... don't chomp output
+- (region)    	replace region with output from command
+- (C-u region)	... and print to minibuffer" ; TODO: make this also chomp
     (interactive (list (read-from-minibuffer "$ " nil nil nil 'shell-command-history)
                        current-prefix-arg))
     (let ((p (if mark-active (region-beginning) 0))
@@ -606,16 +608,16 @@ You have:
 
 ;; rotate / toggle text
 (setup-lazy '(rotate-text) "rotate-text"
-  (add-to-list 'rotate-text-words   '("auto" "manual"))
-  (add-to-list 'rotate-text-words   '("if" "unless"))
-  (add-to-list 'rotate-text-words   '("map" "each"))
-  (add-to-list 'rotate-text-words   '("on" "off"))
-  (add-to-list 'rotate-text-words   '("select" "reject"))
-  (add-to-list 'rotate-text-words   '("t" "nil"))
-  (add-to-list 'rotate-text-words   '("true" "false"))
-  (add-to-list 'rotate-text-words   '("var" "const"))
-  (add-to-list 'rotate-text-words   '("yes" "no"))
-  (add-to-list 'rotate-text-symbols '("?" "!")))
+  (add-to-list 'rotate-text-words  	'("auto"  	"manual"))
+  (add-to-list 'rotate-text-words  	'("if"    	"unless"))
+  (add-to-list 'rotate-text-words  	'("map"   	"each"))
+  (add-to-list 'rotate-text-words  	'("on"    	"off"))
+  (add-to-list 'rotate-text-words  	'("select"	"reject"))
+  (add-to-list 'rotate-text-words  	'("t"     	"nil"))
+  (add-to-list 'rotate-text-words  	'("true"  	"false"))
+  (add-to-list 'rotate-text-words  	'("var"   	"const"))
+  (add-to-list 'rotate-text-words  	'("yes"   	"no"))
+  (add-to-list 'rotate-text-symbols	'("?"     	"!")))
 
 ;; handle camelcase better
 (global-subword-mode 1)
@@ -626,9 +628,9 @@ You have:
   (setup "fold-dwim")
   (setup "yafolding")
 
-  (add-hook 'enh-ruby-hook   'hs-minor-mode)
-  (add-hook 'prog-mode-hook  'hs-minor-mode)
-  (add-hook 'notes-mode-hook 'hs-minor-mode)
+  (add-hook 'enh-ruby-hook  	'hs-minor-mode)
+  (add-hook 'prog-mode-hook 	'hs-minor-mode)
+  (add-hook 'notes-mode-hook	'hs-minor-mode)
 
   (setq hs-isearch-open t)
 
@@ -659,9 +661,9 @@ You have:
 
     (set-temporary-overlay-map
      (let ((map (make-sparse-keymap)))
-       (define-key map (kbd "<right>") 'hs-fold-increase)
-       (define-key map (kbd "<left>")  'hs-fold-decrease)
-       (define-key map (kbd "SPC")     'hs-fold-reset)
+       (define-key map (kbd "<right>")	'hs-fold-increase)
+       (define-key map (kbd "<left>") 	'hs-fold-decrease)
+       (define-key map (kbd "SPC")    	'hs-fold-reset)
        map) t)
     (message "<right> to fold more, <left> to fold less, SPC to reset."))
 
@@ -692,9 +694,9 @@ You have:
 
     (set-temporary-overlay-map
      (let ((map (make-sparse-keymap)))
-       (define-key map (kbd "<right>") 'whitespace-fold-increase)
-       (define-key map (kbd "<left>")  'whitespace-fold-decrease)
-       (define-key map (kbd "SPC")     'whitespace-fold-reset)
+       (define-key map (kbd "<right>")	'whitespace-fold-increase)
+       (define-key map (kbd "<left>") 	'whitespace-fold-decrease)
+       (define-key map (kbd "SPC")    	'whitespace-fold-reset)
        map) t)
     (message "<right> to fold more, <left> to fold less, SPC to reset."))
   )
@@ -711,12 +713,12 @@ You have:
   (setq sp-highlight-pair-overlay nil)
 
   ;; don't do any insertion/deletion magic
-  (setq sp-autoescape-string-quote nil)
-  (setq sp-autoinsert-pair nil)
-  (setq sp-cancel-autoskip-on-backward-movement nil)
-  (setq sp-autodelete-pair nil)
-  (set-default 'sp-autoskip-opening-pair nil)
-  (set-default 'sp-autoskip-closing-pair nil)
+  (setq       	sp-autoescape-string-quote             	nil)
+  (setq       	sp-autoinsert-pair                     	nil)
+  (setq       	sp-cancel-autoskip-on-backward-movement	nil)
+  (setq       	sp-autodelete-pair                     	nil)
+  (set-default	'sp-autoskip-opening-pair              	nil)
+  (set-default	'sp-autoskip-closing-pair              	nil)
 
   ;; move to beginning of text on line
   (defun sp-kill-to-end-of-sexp ()
@@ -753,21 +755,23 @@ You have:
 
   ;; markdown-mode
   (sp-with-modes '(markdown-mode)
-    (sp-local-pair "*" "*" :actions '(wrap))
-    (sp-local-pair "_" "_" :actions '(wrap)))
+    (sp-local-pair "*"	"*"	:actions	'(wrap)	)
+    (sp-local-pair "_"	"_"	:actions	'(wrap)	)
+    )
 
   ;; notes-mode
   (sp-with-modes '(notes-mode)
-    (sp-local-pair "*" "*" :actions '(wrap))
-    (sp-local-pair "/" "/" :actions '(wrap))
-    (sp-local-pair "<" ">" :actions '(wrap))
-    (sp-local-pair "[" "]")
-    (sp-local-pair "'" "'" :actions '(wrap))
-    (sp-local-pair "`" "`" :actions '(wrap)))
+    (sp-local-pair "*"	"*"	:actions	'(wrap)	)
+    (sp-local-pair "/"	"/"	:actions	'(wrap)	)
+    (sp-local-pair "<"	">"	:actions	'(wrap)	)
+    (sp-local-pair "["	"]"	        	       	)
+    (sp-local-pair "'"	"'"	:actions	'(wrap)	)
+    (sp-local-pair "`"	"`"	:actions	'(wrap)	)
+    )
 
   ;; overwrite |pipe| handling in ruby
   (sp-with-modes '(enh-ruby-mode ruby-mode)
-    (sp-local-pair "|" "|" :pre-handlers nil))
+    (sp-local-pair "|"	"|"	:pre-handlers	nil)	)
   )
 
 ;; perspectives / workspaces (has to be loaded late)
@@ -1007,6 +1011,5 @@ narrowed."
   (elastic-advice-command       	indent-according-to-mode)
   (elastic-advice-command-region	indent-region)
   )
-
 
 (provide 'init-editing)

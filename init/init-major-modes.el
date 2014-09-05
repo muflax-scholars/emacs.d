@@ -9,12 +9,12 @@
 (add-to-list 'auto-mode-alist '("\\.log$" . fundamental-mode))
 
 ;; associate non-standardish interpreters with modes
-(add-to-list 'interpreter-mode-alist '("python2" . python-mode))
-(add-to-list 'interpreter-mode-alist '("python3" . python-mode))
-(add-to-list 'interpreter-mode-alist '("ruby18"  . enh-ruby-mode))
-(add-to-list 'interpreter-mode-alist '("ruby19"  . enh-ruby-mode))
-(add-to-list 'interpreter-mode-alist '("ruby20"  . enh-ruby-mode))
-(add-to-list 'interpreter-mode-alist '("ruby21"  . enh-ruby-mode))
+(add-to-list 'interpreter-mode-alist '("python2"	. python-mode))
+(add-to-list 'interpreter-mode-alist '("python3"	. python-mode))
+(add-to-list 'interpreter-mode-alist '("ruby18" 	. enh-ruby-mode))
+(add-to-list 'interpreter-mode-alist '("ruby19" 	. enh-ruby-mode))
+(add-to-list 'interpreter-mode-alist '("ruby20" 	. enh-ruby-mode))
+(add-to-list 'interpreter-mode-alist '("ruby21" 	. enh-ruby-mode))
 
 ;; c style (1TBS, but guess offsets for other files)
 (setq c-default-style "k&r" c-basic-offset tab-width)
@@ -24,8 +24,8 @@
 (setup-lazy '(c-turn-on-eldoc-mode) "c-eldoc"
   (setq c-eldoc-buffer-regenerate-time 15))
 (setup-after "cc-mode"
-  (add-hook 'c++-mode-hook 'c-turn-on-eldoc-mode)
-  (add-hook 'c-mode-hook 'c-turn-on-eldoc-mode))
+  (add-hook 'c++-mode-hook	'c-turn-on-eldoc-mode)
+  (add-hook 'c-mode-hook  	'c-turn-on-eldoc-mode))
 
 ;; show what function we're in
 (setup "which-func"
@@ -38,14 +38,14 @@
   (auto-insert-mode)
   (setq auto-insert-directory "~/.emacs.d/templates/")
   (setq auto-insert-query nil)
-  (define-auto-insert "\\.sh$"  "sh")
-  (define-auto-insert "\\.py$"  "python")
-  (define-auto-insert "\\.hs$"  "haskell")
-  (define-auto-insert "\\.pl$"  "perl")
-  (define-auto-insert "\\.rb$"  "ruby")
-  (define-auto-insert "\\.c$"   "c")
-  (define-auto-insert "\\.cpp$" "cpp")
-  (define-auto-insert "\\.go$"  "go"))
+  (define-auto-insert "\\.sh$" 	"sh")
+  (define-auto-insert "\\.py$" 	"python")
+  (define-auto-insert "\\.hs$" 	"haskell")
+  (define-auto-insert "\\.pl$" 	"perl")
+  (define-auto-insert "\\.rb$" 	"ruby")
+  (define-auto-insert "\\.c$"  	"c")
+  (define-auto-insert "\\.cpp$"	"cpp")
+  (define-auto-insert "\\.go$" 	"go"))
 
 ;; auctex
 (setup-lazy '(latex-mode LaTeX-mode tex-mode TeX-mode) "latex")
@@ -54,22 +54,22 @@
 ;; markdown
 (setup-lazy '(markdown-mode) "markdown-mode"
   (setq markdown-command "kramdown"))
-(add-to-list 'auto-mode-alist '("\\.pdc$"      . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.mkd$"      . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.md$"       . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.pdc$"     	. markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.mkd$"     	. markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.md$"      	. markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.markdown$"	. markdown-mode))
 
 ;; notes-mode
 (setup "notes-mode"
   (add-hook 'notes-mode-hook 'whitespace-mode))
-(add-to-list 'auto-mode-alist '("\\.txt$"    . notes-mode))
-(add-to-list 'auto-mode-alist '("\\.notes$"  . notes-mode))
-(add-to-list 'auto-mode-alist '("\\.script$" . notes-mode))
+(add-to-list 'auto-mode-alist '("\\.txt$"   	. notes-mode))
+(add-to-list 'auto-mode-alist '("\\.notes$" 	. notes-mode))
+(add-to-list 'auto-mode-alist '("\\.script$"	. notes-mode))
 
 ;; yaml
 (setup-lazy '(yaml-mode) "yaml-mode")
-(add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode))
-(add-to-list 'auto-mode-alist '("\\.yml$"  . yaml-mode))
+(add-to-list 'auto-mode-alist '("\\.yaml$"	. yaml-mode))
+(add-to-list 'auto-mode-alist '("\\.yml$" 	. yaml-mode))
 
 ;; org-mode
 (setup-lazy '(org-mode) "org"
@@ -78,22 +78,22 @@
   (setq org-hide-leading-stars t)
   (setq org-indent-indentation-per-level 2)
   (setq org-startup-folded 'content)
-  (setq org-blank-before-new-entry '((heading . nil)
-                                     (plain-list-item . auto)))
+  (setq org-blank-before-new-entry '((heading        	. nil)
+                                     (plain-list-item	. auto)))
   (setq org-M-RET-may-split-line nil)
 
   ;; unset annoying keys
-  (define-key org-mouse-map      [(tab)]         nil)
-  (define-key org-goto-map       [(tab)]         nil)
-  (define-key orgstruct-mode-map [(tab)]         nil)
-  (define-key orgstruct-mode-map (kbd "C-i")     nil)
-  (define-key org-mode-map       [(tab)]         nil)
-  (define-key org-mode-map       [(control tab)] nil)
-  (define-key org-mode-map       (kbd "M-t")     nil)
-  (define-key org-mode-map       [S-iso-lefttab] nil)
-  (define-key org-mode-map       [(shift tab)]   nil)
-  (define-key org-mode-map       [backtab]       nil)
-  (define-key org-mode-map       [?\e (tab)]     nil)
+  (define-key org-mouse-map     	[(tab)]        	nil)
+  (define-key org-goto-map      	[(tab)]        	nil)
+  (define-key orgstruct-mode-map	[(tab)]        	nil)
+  (define-key orgstruct-mode-map	(kbd "C-i")    	nil)
+  (define-key org-mode-map      	[(tab)]        	nil)
+  (define-key org-mode-map      	[(control tab)]	nil)
+  (define-key org-mode-map      	(kbd "M-t")    	nil)
+  (define-key org-mode-map      	[S-iso-lefttab]	nil)
+  (define-key org-mode-map      	[(shift tab)]  	nil)
+  (define-key org-mode-map      	[backtab]      	nil)
+  (define-key org-mode-map      	[?\e (tab)]    	nil)
 
   ;; tag column
   (setq org-tags-column -70)
@@ -111,16 +111,18 @@
   ;; code block
   (org-babel-do-load-languages
    'org-babel-load-languages
-   '((emacs-lisp . t)
-     (sh         . t)
-     (ruby       . t)
-     (python     . t)
-     (haskell    . t)))
-  (add-to-list 'org-src-lang-modes '("ruby" . enh-ruby))
-  (add-to-list 'org-src-lang-modes '("r"    . enh-ruby))
-  (add-to-list 'org-src-lang-modes '("h"    . haskell))
-  (add-to-list 'org-src-lang-modes '("s"    . sh))
-  (add-to-list 'org-src-lang-modes '("p"    . python))
+   '((emacs-lisp	. t)
+     (sh        	. t)
+     (ruby      	. t)
+     (python    	. t)
+     (haskell   	. t)))
+
+  (add-to-list 'org-src-lang-modes '("ruby"	. enh-ruby))
+  (add-to-list 'org-src-lang-modes '("r"   	. enh-ruby))
+  (add-to-list 'org-src-lang-modes '("h"   	. haskell))
+  (add-to-list 'org-src-lang-modes '("s"   	. sh))
+  (add-to-list 'org-src-lang-modes '("p"   	. python))
+
   (setq org-src-fontify-natively t)
   (setq org-confirm-babel-evaluate nil)
 
@@ -137,19 +139,16 @@
                  "#+BEGIN_SRC ruby\n?\n#+END_SRC"
                  "<src lang=\"ruby\">\n\n</src>"))
 
-  (defun org-todo-todo ()
-    (interactive)
-    (org-todo "TODO"))
+  (defmacro org-todo-fun (name)
+    `(defun ,(intern (format "org-todo-%s" (downcase name))) ()
+       (interactive)
+       (org-todo name)))
 
-  (defun org-todo-waiting ()
-    (interactive)
-    (org-todo "WAITING"))
-
-  (defun org-todo-done ()
-    (interactive)
-    (org-todo "DONE"))
-
+  (org-todo-fun "TODO")
+  (org-todo-fun "WAITING")
+  (org-todo-fun "DONE")
   )
+
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
 
 ;; loaded so that we can diminish it later
@@ -172,8 +171,10 @@
 (setup-after "haskell-mode"
   (setup "haskell-doc"
     (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode))
+
  (setup "haskell-indentation"
    (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation))
+
  (setup "inf-haskell"
    (add-hook 'inferior-haskell-mode-hook 'turn-on-ghci-completion)))
 
@@ -195,13 +196,13 @@
   (add-hook 'enh-ruby-mode-hook 'whitespace-mode))
 
 ;;ruby files
-(add-to-list 'interpreter-mode-alist '("ruby" . enh-ruby-mode))
-(add-to-list 'auto-mode-alist '("\\.rake$"    . enh-ruby-mode))
-(add-to-list 'auto-mode-alist '("Rakefile$"   . enh-ruby-mode))
-(add-to-list 'auto-mode-alist '("Gemfile$"    . enh-ruby-mode))
-(add-to-list 'auto-mode-alist '("Capfile$"    . enh-ruby-mode))
-(add-to-list 'auto-mode-alist '("\\.builder$" . enh-ruby-mode))
-(add-to-list 'auto-mode-alist '("\\.gemspec$" . enh-ruby-mode))
+(add-to-list 'interpreter-mode-alist	'("ruby"       	. enh-ruby-mode))
+(add-to-list 'auto-mode-alist       	'("\\.rake$"   	. enh-ruby-mode))
+(add-to-list 'auto-mode-alist       	'("Rakefile$"  	. enh-ruby-mode))
+(add-to-list 'auto-mode-alist       	'("Gemfile$"   	. enh-ruby-mode))
+(add-to-list 'auto-mode-alist       	'("Capfile$"   	. enh-ruby-mode))
+(add-to-list 'auto-mode-alist       	'("\\.builder$"	. enh-ruby-mode))
+(add-to-list 'auto-mode-alist       	'("\\.gemspec$"	. enh-ruby-mode))
 
 (setup-after "enh-ruby-mode"
   ;; ri documentation tool
@@ -214,7 +215,7 @@
 
   ;; erb
   (setup "rhtml-mode"))
-(add-to-list 'auto-mode-alist '("\\.erb$"     . rhtml-mode))
+(add-to-list 'auto-mode-alist '("\\.erb$" . rhtml-mode))
 
 ;; javascript
 (setup-lazy '(js2-mode) "js2-mode")
@@ -240,10 +241,9 @@
 
 ;; mark stuff like FIXME
 (setup-lazy '(fic-mode) "fic-mode")
-(add-hook 'prog-mode-hook     'fic-mode)
-;; misbehaving modes
-(add-hook 'enh-ruby-mode-hook 'fic-mode)
-(add-hook 'js2-mode-hook      'fic-mode)
+(add-hook 'prog-mode-hook    	'fic-mode)
+(add-hook 'enh-ruby-mode-hook	'fic-mode)
+(add-hook 'js2-mode-hook     	'fic-mode)
 
 ;; dired
 (setup-lazy '(dired-jump dired-next dired-prev) "dired"
@@ -308,8 +308,8 @@
 
   ;; open by extension
   (setq dired-open-extensions '(
-                               ("pdf"  . "zathura")
-                               ("djvu" . "zathura")
+                               ("pdf" 	. "zathura")
+                               ("djvu"	. "zathura")
                                ))
 
   ;; sort number naturally
@@ -365,9 +365,10 @@
 
 ;; fancy git interactions
 (setup-lazy '(magit-status) "magit"
-  (set-default 'magit-stage-all-confirm nil)
-  (set-default 'magit-unstage-all-confirm nil)
-  (setq magit-log-cutoff-length 10000)
+  (set-default 'magit-stage-all-confirm  	nil)
+  (set-default 'magit-unstage-all-confirm	nil)
+
+  (setq magit-log-cutoff-length 1000)
 
   ;; full screen magit-status
   (defadvice magit-status (around magit-fullscreen activate)
@@ -451,6 +452,5 @@
 (add-to-list 'auto-mode-alist '("\\.scm$"	. scheme-mode))
 (add-to-list 'auto-mode-alist '("\\.ss$" 	. scheme-mode))
 (add-to-list 'auto-mode-alist '("\\.rkt$"	. racket-mode))
-
 
 (provide 'init-major-modes)

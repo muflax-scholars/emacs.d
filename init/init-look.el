@@ -44,8 +44,8 @@
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 (setup "leuven-theme") ; force-load it here so we have all faces set up
 
-(defvar bright-theme 'leuven               "Bright theme to use")
-(defvar dark-theme   'twilight-anti-bright "Dark theme to use")
+(defvar bright-theme	'leuven              	"Bright theme to use")
+(defvar dark-theme  	'twilight-anti-bright	"Dark theme to use")
 
 (defvar use-bright-theme t "Whether to use the bright or dark theme")
 
@@ -75,12 +75,11 @@
   (global-hl-line-mode t))
 
 ;; fonts
-(defvar small-font  "Anonymous Pro 8")
-(defvar normal-font "Fantasque Sans Mono 10")
-(defvar big-font    "Fantasque Sans Mono 11")
-(defvar huge-font   "Fantasque Sans Mono 13")
-(defvar font-list '(
-                    small-font
+(defvar small-font 	"Anonymous Pro 8")
+(defvar normal-font	"Fantasque Sans Mono 10")
+(defvar big-font   	"Fantasque Sans Mono 11")
+(defvar huge-font  	"Fantasque Sans Mono 13")
+(defvar font-list '(small-font
                     normal-font
                     big-font
                     huge-font))
@@ -168,54 +167,60 @@
   (setq whitespace-style '(face tabs tab-mark))
   (setq whitespace-display-mappings
         `(
-          (space-mark   ?\s    [?\u00B7] [?.]) ; space      - centered dot
-          (space-mark   ?\xA0  [?\u00A4] [?_]) ; hard space - currency
-          (newline-mark ?\n    [?$ ?\n])       ; eol        - dollar sign
+          (space-mark  	?\s  	[?\u00B7]	[?.])	; space      - centered dot
+          (space-mark  	?\xA0	[?\u00A4]	[?_])	; hard space - currency
+          (newline-mark	?\n  	[?$ ?\n])	     	; eol        - dollar sign
 
           ;; consistent spacing of tab
-          (tab-mark ?\t ; tab - bar
-                    [?\| ,@(make-list (1- tab-width) ?\s)]
-                    [?\| ,@(make-list (1- tab-width) ?\s)])
+          (tab-mark	?\t 	; tab - bar
+                   	[?\|	,@(make-list (1- tab-width) ?\s)]
+                   	[?\|	,@(make-list (1- tab-width) ?\s)])
           )))
 
 ;; clean up modeline and hide standard minor modes
+(defmacro diminish-minor-mode (package mode &optional short-name)
+  `(setup-after ,package
+     (when (fboundp ,mode)
+       (diminish ,mode ,(or short-name "")))))
+
 (setup "diminish"
-  (setup-after "abbrev"                (diminish 'abbrev-mode))
-  (setup-after "anzu"                  (diminish 'anzu-mode))
-  (setup-after "auto-complete"         (diminish 'auto-complete-mode))
-  (setup-after "autorevert"            (diminish 'auto-revert-mode))
-  (setup-after "eldoc"                 (diminish 'eldoc-mode))
-  (setup-after "fic-mode"              (diminish 'fic-mode))
-  (setup-after "guide-key"             (diminish 'guide-key-mode))
-  (setup-after "haskell-doc"           (diminish 'haskell-doc-mode))
-  (setup-after "haskell-indentation"   (diminish 'haskell-indentation-mode))
-  (setup-after "hideshow"              (diminish 'hs-minor-mode))
-  (setup-after "highlight-parentheses" (diminish 'highlight-parentheses-mode))
-  (setup-after "magit"                 (diminish 'magit-auto-revert-mode))
-  (setup-after "ruby-block"            (diminish 'ruby-block-mode))
-  (setup-after "simple"                (diminish 'auto-fill-function "AF"))
-  (setup-after "simple"                (diminish 'global-visual-line-mode))
-  (setup-after "simple"                (diminish 'visual-line-mode))
-  (setup-after "slime"                 (diminish 'slime-mode))
-  (setup-after "smartparens"           (diminish 'smartparens-mode))
-  (setup-after "subword"               (diminish 'subword-mode))
-  (setup-after "subword"               (diminish 'superword-mode))
-  (setup-after "undo-tree"             (diminish 'undo-tree-mode))
-  (setup-after "volatile-highlights"   (diminish 'volatile-highlights-mode))
-  (setup-after "whitespace"            (diminish 'global-whitespace-mode "WS"))
-  (setup-after "whitespace"            (diminish 'whitespace-mode " |"))
-  (setup-after "whole-line-or-region"  (diminish 'whole-line-or-region-mode))
-  (setup-after "yasnippet"             (diminish 'yas-minor-mode)))
+  (diminish-minor-mode "abbrev"               	'abbrev-mode               	    	)
+  (diminish-minor-mode "anzu"                 	'anzu-mode                 	    	)
+  (diminish-minor-mode "auto-complete"        	'auto-complete-mode        	    	)
+  (diminish-minor-mode "autorevert"           	'auto-revert-mode          	    	)
+  (diminish-minor-mode "eldoc"                	'eldoc-mode                	    	)
+  (diminish-minor-mode "fic-mode"             	'fic-mode                  	    	)
+  (diminish-minor-mode "guide-key"            	'guide-key-mode            	    	)
+  (diminish-minor-mode "haskell-doc"          	'haskell-doc-mode          	    	)
+  (diminish-minor-mode "haskell-indentation"  	'haskell-indentation-mode  	    	)
+  (diminish-minor-mode "hideshow"             	'hs-minor-mode             	    	)
+  (diminish-minor-mode "highlight-parentheses"	'highlight-parentheses-mode	    	)
+  (diminish-minor-mode "magit"                	'magit-auto-revert-mode    	    	)
+  (diminish-minor-mode "ruby-block"           	'ruby-block-mode           	    	)
+  (diminish-minor-mode "simple"               	'auto-fill-function        	"AF"	)
+  (diminish-minor-mode "simple"               	'global-visual-line-mode   	    	)
+  (diminish-minor-mode "simple"               	'visual-line-mode          	    	)
+  (diminish-minor-mode "slime"                	'slime-mode                	    	)
+  (diminish-minor-mode "smartparens"          	'smartparens-mode          	    	)
+  (diminish-minor-mode "subword"              	'subword-mode              	    	)
+  (diminish-minor-mode "subword"              	'superword-mode            	    	)
+  (diminish-minor-mode "undo-tree"            	'undo-tree-mode            	    	)
+  (diminish-minor-mode "volatile-highlights"  	'volatile-highlights-mode  	    	)
+  (diminish-minor-mode "whitespace"           	'global-whitespace-mode    	"WS"	)
+  (diminish-minor-mode "whitespace"           	'whitespace-mode           	" |"	)
+  (diminish-minor-mode "whole-line-or-region" 	'whole-line-or-region-mode 	    	)
+  (diminish-minor-mode "yasnippet"            	'yas-minor-mode            	    	)
+  )
 
 ;; clean up way-too-long major modes
-(defmacro rename-modeline (package-name mode new-name)
+(defmacro diminish-major-mode (package-name mode new-name)
   `(eval-after-load ,package-name
-     '(defadvice ,mode (after rename-modeline activate)
+     '(defadvice ,mode (after diminish-major-mode activate)
         (setq mode-name ,new-name))))
 
-(rename-modeline "lisp-mode"     emacs-lisp-mode "EL")
-(rename-modeline "sh-script"     sh-mode         "sh")
-(rename-modeline "ruby-mode"     ruby-mode       "RB")
-(rename-modeline "enh-ruby-mode" enh-ruby-mode   "RB+")
+(diminish-major-mode "lisp-mode"    	emacs-lisp-mode	"EL")
+(diminish-major-mode "sh-script"    	sh-mode        	"sh")
+(diminish-major-mode "ruby-mode"    	ruby-mode      	"RB")
+(diminish-major-mode "enh-ruby-mode"	enh-ruby-mode  	"RB+")
 
 (provide 'init-look)

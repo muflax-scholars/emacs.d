@@ -53,9 +53,9 @@
 
 ;; auto completion
 (setup "auto-complete-config"
-  (add-to-list 'ac-modes 'enh-ruby-mode)
-  (add-to-list 'ac-modes 'go-mode)
-  ;; (add-to-list 'ac-modes 'notes-mode)
+  (add-to-list 'ac-modes   	'enh-ruby-mode)
+  (add-to-list 'ac-modes   	'go-mode)
+  ;; (add-to-list 'ac-modes	'notes-mode)
 
   (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
   (setq ac-comphist-file "~/.emacs.d/cache/ac-comphist.dat")
@@ -78,16 +78,18 @@
 ;; racket repl
 (setup-after "racket-mode"
   (setup "ac-geiser"
-    (add-hook    'geiser-mode-hook      'ac-geiser-setup)
-    (add-hook    'geiser-repl-mode-hook 'ac-geiser-setup)
+    (add-hook 'geiser-mode-hook     	'ac-geiser-setup)
+    (add-hook 'geiser-repl-mode-hook	'ac-geiser-setup)
+
     (add-to-list 'ac-modes 'racket-mode)
     (add-to-list 'ac-modes 'geiser-repl-mode)))
 
 ;; common lisp repl
 (setup-after "lisp-mode"
   (setup "ac-slime"
-    (add-hook 'slime-mode-hook      'set-up-slime-ac)
-    (add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
+    (add-hook 'slime-mode-hook     	'set-up-slime-ac)
+    (add-hook 'slime-repl-mode-hook	'set-up-slime-ac)
+
     (add-to-list 'ac-modes 'common-lisp-mode)
     (add-to-list 'ac-modes 'slime-repl-mode)))
 

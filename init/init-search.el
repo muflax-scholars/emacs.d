@@ -20,9 +20,9 @@
               collect (string-to-char c)))
   )
 
-(setup-lazy '(ace-jump-buffer) "ace-jump-buffer")
-(setup-lazy '(ace-link)        "ace-link")
-(setup-lazy '(ace-window)      "ace-window")
+(setup-lazy '(ace-jump-buffer)	"ace-jump-buffer")
+(setup-lazy '(ace-link)       	"ace-link")
+(setup-lazy '(ace-window)     	"ace-window")
 
 (setup-lazy '(phi-search phi-search-backward) "phi-search"
   ;; override phi-search's face definition because it force-sets them

@@ -1,14 +1,15 @@
 ;; misc helper functions
 
-(require 'cl-lib)
+(setup "cl-lib")
+(setup "dash")
 (setup "s")
 
 ;; some generic aliases that make elisp less painful
-(defalias 'first  'cl-first)
-(defalias 'second 'cl-second)
-(defalias 'rest   'cl-rest)
-(defalias 'loop   'cl-loop)
-(defalias 'case   'cl-case)
+(defalias 'first 	'cl-first)
+(defalias 'second	'cl-second)
+(defalias 'rest  	'cl-rest)
+(defalias 'loop  	'cl-loop)
+(defalias 'case  	'cl-case)
 
 (defun read-lines (filename)
   "Return a list of lines of a file at FILENAME."
@@ -32,8 +33,8 @@
   "Returns word boundary or selected region."
   (let (beg
         end
-        (deactivate-mark nil)
-        (case-fold-search nil))
+        (deactivate-mark 	nil)
+        (case-fold-search	nil))
 
     (if (region-active-p)
         (setq beg (region-beginning)

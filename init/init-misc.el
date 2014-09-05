@@ -1,10 +1,9 @@
 ;; random options
 
 ;; calendar
-(setq calendar-week-start-day 1)  ; monday
-(setq calendar-date-style 't)     ; sanity
+(setq calendar-week-start-day 1)	; monday
+(setq calendar-date-style 't)   	; sanity
 
-;; custom variables because fuck emacs
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
