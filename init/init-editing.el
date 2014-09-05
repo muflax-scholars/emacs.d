@@ -976,7 +976,12 @@ narrowed."
     (global-subword-mode 1)))
 
 
-(defvar elastic-tab-align-modes '(emacs-lisp-mode)
+(defvar elastic-tab-align-modes
+  '(
+    emacs-lisp-mode
+    enh-ruby-mode
+    notes-mode
+    )
   "modes that align elastic tabstops during indent")
 
 ;; elastic tabstops
