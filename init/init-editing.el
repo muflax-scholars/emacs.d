@@ -416,6 +416,10 @@ See the variable `align-rules-list' for more details.")
     (interactive "r")
     (align-regexp start end (concat "\\(\\s-*\\)" "\\s-") 1 0 t))
 
+  ;; align should always indent with spaces
+  (defadvice align-areas (around fix-tab-indent activate)
+    (let ((indent-tabs-mode nil))
+      ad-do-it))
   )
 
 ;; diff- mode (better colors)
