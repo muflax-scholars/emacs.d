@@ -319,8 +319,7 @@
 (setup-lazy '(turn-on-eldoc-mode) "eldoc"
   (setq eldoc-idle-delay 0.1))
 (setup-after "lisp-mode"
-  (add-hook 'lisp-mode-hook 'turn-on-eldoc-mode)
-  (add-hook 'lisp-mode-hook 'whitespace-mode))
+  (add-hook 'lisp-mode-hook 'turn-on-eldoc-mode))
 
 ;; go-lang
 (setup-lazy '(go-mode) "go-mode"
@@ -342,10 +341,12 @@
       (byte-compile-file buffer-file-name)))
   (add-hook 'after-save-hook 'byte-compile-current-buffer))
 
-(setup-after "emacs-lisp-mode"
+(setup-after "lisp-mode"
   ;; highlight common libraries
-  (setup "cl-lib-highlight" (cl-lib-highlight-initialize))
-  (setup "dash"             (dash-enable-font-lock)))
+  (setup "cl-lib-highlight"	(cl-lib-highlight-initialize))
+  (setup "dash"            	(dash-enable-font-lock))
+
+  (add-hook 'emacs-lisp-mode-hook 'whitespace-mode))
 
 ;; ag search
 (setup-lazy '(ag) "ag"
@@ -427,10 +428,11 @@
     (add-hook 'lisp-mode-hook (lambda ()
                                 (unless (slime-connected-p)
                                   (save-excursion (slime)))))
-    ))
+    )
+  (add-hook 'lisp-mode-hook 'whitespace-mode))
 
-(add-to-list 'auto-mode-alist '("\\.sbclrc$" . lisp-mode))
-(add-to-list 'auto-mode-alist '("\\.cl$"     . lisp-mode))
+(add-to-list 'auto-mode-alist '("\\.sbclrc$"	. lisp-mode))
+(add-to-list 'auto-mode-alist '("\\.cl$"    	. lisp-mode))
 
 ;; racket
 (setup "racket-mode"
@@ -444,10 +446,11 @@
     (setq geiser-mode-start-repl-p t)
 
     (add-hook 'racket-mode-hook 'geiser-mode--maybe-activate))
-  )
-(add-to-list 'auto-mode-alist '("\\.scm$" . scheme-mode))
-(add-to-list 'auto-mode-alist '("\\.ss$"  . scheme-mode))
-(add-to-list 'auto-mode-alist '("\\.rkt$" . racket-mode))
+  (add-hook 'racket-mode-hook 'whitespace-mode))
+
+(add-to-list 'auto-mode-alist '("\\.scm$"	. scheme-mode))
+(add-to-list 'auto-mode-alist '("\\.ss$" 	. scheme-mode))
+(add-to-list 'auto-mode-alist '("\\.rkt$"	. racket-mode))
 
 
 (provide 'init-major-modes)
