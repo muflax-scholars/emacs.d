@@ -535,12 +535,18 @@ Return a list of the form (begin end indent nonlist-indent). If the point is not
 (defun notes-indent-line ()
   "Indent the current line using some heuristics, trying to preserve any elastic tabstops."
   (interactive)
-  (beginning-of-line)
-  (skip-chars-forward "\t")
-  (delete-region (point-at-bol) (point))
+  (let ((orig-point (point)))
 
-  (beginning-of-line)
-  (indent-to (notes-calc-indent)))
+    (beginning-of-line)
+    (skip-chars-forward "\t")
+    (delete-region (point-at-bol) (point))
+
+    (beginning-of-line)
+    (indent-to (notes-calc-indent))
+
+    ;; don't lose position unless we're left of the indent point
+    (when (> orig-point (point))
+      (goto-char orig-point))))
 
 (defun notes-calc-indent ()
   "Return a list of indentation columns to cycle through.
