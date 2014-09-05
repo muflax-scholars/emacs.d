@@ -2,7 +2,7 @@
 
 ;; works (kinda) like Elastic Tabstops in Sublime
 
-;; bugs:
+;; bugs with minor mode:
 ;; - can't add spaces in current cell
 ;; - newline broken at EOF
 
