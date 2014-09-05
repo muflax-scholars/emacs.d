@@ -57,15 +57,12 @@ Stuff that doesn't work:
 
 		Stating the suspicion that it has something to do with "last line on the screen" or "being in a list", or both.
 
-	- align.el uses tabs to indent when tabstops are enabled?! teh fuck align.el?! I hate you so much.
-
 	- minimap is unusable at the moment, mostly because it's either slow (minimap.el version) or super flickery (sublimity version)
 
 	- breadcrumbs is completely unusable and the code is a mess, but automatic "get me back to where I was a moment ago" is badly needed
 
 	- before-save-hooks should have a way to turn them off; probably a minor mode
 
-	- smart tabs as separator like in O's Sublime, based on tabs / delimit
 ]
 
 [ project-specific code / keybindings
