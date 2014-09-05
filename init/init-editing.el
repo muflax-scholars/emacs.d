@@ -986,16 +986,16 @@ narrowed."
        (when (member major-mode elastic-tab-align-modes)
          (elastic-align-current))))
 
-  ;; FIXME should be smarter and hijack the command's arguments
+  ;; TODO should be smarter and hijack the command's arguments
   (defmacro elastic-advice-command-region (command-name)
     `(defadvice ,command-name (after elastic-tabstops activate)
        (when (member major-mode elastic-tab-align-modes)
-         (elastic-align-region (point) (mark)))))
+         (apply 'elastic-align-region
+                (sort (list (point) (mark)) '<)))))
 
   (elastic-advice-command       	indent-for-tab-command)
   (elastic-advice-command       	literal-tab)
   (elastic-advice-command-region	indent-region)
-
   )
 
 
