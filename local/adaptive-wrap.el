@@ -28,64 +28,25 @@
 
 ;;; Code:
 
-(require 'easymenu)
-(require 's)
-
-(defcustom adaptive-wrap-extra-indent 0
-  "Number of extra spaces to indent in `adaptive-wrap-prefix-mode'.
-
-`adaptive-wrap-prefix-mode' indents the visual lines to
-the level of the actual line plus `adaptive-wrap-extra-indent'.
-A negative value will do a relative de-indent.
-
-Examples:
-
-actual indent = 2
-extra indent = -1
-
-  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
- eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
- enim ad minim veniam, quis nostrud exercitation ullamco laboris
- nisi ut aliquip ex ea commodo consequat.
-
-actual indent = 2
-extra indent = 2
-
-  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-    enim ad minim veniam, quis nostrud exercitation ullamco laboris
-    nisi ut aliquip ex ea commodo consequat."
-  :type 'integer
-  :group 'visual-line)
-(make-variable-buffer-local 'adaptive-wrap-extra-indent)
-
-(defun adaptive-wrap-fill-context-prefix (beg en)
+(defun adaptive-wrap-fill-context-prefix (beg end)
   "Like `fill-context-prefix', but with length adjusted by `adaptive-wrap-extra-indent'."
-  ;; Note: fill-context-prefix may return nil; See:
-  ;; http://article.gmane.org/gmane.emacs.devel/156285
-  (let* ((fcp (or (fill-context-prefix beg en) ""))
+  ;; Note: fill-context-prefix may return nil; See: http://article.gmane.org/gmane.emacs.devel/156285
+  (let* ((fcp (or (fill-context-prefix beg end) ""))
          (fcp-len (string-width fcp))
          (fill-char (if (< 0 fcp-len)
                         (string-to-char (substring fcp -1))
-                      ?\ )))
+                      ?\s)))
 
     ;; Tabs are wonky because visual-lines can't work around Emacs' limitation that tabs have to snap to physical columns, so we replace them with spaces instead.
-    (setq fcp (replace-regexp-in-string "[\t]"
-                                        (s-repeat tab-width " ")
-                                        fcp))
+    (setq fcp (replace-regexp-in-string
+               "[\t]" (make-string tab-width ?\s)
+               fcp))
 
-    (cond
-     ((= 0 adaptive-wrap-extra-indent)
-      fcp)
-     ((< 0 adaptive-wrap-extra-indent)
-      (concat fcp
-              (make-string adaptive-wrap-extra-indent fill-char)))
-     ((< 0 (+ adaptive-wrap-extra-indent fcp-len))
-      (substring fcp
-                 0
-                 (+ adaptive-wrap-extra-indent fcp-len)))
-     (t
-      ""))))
+    ;; Make sure we don't over-indent the line.
+    (setq fcp (substring fcp 0
+                         (min (window-width) 20 (length fcp))))
+
+    fcp))
 
 (defun adaptive-wrap-prefix-function (beg end)
   "Indent the region between BEG and END with adaptive filling."
@@ -120,8 +81,7 @@ extra indent = 2
 
 (defun turn-on-adaptive-wrap-prefix-mode ()
   ;; disable it in org-mode 'cause they already do something like that
-  (unless (memq major-mode
-                (list 'org-mode))
+  (unless (memq major-mode '(org-mode))
     (adaptive-wrap-prefix-mode 1)))
 
 (define-globalized-minor-mode global-adaptive-wrap-prefix-mode
@@ -185,7 +145,6 @@ extra indent = 2
 ;;
 ;; 	* awp-mode: New package.
 ;;
-
 
 (provide 'adaptive-wrap)
 ;;; adaptive-wrap.el ends here
