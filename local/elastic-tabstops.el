@@ -5,6 +5,8 @@
 ;; bugs with minor mode:
 ;; - can't add spaces in current cell
 ;; - newline broken at EOF
+;; - first line might be broken
+;; - mc might want a workaround to speed it up
 
 (eval-when-compile 'cl-lib)
 (eval-when-compile 'dash)
