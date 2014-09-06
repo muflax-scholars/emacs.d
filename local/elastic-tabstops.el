@@ -30,6 +30,9 @@
       (setq start	(point))
       (setq last 	start)
 
+      ;; skip indentation
+      (skip-chars-forward "\t")
+
       ;; width starts after the tab, and ends before the (spaces and) tab
       (while (re-search-forward elastic-line-separator-regexp end t)
         ;; calculate width
