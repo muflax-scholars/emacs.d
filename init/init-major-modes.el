@@ -319,7 +319,8 @@
 (setup-lazy '(turn-on-eldoc-mode) "eldoc"
   (setq eldoc-idle-delay 0.1))
 (setup-after "lisp-mode"
-  (add-hook 'lisp-mode-hook 'turn-on-eldoc-mode))
+  (add-hook 'lisp-mode-hook 'turn-on-eldoc-mode)
+  (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode))
 
 ;; go-lang
 (setup-lazy '(go-mode) "go-mode"
