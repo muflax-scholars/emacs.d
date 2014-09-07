@@ -211,8 +211,8 @@
 (key-def global-map "M-<right>"	'er/mark-defun)
 (key-def global-map "M-<up>"   	'md/move-lines-up)
 
-(key-def global-map "M-<next>" 	'scroll-other-window)
-(key-def global-map "M-<prior>"	'scroll-other-window-down)
+(key-def global-map "M-<next>" 	'dired-next)
+(key-def global-map "M-<prior>"	'dired-prev)
 
 (key-def global-map "C-M-<down>" 	'buf-move-down)
 (key-def global-map "C-M-<left>" 	'buf-move-left)
