@@ -75,7 +75,7 @@
   (global-hl-line-mode t))
 
 ;; fonts
-(defvar small-font 	"Anonymous Pro 8")
+(defvar small-font 	"Fantasque Sans Mono 8")
 (defvar normal-font	"Fantasque Sans Mono 10")
 (defvar big-font   	"Fantasque Sans Mono 11")
 (defvar huge-font  	"Fantasque Sans Mono 13")
