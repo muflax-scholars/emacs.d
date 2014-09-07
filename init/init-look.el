@@ -83,10 +83,10 @@
                     normal-font
                     big-font
                     huge-font))
-(defvar current-font normal-font)
+(defvar default-font normal-font)
 
-(defun set-window-font ()
-  (set-frame-font current-font))
+(defun set-window-font (&optional font)
+  (set-frame-font (or font default-font)))
 
 (add-hook 'after-make-window-system-frame-hooks 'set-window-font)
 
@@ -95,8 +95,7 @@
   `(defun ,(intern (format "use-%s" font)) ()
      ,(format "Use font set in '%s'" font)
      (interactive)
-     (setq current-font ,font)
-     (set-window-font)))
+     (set-window-font ,font)))
 
 (loop for font in font-list collect (eval `(use-font ,font)))
 
