@@ -63,6 +63,7 @@ Stuff that doesn't work:
 
 	- before-save-hooks should have a way to turn them off; probably a minor mode
 
+	- fonts should have a bigger range, and their own temp-keymap so you can left-right select them
 ]
 
 [ project-specific code / keybindings
