@@ -157,8 +157,9 @@
 
 ;; reload file when it changed (and the buffer has no changes)
 (global-auto-revert-mode 1)
-;; also revert dired
-(add-hook 'dired-mode-hook 'turn-on-auto-revert-mode)
+;; also revert some special buffers
+(add-hook 'dired-mode-hook  	'turn-on-auto-revert-mode)
+(add-hook 'neotree-mode-hook	'turn-on-auto-revert-mode)
 (setq auto-revert-verbose nil)
 
 ;; new python mode
