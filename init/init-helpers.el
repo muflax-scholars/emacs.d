@@ -1,8 +1,15 @@
 ;; misc helper functions
 
+;; common lisp stuff
 (setup "cl-lib")
+
+;; better convenience functions for strings and map/reduce/loop
 (setup "dash")
 (setup "s")
+
+;; sane regexes
+(setup "rx")
+(setup "ample-regexps")
 
 ;; some generic aliases that make elisp less painful
 (defalias 'first 	'cl-first)

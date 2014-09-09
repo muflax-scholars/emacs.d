@@ -111,7 +111,7 @@
 ;;; Code:
 
 (eval-when-compile (require 'cl))
-(eval-when-compile (require 'ample-regexps))
+(require 'ample-regexps)
 
 ;; Customizable Variables
 
