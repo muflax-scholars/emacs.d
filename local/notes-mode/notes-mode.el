@@ -651,10 +651,10 @@ With two \\[universal-argument] prefixes (i.e., when ARG is 16), decrease the in
   (setq require-final-newline nil)
 
   ;; comments
-  (set (make-local-variable 'comment-start)      "#")
-  (set (make-local-variable 'comment-start-skip) "#+ *")
-  (set (make-local-variable 'comment-end)        "")
-  (set (make-local-variable 'comment-column)     0)
+  (set (make-local-variable 'comment-start)     	"#")
+  (set (make-local-variable 'comment-start-skip)	"#+ *")
+  (set (make-local-variable 'comment-end)       	"")
+  (set (make-local-variable 'comment-column)    	0)
 
   ;; font lock
   (set (make-local-variable 'font-lock-defaults)
