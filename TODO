@@ -88,12 +88,9 @@ Stuff that doesn't work:
 
 [ regexes
 
-	visual-regexes is cool, but is Python-based. That's mostly fine, but I either:
-
-	- should switch completely to Emacs regexes, which have some cool stuff (but muh Ruby!!w!)
-	- finish the Ruby port
-
-	Emacs regexps are pretty cool, but lack some important categories. Needs more work. Might be fixable via rx/ample-rx instead, and aggressive shortcutting.
+	- universal rx support, possibly by extending phi-search (also needs a history)
+	- might need to fix isearch mess
+	- alternatively, use isearch for simple searches, and phi-searches for rx?
 
 ]
 
