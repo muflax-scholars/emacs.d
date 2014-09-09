@@ -111,6 +111,7 @@
 ;;; Code:
 
 (eval-when-compile (require 'cl))
+(eval-when-compile (require 'ample-regexps))
 
 ;; Customizable Variables
 
@@ -255,6 +256,15 @@
   :group 'notes-faces)
 
 ;; Parsing
+
+(define-arx notes-rx
+  '(
+    (indent	(and bol (* blank)))
+
+    (open-bracket 	(any "[" "{"))
+    (close-bracket	(any "]" "}"))
+    ))
+
 
 (defconst notes-regex-grab-bracket-square-start
   "^\\([ \t]*\\)\\[\\([ \t]+[^\n]*\\)?$")
@@ -663,8 +673,10 @@ With two \\[universal-argument] prefixes (i.e., when ARG is 16), decrease the in
 
   ;; imenu support
   (set (make-local-variable 'imenu-generic-expression)
-       '(
-         (nil "^[\t]*[[] \\(.+\\)$" 1)
+       `(
+         (nil ,(notes-rx indent "[" (+ blank)
+                         (group (* not-newline)) eol)
+              1)
          ))
 
   ;; indentation
@@ -672,7 +684,8 @@ With two \\[universal-argument] prefixes (i.e., when ARG is 16), decrease the in
 
   ;; folding
   (add-to-list 'hs-special-modes-alist
-               '(notes-mode "[[{]" "[\\]}]"))
+               `(notes-mode ,(notes-rx open-bracket)
+                            ,(notes-rx close-bracket)))
 
   )
 
