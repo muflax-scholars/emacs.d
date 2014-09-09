@@ -64,6 +64,8 @@ Stuff that doesn't work:
 	- before-save-hooks should have a way to turn them off; probably a minor mode
 
 	- fonts should have a bigger range, and their own temp-keymap so you can left-right select them
+
+	- after-revert-hook should unfold the buffer because folding is rarely consistent across reverts
 ]
 
 [ project-specific code / keybindings
