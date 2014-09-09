@@ -259,7 +259,20 @@
 
 (define-arx notes-rx
   '(
-    (indent	(and bol (* blank)))
+    (indent  	(and bol (* blank)))
+    (indent-g	(group indent))
+
+    (annotation-g
+     (:func (lambda (_form &rest args)
+              `(group (any ,@args) (* word)))))
+
+    (annotation-line
+     (:func (lambda (_form &rest args)
+              `(seq indent-g
+                    (annotation-g ,@args)
+                    (group (or (seq (+ blank) (* not-newline))
+                               (seq (* blank) eol)))))))
+
 
     (open-bracket 	(any "[" "{"))
     (close-bracket	(any "]" "}"))
@@ -282,31 +295,31 @@
   "^\\([ \t]*\\)\\([\\[{][ \t]+\\)\\(.+\\)")
 
 (defconst notes-regex-annotation-abstract
-  "^\\([ \t]*\\)\\([+]\\sw*\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)")
+  (notes-rx (annotation-line "+")))
 
 (defconst notes-regex-annotation-transformation
-  "^\\([ \t]*\\)\\([<>]\\sw*\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)")
+  (notes-rx (annotation-line "<" ">")))
 
 (defconst notes-regex-annotation-comment
-  "^\\([ \t]*\\)\\([#]\\sw*\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)")
+  (notes-rx (annotation-line "#")))
 
 (defconst notes-regex-annotation-equivalent
-  "^\\([ \t]*\\)\\([=]\\sw*\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)")
+  (notes-rx (annotation-line "=")))
 
 (defconst notes-regex-annotation-model
-  "^\\([ \t]*\\)\\([$]\\sw*\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)")
+  (notes-rx (annotation-line "$")))
 
 (defconst notes-regex-annotation-prompt
-  "^\\([ \t]*\\)\\([%?]\\sw*\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)")
+  (notes-rx (annotation-line "%" "?")))
 
 (defconst notes-regex-annotation-quote
-  "^\\([ \t]*\\)\\([|]\\sw*\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)")
+  (notes-rx (annotation-line "|")))
 
 (defconst notes-regex-annotation-reply
-  "^\\([ \t]*\\)\\([@!]\\sw*\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)")
+  (notes-rx (annotation-line "@" "!")))
 
 (defconst notes-regex-annotation-wrong
-  "^\\([ \t]*\\)\\([*]\\sw*\\)\\(\\([ \t]+\\)\\(.*\\)\\|[ \t]*$\\)")
+  (notes-rx (annotation-line "*")))
 
 (defconst notes-regex-list
   "^\\([ \t]*\\)\\([0-9]+\\.\\|[-]\\)\\([ \t]+\\)")
