@@ -1003,8 +1003,7 @@ narrowed."
   (defmacro elastic-advice-command-region (command-name)
     `(defadvice ,command-name (after elastic-tabstops activate)
        (when (member major-mode elastic-tab-align-modes)
-         (apply 'elastic-align-region
-                (sort (list (point) (mark)) '<)))))
+         (elastic-align-region (point) (mark)))))
 
   (elastic-advice-command       	indent-for-tab-command)
   (elastic-advice-command       	literal-tab)

@@ -4,8 +4,8 @@
 
 ;; bugs with minor mode:
 ;; - can't add spaces in current cell
-;; - newline broken at EOF
 ;; - first line might be broken
+;; general bugs:
 ;; - mc might want a workaround to speed it up
 
 (eval-when-compile 'cl-lib)
@@ -162,9 +162,10 @@
   "elastic-align selected region"
   (let (scope)
     (save-excursion
-      (goto-char beg)
+      (goto-char (min beg end))
 
-      (while (<= (point) end)
+      (while (and (<= (point) (max beg end))
+                  (not (eobp)))
         (setq scope (elastic-block-scope))
         (when scope
           (elastic-align-block scope)
