@@ -66,6 +66,8 @@ Stuff that doesn't work:
 	- fonts should have a bigger range, and their own temp-keymap so you can left-right select them
 
 	- after-revert-hook should unfold the buffer because folding is rarely consistent across reverts
+
+	- occur-x keymap conflicts with occur-edit
 ]
 
 [ project-specific code / keybindings
