@@ -320,8 +320,8 @@
 (setup-lazy '(turn-on-eldoc-mode) "eldoc"
   (setq eldoc-idle-delay 0.1))
 (setup-after "lisp-mode"
-  (add-hook 'lisp-mode-hook 'turn-on-eldoc-mode)
-  (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode))
+  (add-hook 'lisp-mode-hook      	'turn-on-eldoc-mode)
+  (add-hook 'emacs-lisp-mode-hook	'turn-on-eldoc-mode))
 
 ;; go-lang
 (setup-lazy '(go-mode) "go-mode"
@@ -454,5 +454,10 @@
 (add-to-list 'auto-mode-alist '("\\.scm$"	. scheme-mode))
 (add-to-list 'auto-mode-alist '("\\.ss$" 	. scheme-mode))
 (add-to-list 'auto-mode-alist '("\\.rkt$"	. racket-mode))
+
+;; repl
+(setup-lazy '(ielm) "ielm"
+  (setq ielm-prompt "> ")
+  (add-hook 'ielm-mode-hook	'turn-on-eldoc-mode))
 
 (provide 'init-major-modes)
