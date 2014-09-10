@@ -1,0 +1,5 @@
+/packages/archives
+/packages/*.txt
+/cache
+/var
+!**/*.elc
