@@ -53,6 +53,7 @@
         mozc-handle-event
         notes-dedent-or-delete
         notes-indent-line
+        org-force-cycle-archived
         org-force-self-insert
         org-indent-line
         org-return-indent
