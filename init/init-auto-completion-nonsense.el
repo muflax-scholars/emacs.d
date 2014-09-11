@@ -53,8 +53,8 @@
 
 ;; auto completion
 (setup "auto-complete-config"
-  (add-to-list 'ac-modes   	'enh-ruby-mode)
-  (add-to-list 'ac-modes   	'go-mode)
+  (add-to-list 'ac-modes	'enh-ruby-mode)
+  (add-to-list 'ac-modes	'go-mode)
   ;; (add-to-list 'ac-modes	'notes-mode)
 
   (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
@@ -92,5 +92,10 @@
 
     (add-to-list 'ac-modes 'common-lisp-mode)
     (add-to-list 'ac-modes 'slime-repl-mode)))
+
+;; emacs-lisp
+(setup-after "ielm"
+  (add-hook 'ielm-mode-hook 'ac-emacs-lisp-mode-setup)
+  (add-to-list 'ac-modes 'inferior-emacs-lisp-mode))
 
 (provide 'init-auto-completion-nonsense)
