@@ -659,7 +659,7 @@
 (kd visual-prefix-map
     '("C-f"	fold-dwim-toggle)
     '("C-y"	yafolding-toggle-element)
-    '("SPC"	fold-dwim-show-all)
+    '("SPC"	hs-show-block)
     '("f"  	hs-fold-levels)
     '("F"  	fold-dwim-show-all)
     '("s"  	whitespace-fold-levels)
