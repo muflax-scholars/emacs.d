@@ -121,7 +121,10 @@
     (isearch-search-and-update)))
 
 (setup "occur-x"
-  (add-hook 'occur-mode-hook 'turn-on-occur-x-mode))
+  (defun turn-off-occur-x-mode () (occur-x-mode -1))
+
+  (add-hook 'occur-mode-hook     	'turn-on-occur-x-mode)
+  (add-hook 'occur-edit-mode-hook	'turn-off-occur-x-mode))
 
 ;; wrap search
 (defadvice isearch-search (after isearch-no-fail activate)
