@@ -256,6 +256,8 @@
     (dired-jump)
     (revert-buffer)
     (dired-next-line 1)
+    (when (eobp)
+      (dired-back-to-top))
     (dired-find-file))
 
   (defun dired-prev ()
@@ -263,6 +265,8 @@
     (dired-jump)
     (revert-buffer)
     (dired-next-line -1)
+    (when (looking-at "\\.\\.?$")
+      (dired-jump-to-bottom))
     (dired-find-file))
 
   ;; move files between split panes
