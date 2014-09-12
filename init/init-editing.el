@@ -473,6 +473,21 @@ See the variable `align-rules-list' for more details.")
   ;; cookies
   (setq url-cookie-file "~/.emacs.d/cache/url/cookies"))
 
+(defun sudo-open-file (&optional arg)
+  "Find a file and open it as root."
+  (interactive "p")
+  (if arg
+      (find-file (concat "/sudo::" (ido-read-file-name "File: ")))
+    (find-alternate-file (concat "/sudo::" buffer-file-name))))
+
+(defun sudo-open-current-file ()
+  "Edit the current file as root."
+  (interactive)
+  (let ((pos (point)))
+    (find-alternate-file
+     (concat "/sudo::" (buffer-file-name (current-buffer))))
+    (goto-char pos)))
+
 ;; input methods, including a direct mozc binding to avoid ibus (requires mozc install)
 (defmacro set-input-method-fun (name)
   `(defun ,(intern (format "set-input-method-%s" name)) ()
