@@ -492,7 +492,7 @@ See the variable `align-rules-list' for more details.")
 (defmacro set-input-method-fun (name)
   `(defun ,(intern (format "set-input-method-%s" name)) ()
      (interactive)
-     (set-input-method name)))
+     (set-input-method ,name)))
 
 (setup "custom-input-methods"
   (setup "mozc" (setq mozc-leim-title "あ"))
