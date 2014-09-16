@@ -73,6 +73,8 @@
         sp-backward-symbol
         sp-beginning-of-sexp
         sp-end-of-sexp
+        sp-kill-hybrid-sexp
+        sp-newline
         sp-remove-active-pair-overlay
         sp-unwrap-sexp
         toggle-title-case
