@@ -270,8 +270,6 @@
     '("TAB"  	indent-for-tab-command)
 
     ;; punctuation keys
-    '("C-(" 	sp-narrow-to-sexp)
-    '("C-)" 	widen)
     '("C--" 	negative-argument)
     '("C-\\"	generalized-shell-command) ; terminal bug, same as C-|
     '("C-|" 	generalized-shell-command)
@@ -544,9 +542,9 @@
   (define-key ac-completing-map "\r"         	nil)
 
   (kd ac-completing-map
+      '("C-j"	ac-complete)
       '("C-t"	ac-next)
       '("M-t"	ac-previous)
-      '("C-j"	ac-complete)
       ))
 
 ;; multiple cursors
@@ -677,8 +675,10 @@
     '("C-e"    	sp-kill-to-end-of-sexp)
     '("M-a"    	sp-copy-to-beginning-of-sexp)
     '("M-e"    	sp-copy-to-end-of-sexp)
+    '("|"      	sp-split-sexp)
     '("a"      	sp-beginning-of-sexp)
     '("e"      	sp-end-of-sexp)
+    '("j"      	sp-join-sexp)
     '("k"      	sp-kill-sexp)
     '("r"      	sp-rewrap-sexp)
     '("u"      	sp-unwrap-sexp)
@@ -762,14 +762,14 @@
         )
 
     ;; M-up goes to first file
-    (define-key dired-mode-map 	[remap beginning-of-buffer]	dired-back-to-top)
+    (define-key dired-mode-map 	[remap beginning-of-buffer]	'dired-back-to-top)
     (define-key wdired-mode-map	[remap beginning-of-buffer]	'dired-back-to-top)
     (define-key dired-mode-map 	[remap smart-up]           	'dired-back-to-top)
 
     ;; M-down goes to last file
-    (define-key dired-mode-map 	[remap end-of-buffer] 'dired-jump-to-bottom)
-    (define-key dired-mode-map 	[remap smart-down]    'dired-jump-to-bottom)
-    (define-key wdired-mode-map	[remap end-of-buffer] 'dired-jump-to-bottom)))
+    (define-key dired-mode-map 	[remap end-of-buffer]	'dired-jump-to-bottom)
+    (define-key dired-mode-map 	[remap smart-down]   	'dired-jump-to-bottom)
+    (define-key wdired-mode-map	[remap end-of-buffer]	'dired-jump-to-bottom)))
 
 ;; golang
 (setup-after "go-mode"
@@ -824,41 +824,59 @@
     '("T"  	toggle-title-case)
     )
 
+
+
+
 ;; lisp
 (setup-after "lisp-mode"
   ;; operate on sexps
-  ;; (kd lisp-mode-map
-  ;; '("C-<return>"	md/duplicate-down)
-  ;; )
-  ;; (add-hook 'lisp-mode 'smartparens-strict-mode)
-  ;; sp-kill-sexp
-  ;; sp-insert-pair
-  ;; sp-kill-hybrid-sexp
-  ;; sp-hybrid-kill-excessive-whitespace
-  ;; sp-forward-sexp
-  ;; sp-backward-sexp
-  ;; sp-up-sexp
-  ;; sp-down-sexp
-  ;; sp-next-sexp
-  ;; sp-previous-sexp
-  ;; sp-beginning-of-sexp
-  ;; sp-end-of-sexp
-  ;; sp-splice-sexp
-  ;; sp-splice-sexp-killing-backward
-  ;; sp-splice-sexp-killing-forward
-  ;; sp-raise-sexp
-  ;; sp-forward-slurp-sexp
-  ;; sp-forward-barf-sexp
-  ;; sp-absorb-sexp
-  ;; sp-emit-sexp
-  ;; sp-extract-before-sexp
-  ;; sp-extract-after-sexp
-  ;; sp-split-sexp
-  ;; sp-join-sexp
-  ;; sp-indent-defun
-  ;; sp-newline
-  ;; sp-comment
-  )
+  (kd lisp-mode-shared-map
+      ;; TODO these might want to be remaps instead for consistency
+
+      ;; '("C-<return>" md/duplicate-down)
+
+      '("C-("	sp-down-sexp)
+      '("C-)"	sp-up-sexp)
+
+      '("C-k"	sp-kill-hybrid-sexp)
+
+      '("M-a"	sp-beginning-of-sexp)
+      '("M-b"	sp-forward-sexp)
+      '("M-e"	sp-end-of-sexp)
+      '("M-f"	sp-backward-sexp)
+
+      '("C-;"	sp-comment)
+      '("C-<"	sp-dedent-adjust-sexp)
+      '("C->"	sp-indent-adjust-sexp)
+      '("C-^"	sp-raise-sexp)
+
+      '("<return>"	sp-newline)
+
+
+      ;; sp-kill-to-beginning-of-sexp
+      ;; sp-kill-to-end-of-sexp
+      ;; sp-copy-to-beginning-of-sexp
+      ;; sp-copy-to-end-of-sexp
+
+      ))
+
+;; sp-insert-pair
+;; sp-next-sexp
+;; sp-previous-sexp
+
+;; sp-splice-sexp-killing-backward
+;; sp-splice-sexp-killing-forward
+
+;; sp-forward-slurp-sexp
+;; sp-forward-barf-sexp
+
+;; sp-absorb-sexp
+;; sp-emit-sexp
+
+;; sp-extract-before-sexp
+;; sp-extract-after-sexp
+
+;; sp-indent-defun
 
 ;; fonts
 (kd font-prefix-map
