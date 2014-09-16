@@ -419,10 +419,10 @@
   (setup "slime"
     (setq slime-lisp-implementations
           '((ccl 	("ccl"))
-            (sbcl	("sbcl" "--noinform") :coding-system utf-8-unix)))
+            (sbcl	("sbcl" "--noinform" "--no-linedit") :coding-system utf-8-unix)))
 
     (setq slime-default-lisp   	'sbcl)
-    (setq inferior-lisp-program	"sbcl")
+    (setq inferior-lisp-program	"sbcl --noinform --no-linedit")
 
     (setq slime-contribs '(slime-fancy))
     (setq slime-enable-evaluate-in-emacs t)
