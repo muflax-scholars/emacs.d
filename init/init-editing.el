@@ -1,7 +1,7 @@
 ;; generic editing features
 
 ;; safety
-(setq make-backup-files t)
+(setq make-backup-files nil)
 (defvar autosave-dir (expand-file-name "~/.emacs.d/cache/autosave/"))
 (setq auto-save-list-file-prefix autosave-dir)
 (setq auto-save-file-name-transforms `((".*" ,autosave-dir t)))
