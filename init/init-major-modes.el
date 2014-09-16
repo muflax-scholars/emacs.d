@@ -415,17 +415,14 @@
 
 ;; common lisp
 (setup-after "lisp-mode"
+  (setup "slime-autoloads")
   (setup "slime"
     (setq slime-lisp-implementations
-      '((ccl 	("ccl"))
-        (sbcl	("sbcl" "--noinform") :coding-system utf-8-unix)))
+          '((ccl 	("ccl"))
+            (sbcl	("sbcl" "--noinform") :coding-system utf-8-unix)))
 
     (setq slime-default-lisp   	'sbcl)
     (setq inferior-lisp-program	"sbcl")
-
-    (setq quicklisp-helper-path "~/local/quicklisp/slime-helper.el")
-    (when (file-exists-p (expand-file-name quicklisp-helper-path))
-      (load (expand-file-name quicklisp-helper-path)))
 
     (setq slime-contribs '(slime-fancy))
     (setq slime-enable-evaluate-in-emacs t)
