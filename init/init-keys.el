@@ -824,10 +824,7 @@
     '("T"  	toggle-title-case)
     )
 
-
-
-
-;; lisp
+;; general lisp
 (setup-after "lisp-mode"
   ;; operate on sexps
   (kd lisp-mode-shared-map
@@ -859,6 +856,106 @@
       ;; sp-copy-to-end-of-sexp
 
       ))
+
+;; slime
+(setup-after "slime"
+  ;; disable slime default keys
+  (setq slime-parent-bindings	nil
+        slime-prefix-bindings	nil
+        slime-editing-keys   	nil
+        slime-keys           	nil
+        slime-doc-bindings   	nil
+        slime-who-bindings   	nil)
+
+  ;; (re-)setup keymaps
+  (slime-init-keymaps)
+
+  ;; define actual keys
+  (kd slime-doc-map
+      '()
+      ;; '((?a slime-apropos)
+      ;;   (?z slime-apropos-all)
+      ;;   (?p slime-apropos-package)
+      ;;   (?d slime-describe-symbol)
+      ;;   (?f slime-describe-function)
+      ;;   (?h slime-documentation-lookup)
+      ;;   (?~ common-lisp-hyperspec-format)
+      ;;   (?# common-lisp-hyperspec-lookup-reader-macro)))
+      )
+  (kd slime-who-map
+      '()
+      ;; '((?c slime-who-calls)
+      ;;   (?w slime-calls-who)
+      ;;   (?r slime-who-references)
+      ;;   (?b slime-who-binds)
+      ;;   (?s slime-who-sets)
+      ;;   (?m slime-who-macroexpands)
+      ;;   (?a slime-who-specializes)))
+      )
+  (kd slime-prefix-map
+      '()
+      ;; '(("\C-r"  slime-eval-region)
+      ;;   (":"     slime-interactive-eval)
+      ;;   ("\C-e"  slime-interactive-eval)
+      ;;   ("E"     slime-edit-value)
+      ;;   ("\C-l"  slime-load-file)
+      ;;   ("\C-b"  slime-interrupt)
+      ;;   ("\M-d"  slime-disassemble-symbol)
+      ;;   ("\C-t"  slime-toggle-trace-fdefinition)
+      ;;   ("I"     slime-inspect)
+      ;;   ("\C-xt" slime-list-threads)
+      ;;   ("\C-xn" slime-cycle-connections)
+      ;;   ("\C-xc" slime-list-connections)
+      ;;   ("<"     slime-list-callers)
+      ;;   (">"     slime-list-callees)
+      ;;   ;; Include DOC keys...
+      ;;   ("\C-d"  slime-doc-map)
+      ;;   ;; Include XREF WHO-FOO keys...
+      ;;   ("\C-w"  slime-who-map)
+      )
+  (kd slime-parent-map
+      '()
+      ;; '(("\M-."      slime-edit-definition)
+      ;;   ("\M-,"      slime-pop-find-definition-stack)
+      ;;   ("\M-_"      slime-edit-uses)    ; for German layout
+      ;;   ("\M-?"      slime-edit-uses)    ; for USian layout
+      ;;   ("\C-x4."	 slime-edit-definition-other-window)
+      ;;   ("\C-x5."	 slime-edit-definition-other-frame)
+      ;;   ("\C-x\C-e"  slime-eval-last-expression)
+      ;;   ("\C-\M-x"   slime-eval-defun)
+      ;;   ;; Include PREFIX keys...
+      ;;   ("\C-c"	 slime-prefix-map)))
+
+      )
+  (kd slime-editing-map
+      '()
+      ;; ("\M-\t"      slime-complete-symbol)
+      ;; (" "          slime-space)
+      ;; ;; Evaluating
+      ;; ;;("\C-x\M-e" slime-eval-last-expression-display-output :inferior t)
+      ;; ("\C-c\C-p"   slime-pprint-eval-last-expression)
+      ;; ;; Macroexpand
+      ;; ("\C-c\C-m"   slime-expand-1)
+      ;; ("\C-c\M-m"   slime-macroexpand-all)
+      ;; ;; Misc
+      ;; ("\C-c\C-u"   slime-undefine-function)
+      ;; (,(kbd "C-M-.")   slime-next-location)
+      ;; (,(kbd "C-M-,")   slime-previous-location)
+      ;; ;; Obsolete, redundant bindings
+      ;; ("\C-c\C-i" slime-complete-symbol)
+      ;; ;;("\M-*" pop-tag-mark) ; almost to clever
+
+      )
+  (kd slime-mode-map
+      '()
+      ;; ("\M-p"       slime-previous-note)
+      ;; ("\M-n"       slime-next-note)
+      ;; ("\C-c\M-c"   slime-remove-notes)
+      ;; ("\C-c\C-k"   slime-compile-and-load-file)
+      ;; ("\C-c\M-k"   slime-compile-file)
+      ;; ("\C-c\C-c"   slime-compile-defun)))
+      )
+  )
 
 ;; sp-insert-pair
 ;; sp-next-sexp
