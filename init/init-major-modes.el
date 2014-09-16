@@ -450,6 +450,9 @@
     (setq geiser-mode-company-p nil)
     (setq geiser-mode-start-repl-p t)
 
+    ;; don't replace a lambda - if anything, use pretty-symbol-mode later
+    (setq racket-mode-pretty-lambda nil)
+
     (add-hook 'racket-mode-hook 'geiser-mode--maybe-activate))
   (add-hook 'racket-mode-hook 'whitespace-mode))
 
