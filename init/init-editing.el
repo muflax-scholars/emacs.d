@@ -734,6 +734,10 @@ You have:
   (set-default	'sp-autoskip-opening-pair              	nil)
   (set-default	'sp-autoskip-closing-pair              	nil)
 
+  ;; sexp manipulation
+  (setq sp-hybrid-kill-excessive-whitespace t)
+  (setq sp-navigate-close-if-unbalanced t)
+
   ;; move to beginning of text on line
   (defun sp-kill-to-end-of-sexp ()
     "Kill everything in the sexp without unbalancing it."
