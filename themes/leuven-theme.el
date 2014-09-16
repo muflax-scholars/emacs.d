@@ -473,6 +473,7 @@
    `(paren-face-match ((,class (:foreground "#E2464C" :background "#FFE182"))))
    `(paren-face-mismatch ((,class (:weight bold :foreground "white" :background "#FF3F3F"))))
    `(paren-face-no-match ((,class (:weight bold :foreground "white" :background "#FF3F3F"))))
+   `(racket-selfeval-face ((,class (:foreground "#D0372D"))))
    `(recover-this-file ((,class (:weight bold :background "#FF3F3F"))))
    `(rng-error ((,class (:weight bold :foreground "red" :background "#FBE3E4"))))
    `(sh-heredoc ((,class (:foreground "blue" :background "#EEF5FE"))))
