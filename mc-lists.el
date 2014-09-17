@@ -51,6 +51,7 @@
         move-line-down
         move-line-up
         mozc-handle-event
+        next-newline-and-indent
         notes-dedent-or-delete
         notes-indent-line
         org-force-cycle-archived
