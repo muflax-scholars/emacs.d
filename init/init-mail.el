@@ -22,7 +22,9 @@
           ("/[Google Mail].All Mail" 	. ?a)))
 
   ;; allow for updating mail using 'U' in the main view:
-  (setq mu4e-get-mail-command "offlineimap"))
+  (setq mu4e-get-mail-command "offlineimap")
+
+  (defalias 'mu 'mu4e))
 
 (setup "smtpmail"
   (setq message-send-mail-function	'smtpmail-send-it)
