@@ -11,7 +11,9 @@
 
 ;; manual paths
 (add-to-list 'load-path "~/.emacs.d/themes") ; themes
-(add-to-list 'load-path "~/src/emacs/slime") ; local slime install
+;; local installs that should be merged in but are too much work right now
+(add-to-list 'load-path "~/src/emacs/slime")
+(add-to-list 'load-path "~/src/mail/mu/mu4e")
 
 ;; elpa package-repositories
 (require 'package)

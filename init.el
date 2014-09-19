@@ -30,5 +30,8 @@
 ;; major modes
 (setup "init-major-modes")
 
+;; mail
+(setup "init-mail")
+
 ;; random options
 (setup "init-misc")
