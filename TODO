@@ -68,6 +68,8 @@ Stuff that doesn't work:
 	- after-revert-hook should unfold the buffer because folding is rarely consistent across reverts
 
 	- occur-x keymap conflicts with occur-edit
+
+	- mc + wdired don't work together
 ]
 
 [ project-specific code / keybindings
