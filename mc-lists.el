@@ -94,6 +94,7 @@
         align-current
         bc-set
         down-list
+        edebug-step-mode
         find-tag
         focus-next-window
         ibus-handle-event
