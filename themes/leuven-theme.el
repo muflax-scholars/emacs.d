@@ -64,7 +64,7 @@
       (shadow '(:foreground "#7F7F7F"))
       (string '(:foreground "#024c05" :background "#eff8e9")) ; #D0372D or #23238E or #20590C
       (subject '(:weight bold :foreground "#CF5D60"))
-      (symlink '(:foreground "deep sky blue"))
+      (symlink '(:italic t))
       (volatile-highlight '(:background "#FBE448"))
       (vc-branch '(:box (:line-width 1 :color "#00CC33") :foreground "black" :background "#AAFFAA")))
 
