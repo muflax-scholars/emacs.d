@@ -1004,9 +1004,13 @@ narrowed."
 
 (defvar elastic-tab-align-modes
   '(
-    emacs-lisp-mode
     enh-ruby-mode
     notes-mode
+    nix-mode
+    emacs-lisp-mode
+    lisp-mode
+    racket-mode
+    scheme-mode
     )
   "modes that align elastic tabstops during indent")
 

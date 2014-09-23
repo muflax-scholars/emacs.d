@@ -410,7 +410,8 @@
 (setup-lazy '(paradox-list-packages) "paradox"
   (setq paradox-github-token t))
 
-(setup-lazy '(nix-mode) "nix-mode")
+(setup-lazy '(nix-mode) "nix-mode"
+  (add-hook 'nix-mode-hook 'whitespace-mode))
 (add-to-list 'auto-mode-alist '("\\.nix" . nix-mode))
 
 ;; common lisp
