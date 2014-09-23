@@ -465,4 +465,8 @@
   (setq ielm-prompt "> ")
   (add-hook 'ielm-mode-hook	'turn-on-eldoc-mode))
 
+;; arc
+(setup-lazy '(arc-mode) "arc")
+(add-to-list 'auto-mode-alist '("\\.arc$" . arc-mode))
+
 (provide 'init-major-modes)
