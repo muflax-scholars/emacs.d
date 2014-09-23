@@ -469,4 +469,9 @@
 (setup-lazy '(arc-mode) "arc")
 (add-to-list 'auto-mode-alist '("\\.arc$" . arc-mode))
 
+;; shen
+(setup-lazy '(shen-mode) "shen-mode")
+(add-to-list 'auto-mode-alist '("\\.shen$" . shen-mode))
+
+
 (provide 'init-major-modes)
