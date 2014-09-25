@@ -78,8 +78,10 @@
         sp-newline
         sp-remove-active-pair-overlay
         sp-unwrap-sexp
+        title-case-word-or-region
         toggle-title-case
         toggle-upcase
+        upcase-word-or-region
         wdired-previous-line
         whole-line-or-region-comment-dwim-2
         whole-line-or-region-kill-region
