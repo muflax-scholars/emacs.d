@@ -3,7 +3,7 @@
 ;;; Code:
 
 
-;;;### (autoloads (vlf) "vlf" "vlf.el" (21540 16101 65519 459000))
+;;;### (autoloads (vlf) "vlf" "vlf.el" (21541 13778 896357 380000))
 ;;; Generated autoloads from vlf.el
 
 (autoload 'vlf "vlf" "\
@@ -16,8 +16,8 @@ Return newly created buffer.
 
 ;;;***
 
-;;;### (autoloads (vlf-ediff-files) "vlf-ediff" "vlf-ediff.el" (21540
-;;;;;;  16101 53520 19000))
+;;;### (autoloads (vlf-ediff-files) "vlf-ediff" "vlf-ediff.el" (21541
+;;;;;;  13778 888357 750000))
 ;;; Generated autoloads from vlf-ediff.el
 
 (autoload 'vlf-ediff-files "vlf-ediff" "\
@@ -30,8 +30,8 @@ respectively of difference list, runs ediff over the adjacent chunks.
 
 ;;;***
 
-;;;### (autoloads (vlf-occur-load) "vlf-occur" "vlf-occur.el" (21540
-;;;;;;  16101 87518 432000))
+;;;### (autoloads (vlf-occur-load) "vlf-occur" "vlf-occur.el" (21541
+;;;;;;  13778 911356 687000))
 ;;; Generated autoloads from vlf-occur.el
 
 (autoload 'vlf-occur-load "vlf-occur" "\
@@ -43,7 +43,7 @@ Load serialized `vlf-occur' results from current buffer.
 
 ;;;### (autoloads nil nil ("vlf-base.el" "vlf-follow.el" "vlf-integrate.el"
 ;;;;;;  "vlf-pkg.el" "vlf-search.el" "vlf-tune.el" "vlf-write.el")
-;;;;;;  (21540 16101 111350 839000))
+;;;;;;  (21541 13778 954424 176000))
 
 ;;;***
 
