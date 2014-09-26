@@ -283,74 +283,73 @@ If visual-line-mode is on, then also jump to beginning of real line."
     (delete-backward-char 1)))
 
 ;; spell checker
+
 (setup "wcheck-mode"
-  (setq ispell-really-hunspell t)
-  (setq  wcheck-timer-idle .2)
-  (setq-default
-   wcheck-language "English"
-   wcheck-language-data '(("English"
-                           (program       	. "/usr/bin/enchant")
-                           (args          	. ("-l" "-d" "en_US"))
-                           (action-program	. "/usr/bin/enchant")
-                           (action-args   	. ("-a" "-d" "en_US"))
-                           (action-parser 	. enchant-suggestions-menu))
-                          ("German"
-                           (program       	. "/usr/bin/enchant")
-                           (args          	. ("-l" "-d" "de"))
-                           (action-program	. "/usr/bin/enchant")
-                           (action-args   	. ("-a" "-d" "de"))
-                           (action-parser 	. enchant-suggestions-menu))
-                          ("French"
-                           (program       	. "/usr/bin/enchant")
-                           (args          	. ("-l" "-d" "fr"))
-                           (action-program	. "/usr/bin/enchant")
-                           (action-args   	. ("-a" "-d" "fr"))
-                           (action-parser 	. enchant-suggestions-menu))
-                          ))
-  ;; add to dictionary functionality
-  (defun enchant-suggestions-menu (marked-text)
-    (cons (cons "[Add]" 'enchant-add-to-dictionary)
-          (wcheck-parser-ispell-suggestions)))
+  (let ((spell-prog  	"hunspell")
+        (spell-bindir	(expand-file-name "~/.nix-profile/bin/"))
+        (spell-dir   	(expand-file-name "~/.hunspell/")))
 
-  (defvar enchant-dictionaries-dir "~/.config/enchant")
+    (setq ispell-really-hunspell t)
+    (setq wcheck-timer-idle .2)
 
-  (defun enchant-add-to-dictionary (marked-text)
-    (let* ((word (aref marked-text 0))
-           (language (aref marked-text 4))
-           (file (let ((code (nth 1 (member "-d" (wcheck-query-language-data
-                                                  language 'action-args)))))
-                   (when (stringp code)
-                     (concat (file-name-as-directory enchant-dictionaries-dir)
-                             code ".dic")))))
+    (defun make-wcheck-language-data (lang dict personal-dict)
+      `(,lang
+        (program       	. ,(concat spell-bindir spell-prog))
+        (args          	. ("-l" "-d" ,(concat spell-dir dict) "-p" ,(concat spell-dir personal-dict)))
+        (action-program	. ,(concat spell-bindir spell-prog))
+        (action-args   	. ("-a" "-d" ,(concat spell-dir dict) "-p" ,(concat spell-dir personal-dict)))
+        (action-parser 	. hunspell-suggestions-menu)
+        (connection    	. 'pty) ; FIXME pipe *should* work, but somehow gets stuck
+        (personal-dict 	. ,(concat spell-dir personal-dict))))
 
-      (when (and file (file-writable-p file))
-        (with-temp-buffer
-          (insert word) (newline)
-          (append-to-file (point-min) (point-max) file)
-          (message "Added word \"%s\" to the %s dictionary"
-                   word language)))))
+    (setq-default
+     wcheck-language "English"
+     wcheck-language-data `(,(make-wcheck-language-data "English"	"en_US"	"en.dic")
+                            ,(make-wcheck-language-data "German" 	"de_DE"	"de.dic")
+                            ,(make-wcheck-language-data "French" 	"fr_Fr"	"fr.dic")))
 
-  ;; make it possible to toggle wcheck on/off globally
-  ;; TODO have it disable wcheck in open buffers too
-  (defvar use-spell-check t)
-  (defun disable-spell-check ()
-    "turns spell-check off globally"
-    (interactive)
-    (setq use-spell-check nil)
-    (dolist (buffer (buffer-list))
-      (wcheck-buffer-lang-proc-data-update buffer nil))
-    (wcheck-mode 0))
-  (defun enable-spell-check ()
-    "turns spell-check off globally"
-    (interactive)
-    (setq use-spell-check t)
-    (wcheck-mode 1))
-  (defun turn-on-spell-check ()
-    (if use-spell-check (wcheck-mode 1)))
+    ;; add to dictionary functionality
+    (defun hunspell-suggestions-menu (marked-text)
+      (cons (cons "[Add]" 'hunspell-add-to-dictionary)
+            (wcheck-parser-ispell-suggestions)))
 
-  ;; enable spell-check in certain modes
-  (add-hook 'markdown-mode-hook	'turn-on-spell-check)
-  (add-hook 'org-mode-hook     	'turn-on-spell-check))
+    (defun hunspell-add-to-dictionary (marked-text)
+      (let* ((word (aref marked-text 0))
+             (language (aref marked-text 4))
+             (file (wcheck-query-language-data
+                    language 'personal-dict)))
+
+        (when (and file (file-writable-p file))
+          (with-temp-buffer
+            (insert word) (newline)
+            (append-to-file (point-min) (point-max) file)
+            (message "Added word \"%s\" to the %s dictionary"
+                     word language)))))
+
+    ;; make it possible to toggle wcheck on/off globally
+    ;; TODO have it disable wcheck in open buffers too
+    (defvar use-spell-check t)
+
+    (defun disable-spell-check ()
+      "turns spell-check off globally"
+      (interactive)
+      (setq use-spell-check nil)
+      (dolist (buffer (buffer-list))
+        (wcheck-buffer-lang-proc-data-update buffer nil))
+      (wcheck-mode 0))
+
+    (defun enable-spell-check ()
+      "turns spell-check off globally"
+      (interactive)
+      (setq use-spell-check t)
+      (wcheck-mode 1))
+
+    (defun turn-on-spell-check ()
+      (if use-spell-check (wcheck-mode 1)))
+
+    ;; enable spell-check in certain modes
+    (add-hook 'markdown-mode-hook	'turn-on-spell-check)
+    (add-hook 'org-mode-hook     	'turn-on-spell-check)))
 
 ;; align
 (setup "align"
