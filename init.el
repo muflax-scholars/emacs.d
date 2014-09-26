@@ -33,5 +33,8 @@
 ;; mail
 (setup "init-mail")
 
+;; shell
+(setup "init-shell")
+
 ;; random options
 (setup "init-misc")
