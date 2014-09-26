@@ -505,6 +505,7 @@ See the variable `align-rules-list' for more details.")
   (add-hook 'minibuffer-setup-hook	'turn-on-default-input-method)
   (add-hook 'occur-mode-hook      	'turn-on-default-input-method)
   (add-hook 'phi-search-init-hook 	'turn-on-default-input-method)
+  (add-hook 'eshell-mode-hook     	'turn-on-default-input-method)
 
   ;; don't underline partial input
   (setq input-method-highlight-flag nil)

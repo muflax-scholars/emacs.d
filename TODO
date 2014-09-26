@@ -122,7 +122,9 @@ Stuff that doesn't work:
 
 ]
 
-[ update to 24.4
-	- recompile packages
+[ eshell
+	- auto completion
+	- convert everything ugh
+	- fix hungry-delete deleting read-only parts
 
 ]
