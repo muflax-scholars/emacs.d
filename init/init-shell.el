@@ -22,6 +22,8 @@
   (setup "esh-buf-stack"
     (setup-eshell-buf-stack))
 
+  (setup "mv-shell")
+
   ;; completion
   (setq eshell-show-lisp-completions	nil)
   (setq eshell-show-lisp-alternative	t)
@@ -34,7 +36,10 @@
   (setq eshell-history-size        	10000)
   (setq eshell-buffer-maximum-lines	100000)
 
-
+  (defun eshell-current-directory (&optional arg)
+    (interactive)
+    (let ((eshell-buffer-name (concat "*eshell*-" default-directory)))
+      (eshell arg)))
 
   )
 
