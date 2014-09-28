@@ -248,6 +248,11 @@
 
 ;; dired
 (setup-lazy '(dired-jump dired-next dired-prev) "dired"
+  (setup "wdired")
+  (setup "dired-x")
+  (setup "dired-details")
+  (setup "dired-details+")
+  (setup "dired-open")
 
   ;; fast navigation through files in a directory
   ;; TODO this is super simplistic, but meh
@@ -269,22 +274,6 @@
       (dired-jump-to-bottom))
     (dired-find-file))
 
-  ;; move files between split panes
-  (setq dired-dwim-target t)
-
-  ;; don't ask for confirmation in most situations
-  (setq dired-no-confirm t)
-  (setq dired-recursive-copies 'always)
-  (setq dired-recursive-deletes 'top)
-  )
-
-(setup-after "dired"
-  (setup "wdired")
-  (setup "dired-x")
-  (setup "dired-details")
-  (setup "dired-details+")
-  (setup "dired-open")
-
   ;; reload dired after making changes
   (--each '(dired-do-rename
             dired-do-copy
@@ -292,6 +281,7 @@
             wdired-abort-changes)
     (eval `(defadvice ,it (after revert-buffer activate)
              (revert-buffer))))
+
   (defun dired-back-to-start-of-files ()
     (interactive)
     (backward-char (- (current-column) 2)))
@@ -305,6 +295,19 @@
     (interactive)
     (end-of-buffer)
     (dired-next-line -1))
+
+  ;; just delete files, sheesh
+  (defadvice dired-clean-up-after-deletion (around quiet-delete activate)
+    (cl-flet ((y-or-n-p (&rest args) t))
+      ad-do-it))
+
+  ;; move files between split panes
+  (setq dired-dwim-target t)
+
+  ;; don't ask for confirmation in most situations
+  (setq dired-no-confirm t)
+  (setq dired-recursive-copies 'always)
+  (setq dired-recursive-deletes 'top)
 
   ;; use omit-mode to hide dotfiles
   (setq-default dired-omit-files-p t)
