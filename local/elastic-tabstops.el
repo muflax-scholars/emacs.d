@@ -4,7 +4,6 @@
 
 ;; bugs with minor mode:
 ;; - can't add spaces in current cell
-;; - first line might be broken
 ;; general bugs:
 ;; - mc might want a workaround to speed it up
 
@@ -77,18 +76,26 @@
         end
         widths-line
         widths-lines
-        target)
+        target
+        (first-line t)
+        )
 
     ;; walk upwards (and note the beginning)
     (save-excursion
       (beginning-of-line)
 
-      (while (and (setq widths-line (elastic-tabs-width-of-line))
-                  (not (bobp)))
-        (setq beg         	(point)
-              widths-lines	(cons widths-line widths-lines)
-              target      	(elastic-calc-max widths-line target))
-        (forward-line -1))
+      (catch :done
+        (while (setq widths-line
+                     (elastic-tabs-width-of-line))
+          (setq beg         	(point)
+                widths-lines	(cons widths-line widths-lines)
+                target      	(elastic-calc-max widths-line target))
+
+          ;; go up if we can, or stop
+          (if (not (bobp))
+              (forward-line -1)
+            (throw :done t))))
+
       (setq end (point-at-eol)))
 
     ;; walk downwards, if we have a block
