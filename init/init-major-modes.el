@@ -223,8 +223,9 @@
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 
 ;; shell stuff
-(setup-lazy '(shell-mode) "sh-script"
-  (setq sh-basic-offset tab-width))
+(setup-lazy '(sh-mode) "sh-script"
+  (setq sh-basic-offset tab-width)
+  (add-hook 'sh-mode-hook 'whitespace-mode))
 
 ;; nxml stuff
 (setup-lazy '(nxml-mode) "nxml-mode"
@@ -476,6 +477,5 @@
 ;; shen
 (setup-lazy '(shen-mode) "shen-mode")
 (add-to-list 'auto-mode-alist '("\\.shen$" . shen-mode))
-
 
 (provide 'init-major-modes)

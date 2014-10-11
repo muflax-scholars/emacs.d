@@ -1001,7 +1001,6 @@ narrowed."
         (global-subword-mode -1))
     (global-subword-mode 1)))
 
-
 (defvar elastic-tab-align-modes
   '(
     enh-ruby-mode
@@ -1011,6 +1010,7 @@ narrowed."
     lisp-mode
     racket-mode
     scheme-mode
+    sh-mode
     )
   "modes that align elastic tabstops during indent")
 
