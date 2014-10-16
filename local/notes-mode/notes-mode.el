@@ -260,19 +260,18 @@
 (define-arx notes-rx
   '(
     (indent  	(and bol (* blank)))
-    (indent-g	(group indent))
+    (indent-1	(group-n 1 indent))
 
-    (annotation-g
+    (annotation-2
      (:func (lambda (_form &rest args)
-              `(group (any ,@args) (* word)))))
+              `(group-n 2 (any ,@args) (* (not blank))))))
 
-    (annotation-line
+    (annotation-line-3
      (:func (lambda (_form &rest args)
-              `(seq indent-g
-                    (annotation-g ,@args)
-                    (group (or (seq (+ blank) (* not-newline))
-                               (seq (* blank) eol)))))))
-
+              `(seq indent-1
+                    (annotation-2 ,@args)
+                    (group-n 3 (or (seq (+ blank) (* not-newline))
+                                   (seq (* blank) eol)))))))
 
     (open-bracket 	(any "[" "{"))
     (close-bracket	(any "]" "}"))
@@ -295,31 +294,31 @@
   "^\\([ \t]*\\)\\([\\[{][ \t]+\\)\\(.+\\)")
 
 (defconst notes-regex-annotation-abstract
-  (notes-rx (annotation-line "+")))
+  (notes-rx (annotation-line-3 "+")))
 
 (defconst notes-regex-annotation-transformation
-  (notes-rx (annotation-line "<" ">")))
+  (notes-rx (annotation-line-3 "<" ">")))
 
 (defconst notes-regex-annotation-comment
-  (notes-rx (annotation-line "#")))
+  (notes-rx (annotation-line-3 "#")))
 
 (defconst notes-regex-annotation-equivalent
-  (notes-rx (annotation-line "=")))
+  (notes-rx (annotation-line-3 "=")))
 
 (defconst notes-regex-annotation-model
-  (notes-rx (annotation-line "$")))
+  (notes-rx (annotation-line-3 "$")))
 
 (defconst notes-regex-annotation-prompt
-  (notes-rx (annotation-line "%" "?")))
+  (notes-rx (annotation-line-3 "%" "?")))
 
 (defconst notes-regex-annotation-quote
-  (notes-rx (annotation-line "|")))
+  (notes-rx (annotation-line-3 "|")))
 
 (defconst notes-regex-annotation-reply
-  (notes-rx (annotation-line "@" "!")))
+  (notes-rx (annotation-line-3 "@" "!")))
 
 (defconst notes-regex-annotation-wrong
-  (notes-rx (annotation-line "*")))
+  (notes-rx (annotation-line-3 "*")))
 
 (defconst notes-regex-list
   "^\\([ \t]*\\)\\([0-9]+\\.\\|[-]\\)\\([ \t]+\\)")
