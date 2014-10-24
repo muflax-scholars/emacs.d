@@ -63,10 +63,12 @@
 
 ;; multiple cursors
 (setq mc/list-file "~/.emacs.d/mc-lists.el")
-(setup "multiple-cursors"
-  (setup "mc-extras")
-  (setup "mc-jump")
+(setup-after "expand-region"
+  (setup "multiple-cursors"
+    (setup "mc-extras")
+    (setup "mc-jump")))
 
+(setup-after "multiple-cursors"
   (defun mc/many-to-one-yank ()
     "Yanks killed lines from multiple cursors into one position. Less messy than yank-rectangle."
     (interactive)
@@ -722,7 +724,11 @@ You have:
 (setq show-paren-delay 0)
 
 ;; smart parentheses
-(setup "smartparens-config"
+(setup-after "delsel"
+  (setup "smartparens-config"))
+
+(setup-after "smartparens-config"
+
   (smartparens-global-mode t)
   (setq sp-highlight-pair-overlay nil)
 
@@ -822,7 +828,8 @@ You have:
 (auto-compression-mode t)
 
 ;; normally smartparens wraps selected text, but if input is not a pair, just overwrite the text
-(delete-selection-mode 1)
+(setup "delsel"
+  (delete-selection-mode 1))
 
 ;; when popping the mark, continue popping until the cursor actually moves
 (defadvice pop-to-mark-command (around ensure-new-position activate)
