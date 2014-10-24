@@ -15,6 +15,9 @@
 (add-to-list 'load-path "~/src/emacs/slime")
 (add-to-list 'load-path "~/src/mail/mu/mu4e")
 
+;; actual source for c lookup
+(setq source-directory "~/src/emacs/emacs")
+
 ;; elpa package-repositories
 (require 'package)
 (setq package-user-dir "~/.emacs.d/packages")
