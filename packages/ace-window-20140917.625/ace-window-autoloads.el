@@ -1,10 +1,10 @@
 ;;; ace-window-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-
+(add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
 
-;;;### (autoloads (ace-window aw-generic aw-list-visual-area) "ace-window"
-;;;;;;  "ace-window.el" (21537 6929 914431 842000))
+;;;### (autoloads nil "ace-window" "ace-window.el" (21578 5958 69010
+;;;;;;  756000))
 ;;; Generated autoloads from ace-window.el
 
 (autoload 'aw-list-visual-area "ace-window" "\
@@ -44,16 +44,9 @@ Prefixed with two \\[universal-argument]'s, deletes the selected window.
 
 ;;;***
 
-;;;### (autoloads nil nil ("ace-window-pkg.el") (21537 6929 941903
-;;;;;;  400000))
-
-;;;***
-
-(provide 'ace-window-autoloads)
 ;; Local Variables:
 ;; version-control: never
 ;; no-byte-compile: t
 ;; no-update-autoloads: t
-;; coding: utf-8
 ;; End:
 ;;; ace-window-autoloads.el ends here
