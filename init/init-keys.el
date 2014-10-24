@@ -183,6 +183,7 @@
                   ctl-x-map
                   mode-specific-map
                   narrow-map
+                  special-mode-map
                   )
       collect (unset-complete-keymap map))
 
@@ -977,6 +978,17 @@
     '("<f2>"	use-normal-font)
     '("<f3>"	use-big-font)
     '("<f4>"	use-huge-font)
+    )
+
+;; special read-only buffers
+(kd special-mode-map
+    '("q"     	quit-window)
+    '(" "     	scroll-up-command)
+    '("?"     	describe-mode)
+    '("h"     	describe-mode)
+    '(">"     	end-of-buffer)
+    '("<"     	beginning-of-buffer)
+    '("g"     	revert-buffer)
     )
 
 (provide 'init-keys)
