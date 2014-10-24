@@ -163,7 +163,8 @@
 
 ;; highlight some whitespace
 (setup "whitespace"
-  (setq whitespace-style '(face tabs tab-mark spaces space-mark))
+  ;; (setq whitespace-style '(face tabs tab-mark spaces space-mark))
+  (setq whitespace-style '(face tabs tab-mark))
   (setq whitespace-display-mappings
         `(
           (space-mark  	?\s  	[?\u00B7]	[?.])	; space      - centered dot
