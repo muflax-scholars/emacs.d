@@ -570,7 +570,10 @@ See the variable `align-rules-list' for more details.")
   (er/enable-mode-expansions 'notes-mode 'er/add-notes-mode-expansions))
 
 ;; make zsh aliases work
-(setup "shell-command"
+(setup-after "compile"
+  (setup "shell-command"))
+
+(setup-after "shell-command"
   (setq shell-command-switch "-lc")
 ;; tab-completion for shell-command
 ;; FIXME not working yet, but meh

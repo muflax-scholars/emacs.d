@@ -248,13 +248,15 @@
 (add-hook 'js2-mode-hook     	'fic-mode)
 
 ;; dired
-(setup-lazy '(dired-jump dired-next dired-prev) "dired"
-  (setup "wdired")
-  (setup "dired-x")
-  (setup "dired-details")
-  (setup "dired-details+")
-  (setup "dired-open")
+(setup-after "files"
+  (setup-lazy '(dired-jump dired-next dired-prev) "dired"
+    (setup "wdired")
+    (setup "dired-x")
+    (setup "dired-details")
+    (setup "dired-details+")
+    (setup "dired-open")))
 
+(setup-after "dired"
   ;; fast navigation through files in a directory
   ;; TODO this is super simplistic, but meh
   (defun dired-next ()
@@ -317,9 +319,9 @@
 
   ;; open by extension
   (setq dired-open-extensions '(
-                               ("pdf" 	. "zathura")
-                               ("djvu"	. "zathura")
-                               ))
+                                ("pdf" 	. "zathura")
+                                ("djvu"	. "zathura")
+                                ))
 
   ;; sort number naturally
   (setq dired-listing-switches "--group-directories-first -v -al"))
