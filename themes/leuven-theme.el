@@ -92,7 +92,7 @@
    `(whitespace-hspace ((,class (:foreground "#D2D2D2"))))
    `(whitespace-indentation ((,class (:foreground "firebrick" :background "yellow"))))
    `(whitespace-line ((,class (:foreground "#CC0000" :background "#FFFF88"))))
-   `(whitespace-space ((,class (:foreground "#c0c0c0" :strike-through t))))
+   `(whitespace-space ((,class (:foreground "#c0c0c0" :underline t))))
    `(whitespace-tab ((,class (:foreground "#b0b0b0"))))
    `(whitespace-trailing ((,class (:weight bold :foreground "yellow" :background "red1"))))
 
