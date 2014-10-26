@@ -4,6 +4,7 @@
   (setq mu4e-maildir "~/mail")
 
   (setq mu4e-drafts-folder "/[Google Mail].Drafts")
+  (setq mu4e-refile-folder "/[Google Mail].All Mail")
   (setq mu4e-sent-folder   "/[Google Mail].Sent Mail")
   (setq mu4e-trash-folder  "/[Google Mail].Trash")
 
