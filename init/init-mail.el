@@ -23,10 +23,13 @@
           ("/[Google Mail].All Mail" 	. ?a)))
 
   (setq mu4e-bookmarks
-        '(("flag:unread AND NOT flag:trashed"	"Unread messages"     	?u)
-          ("date:today..now"                 	"Today's messages"    	?t)
-          ("date:7d..now"                    	"Last 7 days"         	?w)
-          ("mime:image/*"                    	"Messages with images"	?p)))
+        `((,(concat
+             "flag:unread"
+             " AND NOT flag:trashed"
+             " AND NOT maildir:/[Google Mail].All Mail")	"Unread messages"     	?u)
+          ("date:today..now"                           	"Today's messages"    	?t)
+          ("date:7d..now"                              	"Last 7 days"         	?w)
+          ("mime:image/*"                              	"Messages with images"	?p)))
 
   ;; allow for updating mail using 'U' in the main view:
   (setq mu4e-get-mail-command "offlineimap -u basic")
