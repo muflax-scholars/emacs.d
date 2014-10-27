@@ -2,5 +2,6 @@
 /packages/archives
 /packages/*.txt
 /cache
+/url
 /var
 !**/*.elc
