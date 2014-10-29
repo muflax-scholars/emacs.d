@@ -162,6 +162,9 @@
 (add-hook 'neotree-mode-hook	'turn-on-auto-revert-mode)
 (setq auto-revert-verbose nil)
 
+;; FIXME doesn't work with symlinked directories right now
+(setq auto-revert-use-notify nil)
+
 ;; new python mode
 (setup-lazy '(python-mode) "python"
   (setq python-indent-offset 2)
