@@ -57,6 +57,8 @@ Stuff that doesn't work:
 
 		Stating the suspicion that it has something to do with "last line on the screen" or "being in a list", or both.
 
+	- Scrolling can be painfully slow. Maybe disable smooth scrolling (sometimes)?
+
 	- minimap is unusable at the moment, mostly because it's either slow (minimap.el version) or super flickery (sublimity version)
 
 	- breadcrumbs is completely unusable and the code is a mess, but automatic "get me back to where I was a moment ago" is badly needed
