@@ -3,8 +3,8 @@
 ;;; Code:
 (add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
 
-;;;### (autoloads nil "lua-mode" "lua-mode.el" (21581 64277 313854
-;;;;;;  297000))
+;;;### (autoloads nil "lua-mode" "lua-mode.el" (21583 21923 293674
+;;;;;;  69000))
 ;;; Generated autoloads from lua-mode.el
 
 (autoload 'lua-mode "lua-mode" "\
@@ -15,6 +15,11 @@ Major mode for editing Lua code.
 (add-to-list 'auto-mode-alist '("\\.lua$" . lua-mode))
 
 (add-to-list 'interpreter-mode-alist '("lua" . lua-mode))
+
+;;;***
+
+;;;### (autoloads nil nil ("lua-mode-pkg.el") (21583 21923 351992
+;;;;;;  674000))
 
 ;;;***
 
