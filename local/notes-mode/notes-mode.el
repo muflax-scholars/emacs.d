@@ -374,9 +374,9 @@
    (cons notes-regex-annotation-prompt
          '((2 notes-annotation-prompt-face)))
    ;; (3 notes-annotation-prompt-face keep)))
-   (cons notes-regex-annotation-quote
-         '((2 notes-annotation-quote-face)
-           (3 notes-annotation-quote-face keep)))
+   ;; (cons notes-regex-annotation-quote
+   ;;       '((2 notes-annotation-quote-face)
+   ;;         (3 notes-annotation-quote-face keep)))
    (cons notes-regex-annotation-reply
          '((2 notes-annotation-reply-face)))
    ;; (3 notes-annotation-reply-face keep)))
