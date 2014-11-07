@@ -165,6 +165,9 @@
 ;; FIXME doesn't work with symlinked directories right now
 (setq auto-revert-use-notify nil)
 
+;; imenu works badly across reverts, so just flush
+(add-hook 'after-revert-hook 'imenu-flush-cache)
+
 ;; new python mode
 (setup-lazy '(python-mode) "python"
   (setq python-indent-offset 2)
