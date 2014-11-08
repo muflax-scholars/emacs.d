@@ -657,6 +657,7 @@
     '("SPC"	hs-show-block)
     '("f"  	hs-fold-levels)
     '("F"  	fold-dwim-show-all)
+    '("l"  	toggle-truncate-lines)
     '("s"  	whitespace-fold-levels)
     '("S"  	whitespace-fold-reset)
     '("y"  	yafolding-hide-all)
