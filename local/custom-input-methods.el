@@ -570,6 +570,10 @@
  ("·s" ?ß)
  ("·S" ?ẞ)
 
+ ;; conlangs
+ ("·l" ?ł)
+ ("·L" ?Ł)
+
  ;; borrowings in German
  ("·e" ?é)
  ("·E" ?É)
