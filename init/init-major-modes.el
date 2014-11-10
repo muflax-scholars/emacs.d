@@ -254,16 +254,14 @@
 (add-hook 'js2-mode-hook     	'fic-mode)
 
 ;; dired
-(setup-after "files"
-  (setup-lazy '(dired-jump dired-next dired-prev) "dired"
-    (setup "wdired")
-    (setup "dired-x")
-    (setup "dired-details")
-    (setup "dired-details+")
-    (setup "dired-open")))
+(setup "dired"
+  (setup "wdired")
+  (setup "dired-x")
+  (setup "dired-details")
+  (setup "dired-details+")
+  (setup "dired-open")
 
-(setup-after "dired"
-  ;; fast navigation through files in a directory
+    ;; fast navigation through files in a directory
   ;; TODO this is super simplistic, but meh
   (defun dired-next ()
     (interactive)
@@ -429,7 +427,7 @@
 ;; common lisp
 (setup-after "lisp-mode"
   (setup "slime-autoloads")
-  (setup "slime"
+  (setup-lazy '(slime) "slime"
     (setq slime-lisp-implementations
           '((ccl 	("ccl"))
             (sbcl	("sbcl" "--noinform" "--no-linedit") :coding-system utf-8-unix)))
@@ -453,7 +451,7 @@
 (add-to-list 'auto-mode-alist '("\\.cl$"    	. lisp-mode))
 
 ;; racket
-(setup "racket-mode"
+(setup-lazy '(racket-mode) "racket-mode"
   (setup "geiser-mode"
     (setq geiser-active-implementations '(racket))
     (setq geiser-default-implementation 'racket)

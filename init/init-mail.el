@@ -1,6 +1,6 @@
 ;;; mail settings
 
-(setup "mu4e"
+(setup-lazy '(mu mu4e) "mu4e"
   (setq mu4e-maildir "~/mail")
 
   (setq mu4e-drafts-folder "/[Google Mail].Drafts")
@@ -38,9 +38,9 @@
   (setq mu4e-attachment-dir (expand-file-name "~/stuff"))
 
   ;; no confirmations
-  (setq mu4e-confirm-quit nil)
+  (setq mu4e-confirm-quit nil))
 
-  (defalias 'mu 'mu4e))
+(defalias 'mu 'mu4e)
 
 (setup "smtpmail"
   (setq message-send-mail-function	'smtpmail-send-it)

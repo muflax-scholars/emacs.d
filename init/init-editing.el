@@ -186,61 +186,6 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (defun use-tabs () (setq indent-tabs-mode t))
 (add-hook 'notes-mode-hook 'use-tabs)
 
-;; replacement for orgtbl by using " | " as separator
-(setup-lazy '(delimit-columns-current delimit-columns-region) "delim-col"
-  (setq delimit-columns-str-separator " | ")
-  (setq delimit-columns-separator " +| +")
-  (setq delimit-columns-format 'separator)
-  (setq delimit-columns-extra nil))
-
-(defun delimit-columns-current ()
-  "Delimit columns of current table."
-  (interactive)
-
-  (let ((beg)
-        (end)
-        (begline)
-        (endline)
-        (start)
-        (regexp "^[ \t]*[^ \t\n]+.* | .*$"))
-    (save-excursion
-      ;; initialize region on the current line
-      (beginning-of-line)
-      (setq beg (point))
-      (end-of-line)
-      (setq end (point))
-
-      (setq start beg)
-
-      ;; find beginning of block
-      (goto-char start)
-      (while (and (looking-at regexp)
-                  (not (bobp)))
-        (setq beg (point))
-        (forward-line -1))
-
-      ;; find end of block
-      (goto-char start)
-      (while (and (looking-at regexp)
-                  (not (eobp)))
-        (end-of-line)
-        (setq end (point))
-        (forward-line 1))
-      )
-
-    ;; call alignment function
-    (setq begline (line-number-at-pos beg))
-    (setq endline (line-number-at-pos end))
-    (delimit-columns-region beg end)
-    (save-excursion
-      (goto-line begline)
-      (setq beg (point))
-      (goto-line endline)
-      (end-of-line)
-      (setq end (point)))
-    (delete-trailing-whitespace beg end)
-    ))
-
 ;; automatically indent on return
 (electric-indent-mode 1)
 
@@ -283,7 +228,6 @@ If visual-line-mode is on, then also jump to beginning of real line."
     (delete-backward-char 1)))
 
 ;; spell checker
-
 (setup "wcheck-mode"
   (let ((spell-prog  	"hunspell")
         (spell-bindir	(expand-file-name "~/.nix-profile/bin/"))
@@ -432,11 +376,11 @@ See the variable `align-rules-list' for more details.")
 ;; if no region is active, act on current line
 (setup "whole-line-or-region"
   (setq whole-line-or-region-extensions-alist
-        '((comment-dwim whole-line-or-region-comment-dwim-2 nil)
-          (copy-region-as-kill whole-line-or-region-copy-region-as-kill nil)
-          (kill-region whole-line-or-region-kill-region nil)
-          (kill-ring-save whole-line-or-region-kill-ring-save nil)
-          (yank whole-line-or-region-yank nil)
+        '((comment-dwim       	whole-line-or-region-comment-dwim-2     	nil)
+          (copy-region-as-kill	whole-line-or-region-copy-region-as-kill	nil)
+          (kill-region        	whole-line-or-region-kill-region        	nil)
+          (kill-ring-save     	whole-line-or-region-kill-ring-save     	nil)
+          (yank               	whole-line-or-region-yank               	nil)
           ))
   (whole-line-or-region-mode 1))
 
@@ -553,8 +497,8 @@ See the variable `align-rules-list' for more details.")
 
 ;; expand-region to mark stuff
 (setup "expand-region"
-  (setq expand-region-contract-fast-key "<left>")
-  (setq expand-region-reset-fast-key    "SPC")
+  (setq expand-region-contract-fast-key	"<left>")
+  (setq expand-region-reset-fast-key   	"SPC")
 
   ;; notes-mode speed-up
   (defun er/add-notes-mode-expansions ()
