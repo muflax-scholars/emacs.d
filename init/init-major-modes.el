@@ -318,7 +318,7 @@
 
   ;; use omit-mode to hide dotfiles
   (setq-default dired-omit-files-p t)
-  (setq dired-omit-files "^\\..*[^.]$")
+  (setq dired-omit-files "^\\(\\..*[^.]\\|\\.\\)$")
   (setq dired-omit-verbose nil)
 
   ;; open by extension
