@@ -45,7 +45,8 @@
   (define-auto-insert "\\.rb$" 	"ruby")
   (define-auto-insert "\\.c$"  	"c")
   (define-auto-insert "\\.cpp$"	"cpp")
-  (define-auto-insert "\\.go$" 	"go"))
+  (define-auto-insert "\\.go$" 	"go")
+  (define-auto-insert "\\.rkt$"	"racket"))
 
 ;; auctex
 (setup-lazy '(latex-mode LaTeX-mode tex-mode TeX-mode) "latex")
