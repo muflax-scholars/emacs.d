@@ -1,0 +1,1 @@
+#lang ${1:$$(yas-choose-value '("racket" "racket/base" "typed/racket" "scribble/base" "scribble/manual"))}
