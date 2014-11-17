@@ -39,6 +39,7 @@
         indent-new-comment-line
         indent-region
         kill-and-join-forward
+        kill-with-append
         kill-without-append
         kmacro-end-or-call-macro
         literal-delete-backward-char
