@@ -984,13 +984,67 @@
 
 ;; special read-only buffers
 (kd special-mode-map
-    '("q"     	quit-window)
     '(" "     	scroll-up-command)
-    '("?"     	describe-mode)
-    '("h"     	describe-mode)
-    '(">"     	end-of-buffer)
     '("<"     	beginning-of-buffer)
+    '(">"     	end-of-buffer)
+    '("?"     	describe-mode)
     '("g"     	revert-buffer)
+    '("h"     	describe-mode)
+    '("q"     	quit-window)
     )
+
+;; racket
+(setup-after "racket-mode"
+  (unset-complete-keymap racket-mode-map)
+
+  (kd racket-mode-map
+      '("C-c b" 	racket-unvisit)
+      '("C-c d "	racket-doc)
+      '("C-c f" 	racket-fold-all-tests)
+      '("C-c F" 	racket-unfold-all-tests)
+      '("C-c m" 	racket-visit-module)
+      '("C-c p" 	racket-cycle-paren-shapes)
+      '("C-c t" 	racket-test)
+      '("C-c v" 	racket-visit-definition)
+
+      '("RET"	racket-cr)
+      '(")"  	racket-insert-closing-paren)
+      '("]"  	racket-insert-closing-bracket)
+      '("}"  	racket-insert-closing-brace)
+      ))
+
+(setup-after "geiser-mode"
+  (unset-complete-keymap geiser-mode-map)
+
+  (kd geiser-mode-map
+      '("C-c C-c"	geiser-mode-switch-to-repl-and-enter)
+
+      '("C-x SPC C-c"  	geiser-compile-current-buffer)
+      '("C-x SPC SPC"  	geiser-eval-definition-and-go)
+      '("C-x SPC S-SPC"	geiser-eval-definition)
+      '("C-x SPC b"    	geiser-eval-buffer-and-go)
+      '("C-x SPC B"    	geiser-eval-buffer)
+      '("C-x SPC c"    	geiser-compile-definition-and-go)
+      '("C-x SPC C"    	geiser-compile-definition)
+      '("C-x SPC l"    	geiser-eval-last-sexp)
+      '("C-x SPC r"    	geiser-eval-region-and-go)
+      '("C-x SPC R"    	geiser-eval-region)
+
+      '("C-c <"	geiser-xref-callers)
+      '("C-c >"	geiser-xref-callees)
+
+      '("C-c d d"	geiser-doc-symbol-at-point)
+      '("C-c d m"	geiser-doc-module)
+      '("C-c d w"	geiser-doc-look-up-manual)
+      '("C-c e e"	geiser-expand-definition)
+      '("C-c e l"	geiser-expand-last-sexp)
+      '("C-c e r"	geiser-expand-region)
+      '("C-c l"  	geiser-add-to-load-path)
+      '("C-c r"  	geiser-mode-switch-to-repl)
+
+      ;; ;; '(""	geiser-edit-symbol-at-point)
+      ;; ;; '(""	geiser-pop-symbol-stack)
+      ;; ;; '(""	geiser-edit-module)
+      ))
 
 (provide 'init-keys)
