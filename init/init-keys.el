@@ -92,9 +92,10 @@
          assignable-special-modifiers
          maps))
 
-(defun unset-complete-keymap (map)
-  "unset all assignable keys in given keymap"
-  (mangle-keys 'unset-keymap-by-keys map))
+(defun unset-complete-keymap (&rest maps)
+  "unset all assignable keys in given keymap(s)"
+  (--each maps
+    (mangle-keys 'unset-keymap-by-keys it)))
 
 (defun copy-complete-keymap (from to)
   "copies over all assignable keys from one keymap to another"
