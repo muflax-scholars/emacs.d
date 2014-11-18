@@ -396,7 +396,6 @@
     '("s"  	save-some-buffers)
     '("t"  	input-prefix-map prefix)
     '("w"  	spell-check-prefix-map prefix)
-    '("x"  	helm-prefix-map prefix)
     '("z"  	repeat)
     '("Z"  	repeat-complex-command)
     )
@@ -706,26 +705,6 @@
     '("n"	kmacro-name-last-macro)
     '("s"	kmacro-start-macro-or-insert-counter)
     '("t"	insert-kbd-macro)
-    )
-
-;; helm
-(setup-after "helm"
-  (kd helm-map
-      '("C-w"	subword-backward-kill)
-      '("M-w"	helm-yank-text-at-point)
-      ))
-
-;; (kd global-map
-;;     '("M-x"	helm-M-x)
-;;     )
-
-(kd helm-prefix-map
-    '("C-o"	helm-swoop)
-    '("e"  	helm-flycheck)
-    '("f"  	helm-find-files)
-    '("g"  	helm-do-grep)
-    '("o"  	helm-occur)
-    '("t"  	helm-cmd-t)
     )
 
 ;; org-mode
