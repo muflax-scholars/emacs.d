@@ -30,10 +30,10 @@
                                         compile-command)))
 
 ;; save open buffers etc.
-(setup "desktop"
-  (setq desktop-path "~/.emacs.d/cache/desktop/")
-  ;; (desktop-save-mode 1)
-  )
+;; (setup "desktop"
+;;   (setq desktop-path "~/.emacs.d/cache/desktop/")
+;;   (desktop-save-mode 1)
+;;   )
 
 ;; text stuff
 (setq undo-limit     	1000000)
