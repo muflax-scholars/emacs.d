@@ -135,27 +135,33 @@
       (save-excursion
         (goto-char beg)
         (--each lines
-          (let (diff start)
-            (--each (-zip it target)
-              ;; it -> (width, target width)
+          (--each (-zip it target)
+            ;; it -> (width, target width)
 
-              ;; get into position
-              (forward-char (first it))
+            ;; get into position
+            (forward-char (first it))
 
-              ;; delete any other spaces
-              (setq start (point))
+            (let ((start (point))
+                  (target-spaces 0)
+                  diff)
+
+              ;; go to the end of the cell
               (skip-chars-forward "^\t\n")
-              (delete-region start (point))
 
-              ;; not yet in the last cell
+              ;; add spaces unless we are in the last cell
               (when (= (following-char) ?\t)
-                ;; add correct number of spaces
-                (setq diff (- (rest it) (first it)))
-                (insert-char ?\s diff)
+                (setq target-spaces (- (rest it) (first it))))
 
-                ;; get into position for the next cell
-                (forward-char 1))))
+              (setq diff (- target-spaces (- (point) start)))
 
+              (cond
+               ((> diff 0)	(insert-char ?\s	diff))
+               ((< diff 0)	(delete-char    	diff)))
+
+              ;; get into position for the next cell
+              (when (= (following-char) ?\t)
+                (forward-char 1))
+              ))
 
           ;; get ready for next line
           (forward-line 1))
