@@ -225,7 +225,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
     (delete-char 1))
   (defun literal-delete-backward-char (&optional arg)
     (interactive "P")
-    (delete-backward-char 1)))
+    (delete-char -1)))
 
 ;; spell checker
 (setup "wcheck-mode"
@@ -644,13 +644,13 @@ You have:
 
   (defun whitespace-fold-reset ()
     (interactive)
-    (set (make-local-variable 'whitspace-fold-level) 0)
+    (set (make-local-variable 'whitespace-fold-level) 0)
     (set-selective-display whitespace-fold-level))
 
   (defun whitespace-fold-levels ()
     (interactive)
 
-    (set (make-local-variable 'whitspace-fold-level) tab-width)
+    (set (make-local-variable 'whitespace-fold-level) tab-width)
     (set-selective-display whitespace-fold-level)
 
     (set-temporary-overlay-map
