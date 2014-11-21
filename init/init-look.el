@@ -195,6 +195,7 @@
   (diminish-minor-mode "magit"                	'magit-auto-revert-mode    	    	)
   (diminish-minor-mode "ruby-block"           	'ruby-block-mode           	    	)
   (diminish-minor-mode "simple"               	'auto-fill-function        	"AF"	)
+  (diminish-minor-mode "simple"               	'visual-line-mode          	    	)
   (diminish-minor-mode "simple"               	'global-visual-line-mode   	    	)
   ;; (diminish-minor-mode "simple"            	'visual-line-mode          	    	)
   (diminish-minor-mode "slime"                	'slime-mode                	    	)
