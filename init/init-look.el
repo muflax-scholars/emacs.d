@@ -197,7 +197,6 @@
   (diminish-minor-mode "simple"               	'auto-fill-function        	"AF"	)
   (diminish-minor-mode "simple"               	'visual-line-mode          	    	)
   (diminish-minor-mode "simple"               	'global-visual-line-mode   	    	)
-  ;; (diminish-minor-mode "simple"            	'visual-line-mode          	    	)
   (diminish-minor-mode "slime"                	'slime-mode                	    	)
   (diminish-minor-mode "smartparens"          	'smartparens-mode          	    	)
   ;; (diminish-minor-mode "subword"           	'subword-mode              	    	)
