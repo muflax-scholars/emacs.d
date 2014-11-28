@@ -83,6 +83,7 @@
         title-case-word-or-region
         toggle-title-case
         toggle-upcase
+        uncomment-region
         upcase-word-or-region
         wdired-previous-line
         whole-line-or-region-comment-dwim-2

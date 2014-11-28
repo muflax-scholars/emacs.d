@@ -1,10 +1,11 @@
 ;;; help-fns+-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-(add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
+
 
-;;;### (autoloads nil "help-fns+" "help-fns+.el" (21609 7626 262353
-;;;;;;  289000))
+;;;### (autoloads (describe-file describe-option-of-type describe-option
+;;;;;;  describe-command) "help-fns+" "help-fns+.el" (21623 48582
+;;;;;;  315888 864000))
 ;;; Generated autoloads from help-fns+.el
 
 (autoload 'describe-command "help-fns+" "\
@@ -65,9 +66,16 @@ Non-nil optional arg NO-ERROR-P prints an error message but does not
 
 ;;;***
 
+;;;### (autoloads nil nil ("help-fns+-pkg.el") (21623 48582 339303
+;;;;;;  618000))
+
+;;;***
+
+(provide 'help-fns+-autoloads)
 ;; Local Variables:
 ;; version-control: never
 ;; no-byte-compile: t
 ;; no-update-autoloads: t
+;; coding: utf-8
 ;; End:
 ;;; help-fns+-autoloads.el ends here
