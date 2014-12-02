@@ -103,6 +103,7 @@
         find-tag
         focus-next-window
         ibus-handle-event
+        magit-status
         repeat
         save-buffers-kill-terminal
         smex
