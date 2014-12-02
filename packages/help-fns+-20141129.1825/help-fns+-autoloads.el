@@ -4,8 +4,8 @@
 
 
 ;;;### (autoloads (describe-file describe-option-of-type describe-option
-;;;;;;  describe-command) "help-fns+" "help-fns+.el" (21623 48582
-;;;;;;  315888 864000))
+;;;;;;  describe-command) "help-fns+" "help-fns+.el" (21629 24618
+;;;;;;  92957 162000))
 ;;; Generated autoloads from help-fns+.el
 
 (autoload 'describe-command "help-fns+" "\
@@ -66,8 +66,8 @@ Non-nil optional arg NO-ERROR-P prints an error message but does not
 
 ;;;***
 
-;;;### (autoloads nil nil ("help-fns+-pkg.el") (21623 48582 339303
-;;;;;;  618000))
+;;;### (autoloads nil nil ("help-fns+-pkg.el") (21629 24618 117475
+;;;;;;  148000))
 
 ;;;***
 
