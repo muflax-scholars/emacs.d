@@ -12,7 +12,6 @@
 ;; manual paths
 (add-to-list 'load-path "~/.emacs.d/themes") ; themes
 ;; local installs that should be merged in but are too much work right now
-(add-to-list 'load-path "~/src/emacs/slime")
 (add-to-list 'load-path "~/.nix-profile/share/emacs/site-lisp/mu4e")
 
 ;; actual source for c lookup
