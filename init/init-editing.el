@@ -437,7 +437,7 @@ See the variable `align-rules-list' for more details.")
      (set-input-method ,name)))
 
 (setup "custom-input-methods"
-  (setup "mozc" (setq mozc-leim-title "あ"))
+  ;; (setup "mozc" (setq mozc-leim-title "あ"))
 
   ;; default to the diacritic smasher
   (setq default-input-method "muflax-latin")
