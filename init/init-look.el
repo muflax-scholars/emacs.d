@@ -103,11 +103,15 @@
 (setq scroll-preserve-screen-position t)
 (setq mouse-wheel-progressive-speed nil)
 (setq scroll-error-top-bottom t)
-(setq scroll-margin 0)
-(setq scroll-conservatively 10000)
 ;; necessary or scrolling is really slow
-(setq-default bidi-display-reordering  nil)
+(setq-default bidi-display-reordering nil)
 (setq auto-window-vscroll nil)
+(setup "smooth-scrolling"
+  (smooth-scrolling-mode 1)
+  (setq smooth-scroll-margin 5)
+  (setq scroll-margin 3)
+  (setq scroll-conservatively 10000)
+  )
 
 ;; try to keep windows within a max margin
 (setup "automargin"
