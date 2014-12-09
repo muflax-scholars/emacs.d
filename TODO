@@ -54,10 +54,7 @@ Stuff that doesn't work:
 [ bugs / misc
 
 	- Jumpy cursor, particularly in notes/markdown-mode. Unlikely about the mouse. auto-complete seems to make it worse, but doesn't cause it.
-
 		Stating the suspicion that it has something to do with "last line on the screen" or "being in a list", or both.
-
-	- Scrolling can be painfully slow. Maybe disable smooth scrolling (sometimes)?
 
 	- minimap is unusable at the moment, mostly because it's either slow (minimap.el version) or super flickery (sublimity version)
 
@@ -67,11 +64,11 @@ Stuff that doesn't work:
 
 	- fonts should have a bigger range, and their own temp-keymap so you can left-right select them
 
-	- after-revert-hook should unfold the buffer because folding is rarely consistent across reverts
-
 	- occur-x keymap conflicts with occur-edit
 
 	- mc + wdired don't work together
+
+	- smooth-scrolling should either be faster for big, messy files or auto-disable itself in them
 ]
 
 [ project-specific code / keybindings
@@ -116,7 +113,6 @@ Stuff that doesn't work:
 [ reorganize how buffers are used
 	It might be useful to no longer have ido auto-open old files so we have a clean buffer list, and instead start using recentf.
 
-	Or use a helm variant, once they finally make flx work.
 ]
 
 [ company-mode
