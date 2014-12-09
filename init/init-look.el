@@ -122,7 +122,9 @@
   (volatile-highlights-mode t))
 
 ;; show #colors in matching color
-(setup-lazy '(rainbow-mode) "rainbow-mode")
+(setup-lazy '(rainbow-mode) "rainbow-mode"
+  (defadvice rainbow-mode (after rainbow-mode-refresh activate)
+    (font-lock-fontify-buffer)))
 
 ;; blinking cursor
 (blink-cursor-mode -1)
