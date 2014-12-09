@@ -545,4 +545,7 @@
 ;;;###autoload
 (provide-theme 'leuven)
 
+;; Local Variables:
+;; eval: (rainbow-mode)
+;; End:
 ;;; leuven-theme.el ends here
