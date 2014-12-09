@@ -56,6 +56,7 @@
         next-newline-and-indent
         notes-dedent-or-delete
         notes-indent-line
+        number/decrement
         org-force-cycle-archived
         org-force-self-insert
         org-indent-line

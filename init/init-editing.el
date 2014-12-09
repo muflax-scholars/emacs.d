@@ -673,9 +673,9 @@ You have:
   (setup "smartparens-config"))
 
 (setup-after "smartparens-config"
-
   (smartparens-global-mode t)
   (setq sp-highlight-pair-overlay nil)
+  (setq sp-show-pair-delay 0)
 
   ;; don't do any insertion/deletion magic
   (setq       	sp-autoescape-string-quote             	nil)

@@ -484,7 +484,7 @@
    `(shell-output-3-face ((,class (:foreground "purple"))))
    `(shell-output-face ((,class (:foreground "black"))))
    `(shell-prompt-face ((,class (:weight bold :foreground "yellow"))))
-   `(show-paren-match ((,class (:foreground "#E2464C" :background "#FFFF00"))))
+   `(show-paren-match ((,class (:background "#ffeedd"))))
    `(show-paren-mismatch ((,class (:weight bold :foreground "white" :background "#FF3F3F"))))
    `(sml-modeline-end-face ((,class (:background "#6BADF6")))) ; #335EA8
    `(sml-modeline-vis-face ((,class (:background "#1979CA"))))
