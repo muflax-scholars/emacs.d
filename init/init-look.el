@@ -183,7 +183,7 @@
 ;; highlight parentheses
 (setup "paren"
   (setq show-paren-style 'expression)
-  (setq show-paren-delay 0.0)
+  (setq show-paren-delay 0.125)
   (show-paren-mode 1))
 
 ;; clean up modeline and hide standard minor modes
