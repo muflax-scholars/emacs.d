@@ -13,10 +13,13 @@
 
 ;; some generic aliases that make elisp less painful
 (defalias 'first 	'cl-first)
+(defalias 'hd    	'cl-first)
 (defalias 'second	'cl-second)
 (defalias 'rest  	'cl-rest)
+(defalias 'tl    	'cl-rest)
 (defalias 'loop  	'cl-loop)
 (defalias 'case  	'cl-case)
+(defalias 'fn    	'lambda)
 
 (defun read-lines (filename)
   "Return a list of lines of a file at FILENAME."
