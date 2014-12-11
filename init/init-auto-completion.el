@@ -5,7 +5,7 @@
   (setq yas-snippet-dirs
         '(
           "~/.emacs.d/snippets"
-          "~/spoiler/languages/.snippets"
+          "~/.emacs.d/extra-snippets/german"
           ))
 
   ;; inter-field navigation
@@ -98,4 +98,4 @@
   (add-hook 'ielm-mode-hook 'ac-emacs-lisp-mode-setup)
   (add-to-list 'ac-modes 'inferior-emacs-lisp-mode))
 
-(provide 'init-auto-completion-nonsense)
+(provide 'init-auto-completion)

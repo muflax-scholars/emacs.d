@@ -25,7 +25,7 @@
 (setup "init-search")
 
 ;; auto-completion and templates
-(setup "init-auto-completion-nonsense")
+(setup "init-auto-completion")
 
 ;; major modes
 (setup "init-major-modes")
