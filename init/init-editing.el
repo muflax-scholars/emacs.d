@@ -663,10 +663,11 @@ You have:
   )
 
 ;; parenthesis highlighting behavior
-(show-paren-mode 1)
-(setq blink-matching-paren-distance nil)
-(setq show-paren-style 'parenthesis)
-(setq show-paren-delay 0)
+(setup "paren"
+  (setq blink-matching-paren-distance nil)
+  (setq show-paren-style 'expression)
+  (setq show-paren-delay 0.125)
+  (show-paren-mode 1))
 
 ;; smart parentheses
 (setup-after "delsel"

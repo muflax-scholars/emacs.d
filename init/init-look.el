@@ -180,12 +180,6 @@
                     [?\|	,@(make-list (1- tab-width) ?\s)])
           )))
 
-;; highlight parentheses
-(setup "paren"
-  (setq show-paren-style 'expression)
-  (setq show-paren-delay 0.125)
-  (show-paren-mode 1))
-
 ;; clean up modeline and hide standard minor modes
 (defmacro diminish-minor-mode (package mode &optional short-name)
   `(setup-after ,package
