@@ -53,6 +53,12 @@
 (eval-when-compile (require 'cl))
 (require 'ample-regexps)
 
+;; helper modes
+(require 'corpus-minor-mode)
+(require 'lesson-minor-mode)
+(require 'prompt-minor-mode)
+(require 'word-list-minor-mode)
+
 ;; Customizable Variables
 
 (defvar notes-mode-hook nil

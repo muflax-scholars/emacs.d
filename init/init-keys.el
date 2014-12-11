@@ -1040,4 +1040,124 @@
       ;; ;; '(""	geiser-edit-module)
       ))
 
+(setup-after "prompt-minor-mode"
+  (kd prompt-minor-mode-map
+      '("<f12>"    	corpus/open-corpus-file)
+      '("<mouse-9>"	corpus/open-corpus-file)
+
+      '("<f10>"	prompt/bunf-current-line)
+
+      ;; '("|"	yas-expand)
+
+      ;; navigation
+      '("C-c t a"  	prompt/beginning-of-plus-block)
+      '("C-c t e"  	prompt/end-of-plus-block)
+      '("C-c t C-a"	prompt/beginning-of-example-grab-bracket)
+      '("C-c t C-e"	prompt/end-of-example-grab-bracket)
+
+      '("C-S-f"	prompt/next-block)
+      '("C-S-b"	prompt/prev-block)
+      '("M-f"  	prompt/next-bracket)
+      '("M-b"  	prompt/prev-bracket)
+
+      ;; folding
+      '("C-c t f a"	prompt/fold-show-adjectives)
+      '("C-c t f v"	prompt/fold-show-verbs)
+      '("C-c t f n"	prompt/fold-show-nouns)
+      '("C-c t f r"	prompt/fold-rest)
+      '("C-c t f i"	prompt/fold-invert)
+      '("C-c t f f"	prompt/fold-hide-all)
+      '("C-c t f F"	prompt/fold-show-all)
+
+      ;; moving blocks
+      '("<insert>" 	prompt/copy-example-block)
+      '("C-S-w"    	prompt/kill-example-block)
+      '("C-<left>" 	prompt/select-example-block)
+      '("M-<prior>"	prompt/move-example-block-up)
+      '("M-<next>" 	prompt/move-example-block-down)
+
+      ;; cleaning
+      '("C-c t c"  	prompt/convert-all-dict-entry)
+      '("<f5>"     	prompt/convert-dict-entry)
+      '("C-c t SPC"	prompt/convert-dict-entry)
+
+      '("C-c C-c"	prompt/change-plus-slot)
+      '("C-c C-d"	prompt/delete-plus-slot)
+      '("C-c o"  	prompt/make-slot-optional)
+      '("<f13>"  	prompt/make-slot-optional)
+      ))
+
+(setup-after "corpus-minor-mode"
+  (kd corpus-minor-mode-map
+
+      ;; open corpus file
+      '("<f12>"  	corpus/open-next-corpus-file)
+      '("C-<f12>"	corpus/open-next-corpus-file)
+
+      '("<mouse-9>"  	corpus/open-next-corpus-file)
+      '("C-<mouse-9>"	corpus/open-next-corpus-file)
+      '("M-<mouse-9>"	corpus/open-prev-corpus-file)
+
+      ;; moving blocks
+
+      ;; navigation in corpus
+      '("n"	prompt/next-example-block)
+      '("r"	prompt/prev-example-block)
+      '("h"	(lambda () (interactive (prompt/next-example-block 5))))
+      '("g"	(lambda () (interactive (prompt/prev-example-block 5))))
+
+      '("a"	prompt/next-example-block)
+      '("i"	prompt/prev-example-block)
+      '("l"	(lambda () (interactive (prompt/next-example-block 5))))
+      '("v"	(lambda () (interactive (prompt/prev-example-block 5))))
+
+      '("<down>"   	prompt/next-example-block)
+      '("<up>"     	prompt/prev-example-block)
+      '("<left>"   	corpus/add-example-to-plus-line)
+      '("<right>"  	prompt/next-example-grab-bracket)
+      '("C-<down>" 	next-line)
+      '("C-<up>"   	previous-line)
+      '("C-<left>" 	left-char)
+      '("C-<right>"	right-char)
+
+      '("s"	prompt/next-example-grab-bracket)
+      '("k"	prompt/prev-example-grab-bracket)
+      '("o"	prompt/next-example-grab-bracket)
+      '("w"	prompt/prev-example-grab-bracket)
+
+      '("b"	prompt/beginning-of-example-grab-bracket)
+      '("m"	prompt/end-of-example-grab-bracket)
+
+      ;; moving stuff over
+      '("e"         	corpus/add-example-to-plus-line)
+      '("C-<insert>"	corpus/copy-example-block-over)
+      '("<mouse-8>" 	corpus/copy-example-block-over)
+      ))
+
+(setup-after "word-list-minor-mode"
+  (kd word-list-minor-mode-map
+      '("<right>"  	word-list/mark-item)
+      '("<left>"   	word-list/unmark-item)
+      '("M-<right>"	word-list/mark-item-all)
+      '("M-<left>" 	word-list/unmark-item-all)
+
+      '("<f12>"	word-list/open-word)
+      ))
+
+(setup-after "lesson-minor-mode"
+  (kd lesson-minor-mode-map
+      ;; navigation in corpus
+      '("C-<left>" 	'lesson/prev-block)
+      '("C-<up>"   	'lesson/prev-block)
+      '("C-<right>"	'lesson/next-block)
+      '("C-<down>" 	'lesson/next-block)
+      '("<left>"   	'scroll-down-line)
+      '("<right>"  	'scroll-up-line)
+      '("<up>"     	'scroll-down-line)
+      '("<down>"   	'scroll-up-line)
+      '("<SPC>"    	'lesson/next-thing)
+      '("C-<SPC>"  	'recenter-top-bottom)
+      '("<kanji>"  	'recenter-top-bottom)
+      ))
+
 (provide 'init-keys)
