@@ -47,6 +47,7 @@
         literal-delete-char
         literal-tab
         lua-electric-match
+        md/duplicate-down
         md/move-lines-down
         md/move-lines-up
         mouse-yank-primary
