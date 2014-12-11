@@ -1147,17 +1147,23 @@
 (setup-after "lesson-minor-mode"
   (kd lesson-minor-mode-map
       ;; navigation in corpus
-      '("C-<left>" 	'lesson/prev-block)
-      '("C-<up>"   	'lesson/prev-block)
-      '("C-<right>"	'lesson/next-block)
-      '("C-<down>" 	'lesson/next-block)
-      '("<left>"   	'scroll-down-line)
-      '("<right>"  	'scroll-up-line)
-      '("<up>"     	'scroll-down-line)
-      '("<down>"   	'scroll-up-line)
-      '("<SPC>"    	'lesson/next-thing)
-      '("C-<SPC>"  	'recenter-top-bottom)
-      '("<kanji>"  	'recenter-top-bottom)
+      '("C-<left>" 	lesson/prev-block)
+      '("C-<up>"   	lesson/prev-block)
+      '("C-<right>"	lesson/next-block)
+      '("C-<down>" 	lesson/next-block)
+
+      '("M-<left>" 	dired-prev)
+      '("M-<up>"   	dired-prev)
+      '("M-<right>"	dired-next)
+      '("M-<down>" 	dired-next)
+
+      '("<left>"   	scroll-down-line)
+      '("<right>"  	scroll-up-line)
+      '("<up>"     	scroll-down-line)
+      '("<down>"   	scroll-up-line)
+      '("<SPC>"    	lesson/next-thing)
+      '("C-<SPC>"  	recenter-top-bottom)
+      '("<kanji>"  	recenter-top-bottom)
       ))
 
 (provide 'init-keys)
