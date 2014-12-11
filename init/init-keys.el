@@ -127,9 +127,19 @@
   (--each bindings
     (apply 'key-def map it)))
 
-(defun key-def (map key command &optional type alt-key)
+(defun* key-def (map key command &key
+                     (type   	'simple)
+                     (alt-key	nil)
+                     (debug  	nil))
   "Short, unified key definition."
   (interactive)
+
+  ;; sanity check
+  (when (and debug
+             (symbolp command)
+             (not (fboundp command)))
+    (message "key error: «%s» -> «%s» (undefined)"
+             key command))
 
   (case type
     ;; Creates a prefix map for the key.
@@ -148,8 +158,12 @@
                   (overshadowed-terminal-command ',command ,alt-key))))))
 
     ;; Plain key with a simple command.
+    ('simple
+     (define-key map (kbd key) command))
+
+    ;; error
     (t
-     (define-key map (kbd key) command))))
+     (error "wrong key type: %s" type))))
 
 ;; un-fuck-up with a shotgun modes that steal C-c badly
 (defun unbreak-stupid-map (stupid-map)
@@ -311,24 +325,24 @@
     '("C-f"	forward-word)
     '("C-g"	keyboard-quit) ; also change quit-char if you wanna move it
     '("C-h"	help-command)
-    '("C-i"	indent-for-tab-command terminal "TAB")
+    '("C-i"	indent-for-tab-command :type terminal :alt-key "TAB")
     '("C-j"	newline-and-indent)
     '("C-k"	kill-and-join-forward)
     '("C-l"	recenter-top-bottom)
-    '("C-m"	newline terminal "RET")
+    '("C-m"	newline :type terminal :alt-key "RET")
     '("C-n"	focus-next-window)
     '("C-N"	focus-prev-window)
     '("C-o"	yas-expand)
     '("C-O"	next-newline-and-indent)
-    '("C-p"	mc-prefix-map prefix)
+    '("C-p"	mc-prefix-map :type prefix)
     '("C-q"	quoted-insert)
-    '("C-r"	window-prefix-map prefix)
-    '("C-s"	search-prefix-map prefix)
+    '("C-r"	window-prefix-map :type prefix)
+    '("C-s"	search-prefix-map :type prefix)
     '("C-t"	ac-trigger-key-command)
     '("C-u"	universal-argument)
-    '("C-v"	visual-prefix-map prefix)
+    '("C-v"	visual-prefix-map :type prefix)
     '("C-w"	kill-region)
-    '("C-x"	command-prefix-map prefix)
+    '("C-x"	command-prefix-map :type prefix)
     '("C-y"	yank-and-indent)
     '("C-Y"	yank)
     '("C-z"	undo-tree-undo)
@@ -373,29 +387,29 @@
     '("C-w"	write-file)
     '("C-x"	exchange-point-and-mark)
     '("M-f"	find-file-at-point)
-    '("SPC"	eval-prefix-map prefix)
+    '("SPC"	eval-prefix-map :type prefix)
     '("#"  	server-edit)
-    '("("  	sexp-prefix-map prefix)
+    '("("  	sexp-prefix-map :type prefix)
     '("+"  	balance-windows)
     '("~"  	aya-create)
-    '("a"  	align-prefix-map prefix)
+    '("a"  	align-prefix-map :type prefix)
     '("b"  	switch-to-buffer)
-    '("c"  	case-prefix-map prefix)
-    '("d"  	debug-prefix-map prefix)
-    '("f"  	font-prefix-map prefix)
+    '("c"  	case-prefix-map :type prefix)
+    '("d"  	debug-prefix-map :type prefix)
+    '("f"  	font-prefix-map :type prefix)
     '("g"  	magit-status)
     '("h"  	mark-whole-buffer)
     '("i"  	indent-region)
     '("k"  	kill-buffer)
-    '("m"  	number-prefix-map prefix)
-    '("M"  	macro-prefix-map prefix)
+    '("m"  	number-prefix-map :type prefix)
+    '("M"  	macro-prefix-map :type prefix)
     '("n"  	narrow-map)
     '("p"  	paradox-list-packages)
-    '("r"  	rectangle-prefix-map prefix)
-    '("R"  	register-prefix-map prefix)
+    '("r"  	rectangle-prefix-map :type prefix)
+    '("R"  	register-prefix-map :type prefix)
     '("s"  	save-some-buffers)
-    '("t"  	input-prefix-map prefix)
-    '("w"  	spell-check-prefix-map prefix)
+    '("t"  	input-prefix-map :type prefix)
+    '("w"  	spell-check-prefix-map :type prefix)
     '("z"  	repeat)
     '("Z"  	repeat-complex-command)
     )
@@ -419,7 +433,7 @@
     '("d"  	er/mark-defun)
     '("e"  	next-error)
     '("E"  	previous-error)
-    '("g"  	jump-prefix-map prefix)
+    '("g"  	jump-prefix-map :type prefix)
     '("i"  	idomenu)
     '("I"  	imenu-anywhere)
     '("o"  	occur)
