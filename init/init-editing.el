@@ -565,7 +565,7 @@ You have:
     (number/add (number-read "1")))
   (defun number/decrement ()
     (interactive)
-    (number/subtract (number-read "1"))))
+    (number/sub (number-read "1"))))
 
 ;; rotate / toggle text
 (setup-lazy '(rotate-text) "rotate-text"
