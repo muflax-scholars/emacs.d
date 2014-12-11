@@ -54,6 +54,7 @@
 (require 'ample-regexps)
 
 ;; helper modes
+(require 'conlang)
 (require 'corpus-minor-mode)
 (require 'lesson-minor-mode)
 (require 'prompt-minor-mode)
