@@ -1,0 +1,5 @@
+? ${1:noun}
+! ${2:$1$(when (and yas-moving-away-p (not yas-modified-p))
+              (insert (capitalize yas-text)))}
+! <${3:$$(yas-choose-value '("Hund" "Schaf" "Frau" "Kuh" "Drache" "Doktor" "Bett" "Schwan" "Floß" "Mann" "Haus" "Name" "Chef" "Auto" "Kamera" "Gecko" "Museum" "Pizza"))}>
+$0

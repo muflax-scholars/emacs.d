@@ -1,0 +1,1 @@
++adj ${1:(es)} ${4:ist} $3, dass ${2:[activity]}$0
