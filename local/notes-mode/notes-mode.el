@@ -19,69 +19,9 @@
 ;;
 ;;; Commentary:
 ;;
-;; This mode implements the notation I use to write notes (and teaching scripts). It helps you write any documentation in the most desirable style, that of prompted examples, by annotating normal plain text. It works like this:
+;; This mode implements the notation I use to write notes (and teaching scripts). It helps me write any documentation in the most desirable style, that of prompted examples, by annotating normal plain text.
 ;;
-;; [ line annotations
-;;
-;; You can mark a line as special by starting it with a dedicated character, like this:
-;;
-;; $ This line is an explanation. You can tell because it starts with a $.
-;;
-;; $ The next line is a quote. It starts with a >.
-;; > I am a quote!
-;; $ (Yes, you are.)
-;;
-;; % How do you start a quote?
-;; @ With a >.
-;;
-;; $ As you can see, a % begins a prompt, whereas @ marks the expected reply or answer. They are typically used as a pair, but @ by itself is also used to show examples.
-;;
-;; Remaining options:
-;;
-;; + abstract concept, as demonstrated by the following lines
-;; # comments
-;; ! wrong, invalid
-;; = equivalent, typically used to transform metaphors into literal structures
-;;
-;; ]
-;;
-;; [ highlighting
-;;
-;; emphasis:
-;; @ I suspect stegosaurus was *really* dumb.
-;;
-;; placeholders:
-;; @ I used to work for [big company] before I moved to Alaska.
-;;
-;; [ grab brackets
-;;
-;; Enclose text in any pair of parentheses. You can add headers too, like I'm been doing.
-;;
-;; ]
-;; [ lists
-;;
-;; Works like Markdown, but only supports the "-" or "1." notation.
-;;
-;; ]
-;; [ links
-;;
-;; Like Markdown.
-;;
-;; ]
-;; [ footnotes
-;;
-;; Like extended Markdown, except also allows nesting.
-;;
-;; ]
-;; [ indentation
-;;
-;; ]
-;; [ folding
-;;
-;; ]
-;; [ tables
-;;
-;; ]
+;; The other minor modes deal with particular editing problems during script development. They're mostly a big sprawling mess of helper functions.
 ;;
 ;; [ appendix
 ;;
@@ -95,7 +35,7 @@
 ;;
 ;; - Knuth's idea of literate programming, in a vague sense
 ;;
-;; - the experience of writing language courses and needing a convenient notation for common constructions, like prompts
+;; - the experience of writing language courses
 ;; ]
 ;;
 ;;; Installation:
