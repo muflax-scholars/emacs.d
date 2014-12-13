@@ -9,7 +9,9 @@
 
   (if lesson-minor-mode
       (read-only-mode 1)
-    (read-only-mode 0)))
+    (progn
+      (lesson/unhighlight-blocks)
+      (read-only-mode 0))))
 
 (defvar lesson/window-margin 15)
 
@@ -19,37 +21,55 @@
     (blank-line  	(seq bol (* blank) eol))
     ))
 
+;; blocks
+
 (defun lesson/find-next-block ()
+  (save-excursion
+    (lesson/end-of-block)
+    (re-search-forward (lesson/rx lesson-block) nil t)
+
+    (lesson/current-block)))
+
+(defun lesson/find-prev-block ()
+  (save-excursion
+    (lesson/beginning-of-block)
+    (re-search-backward (lesson/rx lesson-block) nil t)
+
+    (lesson/current-block)))
+
+(defun lesson/current-block ()
   (let (block-beg
         block-end)
     (save-excursion
-      (unless (re-search-forward (lesson/rx blank-line) nil t)
-        (re-search-backward (lesson/rx blank-line) nil t))
-
-      (re-search-forward (lesson/rx lesson-block) nil t)
-      (beginning-of-line)
+      (lesson/beginning-of-block)
       (setq block-beg (point))
 
-      (while (and (looking-at (lesson/rx lesson-block))
-                  (not (eobp)))
-        (forward-line 1))
-
-      (unless (eobp)
-        (forward-char -1))
-
+      (lesson/end-of-block)
       (setq block-end (point)))
 
     (list block-beg block-end)))
 
-(defun lesson/find-prev-block ()
-  (save-excursion
-    (re-search-backward (lesson/rx blank-line)  	nil t)
-    (re-search-backward (lesson/rx lesson-block)	nil t)
-    (re-search-backward (lesson/rx blank-line)  	nil t)
+(defun lesson/beginning-of-block ()
+  (interactive)
 
-    (lesson/find-next-block)))
+  (let (moved)
+    (beginning-of-line)
+    (while (and (looking-at (lesson/rx lesson-block))
+                (not (bobp)))
+      (setq moved t)
+      (forward-line -1))
+    (when moved (forward-line 1))))
 
-;; FIXME: can't select the very first block of the file, if it's not whitespace-separated
+(defun lesson/end-of-block ()
+  (interactive)
+
+  (let (moved)
+    (beginning-of-line)
+    (while (and (looking-at (lesson/rx lesson-block))
+                (not (eobp)))
+      (setq moved t)
+      (forward-line 1))
+    (when moved (forward-char -1))))
 
 (defun lesson/next-thing ()
   (interactive)
@@ -57,9 +77,7 @@
   (let (cur-block
         in-block
         )
-    (save-excursion
-      (re-search-backward (lesson/rx blank-line) nil t)
-      (setq cur-block (lesson/find-next-block)))
+    (setq cur-block (lesson/current-block))
 
     (--each (overlays-at (point))
       (when (overlay-get it 'lesson-block)
@@ -88,6 +106,11 @@
   (interactive)
 
   (apply 'lesson/start-block (lesson/find-next-block)))
+
+(defun lesson/prev-block ()
+  (interactive)
+
+  (apply 'lesson/start-block (lesson/find-prev-block)))
 
 (defun lesson/start-block (beg end)
   (lesson/highlight-block beg end)
@@ -140,17 +163,6 @@
 
     (goto-char (first (lesson/find-prev-block)))
     (lesson/smooth-recenter)))
-
-(defun prev-lesson-block ()
-  (interactive)
-
-  (apply 'lesson/start-block (lesson/find-prev-block)))
-
-(defun next-lesson-block ()
-  (interactive)
-
-  (apply 'lesson/start-block (lesson/find-next-block)))
-
 
 ;; verbs
 
