@@ -19,6 +19,7 @@
   '(
     (lesson-block	(seq bol (* blank) (not (any "[" "]" "+" "$" blank "\n"))))
     (blank-line  	(seq bol (* blank) eol))
+    (lesson-file 	(seq bol "L-" (+ digit) (? "-" letter) eol))
     ))
 
 ;; blocks
@@ -190,7 +191,33 @@
           (replace-match
            (concat "\\1\t" (second it))))))))
 
+;; file navigation
 
+(defun lesson/next-lesson ()
+  (interactive)
+
+  (let ((start-buffer (current-buffer)))
+    (dired-next)
+    (unless (eq (current-buffer)
+                start-buffer)
+      (if (lesson/lesson-file?)
+          (lesson-minor-mode 1)
+        (dired-prev)))))
+
+(defun lesson/prev-lesson ()
+  (interactive)
+
+  (let ((start-buffer (current-buffer)))
+    (dired-prev)
+    (unless (eq (current-buffer)
+                start-buffer)
+      (if (lesson/lesson-file?)
+          (lesson-minor-mode 1)
+        (dired-next)))))
+
+(defun lesson/lesson-file? ()
+  (s-match (lesson/rx lesson-file)
+           (file-name-nondirectory (buffer-file-name))))
 
 (provide 'lesson-minor-mode)
 ;;; lesson-minor-mode.el ends here

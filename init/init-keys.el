@@ -1152,10 +1152,10 @@
       '("C-<right>"	lesson/next-block)
       '("C-<down>" 	lesson/next-block)
 
-      '("M-<left>" 	dired-prev)
-      '("M-<up>"   	dired-prev)
-      '("M-<right>"	dired-next)
-      '("M-<down>" 	dired-next)
+      '("M-<left>" 	lesson/prev-lesson)
+      '("M-<up>"   	lesson/prev-lesson)
+      '("M-<right>"	lesson/next-lesson)
+      '("M-<down>" 	lesson/next-lesson)
 
       '("<left>"   	scroll-down-line)
       '("<right>"  	scroll-up-line)
