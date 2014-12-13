@@ -126,3 +126,11 @@ Stuff that doesn't work:
 	- fix hungry-delete deleting read-only parts
 
 ]
+
+[ lisp
+	{ poss aliases
+		(unroll list a b)
+		(apply 'f a b x) -> (-> f a b x)
+	}
+
+]
