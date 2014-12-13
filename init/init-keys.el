@@ -1157,13 +1157,15 @@
       '("M-<right>"	lesson/next-lesson)
       '("M-<down>" 	lesson/next-lesson)
 
-      '("<left>"   	scroll-down-line)
-      '("<right>"  	scroll-up-line)
-      '("<up>"     	scroll-down-line)
-      '("<down>"   	scroll-up-line)
-      '("<SPC>"    	lesson/next-thing)
-      '("C-<SPC>"  	recenter-top-bottom)
-      '("<kanji>"  	recenter-top-bottom)
+      '("<left>" 	scroll-down-line)
+      '("<right>"	scroll-up-line)
+      '("<up>"   	scroll-down-line)
+      '("<down>" 	scroll-up-line)
+      '("<SPC>"  	lesson/next-thing)
+      '("C-<SPC>"	recenter-top-bottom)
+      '("<kanji>"	recenter-top-bottom)
+
+      '("<menu>"	lesson-minor-mode)
       ))
 
 (provide 'init-keys)
