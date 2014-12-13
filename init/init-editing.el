@@ -992,4 +992,8 @@ narrowed."
   (elastic-advice-command-region	indent-region)
   )
 
+(defun dos2unix ()
+  (interactive)
+  (set-buffer-file-coding-system 'unix 't))
+
 (provide 'init-editing)

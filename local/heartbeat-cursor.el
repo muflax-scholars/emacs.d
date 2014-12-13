@@ -10,7 +10,7 @@
 
 (defun heartbeat-range (from to cnt)
   (let ((step (/ (- to from) (float cnt))))
-    (cli-loop for i below cnt collect (+ from (* step i)))))
+    (cl-loop for i below cnt collect (+ from (* step i)))))
 
 (defun heartbeat-cursor-colors ()
   (let ((cnt (* heartbeat-period heartbeat-fps)))

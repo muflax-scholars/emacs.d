@@ -128,7 +128,7 @@ This can be t or nil."
                                       '(1 2 3 4 5 6)))
 (defvar nyan-current-frame 0)
 
-(defconst +catface+ [
+(defconst nyan-catface [
         ["[]*" "[]#"]
         ["(*^ｰﾟ)" "( ^ｰ^)" "(^ｰ^ )" "(ﾟｰ^*)"]
         ["(´ω｀三 )" "( ´ω三｀ )" "( ´三ω｀ )" "( 三´ω｀)"
@@ -142,7 +142,7 @@ This can be t or nil."
 
 (defun nyan-swich-anim-frame ()
   (setq nyan-current-frame (% (+ 1 nyan-current-frame) 6))
-  (redraw-modeline))
+  (force-mode-line-update))
 
 (defun nyan-get-anim-frame ()
   (if nyan-animate-nyancat
@@ -165,7 +165,7 @@ This can be t or nil."
                (- nyan-bar-length +nyan-cat-size+))
           100)))
 
-(defun catface () (aref +catface+ nyan-cat-face-number))
+(defun catface () (aref nyan-catface nyan-cat-face-number))
 
 (defun catface-index ()
   (min (round (/ (* (round (* 100

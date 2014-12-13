@@ -37,17 +37,15 @@
 ;; (setq bookmark-default-file "~/.emacs.d/cache/bookmarks")
 
 ;; better search/replace
-(setup-lazy '(vr/query-replace vr/query-replace-from-beginning) "visual-regexp")
+(setup "visual-regexp"
+  (defun vr/query-replace-from-beginning ()
+    (interactive)
+    (save-excursion
+      (goto-char (point-min))
+      (call-interactively 'vr/query-replace)))
 
-(setup-after "visual-regexp"
   (setup "visual-regexp-steroids"
     (setq vr/engine 'emacs)))
-
-(defun vr/query-replace-from-beginning ()
-  (interactive)
-  (save-excursion
-    (goto-char (point-min))
-    (call-interactively 'vr/query-replace)))
 
 ;; ido and smex (ido for M-x)
 (setup "flx-ido"

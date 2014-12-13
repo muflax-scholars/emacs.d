@@ -46,7 +46,7 @@
 
 ;;; Code:
 
-(require 'cl)
+(eval-when-compile 'cl-lib)
 
 (defgroup scratch nil
   "Scratch buffers."
