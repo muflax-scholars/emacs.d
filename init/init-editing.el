@@ -82,7 +82,9 @@
     (interactive)
     (mc/many-to-one-yank)
     (call-interactively 'indent-region))
-  )
+
+  ;; when would you ever *not* want a regexp?!
+  (defalias 'mc/mark-all-in-region 'mc/mark-all-in-region-regexp))
 
 ;; edit symbol in multiple places simultaneously
 (setup-lazy '(iedit-mode iedit-mode-toggle-on-function) "iedit")
