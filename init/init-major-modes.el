@@ -297,7 +297,7 @@
   (defun dired-back-to-top ()
     (interactive)
     (goto-char (point-min))
-    (dired-next-line 4))
+    (dired-next-line 3))
 
   (defun dired-jump-to-bottom ()
     (interactive)
