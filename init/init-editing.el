@@ -198,11 +198,15 @@ If visual-line-mode is on, then also jump to beginning of real line."
   (yank)
   (call-interactively 'indent-region))
 
-(defun unfill-region (begin end)
+(defun unfill-region (beg end)
   "Remove all line breaks in a region but leave paragraphs,
   indented text (quotes, code) and lists intact."
   (interactive "r")
-  (replace-regexp "\\([^\n]\\)\n\\([^ *\\>-\n]\\)" "\\1 \\2" nil begin end))
+
+  (save-excursion
+    (goto-char beg)
+    (while (re-search-forward "\\([^\n]\\)\n\\([^ *\\>-\n]\\)" end t)
+      (replace-match "\\1 \\2"))))
 
 (defun next-newline-and-indent ()
   "Insert new line *after* the current one."
@@ -230,7 +234,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
     (delete-char -1)))
 
 ;; spell checker
-(setup "wcheck-mode"
+(setup-lazy '(wcheck-mode) "wcheck-mode"
   (let ((spell-prog  	"hunspell")
         (spell-bindir	(expand-file-name "~/.nix-profile/bin/"))
         (spell-dir   	(expand-file-name "~/.hunspell/")))
@@ -281,7 +285,7 @@ If visual-line-mode is on, then also jump to beginning of real line."
       (interactive)
       (setq use-spell-check nil)
       (dolist (buffer (buffer-list))
-        (wcheck-buffer-lang-proc-data-update buffer nil))
+        (wcheck--buffer-lang-proc-data-update buffer nil))
       (wcheck-mode 0))
 
     (defun enable-spell-check ()
@@ -634,13 +638,13 @@ You have:
 
   (defun whitespace-fold-increase ()
     (interactive)
-    (set (make-local-variable 'whitspace-fold-level)
+    (set (make-local-variable 'whitespace-fold-level)
          (+ whitespace-fold-level tab-width))
     (set-selective-display whitespace-fold-level))
 
   (defun whitespace-fold-decrease ()
     (interactive)
-    (set (make-local-variable 'whitspace-fold-level)
+    (set (make-local-variable 'whitespace-fold-level)
          (max (- whitespace-fold-level tab-width) tab-width))
     (set-selective-display whitespace-fold-level))
 
