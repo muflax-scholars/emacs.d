@@ -108,10 +108,9 @@
 (setq auto-window-vscroll nil)
 (setup "smooth-scrolling"
   (smooth-scrolling-mode 1)
-  (setq smooth-scroll-margin 5)
-  (setq scroll-margin 3)
-  (setq scroll-conservatively 10000)
-  )
+  (setq smooth-scroll-margin	5)
+  (setq scroll-margin       	5)
+  (setq scroll-conservatively 10000))
 
 ;; try to keep windows within a max margin
 (setup "automargin"
