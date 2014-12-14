@@ -185,6 +185,12 @@
      (when (fboundp ,mode)
        (diminish ,mode ,(or short-name "")))))
 
+;; clean up way-too-long major modes
+(defmacro diminish-major-mode (package-name mode new-name)
+  `(eval-after-load ,package-name
+     '(defadvice ,mode (after diminish-major-mode activate)
+        (setq mode-name ,new-name))))
+
 (setup "diminish"
   (diminish-minor-mode "abbrev"               	'abbrev-mode               	    	)
   (diminish-minor-mode "anzu"                 	'anzu-mode                 	    	)
@@ -212,17 +218,11 @@
   (diminish-minor-mode "whitespace"           	'whitespace-mode           	" |"	)
   (diminish-minor-mode "whole-line-or-region" 	'whole-line-or-region-mode 	    	)
   (diminish-minor-mode "yasnippet"            	'yas-minor-mode            	    	)
+
+  (diminish-major-mode "lisp-mode"    	emacs-lisp-mode	"EL" 	)
+  (diminish-major-mode "sh-script"    	sh-mode        	"sh" 	)
+  (diminish-major-mode "ruby-mode"    	ruby-mode      	"RB" 	)
+  (diminish-major-mode "enh-ruby-mode"	enh-ruby-mode  	"RB+"	)
   )
-
-;; clean up way-too-long major modes
-(defmacro diminish-major-mode (package-name mode new-name)
-  `(eval-after-load ,package-name
-     '(defadvice ,mode (after diminish-major-mode activate)
-        (setq mode-name ,new-name))))
-
-(diminish-major-mode "lisp-mode"    	emacs-lisp-mode	"EL")
-(diminish-major-mode "sh-script"    	sh-mode        	"sh")
-(diminish-major-mode "ruby-mode"    	ruby-mode      	"RB")
-(diminish-major-mode "enh-ruby-mode"	enh-ruby-mode  	"RB+")
 
 (provide 'init-look)
