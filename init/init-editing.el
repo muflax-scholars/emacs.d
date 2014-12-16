@@ -996,4 +996,44 @@ narrowed."
   (interactive)
   (set-buffer-file-coding-system 'unix 't))
 
+(defun scramble (beg end)
+  "Scramble all lines in region."
+  (interactive "r")
+
+  (let ((beg	(min beg end))
+        (end	(max beg end))
+        lines
+        done)
+    (save-excursion
+      (goto-char beg)
+      (beginning-of-line)
+      (setq beg (point))
+
+      (goto-char end)
+      (when (bolp)
+        (forward-char -1))
+      (setq end (point))
+
+      (setq lines (s-lines (buffer-substring-no-properties beg end)))
+
+      (while (not done)
+        (delete-region beg end)
+        (insert (s-join "\n" (shuffle lines)))
+
+        (setq done (/= (read-key "SPC to shuffle again") ?\s))))))
+
+(defun shuffle (list)
+  "fair permutation of a list"
+  (let ((i 0)
+        j
+        temp
+        (len (length list)))
+    (while (< i len)
+      (setq j (+ i (random (- len i))))
+      (setq temp (nth i list))
+      (setcar (nthcdr i list) (nth j list))
+      (setcar (nthcdr j list) temp)
+      (setq i (1+ i))))
+  list)
+
 (provide 'init-editing)
