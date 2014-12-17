@@ -306,7 +306,7 @@
 
   ;; just delete files, sheesh
   (defadvice dired-clean-up-after-deletion (around quiet-delete activate)
-    (cl-flet ((y-or-n-p (&rest args) t))
+    (noflet ((y-or-n-p (&rest args) t))
       ad-do-it))
 
   ;; move files between split panes

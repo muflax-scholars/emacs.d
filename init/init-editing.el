@@ -189,7 +189,11 @@ If visual-line-mode is on, then also jump to beginning of real line."
 (add-hook 'notes-mode-hook 'use-tabs)
 
 ;; automatically indent on return
-(electric-indent-mode 1)
+(setup "electric"
+  (electric-indent-mode 1)
+  (defadvice electric-indent-post-self-insert-function (around keep-trailing-whitespace activate)
+    (noflet ((delete-horizontal-space (&rest args) t))
+      ad-do-it)))
 
 ;; also indent when yanked
 (defun yank-and-indent ()
@@ -550,11 +554,39 @@ You have:
           (shell-command-on-region p m command)))))
   )
 
+(defun trim-whitespace (&optional start end)
+  "Slightly less aggressive version of 'delete-trailing-whitespace'."
+  (interactive (progn
+                 (barf-if-buffer-read-only)
+                 (if (use-region-p)
+                     (list (region-beginning) (region-end))
+                   (list nil nil))))
+  (save-match-data
+    (save-excursion
+      (let ((end-marker (copy-marker (or end (point-max))))
+            (start (or start (point-min))))
+        (goto-char start)
+        ;; only delete spaces
+        (while (re-search-forward "[ ]+$" end-marker t)
+          (skip-chars-backward " " (line-beginning-position))
+          (delete-region (point) (match-end 0)))
+        ;; Delete trailing empty lines.
+        (goto-char end-marker)
+        (when (and (not end)
+                   delete-trailing-lines
+                   ;; Really the end of buffer.
+                   (= (point-max) (1+ (buffer-size)))
+                   (<= (skip-chars-backward "\n") -2))
+          (delete-region (1+ (point)) end-marker))
+        (set-marker end-marker nil))))
+  ;; Return nil for the benefit of `write-file-functions'.
+  nil)
+
 ;; remove trailing whitespace on save, unless it's a big buffer
 ;; TODO make this fast so we can always run it
 (defun maybe-trim-whitespace ()
   (when (not (> (buffer-size) 1000000))
-    (delete-trailing-whitespace)))
+    (trim-whitespace)))
 
 (add-hook 'before-save-hook 'maybe-trim-whitespace)
 
