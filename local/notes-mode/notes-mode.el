@@ -289,8 +289,8 @@
 
 (defvar notes-mode-font-lock-keywords
   (list
-   (cons notes-regex-list   '(2 notes-list-face))
-   (cons notes-regex-bold   '(2 notes-bold-face))
+   (cons notes-regex-list	'(2 notes-list-face))
+   (cons notes-regex-bold	'(2 notes-bold-face))
 
    (cons notes-regex-placeholder-square
          '(1 notes-placeholder-square-face))
