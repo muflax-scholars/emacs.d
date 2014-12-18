@@ -211,7 +211,7 @@
 
     (annotation-2
      (:func (lambda (_form &rest args)
-              `(group-n 2 (any ,@args) (* (not blank))))))
+              `(group-n 2 (any ,@args) (* (not (any blank "\n")))))))
 
     (annotation-line-3
      (:func (lambda (_form &rest args)
