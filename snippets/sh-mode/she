@@ -1,7 +1,6 @@
 #name : shebang
 # --
-#!/usr/bin/env ruby
-# -*- encoding: utf-8 -*-
+#!/bin/zsh -l
 # Copyright muflax <mail@muflax.com>, `(current-year)`
 # License: GNU GPLv3 (or later) <http://www.gnu.org/copyleft/gpl.html>
 

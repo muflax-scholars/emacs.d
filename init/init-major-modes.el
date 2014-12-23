@@ -31,23 +31,6 @@
 (setup "which-func"
   (which-function-mode 1))
 
-;; use automatic file headers
-;; #TODO recognize name automagically
-;; #TODO add end-of-buffer
-(setup "autoinsert"
-  (auto-insert-mode)
-  (setq auto-insert-directory "~/.emacs.d/templates/")
-  (setq auto-insert-query nil)
-  (define-auto-insert "\\.sh$" 	"sh")
-  (define-auto-insert "\\.py$" 	"python")
-  (define-auto-insert "\\.hs$" 	"haskell")
-  (define-auto-insert "\\.pl$" 	"perl")
-  (define-auto-insert "\\.rb$" 	"ruby")
-  (define-auto-insert "\\.c$"  	"c")
-  (define-auto-insert "\\.cpp$"	"cpp")
-  (define-auto-insert "\\.go$" 	"go")
-  (define-auto-insert "\\.rkt$"	"racket"))
-
 ;; auctex
 (setup-lazy '(latex-mode LaTeX-mode tex-mode TeX-mode) "latex")
 (add-hook 'LaTeX-mode-hook 'TeX-PDF-mode)

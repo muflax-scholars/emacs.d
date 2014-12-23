@@ -36,6 +36,16 @@
 
     (yas-choose-value (split-string (shell-command-to-string command) "\n" t)))
 
+  (defun yas-insert-by-name (name)
+    (noflet ((dummy-prompt
+            (prompt choices &optional display-fn)
+            (declare (ignore prompt))
+            (or (cl-find name choices :key display-fn :test #'string=)
+                (throw 'notfound nil))))
+      (let ((yas-prompt-functions '(dummy-prompt)))
+        (catch 'notfound
+          (yas-insert-snippet t)))))
+
   ;; options
   (setq yas-indent-line 'fixed)
   (setq yas-verbosity 1)
@@ -97,5 +107,39 @@
 (setup-after "ielm"
   (add-hook 'ielm-mode-hook 'ac-emacs-lisp-mode-setup)
   (add-to-list 'ac-modes 'inferior-emacs-lisp-mode))
+
+;; use automatic file headers
+;; #TODO recognize name automagically
+(setup-after "yasnippet"
+  (setup "autoinsert"
+    (defun auto-insert-from-yas (ext mode)
+      (define-auto-insert
+        (format "\\.%s$" ext)
+        (lambda ()
+           (yas-insert-by-name "shebang")
+           (end-of-buffer))))
+
+    (defun current-year ()
+      (format-time-string "%Y"))
+
+    (auto-insert-mode)
+    (setq auto-insert-directory "~/.emacs.d/templates/")
+    (setq auto-insert-query nil)
+
+    ;; don't use the default values
+    (setq auto-insert-alist '())
+
+    (auto-insert-from-yas "sh" 	'sh-script-mode)
+    (auto-insert-from-yas "py" 	'python-mode)
+    (auto-insert-from-yas "hs" 	'haskell-mode)
+    (auto-insert-from-yas "pl" 	'perl-mode)
+    (auto-insert-from-yas "rb" 	'ruby-mode)
+    (auto-insert-from-yas "c"  	'c-mode)
+    (auto-insert-from-yas "h"  	'c-mode)
+    (auto-insert-from-yas "cpp"	'c-mode)
+    (auto-insert-from-yas "go" 	'go-mode)
+    (auto-insert-from-yas "rkt"	'racket-mode)
+    ))
+
 
 (provide 'init-auto-completion)
