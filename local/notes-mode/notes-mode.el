@@ -206,7 +206,8 @@
 
 (define-arx notes-rx
   '(
-    (indent  	(and bol (* blank)))
+    (indent  	(or (seq bol (* blank))
+                   (+ "\t")))
     (indent-1	(group-n 1 indent))
 
     (annotation-2
