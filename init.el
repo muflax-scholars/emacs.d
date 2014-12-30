@@ -4,7 +4,11 @@
 
 ;; load path
 (defun emacs-d (path)
-  (concat user-emacs-directory path))
+  (let ((user-dir
+         (cond ((boundp 'user-init-dir)       	user-init-dir)
+               ((boundp 'user-emacs-directory)	user-emacs-directory)
+               (t                             	"~/.emacs.d/"))))
+    (concat user-dir path)))
 (load (emacs-d "init/init-load-path.el"))
 
 ;; init setup (for faster start-up)
