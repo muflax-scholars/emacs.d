@@ -15,6 +15,9 @@
 (require 'setup)
 (setup-initialize)
 
+;; external packages
+(setup "init-packages")
+
 ;; helper functions (should be early)
 (setup "init-helpers")
 
