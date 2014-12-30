@@ -26,16 +26,6 @@
 
 (setup-lazy '(phi-search phi-search-backward) "phi-search")
 
-;; support for bookmarks (broken; resurrect this at some point...)
-;; (require 'breadcrumb)
-;; (global-set-key (kbd "C-c m") 'bc-set)
-;; (global-set-key (kbd "M-SPC") 'bc-previous)
-;; (global-set-key (kbd "M-S-SPC") 'bc-next)
-;; (setq bc-bookmark-limit 1000)
-;; (setq bc-bookmark-file (expand-file-name "~/.emacs.d/cache/breadcrumb"))
-;; ;; normal bookmarks
-;; (setq bookmark-default-file "~/.emacs.d/cache/bookmarks")
-
 ;; better search/replace
 (setup "visual-regexp"
   (defun vr/query-replace-from-beginning ()
@@ -61,9 +51,13 @@
   (setq ido-use-virtual-buffers t)
   (setq ido-default-file-method 'selected-window) ; ignore buffers in different frames
   (setq ido-default-buffer-method 'selected-window) ; ignore buffers in different frames
-  (setq ido-save-directory-list-file "~/.emacs.d/cache/ido.last")
+  (setq ido-save-directory-list-file (emacs-d "cache/ido.last"))
   (setq ido-ignore-buffers
-        '("\\` " "^\\*Backtrace\\*$" "^\\*.*Completions\\*$" "^\\*Compile-Log\\*$" "\\.elc$"))
+        '("\\` "
+          "^\\*Backtrace\\*$"
+          "^\\*.*Completions\\*$"
+          "^\\*Compile-Log\\*$"
+          "\\.elc$"))
   (setq ido-case-fold t) ; case insensitive
   (setq ido-enable-last-directory-history t)
   (setq ido-max-work-directory-list 30)
@@ -74,16 +68,16 @@
 
 ;; smex
 (setup "smex"
-  (setq smex-save-file "~/.emacs.d/cache/smex-items")
+  (setq smex-save-file (emacs-d "cache/smex-items"))
   (smex-initialize))
 
 ;; recent files
 (setup "recentf"
   (setq recentf-max-saved-items 1000)
-  (setq recentf-save-file "~/.emacs.d/cache/recentf")
+  (setq recentf-save-file (emacs-d "cache/recentf"))
   (setq recentf-exclude (append recentf-exclude
-                                '("\.emacs\.d/cache"
-                                  "\.emacs\.d/packages")))
+                                '("\\.emacs\\.d/cache"
+                                  "\\.emacs\\.d/packages")))
   (recentf-mode 1)
 
   ;; file completion

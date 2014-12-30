@@ -2,7 +2,7 @@
 
 ;; safety
 (setq make-backup-files nil)
-(defvar autosave-dir (expand-file-name "~/.emacs.d/cache/autosave/"))
+(defvar autosave-dir (expand-file-name (emacs-d "cache/autosave/")))
 (setq auto-save-list-file-prefix autosave-dir)
 (setq auto-save-file-name-transforms `((".*" ,autosave-dir t)))
 (setq confirm-kill-emacs 'y-or-n-p)
@@ -20,8 +20,8 @@
   (setq kmacro-ring-max       	1000)
   (setq comint-input-ring-size	1000)
 
-  (setq save-place-file	"~/.emacs.d/cache/saveplace")
-  (setq savehist-file  	"~/.emacs.d/cache/history")
+  (setq save-place-file	(emacs-d "cache/saveplace"))
+  (setq savehist-file  	(emacs-d "cache/history"))
 
   (setq-default save-place t)
   (setq savehist-additional-variables '(search-ring
@@ -31,7 +31,7 @@
 
 ;; save open buffers etc.
 ;; (setup "desktop"
-;;   (setq desktop-path "~/.emacs.d/cache/desktop/")
+;;   (setq desktop-path (emacs-d "cache/desktop/"))
 ;;   (desktop-save-mode 1)
 ;;   )
 
@@ -62,7 +62,7 @@
 (prefer-coding-system       	'utf-8) ; with sugar on top
 
 ;; multiple cursors
-(setq mc/list-file "~/.emacs.d/mc-lists.el")
+(setq mc/list-file (emacs-d "mc-lists.el"))
 (setup-after "expand-region"
   (setup "multiple-cursors"
     (setup "mc-extras")
@@ -88,16 +88,6 @@
 
 ;; edit symbol in multiple places simultaneously
 (setup-lazy '(iedit-mode iedit-mode-toggle-on-function) "iedit")
-
-;; support for bookmarks (broken; resurrect this at some point...)
-;; (require 'breadcrumb)
-;; (global-set-key (kbd "C-c m") 'bc-set)
-;; (global-set-key (kbd "M-SPC") 'bc-previous)
-;; (global-set-key (kbd "M-S-SPC") 'bc-next)
-;; (setq bc-bookmark-limit 1000)
-;; (setq bc-bookmark-file (expand-file-name "~/.emacs.d/cache/breadcrumb"))
-;; ;; normal bookmarks
-;; (setq bookmark-default-file "~/.emacs.d/cache/bookmarks")
 
 ;; undo-tree like in vim
 (setup "undo-tree"
@@ -421,9 +411,9 @@ See the variable `align-rules-list' for more details.")
 ;; tramp (remote files)
 (setup-after "tramp"
   (setq tramp-default-method "ssh")
-  (setq tramp-persistency-file-name "~/.emacs.d/cache/tramp")
+  (setq tramp-persistency-file-name (emacs-d "cache/tramp"))
   ;; cookies
-  (setq url-cookie-file "~/.emacs.d/cache/url/cookies"))
+  (setq url-cookie-file (emacs-d "cache/url/cookies")))
 
 (defun sudo-open-file (&optional arg)
   "Find a file and open it as root."
@@ -785,7 +775,7 @@ You have:
 ;; perspectives / workspaces (has to be loaded late)
 ;; FIXME stupid
 ;; (setup "persp-mode"
-;;   (setq persp-save-dir (expand-file-name "~/.emacs.d/cache/persp-confs"))
+;;   (setq persp-save-dir (expand-file-name (emacs-d "cache/persp-confs")))
 ;;   (setq persp-set-last-persp-for-new-frames nil)
 ;;   (setq persp-auto-save-num-of-backups 10)
 ;;   (setq wg-morph-on nil)

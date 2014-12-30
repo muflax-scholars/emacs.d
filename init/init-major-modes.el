@@ -423,7 +423,7 @@
     (setq slime-enable-evaluate-in-emacs t)
     (setq slime-autodoc-use-multiline-p t)
     (setq slime-auto-start 'always)
-    (setq slime-repl-history-file "~/.emacs.d/cache/slime_history")
+    (setq slime-repl-history-file (emacs-d "cache/slime_history"))
 
     (add-hook 'lisp-mode-hook (lambda ()
                                 (unless (slime-connected-p)
@@ -440,7 +440,7 @@
     (setq geiser-active-implementations '(racket))
     (setq geiser-default-implementation 'racket)
     (setq geiser-autodoc-delay 0.1)
-    (setq geiser-repl-history-filename "~/.emacs.d/cache/geiser_history")
+    (setq geiser-repl-history-filename (emacs-d "cache/geiser_history"))
     (setq geiser-repl-company-p nil)
     (setq geiser-mode-company-p nil)
     (setq geiser-mode-start-repl-p t)

@@ -3,9 +3,9 @@
 ;; snippets
 (setup "yasnippet"
   (setq yas-snippet-dirs
-        '(
-          "~/.emacs.d/snippets"
-          "~/.emacs.d/extra-snippets/german"
+        `(
+          ,(emacs-d "snippets")
+          ,(emacs-d "extra-snippets/german")
           ))
 
   ;; inter-field navigation
@@ -67,8 +67,8 @@
   (add-to-list 'ac-modes	'go-mode)
   ;; (add-to-list 'ac-modes	'notes-mode)
 
-  (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
-  (setq ac-comphist-file "~/.emacs.d/cache/ac-comphist.dat")
+  (add-to-list 'ac-dictionary-directories (emacs-d "ac-dict"))
+  (setq ac-comphist-file (emacs-d "cache/ac-comphist.dat"))
   (setq ac-auto-show-menu nil)
   (setq ac-ignore-case nil)
   (setq ac-quick-help-delay 0.8)
@@ -80,7 +80,7 @@
 
 ;; abbrev-mode
 (setup-after "abbrev"
-  (setq abbrev-file-name "~/.emacs.d/abbrev_defs")
+  (setq abbrev-file-name (emacs-d "abbrev_defs"))
   (setq save-abbrevs 'silently)
   (when (file-exists-p abbrev-file-name)
     (quietly-read-abbrev-file)))
@@ -123,7 +123,7 @@
       (format-time-string "%Y"))
 
     (auto-insert-mode)
-    (setq auto-insert-directory "~/.emacs.d/templates/")
+    (setq auto-insert-directory (emacs-d "templates/"))
     (setq auto-insert-query nil)
 
     ;; don't use the default values
@@ -140,6 +140,5 @@
     (auto-insert-from-yas "go" 	'go-mode)
     (auto-insert-from-yas "rkt"	'racket-mode)
     ))
-
 
 (provide 'init-auto-completion)

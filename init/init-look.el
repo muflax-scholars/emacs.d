@@ -41,7 +41,7 @@
 (add-hook 'after-init-hook 'run-after-make-frame-hooks-current-frame)
 
 ;; color themes
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
+(add-to-list 'custom-theme-load-path (emacs-d "themes/"))
 (setup "leuven-theme") ; force-load it here so we have all faces set up
 
 (defvar bright-theme	'leuven              	"Bright theme to use")

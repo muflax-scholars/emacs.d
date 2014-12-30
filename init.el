@@ -3,7 +3,9 @@
 (setq user-mail-address	"mail@muflax.com")
 
 ;; load path
-(load "~/.emacs.d/init/init-load-path.el")
+(defun emacs-d (path)
+  (concat user-emacs-directory path))
+(load (emacs-d "init/init-load-path.el"))
 
 ;; init setup (for faster start-up)
 (require 'setup)
