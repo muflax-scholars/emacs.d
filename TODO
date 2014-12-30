@@ -131,6 +131,7 @@ Stuff that doesn't work:
 	{ poss aliases
 		(unroll list a b)
 		(apply 'f a b x) -> (-> f a b x)
+		some short names for common stuff
 	}
 
 ]
