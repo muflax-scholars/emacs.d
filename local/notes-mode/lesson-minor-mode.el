@@ -8,13 +8,17 @@
   nil " ?!" lesson-minor-mode-map
 
   (if lesson-minor-mode
-      (read-only-mode 1)
+      (progn
+        (read-only-mode 1)
+        (smooth-scrolling-mode nil))
     (progn
       (lesson/unhighlight-blocks)
-      (read-only-mode 0))))
+      (read-only-mode 0)
+      (smooth-scrolling-mode t))
+    ))
 
 (defvar lesson/window-margin 15)
-(defvar lesson/scroll-margin scroll-margin)
+(defvar lesson/scroll-margin 0)
 
 (define-arx lesson/rx
   '(
