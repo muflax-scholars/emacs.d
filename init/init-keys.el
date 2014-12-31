@@ -1136,12 +1136,12 @@
 
 (setup-after "word-list-minor-mode"
   (kd word-list-minor-mode-map
-      '("<right>"  	word-list/mark-item)
-      '("<left>"   	word-list/unmark-item)
-      '("M-<right>"	word-list/mark-item-all)
-      '("M-<left>" 	word-list/unmark-item-all)
-
       '("<f12>"	word-list/open-word)
+
+      '("<left>"   	word-list/unmark-item)
+      '("<right>"  	word-list/mark-item)
+      '("M-<left>" 	word-list/unmark-item-all)
+      '("M-<right>"	word-list/mark-item-all)
       ))
 
 (setup-after "lesson-minor-mode"
@@ -1158,14 +1158,13 @@
       '("M-<down>" 	lesson/next-lesson)
 
       '("<left>" 	scroll-down-line)
-      '("<right>"	scroll-up-line)
       '("<up>"   	scroll-down-line)
+      '("<right>"	scroll-up-line)
       '("<down>" 	scroll-up-line)
-      '("<SPC>"  	lesson/next-thing)
-      '("C-<SPC>"	recenter-top-bottom)
-      '("<kanji>"	recenter-top-bottom)
 
-      '("<menu>"	lesson-minor-mode)
+      '("<SPC>"  	lesson/next-thing)
+      '("<kanji>"	recenter-top-bottom)
+      '("<menu>" 	lesson-minor-mode)
       ))
 
 (provide 'init-keys)
