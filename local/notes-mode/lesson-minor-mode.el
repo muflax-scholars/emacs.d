@@ -14,6 +14,7 @@
       (read-only-mode 0))))
 
 (defvar lesson/window-margin 15)
+(defvar lesson/scroll-margin scroll-margin)
 
 (define-arx lesson/rx
   '(
@@ -75,10 +76,8 @@
 (defun lesson/next-thing ()
   (interactive)
 
-  (let (cur-block
-        in-block
-        )
-    (setq cur-block (lesson/current-block))
+  (let ((cur-block (lesson/current-block))
+        in-block)
 
     (--each (overlays-at (point))
       (when (overlay-get it 'lesson-block)
@@ -89,19 +88,39 @@
                          (second cur-block))
                       ;; go to next block
                       (lesson/next-block))
-                     ;; (lesson/smooth-recenter)
                      (t
                       ;; go to next line in block
                       (forward-line 1)
-                      ;; (lesson/smooth-recenter)
                       )))
      (t
       ;; find block
       (apply 'lesson/start-block cur-block)
-      ;; (lesson/smooth-recenter)
-      ))
+      ))))
 
-    ))
+(defun lesson/prev-thing ()
+  (interactive)
+
+  (let ((cur-block (lesson/current-block))
+        in-block)
+
+    (--each (overlays-at (point))
+      (when (overlay-get it 'lesson-block)
+        (setq in-block t)))
+
+    (cond
+     (in-block (cond ((= (point-at-bol)
+                         (first cur-block))
+                      ;; go to prev block
+                      (lesson/prev-block))
+                     (t
+                      ;; go to prev line in block
+                      (forward-line -1)
+                      )))
+     (t
+      ;; find block
+      (apply 'lesson/start-block (lesson/find-prev-block))
+      (lesson/end-of-block)
+      ))))
 
 (defun lesson/next-block ()
   (interactive)
@@ -164,6 +183,20 @@
 
     (goto-char (first (lesson/find-prev-block)))
     (lesson/smooth-recenter)))
+
+(defun lesson/scroll-up-line ()
+  (interactive)
+
+  (unless (<= (smooth-scroll-lines-above-point)
+           lesson/scroll-margin)
+    (scroll-up-line)))
+
+(defun lesson/scroll-down-line ()
+  (interactive)
+
+  (unless (<= (1- (smooth-scroll-lines-below-point))
+              lesson/scroll-margin)
+    (scroll-down-line)))
 
 ;; verbs
 

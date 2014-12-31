@@ -1157,11 +1157,12 @@
       '("M-<right>"	lesson/next-lesson)
       '("M-<down>" 	lesson/next-lesson)
 
-      '("<left>" 	scroll-down-line)
-      '("<up>"   	scroll-down-line)
-      '("<right>"	scroll-up-line)
-      '("<down>" 	scroll-up-line)
+      '("<left>" 	lesson/scroll-down-line)
+      '("<up>"   	lesson/scroll-down-line)
+      '("<right>"	lesson/scroll-up-line)
+      '("<down>" 	lesson/scroll-up-line)
 
+      '("C-<SPC>"	lesson/prev-thing)
       '("<SPC>"  	lesson/next-thing)
       '("<kanji>"	recenter-top-bottom)
       '("<menu>" 	lesson-minor-mode)
