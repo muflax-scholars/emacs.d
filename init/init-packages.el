@@ -30,6 +30,26 @@
          (symbol-name (car package))
          (package-version-join (car version))))))
 
+  (defun package-dependencies ()
+    (let (deps)
+
+      (dolist (package package-alist)
+        (dolist (dep (elt (cdr package) 1))
+          (add-to-list 'deps (car dep))))
+
+      (sort deps 'string<)))
+
+  (defun package-no-dependencies ()
+    (let ((deps (package-dependencies))
+          no-deps)
+
+      (dolist (package package-alist)
+        (let ((package-name (car package)))
+          (unless (memq package-name deps)
+            (add-to-list 'no-deps package-name))))
+
+      (sort no-deps 'string<)))
+
   (setq package-load-list '(all))
 
   (package-initialize))
