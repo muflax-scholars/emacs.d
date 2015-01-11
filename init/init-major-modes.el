@@ -357,7 +357,10 @@
   (add-hook 'after-init-hook #'global-flycheck-mode)
   (setq flycheck-indication-mode 'right-fringe)
   (setq flycheck-display-errors-function nil)
-  (setq flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
+  (setq-default flycheck-disabled-checkers
+                '(emacs-lisp-checkdoc
+                  ruby-rubocop))
+  )
 
 ;; disable version control in emacs because it just bloats the mode-line
 (setup "vc"
