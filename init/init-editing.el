@@ -36,7 +36,7 @@
 ;;   )
 
 ;; text stuff
-(setq undo-limit     	1000000)
+(setq undo-limit     	10000000)
 (setq message-log-max	100000)
 (setq sentence-end-double-space nil)
 (column-number-mode t)
