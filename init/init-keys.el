@@ -318,10 +318,12 @@
 
     ;; alphabet
     '("C-a"	smart-beginning-of-line)
+    '("C-A"	beginning-of-line)
     '("C-b"	backward-word)
     '("C-c"	mode-specific-command-prefix)
     '("C-d"	kill-without-append)
     '("C-e"	smart-end-of-line)
+    '("C-E"	end-of-line)
     '("C-f"	forward-word)
     '("C-g"	keyboard-quit) ; also change quit-char if you wanna move it
     '("C-h"	help-command)

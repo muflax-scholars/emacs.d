@@ -115,34 +115,69 @@
 
 ;; move to beginning of text on line
 (defun smart-beginning-of-line ()
-  "Move point to first non-whitespace character or beginning-of-line.
+  "Move point to one step left towards the beginning of the line.
 
-Move point to the first non-whitespace character on this line. If point was
-already at that position, move point to beginning of line.
-
-If visual-line-mode is on, then also jump to beginning of real line."
+Point stops at elastic tab stops, beginning of the visual line and eventually the real beginning of the line."
   (interactive)
-  (let ((oldpos (point))
-        (vispos (point)))
 
-    (beginning-of-visual-line)
-    (setq vispos (point))
-    (beginning-of-line-text)
+  (let ((positions
+         (list
+          ;; elastic tabs
+          (go (when (= (preceding-char) ?\t)
+                (skip-chars-backward "\t"))
+              (skip-chars-backward "^\t\n")
+              (point))
 
-    (if (and (> vispos (point))
-             (not (= oldpos vispos)))
-        (goto-char vispos)
-      (when (= oldpos (point))
-        (beginning-of-line)))))
+          ;; first text
+          (go (beginning-of-line-text)
+              (point))
+
+          ;; visual line
+          (go (beginning-of-visual-line)
+              (point))
+
+          ;; real line
+          (line-beginning-position))))
+
+    ;; filter it
+    (setq positions (--filter (< it (point))
+                              positions))
+
+    (when positions
+      (goto-char (apply 'max positions)))))
 
 (defun smart-end-of-line ()
-  "Move point to end of visual line or, if already there, to end of logical line."
-  (interactive)
-  (let ((oldpos (point)))
+  "Move point to one step right towards the end of the line.
 
-    (end-of-visual-line)
-    (when (= oldpos (point))
-      (end-of-line))))
+Point stops at elastic tab stops, end of the visual line and eventually the real end of the line."
+  (interactive)
+
+  (let ((positions
+         (list
+          ;; elastic tabs
+          (go (when (= (preceding-char) ?\t)
+                (skip-chars-forward "^\t\n"))
+              (skip-chars-forward "\t")
+              (point))
+
+          ;; last text
+          (go (end-of-line)
+              (skip-syntax-backward "-" (line-beginning-position))
+              (point))
+
+          ;; visual line
+          (go (end-of-visual-line)
+              (point))
+
+          ;; real line
+          (line-end-position))))
+
+    ;; filter it
+    (setq positions (--filter (> it (point))
+                              positions))
+
+    (when positions
+      (goto-char (apply 'min positions)))))
 
 ;; org-mode has similar behavior built-in, so use it instead
 (setup-after "org-mode"
