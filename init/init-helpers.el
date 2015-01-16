@@ -23,6 +23,7 @@
 (defalias 'loop  	'cl-loop)
 (defalias 'case  	'cl-case)
 (defalias 'fn    	'lambda)
+(defalias 'go    	'save-excursion)
 
 (defun read-lines (filename)
   "Return a list of lines of a file at FILENAME."
