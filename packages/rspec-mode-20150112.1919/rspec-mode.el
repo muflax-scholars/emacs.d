@@ -202,11 +202,6 @@ there's an `include FactoryGirl::Syntax::Methods' statement in spec_helper."
           (const concise)
           (const nil))
   :group 'rspec-mode)
-  
-(defcustom rspec-auto-scroll t
-  "Auto scroll the output"
-  :type 'boolean
-  :group 'rspec-mode)
 
 ;;;###autoload
 (define-minor-mode rspec-mode
@@ -567,13 +562,16 @@ file if it exists, or sensible defaults otherwise"
 
 (defun rspec-spring-p ()
   (and rspec-use-spring-when-possible
-       (let ((root (rspec-project-root)))
+       (let ((root (directory-file-name (rspec-project-root))))
          (or
           ;; Older versions
-          (file-exists-p (concat root "tmp/spring/spring.pid"))
+          (file-exists-p (format "%s/tmp/spring/spring.pid" root))
           ;; 0.9.2+
-          (file-exists-p (concat temporary-file-directory "spring/"
-                                 (md5 (substring root 0 -1)) ".pid"))))))
+          (file-exists-p (format "%s/spring/%s.pid" temporary-file-directory (md5 root)))
+          ;; 1.2.0+
+          (let ((path (or (getenv "XDG_RUNTIME_DIR") temporary-file-directory))
+                (ruby-version (shell-command-to-string "ruby -e 'print RUBY_VERSION'")))
+            (file-exists-p (format "%s/spring/%s.pid" path (md5 (concat ruby-version root)))))))))
 
 (defun rspec2-p ()
   (or (string-match "rspec" rspec-spec-command)
@@ -664,8 +662,7 @@ or a cons (FILE . LINE), to run one example."
   (if rspec-use-rvm
       (rvm-activate-corresponding-ruby))
 
-  (let ((default-directory (or (rspec-project-root) default-directory))
-        (compilation-scroll-output rspec-auto-scroll))
+  (let ((default-directory (or (rspec-project-root) default-directory)))
     (compile (mapconcat 'identity `(,(rspec-runner)
                                     ,(rspec-runner-options opts)
                                     ,target) " ")
@@ -680,19 +677,19 @@ or a cons (FILE . LINE), to run one example."
     ("^[0-9]+ examples?, \\([0-9]+ failures?\\)"
      (1 compilation-error-face))))
 
+(defvar rspec--compilation-error-regexp-alist-alist
+      '((rspec-capybara-html "Saved file \\([0-9A-Za-z@_./\:-]+\\.html\\)" 1 nil nil 0 1)
+        (rspec-capybara-screenshot "Screenshot: \\([0-9A-Za-z@_./\:-]+\\.png\\)" 1 nil nil 0 1)
+        (rspec "^ +# \\([0-9A-Za-z@_./:-]+\\.rb\\):\\([0-9]+\\):in" 1 2 nil 2 1)
+        (rspec-deprecations "^ +# \\([0-9A-Za-z@_./:-]+\\.rb\\):\\([0-9]+\\)" 1 2 nil 0 1)
+        (rspec-summary "^rspec \\([0-9A-Za-z@_./:-]+\\.rb\\):\\([0-9]+\\)" 1 2 nil 2 1)))
+
 (define-derived-mode rspec-compilation-mode compilation-mode "RSpec Compilation"
   "Compilation mode for RSpec output."
-  (set (make-local-variable 'compilation-error-regexp-alist)
-       (append '(rspec rspec-capybara-html rspec-capybara-screenshot)
-               compilation-error-regexp-alist))
   (set (make-local-variable 'compilation-error-regexp-alist-alist)
-       (append '((rspec-capybara-html
-                  "Saved file \\([0-9A-Za-z@_./\:-]+\\.html\\)" 1 nil nil 0 1)
-                 (rspec-capybara-screenshot
-                  "Screenshot: \\([0-9A-Za-z@_./\:-]+\\.png\\)" 1 nil nil 0 1)
-                 (rspec
-                  "rspec +\\([0-9A-Za-z@_./\:-]+\\.rb\\):\\([0-9]+\\)" 1 2 nil 2 1))
-               compilation-error-regexp-alist-alist))
+       rspec--compilation-error-regexp-alist-alist)
+  (set (make-local-variable 'compilation-error-regexp-alist)
+       (mapcar 'car rspec--compilation-error-regexp-alist-alist))
   (setq font-lock-defaults '(rspec-compilation-mode-font-lock-keywords t))
   (add-hook 'compilation-filter-hook 'rspec-colorize-compilation-buffer nil t)
   (add-hook 'compilation-finish-functions 'rspec-handle-error nil t))
@@ -733,7 +730,7 @@ or a cons (FILE . LINE), to run one example."
   (cl-case rspec-snippets-fg-syntax
     (full nil)
     (concise t)
-    (nil
+    (t
      (with-temp-buffer
        (insert-file-contents
         (concat (rspec-project-root) "spec/spec_helper.rb"))
