@@ -942,11 +942,19 @@ With prefix P, don't widen, just narrow even if buffer is already
 narrowed."
   (interactive "P")
   (declare (interactive-only))
-  (cond ((and (buffer-narrowed-p) (not p)) (widen))
+  (cond ((and (buffer-narrowed-p)
+              (not p))
+         (widen))
+
         ((region-active-p)
          (narrow-to-region (region-beginning) (region-end)))
-        ((derived-mode-p 'org-mode) (org-narrow-to-subtree))
-        (t (narrow-to-defun))))
+
+        ((and (fboundp 'org-narrow-to-subtree)
+              (derived-mode-p 'org-mode)
+              (org-narrow-to-subtree)))
+
+        (t
+         (narrow-to-defun))))
 
 ;; help extension
 (setup "help-fns+")
