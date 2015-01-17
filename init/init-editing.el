@@ -647,6 +647,8 @@ You have:
 (global-subword-mode 1)
 
 ;; folding
+(defvar folding-ellipsis "๛" "replacement for folded content")
+
 (setup "hideshow"
   (setup-lazy '(hideshowvis-enable hideshowvis-minor-mode) "hideshowvis")
   (setup "fold-dwim")
@@ -657,6 +659,16 @@ You have:
   (add-hook 'notes-mode-hook	'hs-minor-mode)
 
   (setq hs-isearch-open t)
+
+  ;; better ellipsis
+  (set-display-table-slot standard-display-table
+                          'selective-display
+                          folding-ellipsis)
+  (setq yafolding-ellipsis-content folding-ellipsis)
+  (setq hs-set-up-overlay
+        (fn (ov)
+          (when (eq 'code (overlay-get ov 'hs))
+            (overlay-put ov 'display folding-ellipsis))))
 
   (setq hs-fold-level 1)
 
