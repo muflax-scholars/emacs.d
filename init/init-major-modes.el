@@ -358,8 +358,10 @@
   (setq flycheck-indication-mode 'right-fringe)
   (setq flycheck-display-errors-function nil)
   (setq-default flycheck-disabled-checkers
-                '(emacs-lisp-checkdoc
-                  ruby-rubocop))
+                '(emacs-lisp-checkdoc))
+
+  ;; avoid spam
+  (setq flycheck-rubocop-lint-only t)
   )
 
 ;; disable version control in emacs because it just bloats the mode-line
