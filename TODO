@@ -69,6 +69,8 @@ Stuff that doesn't work:
 	- mc + wdired don't work together
 
 	- smooth-scrolling should either be faster for big, messy files or auto-disable itself in them
+	
+	- rainbow identifiers are neat; try to come up with a useful coloring algo
 ]
 
 [ project-specific code / keybindings
