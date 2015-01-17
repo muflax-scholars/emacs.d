@@ -59,6 +59,7 @@
         notes-dedent-or-delete
         notes-indent-line
         number/decrement
+        number/divide
         org-force-cycle-archived
         org-force-self-insert
         org-indent-line
