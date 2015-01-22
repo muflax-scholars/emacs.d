@@ -123,10 +123,10 @@ Point stops at elastic tab stops, beginning of the visual line and eventually th
   (let ((positions
          (list
           ;; elastic tabs
-          (go (when (= (preceding-char) ?\t)
-                (skip-chars-backward "\t"))
-              (skip-chars-backward "^\t\n")
-              (point))
+          ;; (go (when (= (preceding-char) ?\t)
+          ;;       (skip-chars-backward "\t"))
+          ;;     (skip-chars-backward "^\t\n")
+          ;;     (point))
 
           ;; first text
           (go (beginning-of-line-text)
@@ -155,10 +155,10 @@ Point stops at elastic tab stops, end of the visual line and eventually the real
   (let ((positions
          (list
           ;; elastic tabs
-          (go (when (= (preceding-char) ?\t)
-                (skip-chars-forward "^\t\n"))
-              (skip-chars-forward "\t")
-              (point))
+          ;; (go (when (= (preceding-char) ?\t)
+          ;;       (skip-chars-forward "^\t\n"))
+          ;;     (skip-chars-forward "\t")
+          ;;     (point))
 
           ;; last text
           (go (end-of-line)
