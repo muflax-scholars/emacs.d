@@ -181,7 +181,7 @@
 
   ;; better indenting
   (setq ruby-indent-level tab-width)
-  (setq enh-ruby-bounce-deep-indent t)
+  (setq enh-ruby-bounce-deep-indent nil)
   (setq enh-ruby-deep-indent-paren nil)
 
   (add-hook 'enh-ruby-mode-hook 'whitespace-mode))
