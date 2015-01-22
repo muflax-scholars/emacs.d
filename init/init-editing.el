@@ -1067,6 +1067,9 @@ narrowed."
   (elastic-advice-command       	literal-tab)
   (elastic-advice-command       	indent-according-to-mode)
   (elastic-advice-command-region	indent-region)
+  (elastic-advice-command       	comment-dwim)
+  (elastic-advice-command-region	comment-region)
+  (elastic-advice-command-region	uncomment-region)
   )
 
 (defun dos2unix ()
