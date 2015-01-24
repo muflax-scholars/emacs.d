@@ -644,7 +644,7 @@ You have:
   (add-to-list 'rotate-text-symbols	'("?"     	"!")))
 
 ;; handle camelcase better
-(global-subword-mode 1)
+(add-hook 'prog-mode-hook 'subword-mode)
 
 ;; folding
 (defvar folding-ellipsis "๛" "replacement for folded content")
