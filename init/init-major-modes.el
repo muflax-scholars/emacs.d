@@ -45,7 +45,7 @@
 
 ;; notes-mode
 (setup "notes-mode"
-  (add-hook 'notes-mode-hook 'whitespace-mode))
+  (add-hook 'notes-mode-hook 'leerzeichen-mode))
 (add-to-list 'auto-mode-alist '("\\.txt$"   	. notes-mode))
 (add-to-list 'auto-mode-alist '("\\.notes$" 	. notes-mode))
 (add-to-list 'auto-mode-alist '("\\.script$"	. notes-mode))
@@ -184,7 +184,7 @@
   (setq enh-ruby-bounce-deep-indent nil)
   (setq enh-ruby-deep-indent-paren nil)
 
-  (add-hook 'enh-ruby-mode-hook 'whitespace-mode))
+  (add-hook 'enh-ruby-mode-hook 'leerzeichen-mode))
 
 ;;ruby files
 (add-to-list 'interpreter-mode-alist	'("ruby"       	. enh-ruby-mode))
@@ -215,7 +215,7 @@
 ;; shell stuff
 (setup-lazy '(sh-mode) "sh-script"
   (setq sh-basic-offset tab-width)
-  (add-hook 'sh-mode-hook 'whitespace-mode))
+  (add-hook 'sh-mode-hook 'leerzeichen-mode))
 
 ;; nxml stuff
 (setup-lazy '(nxml-mode) "nxml-mode"
@@ -346,7 +346,7 @@
   (setup "cl-lib-highlight"	(cl-lib-highlight-initialize))
   (setup "dash"            	(dash-enable-font-lock))
 
-  (add-hook 'emacs-lisp-mode-hook 'whitespace-mode)
+  (add-hook 'emacs-lisp-mode-hook 'leerzeichen-mode)
 
   (setup "lisp-extra-font-lock"
     ;; make sure it's loaded late so whitespace etc are still fine
@@ -412,7 +412,7 @@
   (setq paradox-github-token t))
 
 (setup-lazy '(nix-mode) "nix-mode"
-  (add-hook 'nix-mode-hook 'whitespace-mode))
+  (add-hook 'nix-mode-hook 'leerzeichen-mode))
 (add-to-list 'auto-mode-alist '("\\.nix" . nix-mode))
 
 ;; common lisp
@@ -436,7 +436,7 @@
                                 (unless (slime-connected-p)
                                   (save-excursion (slime)))))
     )
-  (add-hook 'lisp-mode-hook 'whitespace-mode))
+  (add-hook 'lisp-mode-hook 'leerzeichen-mode))
 
 (add-to-list 'auto-mode-alist '("\\.sbclrc$"	. lisp-mode))
 (add-to-list 'auto-mode-alist '("\\.cl$"    	. lisp-mode))
@@ -456,7 +456,7 @@
     (setq racket-mode-pretty-lambda nil)
 
     (add-hook 'racket-mode-hook 'geiser-mode--maybe-activate))
-  (add-hook 'racket-mode-hook 'whitespace-mode))
+  (add-hook 'racket-mode-hook 'leerzeichen-mode))
 
 (add-to-list 'auto-mode-alist '("\\.sc$" 	. scheme-mode))
 (add-to-list 'auto-mode-alist '("\\.scm$"	. scheme-mode))

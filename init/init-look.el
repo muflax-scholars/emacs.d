@@ -162,7 +162,7 @@
 ;; (sublimity-map-set-delay 10)
 ;; (sublimity-mode 1)
 
-;; highlight some whitespace
+;; fancy whitespace highlighting
 (setup "whitespace"
   (setq whitespace-space-regexp "\\( +\t\\)")
   (setq whitespace-style '(face tabs tab-mark spaces))
@@ -177,6 +177,9 @@
                     [?\|	,@(make-list (1- tab-width) ?\s)]
                     [?\|	,@(make-list (1- tab-width) ?\s)])
           )))
+
+;; more light-weight default whitespace highlighting
+(setup "leerzeichen")
 
 ;; clean up modeline and hide standard minor modes
 (defmacro diminish-minor-mode (package mode &optional short-name)
@@ -214,9 +217,10 @@
   (diminish-minor-mode "undo-tree"            	'undo-tree-mode            	    	)
   (diminish-minor-mode "volatile-highlights"  	'volatile-highlights-mode  	    	)
   (diminish-minor-mode "whitespace"           	'global-whitespace-mode    	"WS"	)
-  (diminish-minor-mode "whitespace"           	'whitespace-mode           	" |"	)
+  (diminish-minor-mode "whitespace"           	'whitespace-mode           	"ws"	)
   (diminish-minor-mode "whole-line-or-region" 	'whole-line-or-region-mode 	    	)
   (diminish-minor-mode "yasnippet"            	'yas-minor-mode            	    	)
+  (diminish-minor-mode "leerzeichen"          	'leerzeichen-mode          	" |"	)
 
   (diminish-major-mode "lisp-mode"    	emacs-lisp-mode	"EL" 	)
   (diminish-major-mode "sh-script"    	sh-mode        	"sh" 	)
