@@ -346,7 +346,11 @@
   (setup "cl-lib-highlight"	(cl-lib-highlight-initialize))
   (setup "dash"            	(dash-enable-font-lock))
 
-  (add-hook 'emacs-lisp-mode-hook 'whitespace-mode))
+  (add-hook 'emacs-lisp-mode-hook 'whitespace-mode)
+
+  (setup "lisp-extra-font-lock"
+    ;; make sure it's loaded late so whitespace etc are still fine
+    (add-hook 'lisp-mode-hook 'lisp-extra-font-lock-mode t)))
 
 ;; ag search
 (setup-lazy '(ag) "ag"
