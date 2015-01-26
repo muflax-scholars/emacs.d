@@ -165,7 +165,7 @@
 ;; fancy whitespace highlighting
 (setup "whitespace"
   (setq whitespace-space-regexp "\\( +\t\\)")
-  (setq whitespace-style '(face tabs tab-mark spaces))
+  (setq whitespace-style '(face tabs spaces))
   (setq whitespace-display-mappings
         `(
           (space-mark  	?\s  	[?\u00B7]	[?.]    	)	; space     	- centered dot
