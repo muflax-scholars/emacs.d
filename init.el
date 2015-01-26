@@ -16,34 +16,34 @@
 (setup-initialize)
 
 ;; external packages
-(setup "init-packages")
+(require 'init-packages)
 
 ;; helper functions (should be early)
-(setup "init-helpers")
+(require 'init-helpers)
 
 ;; key bindings
-(setup "init-keys")
+(require 'init-keys)
 
 ;; themes and generic visual stuff
-(setup "init-look")
+(require 'init-look)
 
 ;; editing features
-(setup "init-editing")
+(require 'init-editing)
 
 ;; searches, navigation and a plethora of regex engines
-(setup "init-search")
+(require 'init-search)
 
 ;; auto-completion and templates
-(setup "init-auto-completion")
+(require 'init-auto-completion)
 
 ;; major modes
-(setup "init-major-modes")
+(require 'init-major-modes)
 
 ;; mail
-(setup "init-mail")
+(require 'init-mail)
 
 ;; shell
-(setup "init-shell")
+(require 'init-shell)
 
 ;; random options
-(setup "init-misc")
+(require 'init-misc)

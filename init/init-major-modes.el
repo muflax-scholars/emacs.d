@@ -1,7 +1,7 @@
 ;; major modes
 
 ;; default modes
-(setup-after "notes-mode"
+(load-after 'notes-mode
   (setq-default major-mode 'notes-mode)
   (setq initial-major-mode 'notes-mode))
 
@@ -18,18 +18,18 @@
 
 ;; c style (1TBS, but guess offsets for other files)
 (setq c-default-style "k&r" c-basic-offset tab-width)
-(setup "guess-offset")
+(require 'guess-offset)
 
 ;; eldoc for function signatures
 (setup-lazy '(c-turn-on-eldoc-mode) "c-eldoc"
   (setq c-eldoc-buffer-regenerate-time 15))
-(setup-after "cc-mode"
+(load-after 'cc-mode
   (add-hook 'c++-mode-hook	'c-turn-on-eldoc-mode)
   (add-hook 'c-mode-hook  	'c-turn-on-eldoc-mode))
 
 ;; show what function we're in
-(setup "which-func"
-  (which-function-mode 1))
+(require 'which-func)
+(which-function-mode 1)
 
 ;; auctex
 (setup-lazy '(latex-mode LaTeX-mode tex-mode TeX-mode) "latex")
@@ -44,8 +44,8 @@
 (add-to-list 'auto-mode-alist '("\\.markdown$"	. markdown-mode))
 
 ;; notes-mode
-(setup "notes-mode"
-  (add-hook 'notes-mode-hook 'leerzeichen-mode))
+(require 'notes-mode)
+(add-hook 'notes-mode-hook 'leerzeichen-mode)
 (add-to-list 'auto-mode-alist '("\\.txt$"   	. notes-mode))
 (add-to-list 'auto-mode-alist '("\\.notes$" 	. notes-mode))
 (add-to-list 'auto-mode-alist '("\\.script$"	. notes-mode))
@@ -136,8 +136,8 @@
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
 
 ;; loaded so that we can diminish it later
-(setup-after "org-mode"
-  (setup "org-indent"))
+(load-after 'org-mode
+  (require 'org-indent))
 
 ;; reload file when it changed (and the buffer has no changes)
 (global-auto-revert-mode 1)
@@ -160,14 +160,14 @@
 ;; haskell mode
 (setup-lazy '(haskell-mode) "haskell-mode")
 (setup-after "haskell-mode"
-  (setup "haskell-doc"
-    (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode))
+  (require 'haskell-doc)
+  (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
 
- (setup "haskell-indentation"
-   (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation))
+  (require 'haskell-indentation)
+  (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 
- (setup "inf-haskell"
-   (add-hook 'inferior-haskell-mode-hook 'turn-on-ghci-completion)))
+  (require 'inf-haskell)
+  (add-hook 'inferior-haskell-mode-hook 'turn-on-ghci-completion))
 
 ;; ruby mode
 ;; replace normal ruby mode
@@ -197,15 +197,16 @@
 
 (setup-after "enh-ruby-mode"
   ;; ri documentation tool
-  (setup "yari")
+  (require 'yari)
 
   ;; show what block an end belongs to
-  (setup "ruby-block"
-    (ruby-block-mode t)
-    (setq ruby-block-highlight-toggle t))
+  (require 'ruby-block)
+  (ruby-block-mode t)
+  (setq ruby-block-highlight-toggle t)
 
   ;; erb
-  (setup "rhtml-mode"))
+  (require 'rhtml-mode))
+
 (add-to-list 'auto-mode-alist '("\\.erb$" . rhtml-mode))
 
 ;; javascript
@@ -238,86 +239,86 @@
 (add-hook 'js2-mode-hook     	'fic-mode)
 
 ;; dired
-(setup "dired"
-  (setup "wdired")
-  (setup "dired-x")
-  (setup "dired-details")
-  (setup "dired-details+")
-  (setup "dired-open")
+(require 'dired)
+(require 'wdired)
+(require 'dired-x)
+(require 'dired-details)
+(require 'dired-details+)
+(require 'dired-open)
 
-    ;; fast navigation through files in a directory
-  ;; TODO this is super simplistic, but meh
-  (defun dired-next ()
-    (interactive)
-    (dired-jump)
-    (revert-buffer)
-    (dired-next-line 1)
-    (when (eobp)
-      (dired-back-to-top))
-    (dired-find-file))
+;; fast navigation through files in a directory
+;; TODO this is super simplistic, but meh
+(defun dired-next ()
+  (interactive)
+  (dired-jump)
+  (revert-buffer)
+  (dired-next-line 1)
+  (when (eobp)
+    (dired-back-to-top))
+  (dired-find-file))
 
-  (defun dired-prev ()
-    (interactive)
-    (dired-jump)
-    (revert-buffer)
-    (dired-next-line -1)
-    (when (looking-at "\\.\\.?$")
-      (dired-jump-to-bottom))
-    (dired-find-file))
+(defun dired-prev ()
+  (interactive)
+  (dired-jump)
+  (revert-buffer)
+  (dired-next-line -1)
+  (when (looking-at "\\.\\.?$")
+    (dired-jump-to-bottom))
+  (dired-find-file))
 
-  ;; reload dired after making changes
-  (--each '(dired-do-rename
-            dired-do-copy
-            dired-create-directory
-            wdired-abort-changes)
-    (eval `(defadvice ,it (after revert-buffer activate)
-             (revert-buffer))))
+;; reload dired after making changes
+(--each '(dired-do-rename
+          dired-do-copy
+          dired-create-directory
+          wdired-abort-changes)
+  (eval `(defadvice ,it (after revert-buffer activate)
+           (revert-buffer))))
 
-  (defun dired-back-to-start-of-files ()
-    (interactive)
-    (backward-char (- (current-column) 2)))
+(defun dired-back-to-start-of-files ()
+  (interactive)
+  (backward-char (- (current-column) 2)))
 
-  (defun dired-back-to-top ()
-    (interactive)
-    (goto-char (point-min))
-    (dired-next-line 3))
+(defun dired-back-to-top ()
+  (interactive)
+  (goto-char (point-min))
+  (dired-next-line 3))
 
-  (defun dired-jump-to-bottom ()
-    (interactive)
-    (goto-char (point-max))
-    (dired-next-line -1))
+(defun dired-jump-to-bottom ()
+  (interactive)
+  (goto-char (point-max))
+  (dired-next-line -1))
 
-  ;; just delete files, sheesh
-  (defadvice dired-clean-up-after-deletion (around quiet-delete activate)
-    (noflet ((y-or-n-p (&rest args) t))
-      ad-do-it))
+;; just delete files, sheesh
+(defadvice dired-clean-up-after-deletion (around quiet-delete activate)
+  (noflet ((y-or-n-p (&rest args) t))
+    ad-do-it))
 
-  ;; move files between split panes
-  (setq dired-dwim-target t)
+;; move files between split panes
+(setq dired-dwim-target t)
 
-  ;; don't ask for confirmation in most situations
-  (setq dired-no-confirm t)
-  (setq dired-recursive-copies 'always)
-  (setq dired-recursive-deletes 'top)
+;; don't ask for confirmation in most situations
+(setq dired-no-confirm t)
+(setq dired-recursive-copies 'always)
+(setq dired-recursive-deletes 'top)
 
-  ;; use omit-mode to hide dotfiles
-  (setq-default dired-omit-files-p t)
-  (setq dired-omit-files "^\\(\\..*[^.]\\|\\.\\)$")
-  (setq dired-omit-verbose nil)
+;; use omit-mode to hide dotfiles
+(setq-default dired-omit-files-p t)
+(setq dired-omit-files "^\\(\\..*[^.]\\|\\.\\)$")
+(setq dired-omit-verbose nil)
 
-  ;; open by extension
-  (setq dired-open-extensions '(
-                                ("pdf" 	. "zathura")
-                                ("djvu"	. "zathura")
-                                ))
+;; open by extension
+(setq dired-open-extensions '(
+                              ("pdf" 	. "zathura")
+                              ("djvu"	. "zathura")
+                              ))
 
-  ;; sort number naturally
-  (setq dired-listing-switches "--group-directories-first -v -al"))
+;; sort number naturally
+(setq dired-listing-switches "--group-directories-first -v -al")
 
 ;; eldoc, ie function signatures in the minibuffer
 (setup-lazy '(turn-on-eldoc-mode) "eldoc"
   (setq eldoc-idle-delay 0.1))
-(setup-after "lisp-mode"
+(load-after 'lisp-mode
   (add-hook 'lisp-mode-hook      	'turn-on-eldoc-mode)
   (add-hook 'emacs-lisp-mode-hook	'turn-on-eldoc-mode))
 
@@ -327,48 +328,50 @@
   (setq gofmt-command "goimports")
   (setq gofmt-show-errors nil))
 
-(setup-after "go-mode"
-  (setup "go-eldoc"
-    (add-hook 'go-mode-hook 'go-eldoc-setup)))
+(load-after 'go-mode
+  (require 'go-eldoc)
+  (add-hook 'go-mode-hook 'go-eldoc-setup))
 
 ;; emacs-lisp
-(setup "bytecomp"
-  (defun byte-compile-current-buffer ()
-    "`byte-compile' current buffer if it's emacs-lisp-mode and compiled file exists."
-    (interactive)
-    (when (and (eq major-mode 'emacs-lisp-mode)
-               (file-exists-p (byte-compile-dest-file buffer-file-name)))
-      (byte-compile-file buffer-file-name)))
-  (add-hook 'after-save-hook 'byte-compile-current-buffer))
+(require 'bytecomp)
+(defun byte-compile-update-current-buffer ()
+  "`byte-compile' current buffer if it's emacs-lisp-mode and compiled file exists."
+  (interactive)
+  (when (and (eq major-mode 'emacs-lisp-mode)
+             (file-exists-p (byte-compile-dest-file buffer-file-name)))
+    (byte-compile-file buffer-file-name)))
+(add-hook 'after-save-hook 'byte-compile-update-current-buffer)
 
-(setup-after "lisp-mode"
+(load-after 'lisp-mode
   ;; highlight common libraries
-  (setup "cl-lib-highlight"	(cl-lib-highlight-initialize))
-  (setup "dash"            	(dash-enable-font-lock))
+  (require 'cl-lib-highlight)
+  (cl-lib-highlight-initialize)
 
-  (add-hook 'emacs-lisp-mode-hook 'leerzeichen-mode)
+  (require 'dash)
+  (dash-enable-font-lock)
 
-  (setup "lisp-extra-font-lock"
-    ;; make sure it's loaded late so whitespace etc are still fine
-    (add-hook 'lisp-mode-hook 'lisp-extra-font-lock-mode t)))
+  (require 'lisp-extra-font-lock)
+  ;; make sure it's loaded late so whitespace etc are still fine
+  (add-hook 'lisp-mode-hook 'lisp-extra-font-lock-mode t)
+
+  (add-hook 'emacs-lisp-mode-hook 'leerzeichen-mode))
 
 ;; ag search
 (setup-lazy '(ag) "ag"
   (setq ag-highlight-search t))
 
 ;; Flycheck for code linting
-(setup "flycheck"
-  (add-hook 'after-init-hook #'global-flycheck-mode)
-  (setq flycheck-indication-mode 'right-fringe)
-  (setq flycheck-display-errors-function nil)
-  (setq-default flycheck-disabled-checkers
-                '(emacs-lisp-checkdoc
-                  ruby-rubocop))
-  )
+(require 'flycheck)
+(add-hook 'after-init-hook #'global-flycheck-mode)
+(setq flycheck-indication-mode 'right-fringe)
+(setq flycheck-display-errors-function nil)
+(setq-default flycheck-disabled-checkers
+              '(emacs-lisp-checkdoc
+                ruby-rubocop))
 
 ;; disable version control in emacs because it just bloats the mode-line
-(setup "vc"
-  (setq vc-handled-backends ()))
+(require 'vc)
+(setq vc-handled-backends ())
 
 ;; fancy git interactions
 (setup-lazy '(magit-status) "magit"
@@ -416,8 +419,8 @@
 (add-to-list 'auto-mode-alist '("\\.nix" . nix-mode))
 
 ;; common lisp
-(setup-after "lisp-mode"
-  (setup "slime-autoloads")
+(load-after 'lisp-mode
+  (require 'slime-autoloads)
   (setup-lazy '(slime) "slime"
     (setq slime-lisp-implementations
           '((ccl 	("ccl"))
@@ -443,19 +446,19 @@
 
 ;; racket
 (setup-lazy '(racket-mode) "racket-mode"
-  (setup "geiser-mode"
-    (setq geiser-active-implementations '(racket))
-    (setq geiser-default-implementation 'racket)
-    (setq geiser-autodoc-delay 0.1)
-    (setq geiser-repl-history-filename (emacs-d "cache/geiser_history"))
-    (setq geiser-repl-company-p nil)
-    (setq geiser-mode-company-p nil)
-    (setq geiser-mode-start-repl-p t)
+  (require 'geiser-mode)
+  (setq geiser-active-implementations '(racket))
+  (setq geiser-default-implementation 'racket)
+  (setq geiser-autodoc-delay 0.1)
+  (setq geiser-repl-history-filename (emacs-d "cache/geiser_history"))
+  (setq geiser-repl-company-p nil)
+  (setq geiser-mode-company-p nil)
+  (setq geiser-mode-start-repl-p t)
 
-    ;; don't replace a lambda - if anything, use pretty-symbol-mode later
-    (setq racket-mode-pretty-lambda nil)
+  ;; don't replace a lambda - if anything, use pretty-symbol-mode later
+  (setq racket-mode-pretty-lambda nil)
 
-    (add-hook 'racket-mode-hook 'geiser-mode--maybe-activate))
+  (add-hook 'racket-mode-hook 'geiser-mode--maybe-activate)
   (add-hook 'racket-mode-hook 'leerzeichen-mode))
 
 (add-to-list 'auto-mode-alist '("\\.sc$" 	. scheme-mode))

@@ -1,18 +1,18 @@
 ;; misc helper functions
 
 ;; common lisp stuff
-(setup "cl-lib")
+(require 'cl-lib)
 
 ;; better convenience functions for strings and map/reduce/loop
-(setup "dash")
-(setup "s")
+(require 'dash)
+(require 's)
 
 ;; sane regexes
-(setup "rx")
-(setup "ample-regexps")
+(require 'rx)
+(require 'ample-regexps)
 
 ;; replace obsolete flet
-(setup "noflet")
+(require 'noflet)
 
 ;; some generic aliases that make elisp less painful
 (defalias 'first 	'cl-first)

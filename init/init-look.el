@@ -42,7 +42,7 @@
 
 ;; color themes
 (add-to-list 'custom-theme-load-path (emacs-d "themes/"))
-(setup "leuven-theme") ; force-load it here so we have all faces set up
+(require 'leuven-theme) ; force-load it here so we have all faces set up
 
 (defvar bright-theme	'leuven              	"Bright theme to use")
 (defvar dark-theme  	'twilight-anti-bright	"Dark theme to use")
@@ -71,7 +71,7 @@
       (load-theme bright-theme t))))
 
 ;; highlight current line
-(setup "hl-line")
+(require 'hl-line)
 
 ;; fonts
 (defvar small-font 	"Fantasque Sans Mono 8")
@@ -105,37 +105,38 @@
 ;; necessary or scrolling is really slow
 (setq-default bidi-display-reordering nil)
 (setq auto-window-vscroll nil)
-(setup "smooth-scrolling"
-  (smooth-scrolling-mode 1)
-  (setq smooth-scroll-margin	5)
-  (setq scroll-margin       	5)
-  (setq scroll-conservatively 10000))
+
+(require 'smooth-scrolling)
+(smooth-scrolling-mode 1)
+(setq smooth-scroll-margin	5)
+(setq scroll-margin       	5)
+(setq scroll-conservatively 10000)
 
 ;; try to keep windows within a max margin
-(setup "automargin"
-  (setq automargin-target-width 120))
+(require 'automargin)
+(setq automargin-target-width 120)
 
 ;; undo highlighting
-(setup "volatile-highlights"
-  (volatile-highlights-mode t))
+(require 'volatile-highlights)
+(volatile-highlights-mode t)
 
 ;; show #colors in matching color
-(setup-lazy '(rainbow-mode) "rainbow-mode"
-  (defadvice rainbow-mode (after rainbow-mode-refresh activate)
-    (font-lock-fontify-buffer)))
+(require 'rainbow-mode)
+(defadvice rainbow-mode (after rainbow-mode-refresh activate)
+  (font-lock-fontify-buffer))
 
 ;; blinking cursor
 (blink-cursor-mode -1)
-;; (setup "heartbeat-cursor"
+;; (require 'heartbeat-cursor)
 ;;   (heartbeat-cursor-mode))
 ;; TODO should be a bar, as soon as multiple-coursors figures out a way to draw that
 ;; (setq-default cursor-type '(bar . 2))
 (setq-default cursor-type 'box)
 
 ;; nyan nyan nyan
-(setup "nyan-mode"
-  (nyan-mode t)
-  (setq nyan-bar-length 10))
+(require 'nyan-mode)
+(nyan-mode t)
+(setq nyan-bar-length 10)
 
 ;; line-number-mode
 (setq line-number-display-width 1000)
@@ -148,8 +149,8 @@
 (setq split-width-threshold 90)
 
 ;; don't warn about impossible undo
-(setup "warnings"
-  (setq warning-suppress-types (append '(undo discard-info) warning-suppress-types)))
+(require 'warnings)
+(setq warning-suppress-types (append '(undo discard-info) warning-suppress-types))
 
 ;; minimap (badly broken, but One Day(tm), man...
 ;; non-annoying minimap that lacks a bunch of cool features
@@ -163,69 +164,68 @@
 ;; (sublimity-mode 1)
 
 ;; fancy whitespace highlighting
-(setup "whitespace"
-  (setq whitespace-space-regexp "\\( +\t\\)")
-  (setq whitespace-style '(face tabs spaces))
-  (setq whitespace-display-mappings
-        `(
-          (space-mark  	?\s  	[?\u00B7]	[?.]    	)	; space     	- centered dot
-          (space-mark  	?\xA0	[?\u00A4]	[?_]    	)	; hard space	- currency
-          (newline-mark	?\n  	[?$ ?\n] 	[?$ ?\n]	)	; eol       	- dollar sign
+(require 'whitespace)
+(setq whitespace-space-regexp "\\( +\t\\)")
+(setq whitespace-style '(face tabs spaces))
+(setq whitespace-display-mappings
+      `(
+        (space-mark  	?\s  	[?\u00B7]	[?.]    	)	; space     	- centered dot
+        (space-mark  	?\xA0	[?\u00A4]	[?_]    	)	; hard space	- currency
+        (newline-mark	?\n  	[?$ ?\n] 	[?$ ?\n]	)	; eol       	- dollar sign
 
-          ;; consistent spacing of tab
-          (tab-mark ?\t 	; tab - bar
-                    [?\|	,@(make-list (1- tab-width) ?\s)]
-                    [?\|	,@(make-list (1- tab-width) ?\s)])
-          )))
+        ;; consistent spacing of tab
+        (tab-mark ?\t 	; tab - bar
+                  [?\|	,@(make-list (1- tab-width) ?\s)]
+                  [?\|	,@(make-list (1- tab-width) ?\s)])
+        ))
 
 ;; more light-weight default whitespace highlighting
-(setup "leerzeichen")
+(require 'leerzeichen)
 
 ;; clean up modeline and hide standard minor modes
 (defmacro diminish-minor-mode (package mode &optional short-name)
-  `(setup-after ,package
+  `(load-after ,package
      (when (fboundp ,mode)
        (diminish ,mode ,(or short-name "")))))
 
 ;; clean up way-too-long major modes
 (defmacro diminish-major-mode (package-name mode new-name)
-  `(eval-after-load ,package-name
+  `(load-after ,package-name
      '(defadvice ,mode (after diminish-major-mode activate)
         (setq mode-name ,new-name))))
 
-(setup "diminish"
-  (diminish-minor-mode "abbrev"               	'abbrev-mode               	    	)
-  (diminish-minor-mode "anzu"                 	'anzu-mode                 	    	)
-  (diminish-minor-mode "auto-complete"        	'auto-complete-mode        	    	)
-  (diminish-minor-mode "autorevert"           	'auto-revert-mode          	    	)
-  (diminish-minor-mode "eldoc"                	'eldoc-mode                	    	)
-  (diminish-minor-mode "fic-mode"             	'fic-mode                  	    	)
-  (diminish-minor-mode "guide-key"            	'guide-key-mode            	    	)
-  (diminish-minor-mode "haskell-doc"          	'haskell-doc-mode          	    	)
-  (diminish-minor-mode "haskell-indentation"  	'haskell-indentation-mode  	    	)
-  (diminish-minor-mode "hideshow"             	'hs-minor-mode             	    	)
-  (diminish-minor-mode "highlight-parentheses"	'highlight-parentheses-mode	    	)
-  (diminish-minor-mode "magit"                	'magit-auto-revert-mode    	    	)
-  (diminish-minor-mode "ruby-block"           	'ruby-block-mode           	    	)
-  (diminish-minor-mode "simple"               	'auto-fill-function        	"AF"	)
-  (diminish-minor-mode "simple"               	'visual-line-mode          	    	)
-  (diminish-minor-mode "simple"               	'global-visual-line-mode   	    	)
-  (diminish-minor-mode "slime"                	'slime-mode                	    	)
-  (diminish-minor-mode "smartparens"          	'smartparens-mode          	    	)
-  ;; (diminish-minor-mode "subword"           	'subword-mode              	    	)
-  ;; (diminish-minor-mode "subword"           	'superword-mode            	    	)
-  (diminish-minor-mode "undo-tree"            	'undo-tree-mode            	    	)
-  (diminish-minor-mode "volatile-highlights"  	'volatile-highlights-mode  	    	)
-  (diminish-minor-mode "whitespace"           	'global-whitespace-mode    	"WS"	)
-  (diminish-minor-mode "whitespace"           	'whitespace-mode           	"ws"	)
-  (diminish-minor-mode "whole-line-or-region" 	'whole-line-or-region-mode 	    	)
-  (diminish-minor-mode "yasnippet"            	'yas-minor-mode            	    	)
-  (diminish-minor-mode "leerzeichen"          	'leerzeichen-mode          	" |"	)
+(require 'diminish)
+(diminish-minor-mode   	'abbrev               	'abbrev-mode               	    	)
+(diminish-minor-mode   	'anzu                 	'anzu-mode                 	    	)
+(diminish-minor-mode   	'auto-complete        	'auto-complete-mode        	    	)
+(diminish-minor-mode   	'autorevert           	'auto-revert-mode          	    	)
+(diminish-minor-mode   	'eldoc                	'eldoc-mode                	    	)
+(diminish-minor-mode   	'fic-mode             	'fic-mode                  	    	)
+(diminish-minor-mode   	'guide-key            	'guide-key-mode            	    	)
+(diminish-minor-mode   	'haskell-doc          	'haskell-doc-mode          	    	)
+(diminish-minor-mode   	'haskell-indentation  	'haskell-indentation-mode  	    	)
+(diminish-minor-mode   	'hideshow             	'hs-minor-mode             	    	)
+(diminish-minor-mode   	'highlight-parentheses	'highlight-parentheses-mode	    	)
+(diminish-minor-mode   	'magit                	'magit-auto-revert-mode    	    	)
+(diminish-minor-mode   	'ruby-block           	'ruby-block-mode           	    	)
+(diminish-minor-mode   	'simple               	'auto-fill-function        	"AF"	)
+(diminish-minor-mode   	'simple               	'visual-line-mode          	    	)
+(diminish-minor-mode   	'simple               	'global-visual-line-mode   	    	)
+(diminish-minor-mode   	'slime                	'slime-mode                	    	)
+(diminish-minor-mode   	'smartparens          	'smartparens-mode          	    	)
+;; (diminish-minor-mode	'subword              	'subword-mode              	    	)
+;; (diminish-minor-mode	'subword              	'superword-mode            	    	)
+(diminish-minor-mode   	'undo-tree            	'undo-tree-mode            	    	)
+(diminish-minor-mode   	'volatile-highlights  	'volatile-highlights-mode  	    	)
+(diminish-minor-mode   	'whitespace           	'global-whitespace-mode    	"WS"	)
+(diminish-minor-mode   	'whitespace           	'whitespace-mode           	"ws"	)
+(diminish-minor-mode   	'whole-line-or-region 	'whole-line-or-region-mode 	    	)
+(diminish-minor-mode   	'yasnippet            	'yas-minor-mode            	    	)
+(diminish-minor-mode   	'leerzeichen          	'leerzeichen-mode          	" |"	)
 
-  (diminish-major-mode "lisp-mode"    	emacs-lisp-mode	"EL" 	)
-  (diminish-major-mode "sh-script"    	sh-mode        	"sh" 	)
-  (diminish-major-mode "ruby-mode"    	ruby-mode      	"RB" 	)
-  (diminish-major-mode "enh-ruby-mode"	enh-ruby-mode  	"RB+"	)
-  )
+(diminish-major-mode	'lisp-mode    	emacs-lisp-mode	"EL" 	)
+(diminish-major-mode	'sh-script    	sh-mode        	"sh" 	)
+(diminish-major-mode	'ruby-mode    	ruby-mode      	"RB" 	)
+(diminish-major-mode	'enh-ruby-mode	enh-ruby-mode  	"RB+"	)
 
 (provide 'init-look)

@@ -1,57 +1,57 @@
 ;;; local packages
 
 ;; elpa package-repositories
-(setup "package"
-  (setq package-user-dir (emacs-d "packages"))
-  (add-to-list 'package-archives '("tromey"   	. "http://tromey.com/elpa/")                       	t)
-  (add-to-list 'package-archives '("marmalade"	. "http://marmalade-repo.org/packages/")           	t)
-  (add-to-list 'package-archives '("melpa"    	. "http://melpa.milkbox.net/packages/")            	t)
-  (add-to-list 'package-archives '("SC"       	. "http://joseito.republika.pl/sunrise-commander/")	t)
+(require 'package)
+(setq package-user-dir (emacs-d "packages"))
+(add-to-list 'package-archives '("tromey"   	. "http://tromey.com/elpa/")                       	t)
+(add-to-list 'package-archives '("marmalade"	. "http://marmalade-repo.org/packages/")           	t)
+(add-to-list 'package-archives '("melpa"    	. "http://melpa.milkbox.net/packages/")            	t)
+(add-to-list 'package-archives '("SC"       	. "http://joseito.republika.pl/sunrise-commander/")	t)
 
-  (defun package-disabled-packages ()
-    (let (disabled-packages)
-      (dolist (package package-alist)
-        (let ((package-name (car package)))
-          (unless (memq package-name package-activated-list)
-            (add-to-list 'disabled-packages package-name))))
+(defun package-disabled-packages ()
+  (let (disabled-packages)
+    (dolist (package package-alist)
+      (let ((package-name (car package)))
+        (unless (memq package-name package-activated-list)
+          (add-to-list 'disabled-packages package-name))))
 
-      disabled-packages))
+    disabled-packages))
 
-  (defun package-delete-all-disabled ()
-    (dolist (package (package-disabled-packages))
-      (let ((version (elt (cdr (assoc package package-alist)) 0)))
-        (package-delete
-         (symbol-name package)
-         (package-version-join version))))
+(defun package-delete-all-disabled ()
+  (dolist (package (package-disabled-packages))
+    (let ((version (elt (cdr (assoc package package-alist)) 0)))
+      (package-delete
+       (symbol-name package)
+       (package-version-join version))))
 
-    (dolist (package package-obsolete-alist)
-      (dolist (version (cdr package))
-        (package-delete
-         (symbol-name (car package))
-         (package-version-join (car version))))))
+  (dolist (package package-obsolete-alist)
+    (dolist (version (cdr package))
+      (package-delete
+       (symbol-name (car package))
+       (package-version-join (car version))))))
 
-  (defun package-dependencies ()
-    (let (deps)
+(defun package-dependencies ()
+  (let (deps)
 
-      (dolist (package package-alist)
-        (dolist (dep (elt (cdr package) 1))
-          (add-to-list 'deps (car dep))))
+    (dolist (package package-alist)
+      (dolist (dep (elt (cdr package) 1))
+        (add-to-list 'deps (car dep))))
 
-      (sort deps 'string<)))
+    (sort deps 'string<)))
 
-  (defun package-no-dependencies ()
-    (let ((deps (package-dependencies))
-          no-deps)
+(defun package-no-dependencies ()
+  (let ((deps (package-dependencies))
+        no-deps)
 
-      (dolist (package package-alist)
-        (let ((package-name (car package)))
-          (unless (memq package-name deps)
-            (add-to-list 'no-deps package-name))))
+    (dolist (package package-alist)
+      (let ((package-name (car package)))
+        (unless (memq package-name deps)
+          (add-to-list 'no-deps package-name))))
 
-      (sort no-deps 'string<)))
+    (sort no-deps 'string<)))
 
-  (setq package-load-list '(all))
+(setq package-load-list '(all))
 
-  (package-initialize))
+(package-initialize)
 
 (provide 'init-packages)

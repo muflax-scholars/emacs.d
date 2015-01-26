@@ -169,11 +169,11 @@
 (defun unbreak-stupid-map (stupid-map)
   (define-key stupid-map (kbd "C-c") nil))
 
-(setup-after "python"       	(unbreak-stupid-map python-mode-map))
-(setup-after "enh-ruby-mode"	(unbreak-stupid-map enh-ruby-mode-map))
-(setup-after "go-mode"      	(unbreak-stupid-map go-mode-map))
-(setup-after "flycheck"     	(unbreak-stupid-map flycheck-mode-map))
-(setup-after "conf-mode"    	(unbreak-stupid-map conf-mode-map))
+(load-after 'python       	(unbreak-stupid-map python-mode-map))
+(load-after 'enh-ruby-mode	(unbreak-stupid-map enh-ruby-mode-map))
+(load-after 'go-mode      	(unbreak-stupid-map go-mode-map))
+(load-after 'flycheck     	(unbreak-stupid-map flycheck-mode-map))
+(load-after 'conf-mode    	(unbreak-stupid-map conf-mode-map))
 
 ;; fix mod4 bug
 (define-key special-event-map (kbd "<key-17>")  	'ignore)
@@ -463,16 +463,16 @@
     )
 
 ;; with active search
-(setup-after "phi-search"
-  (setup "phi-search-mc"
-    (kd phi-search-default-map
-        '("C-<down>"  	phi-search-mc/mark-next)
-        '("C-<up>"    	phi-search-mc/mark-previous)
-        '("C-<return>"	phi-search-mc/mark-here)
-        '("C-p SPC"   	phi-search-mc/mark-all)
-        )))
+(load-after 'phi-search
+  (require 'phi-search-mc)
+  (kd phi-search-default-map
+      '("C-<down>"  	phi-search-mc/mark-next)
+      '("C-<up>"    	phi-search-mc/mark-previous)
+      '("C-<return>"	phi-search-mc/mark-here)
+      '("C-p SPC"   	phi-search-mc/mark-all)
+      ))
 
-(setup-after "isearch"
+(load-after 'isearch
   ;; make backspace more intuitive
   (kd isearch-mode-map
       '("<backspace>"	isearch-del-char)
@@ -493,7 +493,7 @@
       '("C-\\"	isearch-toggle-input-method)
       ))
 
-(setup-after "replace" ;; occur
+(load-after 'replace ;; occur
   (kd occur-mode-map
       '("C-c C-c"	occur-edit-mode)
       '("C-c C-f"	next-error-follow-minor-mode)
@@ -525,7 +525,7 @@
     '("s"	profiler-start)
     )
 
-(setup-after "yasnippet"
+(load-after 'yasnippet
   ;; saner trigger key
   (define-key yas-minor-mode-map [(tab)]    	nil)
   (define-key yas-minor-mode-map (kbd "TAB")	nil)
@@ -539,7 +539,7 @@
       ))
 
 ;; auto-completion
-(setup-after "auto-complete-config"
+(load-after 'auto-complete-config
   (setq ac-use-menu-map nil)
   (ac-set-trigger-key "C-t")
 
@@ -582,7 +582,7 @@
     '("Y"  	mc/many-to-one-yank)
     )
 
-(setup-after "multiple-cursors-core"
+(load-after 'multiple-cursors-core
   ;; <ret> inserts a newline; C-j exits (a bit more convenient that way)
   (kd mc/keymap
       '("<return>"	nil)
@@ -592,7 +592,7 @@
       ))
 
 ;; handle comments
-(setup-after "cc-mode"
+(load-after 'cc-mode
   (kd c-mode-map
       '("M-RET"	c-indent-new-comment-line)
       ))
@@ -724,24 +724,24 @@
     )
 
 ;; org-mode
-(setup-after "org"
+(load-after 'org
   (org-defkey org-mode-map (kbd "C-c C-d")	'org-todo-done)
   (org-defkey org-mode-map (kbd "C-c C-t")	'org-todo-todo)
   (org-defkey org-mode-map (kbd "C-c C-w")	'org-todo-waiting))
 
 ;; haskell
-(setup-after "haskell-mode"
+(load-after 'haskell-mode
   (kd haskell-mode-map
       '("C-c ?"  	haskell-process-do-type)
       '("C-c C-?"	haskell-process-do-info)))
 
 ;; ruby
-(setup-after "enh-ruby-mode"
+(load-after 'enh-ruby-mode
   (kd enh-ruby-mode-map
       '("C-c ?"	yari)))
 
-(setup-after "dired"
-  (setup-after "wdired"
+(load-after 'dired
+  (load-after 'wdired
     (kd dired-mode-map
         '("C-c C-c" 	wdired-change-to-wdired-mode)
         '("<insert>"	dired-mark)
@@ -766,12 +766,12 @@
     (define-key wdired-mode-map	[remap end-of-buffer]	'dired-jump-to-bottom)))
 
 ;; golang
-(setup-after "go-mode"
+(load-after 'go-mode
   (kd go-mode-map
       '("M-t"	godef-jump)
       '("M-T"	godef-jump-other-window)))
 
-(setup-after "magit"
+(load-after 'magit
   ;; needed because of fullscreen override
   (kd magit-status-mode-map
       '("q"	magit-quit-session)
@@ -819,7 +819,7 @@
     )
 
 ;; general lisp
-(setup-after "lisp-mode"
+(load-after 'lisp-mode
   ;; operate on sexps
   (kd lisp-mode-shared-map
       ;; TODO these might want to be remaps instead for consistency
@@ -852,7 +852,7 @@
       ))
 
 ;; slime
-(setup-after "slime"
+(load-after 'slime
   ;; disable slime default keys
   (setq slime-parent-bindings	nil
         slime-prefix-bindings	nil
@@ -989,7 +989,7 @@
     )
 
 ;; racket
-(setup-after "racket-mode"
+(load-after 'racket-mode
   (unset-complete-keymap racket-mode-map)
 
   (kd racket-mode-map
@@ -1008,7 +1008,7 @@
       '("}"  	racket-insert-closing-brace)
       ))
 
-(setup-after "geiser-mode"
+(load-after 'geiser-mode
   (unset-complete-keymap geiser-mode-map)
 
   (kd geiser-mode-map
@@ -1042,7 +1042,7 @@
       ;; ;; '(""	geiser-edit-module)
       ))
 
-(setup-after "prompt-minor-mode"
+(load-after 'prompt-minor-mode
   (kd prompt-minor-mode-map
       '("<f12>"    	corpus/open-corpus-file)
       '("<mouse-9>"	corpus/open-corpus-file)
@@ -1089,7 +1089,7 @@
       '("<f13>"  	prompt/make-slot-optional)
       ))
 
-(setup-after "corpus-minor-mode"
+(load-after 'corpus-minor-mode
   (kd corpus-minor-mode-map
 
       ;; open corpus file
@@ -1136,7 +1136,7 @@
       '("<mouse-8>" 	corpus/copy-example-block-over)
       ))
 
-(setup-after "word-list-minor-mode"
+(load-after 'word-list-minor-mode
   (kd word-list-minor-mode-map
       '("<f12>"	word-list/open-word)
 
@@ -1146,7 +1146,7 @@
       '("M-<right>"	word-list/mark-item-all)
       ))
 
-(setup-after "lesson-minor-mode"
+(load-after 'lesson-minor-mode
   (kd lesson-minor-mode-map
       ;; navigation in corpus
       '("C-<left>" 	lesson/prev-block)

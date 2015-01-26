@@ -15,14 +15,14 @@
           eshell-term
           eshell-unix))
 
-  (setup "esh-help"
-    (setup-esh-help-eldoc)
-    (add-hook 'eshell-mode-hook 'turn-on-eldoc-mode))
+  (require 'esh-help)
+  (setup-esh-help-eldoc)
+  (add-hook 'eshell-mode-hook 'turn-on-eldoc-mode)
 
-  (setup "esh-buf-stack"
-    (setup-eshell-buf-stack))
+  (require 'esh-buf-stack)
+  (setup-eshell-buf-stack)
 
-  (setup "mv-shell")
+  (require 'mv-shell)
 
   ;; completion
   (setq eshell-show-lisp-completions	nil)
@@ -40,7 +40,6 @@
     (interactive)
     (let ((eshell-buffer-name (concat "*eshell*-" default-directory)))
       (eshell arg)))
-
   )
 
 (provide 'init-shell)
