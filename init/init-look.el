@@ -71,8 +71,7 @@
       (load-theme bright-theme t))))
 
 ;; highlight current line
-(setup "hl-line"
-  (global-hl-line-mode t))
+(setup "hl-line")
 
 ;; fonts
 (defvar small-font 	"Fantasque Sans Mono 8")
