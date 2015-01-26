@@ -6,6 +6,7 @@
 ;; - can't add spaces in current cell
 ;; general bugs:
 ;; - mc might want a workaround to speed it up
+;; - tabs have one physical / two visual width, and that messes up some width calc; use "current column"?
 
 (eval-when-compile 'cl-lib)
 (eval-when-compile 'dash)

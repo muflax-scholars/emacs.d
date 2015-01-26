@@ -48,7 +48,8 @@ Stuff that doesn't work:
 	- panes
 	- quick jump to terminal
 	- make zsh suspend painless, or run some eshell thingy, or something
-
+	- dired should casefold
+	
 ]
 
 [ bugs / misc
