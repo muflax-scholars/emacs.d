@@ -758,6 +758,7 @@ You have:
   (sp-local-pair "["	"]"	        	       	)
   (sp-local-pair "'"	"'"	:actions	'(wrap)	)
   (sp-local-pair "`"	"`"	:actions	'(wrap)	)
+  (sp-local-pair "«"	"»"	:actions	'(wrap)	)
   )
 
 ;; overwrite |pipe| handling in ruby
