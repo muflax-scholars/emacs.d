@@ -27,4 +27,22 @@
     `(eval-after-load ,feature
        '(progn ,@body))))
 
+(defmacro load-lazy (triggers file &rest body)
+  "Load FEATURE when calling any of TRIGGERS. When loaded, eval BODY."
+  (declare (indent defun))
+  (let ((triggers (eval triggers)))
+    `(progn
+       ,@(mapcar (lambda (trigger)
+                   `(autoload ',trigger ,file nil t))
+                 triggers)
+       (load-after ,file
+         (progn ,@body)))))
+
+(eval-after-load "lisp-mode"
+  '(font-lock-add-keywords
+    'emacs-lisp-mode
+    '(("(\\(load\\(?:-\\(?:after\\|lazy\\)\\)?\\)\\_>"
+       1 font-lock-keyword-face)
+      )))
+
 (provide 'init-load-path)

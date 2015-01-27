@@ -1,6 +1,6 @@
 ;;; mail settings
 
-(setup-lazy '(mu mu4e) "mu4e"
+(load-lazy '(mu mu4e) "mu4e"
   (setq mu4e-maildir "~/mail")
 
   (setq mu4e-drafts-folder "/[Google Mail].Drafts")
@@ -27,9 +27,9 @@
              "flag:unread"
              " AND NOT flag:trashed"
              " AND NOT maildir:/[Google Mail].All Mail")	"Unread messages"     	?u)
-          ("date:today..now"                           	"Today's messages"    	?t)
-          ("date:7d..now"                              	"Last 7 days"         	?w)
-          ("mime:image/*"                              	"Messages with images"	?p)))
+          ("date:today..now"                            	"Today's messages"    	?t)
+          ("date:7d..now"                               	"Last 7 days"         	?w)
+          ("mime:image/*"                               	"Messages with images"	?p)))
 
   ;; allow for updating mail using 'U' in the main view:
   (setq mu4e-get-mail-command "offlineimap -u basic")
