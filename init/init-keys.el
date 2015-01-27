@@ -180,9 +180,9 @@
 (define-key special-event-map (kbd "<M-key-17>")	'ignore)
 
 ;; find unused keys
-(setup-lazy '(free-keys) "free-keys"
-  ;; allowed key components
-  (setq free-keys-keys (apply 'concat assignable-normal-keys)))
+(require 'free-keys)
+;; allowed key components
+(setq free-keys-keys (apply 'concat assignable-normal-keys))
 
 ;; built-ins prefix maps restated for clarity
 (defvar global-map)

@@ -21,7 +21,7 @@
 (require 'guess-offset)
 
 ;; eldoc for function signatures
-(setup-lazy '(c-turn-on-eldoc-mode) "c-eldoc"
+(load-lazy '(c-turn-on-eldoc-mode) "c-eldoc"
   (setq c-eldoc-buffer-regenerate-time 15))
 (load-after 'cc-mode
   (add-hook 'c++-mode-hook	'c-turn-on-eldoc-mode)
@@ -32,11 +32,11 @@
 (which-function-mode 1)
 
 ;; auctex
-(setup-lazy '(latex-mode LaTeX-mode tex-mode TeX-mode) "latex")
+(load-lazy '(latex-mode LaTeX-mode tex-mode TeX-mode) "latex")
 (add-hook 'LaTeX-mode-hook 'TeX-PDF-mode)
 
 ;; markdown
-(setup-lazy '(markdown-mode) "markdown-mode"
+(load-lazy '(markdown-mode) "markdown-mode"
   (setq markdown-command "kramdown"))
 (add-to-list 'auto-mode-alist '("\\.pdc$"     	. markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.mkd$"     	. markdown-mode))
@@ -51,12 +51,12 @@
 (add-to-list 'auto-mode-alist '("\\.script$"	. notes-mode))
 
 ;; yaml
-(setup-lazy '(yaml-mode) "yaml-mode")
+(load-lazy '(yaml-mode) "yaml-mode")
 (add-to-list 'auto-mode-alist '("\\.yaml$"	. yaml-mode))
 (add-to-list 'auto-mode-alist '("\\.yml$" 	. yaml-mode))
 
 ;; org-mode
-(setup-lazy '(org-mode) "org"
+(load-lazy '(org-mode) "org"
   ;; proper indentation / folding
   (setq org-startup-indented t)
   (setq org-hide-leading-stars t)
@@ -153,13 +153,12 @@
 (add-hook 'after-revert-hook 'imenu-flush-cache)
 
 ;; new python mode
-(setup-lazy '(python-mode) "python"
+(load-lazy '(python-mode) "python"
   (setq python-indent-offset 2)
   (add-hook 'python-mode-hook (lambda () (setq tab-width 2))))
 
 ;; haskell mode
-(setup-lazy '(haskell-mode) "haskell-mode")
-(setup-after "haskell-mode"
+(load-lazy '(haskell-mode) "haskell-mode"
   (require 'haskell-doc)
   (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
 
@@ -173,7 +172,7 @@
 ;; replace normal ruby mode
 (defalias 'ruby-mode 'enh-ruby-mode)
 ;; enhanced ruby mode
-(setup-lazy '(ruby-mode enh-ruby-mode rhtml-mode) "enh-ruby-mode"
+(load-lazy '(ruby-mode enh-ruby-mode rhtml-mode) "enh-ruby-mode"
   (setq enh-ruby-program "~/.rbenv/shims/ruby")
 
   ;; flycheck covers errors anyway
@@ -210,30 +209,30 @@
 (add-to-list 'auto-mode-alist '("\\.erb$" . rhtml-mode))
 
 ;; javascript
-(setup-lazy '(js2-mode) "js2-mode")
+(load-lazy '(js2-mode) "js2-mode")
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 
 ;; shell stuff
-(setup-lazy '(sh-mode) "sh-script"
+(load-lazy '(sh-mode) "sh-script"
   (setq sh-basic-offset tab-width)
   (add-hook 'sh-mode-hook 'leerzeichen-mode))
 
 ;; nxml stuff
-(setup-lazy '(nxml-mode) "nxml-mode"
+(load-lazy '(nxml-mode) "nxml-mode"
   (setq nxml-child-indent tab-width))
 
 ;; lua
-(setup-lazy '(lua-mode) "lua-mode"
+(load-lazy '(lua-mode) "lua-mode"
   (setq lua-indent-level 2))
 
 ;; (s)css
-(setup-lazy '(scss-mode) "scss-mode"
+(load-lazy '(scss-mode) "scss-mode"
   (setq scss-compile-at-save nil))
-(setup-lazy '(css-mode) "css-mode"
+(load-lazy '(css-mode) "css-mode"
   (setq css-indent-level 2))
 
 ;; mark stuff like FIXME
-(setup-lazy '(fic-mode) "fic-mode")
+(load-lazy '(fic-mode) "fic-mode")
 (add-hook 'prog-mode-hook    	'fic-mode)
 (add-hook 'enh-ruby-mode-hook	'fic-mode)
 (add-hook 'js2-mode-hook     	'fic-mode)
@@ -316,14 +315,14 @@
 (setq dired-listing-switches "--group-directories-first -v -al")
 
 ;; eldoc, ie function signatures in the minibuffer
-(setup-lazy '(turn-on-eldoc-mode) "eldoc"
+(load-lazy '(turn-on-eldoc-mode) "eldoc"
   (setq eldoc-idle-delay 0.1))
 (load-after 'lisp-mode
   (add-hook 'lisp-mode-hook      	'turn-on-eldoc-mode)
   (add-hook 'emacs-lisp-mode-hook	'turn-on-eldoc-mode))
 
 ;; go-lang
-(setup-lazy '(go-mode) "go-mode"
+(load-lazy '(go-mode) "go-mode"
   (add-hook 'before-save-hook #'gofmt-before-save)
   (setq gofmt-command "goimports")
   (setq gofmt-show-errors nil))
@@ -357,7 +356,7 @@
   (add-hook 'emacs-lisp-mode-hook 'leerzeichen-mode))
 
 ;; ag search
-(setup-lazy '(ag) "ag"
+(load-lazy '(ag) "ag"
   (setq ag-highlight-search t))
 
 ;; Flycheck for code linting
@@ -374,7 +373,7 @@
 (setq vc-handled-backends ())
 
 ;; fancy git interactions
-(setup-lazy '(magit-status) "magit"
+(load-lazy '(magit-status) "magit"
   (set-default 'magit-stage-all-confirm  	nil)
   (set-default 'magit-unstage-all-confirm	nil)
 
@@ -409,19 +408,19 @@
     (magit-refresh))
   )
 
-(setup-lazy '(conf-mode) "conf-mode")
+(load-lazy '(conf-mode) "conf-mode")
 
-(setup-lazy '(paradox-list-packages) "paradox"
+(load-lazy '(paradox-list-packages) "paradox"
   (setq paradox-github-token t))
 
-(setup-lazy '(nix-mode) "nix-mode"
+(load-lazy '(nix-mode) "nix-mode"
   (add-hook 'nix-mode-hook 'leerzeichen-mode))
 (add-to-list 'auto-mode-alist '("\\.nix" . nix-mode))
 
 ;; common lisp
 (load-after 'lisp-mode
   (require 'slime-autoloads)
-  (setup-lazy '(slime) "slime"
+  (load-lazy '(slime) "slime"
     (setq slime-lisp-implementations
           '((ccl 	("ccl"))
             (sbcl	("sbcl" "--noinform" "--no-linedit") :coding-system utf-8-unix)))
@@ -445,7 +444,7 @@
 (add-to-list 'auto-mode-alist '("\\.cl$"    	. lisp-mode))
 
 ;; racket
-(setup-lazy '(racket-mode) "racket-mode"
+(load-lazy '(racket-mode) "racket-mode"
   (require 'geiser-mode)
   (setq geiser-active-implementations '(racket))
   (setq geiser-default-implementation 'racket)
@@ -467,16 +466,16 @@
 (add-to-list 'auto-mode-alist '("\\.rkt$"	. racket-mode))
 
 ;; repl
-(setup-lazy '(ielm) "ielm"
+(load-lazy '(ielm) "ielm"
   (setq ielm-prompt "> ")
   (add-hook 'ielm-mode-hook	'turn-on-eldoc-mode))
 
 ;; arc
-(setup-lazy '(arc-mode) "arc")
+(load-lazy '(arc-mode) "arc")
 (add-to-list 'auto-mode-alist '("\\.arc$" . arc-mode))
 
 ;; shen
-(setup-lazy '(shen-mode) "shen-mode")
+(load-lazy '(shen-mode) "shen-mode")
 (add-to-list 'auto-mode-alist '("\\.shen$" . shen-mode))
 
 (provide 'init-major-modes)

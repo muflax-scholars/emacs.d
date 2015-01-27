@@ -1,6 +1,6 @@
 ;;; shell scripting
 
-(setup-lazy '(eshell) "eshell"
+(load-lazy '(eshell) "eshell"
   ;; used core modules
   (setq eshell-modules-list
         '(eshell-basic

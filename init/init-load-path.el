@@ -18,7 +18,7 @@
 (unless (file-exists-p source-directory)
   (setq source-directory "~/src/emacs/emacs"))
 
-;; convenience function
+;; convenience functions for loading libraries
 (if (fboundp 'with-eval-after-load)
     (defalias 'load-after 'with-eval-after-load)
   (defmacro load-after (feature &rest body)

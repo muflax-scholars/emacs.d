@@ -59,7 +59,7 @@
 
 ;; auto-yasnippet
 (load-after 'yasnippet
-  (setup-lazy '(aya-create aya-expand) "auto-yasnippet"))
+  (require 'auto-yasnippet))
 
 ;; auto completion
 (require 'auto-complete-config)
