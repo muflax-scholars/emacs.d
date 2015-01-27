@@ -11,10 +11,6 @@
     (concat user-dir path)))
 (load (emacs-d "init/init-load-path.el"))
 
-;; init setup (for faster start-up)
-(require 'setup)
-(setup-initialize)
-
 ;; external packages
 (require 'init-packages)
 
@@ -47,3 +43,5 @@
 
 ;; random options
 (require 'init-misc)
+
+(message "emacs: ready!")

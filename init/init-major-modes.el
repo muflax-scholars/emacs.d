@@ -194,7 +194,7 @@
 (add-to-list 'auto-mode-alist       	'("\\.builder$"	. enh-ruby-mode))
 (add-to-list 'auto-mode-alist       	'("\\.gemspec$"	. enh-ruby-mode))
 
-(setup-after "enh-ruby-mode"
+(load-after 'enh-ruby-mode
   ;; ri documentation tool
   (require 'yari)
 
