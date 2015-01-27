@@ -5,6 +5,8 @@
 
 (define-abbrev-table 'ag-mode-abbrev-table '())
 
+(define-abbrev-table 'bs-mode-abbrev-table '())
+
 (define-abbrev-table 'change-log-mode-abbrev-table '())
 
 (define-abbrev-table 'comint-mode-abbrev-table '())
@@ -14,6 +16,8 @@
 (define-abbrev-table 'diff-mode-abbrev-table '())
 
 (define-abbrev-table 'dsssl-mode-abbrev-table '())
+
+(define-abbrev-table 'edebug-eval-mode-abbrev-table '())
 
 (define-abbrev-table 'edit-abbrevs-mode-abbrev-table '())
 
@@ -30,6 +34,8 @@
 (define-abbrev-table 'epa-key-mode-abbrev-table '())
 
 (define-abbrev-table 'flycheck-error-list-mode-abbrev-table '())
+
+(define-abbrev-table 'free-keys-mode-abbrev-table '())
 
 (define-abbrev-table 'fundamental-mode-abbrev-table '())
 
@@ -94,6 +100,8 @@
 (define-abbrev-table 'mu4e-about-mode-abbrev-table '())
 
 (define-abbrev-table 'mu4e~update-mail-mode-abbrev-table '())
+
+(define-abbrev-table 'neotree-mode-abbrev-table '())
 
 (define-abbrev-table 'notes-mode-abbrev-table '())
 

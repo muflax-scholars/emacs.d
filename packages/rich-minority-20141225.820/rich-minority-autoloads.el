@@ -4,7 +4,7 @@
 
 
 ;;;### (autoloads (rich-minority-mode rm--mode-list-as-string-list)
-;;;;;;  "rich-minority" "rich-minority.el" (21703 47242 139231 971000))
+;;;;;;  "rich-minority" "rich-minority.el" (21703 50099 831831 700000))
 ;;; Generated autoloads from rich-minority.el
 
 (autoload 'rm--mode-list-as-string-list "rich-minority" "\
@@ -32,8 +32,8 @@ the mode if ARG is omitted or nil, and toggle it if ARG is `toggle'.
 
 ;;;***
 
-;;;### (autoloads nil nil ("rich-minority-pkg.el") (21703 47242 169725
-;;;;;;  676000))
+;;;### (autoloads nil nil ("rich-minority-pkg.el") (21703 50099 861300
+;;;;;;  859000))
 
 ;;;***
 

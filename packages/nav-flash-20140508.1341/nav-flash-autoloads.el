@@ -4,7 +4,7 @@
 
 
 ;;;### (autoloads (nav-flash-show nav-flash) "nav-flash" "nav-flash.el"
-;;;;;;  (21449 953 648586 215000))
+;;;;;;  (21703 49388 610639 207000))
 ;;; Generated autoloads from nav-flash.el
 
 (let ((loads (get 'nav-flash 'custom-loads))) (if (member '"nav-flash" loads) nil (put 'nav-flash 'custom-loads (cons '"nav-flash" loads))))
@@ -28,8 +28,8 @@ this function a no-op.
 
 ;;;***
 
-;;;### (autoloads nil nil ("nav-flash-pkg.el") (21449 953 682613
-;;;;;;  776000))
+;;;### (autoloads nil nil ("nav-flash-pkg.el") (21703 49388 627284
+;;;;;;  969000))
 
 ;;;***
 
