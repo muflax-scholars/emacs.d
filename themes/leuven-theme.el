@@ -116,7 +116,7 @@
    ;; Font lock faces
    `(font-lock-builtin-face ((,class (:foreground "#006FE0"))))
    `(font-lock-comment-delimiter-face ((,class (:foreground "#8D8D84")))) ; #696969
-   `(font-lock-comment-face ((,class (:slant italic :foreground "#555555" :background "#f7f7f7"))))
+   `(font-lock-comment-face ((,class (:foreground "#555555" :background "#f7f7f7"))))
    `(font-lock-constant-face ((,class (:foreground "#D0372D"))))
    `(font-lock-doc-face ((,class (:foreground "#555555" :background "#f7f7f7"))))
    `(font-lock-doc-string-face ((,class (:foreground "#008000"))))
@@ -304,7 +304,7 @@
    `(font-latex-string-face ((,class (:weight bold :foreground "#0066FF"))))
    `(font-latex-verbatim-face ((,class (:foreground "#000088" :background "#FFFFE0" :inherit nil))))
    `(git-commit-summary-face ((,class (:foreground "#000000"))))
-   `(git-commit-comment-face ((,class (:slant italic :foreground "#696969"))))
+   `(git-commit-comment-face ((,class (:foreground "#696969"))))
    `(helm-action ((,class (:foreground "black"))))
    `(helm-bookmarks-su-face ((,class (:foreground "red"))))
    `(helm-buffer-process ((,class (:foreground "#008200"))))
@@ -381,7 +381,7 @@
    `(nxml-attribute-local-name-face ((,class (:foreground "magenta"))))
    `(nxml-attribute-value-delimiter-face ((,class (:foreground "green4"))))
    `(nxml-attribute-value-face ((,class (:foreground "green4"))))
-   `(nxml-comment-content-face ((,class (:slant italic :foreground "red"))))
+   `(nxml-comment-content-face ((,class (:foreground "red"))))
    `(nxml-comment-delimiter-face ((,class (:foreground "red"))))
    `(nxml-element-local-name ((,class (:box (:line-width 1 :color "#999999") :foreground "#000088" :background "#DEDEDE"))))
    `(nxml-element-local-name-face ((,class (:foreground "blue"))))
