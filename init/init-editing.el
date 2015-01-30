@@ -595,6 +595,7 @@ You have:
 (add-to-list 'rotate-text-symbols	'("?"     	"!"))
 
 ;; handle camelcase better
+(require 'subword)
 (add-hook 'prog-mode-hook 'subword-mode)
 
 ;; folding
