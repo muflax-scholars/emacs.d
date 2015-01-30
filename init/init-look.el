@@ -127,8 +127,9 @@
 
 ;; blinking cursor
 (blink-cursor-mode -1)
-;; (require 'heartbeat-cursor)
-;;   (heartbeat-cursor-mode))
+(require 'heartbeat-cursor)
+;; (heartbeat-cursor-mode))
+
 ;; TODO should be a bar, as soon as multiple-coursors figures out a way to draw that
 ;; (setq-default cursor-type '(bar . 2))
 (setq-default cursor-type 'box)
@@ -152,35 +153,34 @@
 (require 'warnings)
 (setq warning-suppress-types (append '(undo discard-info) warning-suppress-types))
 
-;; minimap (badly broken, but One Day(tm), man...
-;; non-annoying minimap that lacks a bunch of cool features
-;; (require 'minimap)
+;; light-weight default whitespace highlighting
+(require 'leerzeichen)
 
-;; minimap that flickers
-;; (require 'sublimity)
-;; (require 'sublimity)
-;; (require 'sublimity-map)
-;; (sublimity-map-set-delay 10)
-;; (sublimity-mode 1)
-
-;; fancy whitespace highlighting
+;; fancier space highlighting
 (require 'whitespace)
 (setq whitespace-space-regexp "\\( +\t\\)")
-(setq whitespace-style '(face tabs spaces))
-(setq whitespace-display-mappings
-      `(
-        (space-mark  	?\s  	[?\u00B7]	[?.]    	)	; space     	- centered dot
-        (space-mark  	?\xA0	[?\u00A4]	[?_]    	)	; hard space	- currency
-        (newline-mark	?\n  	[?$ ?\n] 	[?$ ?\n]	)	; eol       	- dollar sign
+(setq whitespace-style '(face spaces tabs))
 
-        ;; consistent spacing of tab
-        (tab-mark ?\t 	; tab - bar
-                  [?\|	,@(make-list (1- tab-width) ?\s)]
-                  [?\|	,@(make-list (1- tab-width) ?\s)])
-        ))
+;; nested parentheses are highlighted when inside of them
+(require 'highlight-parentheses)
+(defun turn-on-highlight-parentheses ()
+  (highlight-parentheses-mode 1))
+(add-hook 'prog-mode-hook    	'turn-on-highlight-parentheses)
+(add-hook 'enh-ruby-mode-hook	'turn-on-highlight-parentheses)
 
-;; more light-weight default whitespace highlighting
-(require 'leerzeichen)
+;; parenthesis highlighting behavior
+(require 'paren)
+(setq blink-matching-paren-distance nil)
+(setq show-paren-style 'expression)
+(setq show-paren-delay 0.125)
+(show-paren-mode 1)
+
+;; don't hard-wrap text, but use nice virtual wrapping
+(require 'adaptive-wrap)
+(setq-default fill-column 80)
+(global-visual-line-mode 1)
+(global-adaptive-wrap-prefix-mode 1)
+(setq visual-line-fringe-indicators '(nil right-curly-arrow))
 
 ;; clean up modeline and hide standard minor modes
 (defmacro diminish-minor-mode (package mode &optional short-name)

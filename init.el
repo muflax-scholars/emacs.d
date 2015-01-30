@@ -24,9 +24,15 @@
 (require 'init-look)
 
 ;; editing features
+(require 'init-align)
 (require 'init-editing)
+(require 'init-folding)
+(require 'init-killing)
+(require 'init-input)
 
-;; searches, navigation and a plethora of regex engines
+;; navigation and searches
+(require 'init-buffers)
+(require 'init-navigation)
 (require 'init-search)
 
 ;; auto-completion and templates

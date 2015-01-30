@@ -44,10 +44,14 @@
 
 (defvar hungry-delete-mode-map (make-keymap)
   "Keymap for hungry-delete-minor-mode.")
-(define-key hungry-delete-mode-map [remap delete-char]                   'hungry-delete-forward)
-(define-key hungry-delete-mode-map [remap delete-forward-char]           'hungry-delete-forward)
-(define-key hungry-delete-mode-map [remap delete-backward-char]          'hungry-delete-backward)
-(define-key hungry-delete-mode-map [remap backward-delete-char-untabify] 'hungry-delete-backward)
+
+(defun hungry-remap-key (from to)
+  (define-key hungry-delete-mode-map [remap from] to))
+
+(hungry-remap-key	'delete-char                  	'hungry-delete-forward)
+(hungry-remap-key	'delete-forward-char          	'hungry-delete-forward)
+(hungry-remap-key	'delete-backward-char         	'hungry-delete-backward)
+(hungry-remap-key	'backward-delete-char-untabify	'hungry-delete-backward)
 
 (defmacro hungry-delete-skip-ws-forward (&optional limit)
   "Skip over any whitespace following point.

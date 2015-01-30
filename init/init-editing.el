@@ -11,23 +11,29 @@
 
 ;; save location inside buffer
 (require 'saveplace)
+
 ;; save minibuffer history
+(require 'savehist)
 (savehist-mode 1)
-(setq kill-ring-max         	1000)
-(setq history-length        	1000)
-(setq search-ring-max       	1000)
-(setq regexp-search-ring-max	1000)
-(setq kmacro-ring-max       	1000)
-(setq comint-input-ring-size	1000)
+(setq kill-ring-max           	1000)
+(setq history-length          	1000)
+(setq search-ring-max         	1000)
+(setq regexp-search-ring-max  	1000)
+(setq kmacro-ring-max         	1000)
+(load-after 'comint           	
+  (setq comint-input-ring-size	1000))
 
 (setq save-place-file	(emacs-d "cache/saveplace"))
 (setq savehist-file  	(emacs-d "cache/history"))
 
 (setq-default save-place t)
-(setq savehist-additional-variables '(search-ring
-                                      regexp-search-ring
-                                      kill-ring
-                                      compile-command))
+(setq savehist-additional-variables
+      '(
+        compile-command
+        kill-ring
+        regexp-search-ring
+        search-ring
+        ))
 
 ;; save open buffers etc.
 ;; (require 'desktop)
@@ -41,13 +47,6 @@
 (setq sentence-end-double-space nil)
 (column-number-mode t)
 (setq-default indicate-empty-lines t)
-
-;; don't hard-wrap text, but use nice virtual wrapping
-(require 'adaptive-wrap)
-(setq-default fill-column 80)
-(global-visual-line-mode 1)
-(global-adaptive-wrap-prefix-mode 1)
-(setq visual-line-fringe-indicators '(nil right-curly-arrow))
 
 ;; enable useful command
 (put 'narrow-to-region	'disabled nil)
@@ -92,95 +91,6 @@
 (global-undo-tree-mode)
 (setq undo-tree-visualizer-timestamps t)
 
-;; nested parentheses are highlighted when inside of them
-(require 'highlight-parentheses)
-(defun turn-on-highlight-parentheses () (highlight-parentheses-mode 1))
-(add-hook 'prog-mode-hook    	'turn-on-highlight-parentheses)
-(add-hook 'enh-ruby-mode-hook	'turn-on-highlight-parentheses)
-
-;; copy end of line, like C-k
-(defun copy-line ()
-  (interactive)
-  (set 'this-command 'copy-to-kill)
-  (save-excursion
-    (set-mark (point))
-    (if (= (point) (line-end-position))
-        (forward-line)
-      (goto-char (line-end-position)))
-    (if (eq last-command 'copy-to-kill)
-        (append-next-kill))
-    (kill-ring-save (mark) (point))))
-
-;; move to beginning of text on line
-(defun smart-beginning-of-line ()
-  "Move point to one step left towards the beginning of the line.
-
-Point stops at elastic tab stops, beginning of the visual line and eventually the real beginning of the line."
-  (interactive)
-
-  (let ((positions
-         (list
-          ;; elastic tabs
-          ;; (go (when (= (preceding-char) ?\t)
-          ;;       (skip-chars-backward "\t"))
-          ;;     (skip-chars-backward "^\t\n")
-          ;;     (point))
-
-          ;; first text
-          (go (beginning-of-line-text)
-              (point))
-
-          ;; visual line
-          (go (beginning-of-visual-line)
-              (point))
-
-          ;; real line
-          (line-beginning-position))))
-
-    ;; filter it
-    (setq positions (--filter (< it (point))
-                              positions))
-
-    (when positions
-      (goto-char (apply 'max positions)))))
-
-(defun smart-end-of-line ()
-  "Move point to one step right towards the end of the line.
-
-Point stops at elastic tab stops, end of the visual line and eventually the real end of the line."
-  (interactive)
-
-  (let ((positions
-         (list
-          ;; elastic tabs
-          ;; (go (when (= (preceding-char) ?\t)
-          ;;       (skip-chars-forward "^\t\n"))
-          ;;     (skip-chars-forward "\t")
-          ;;     (point))
-
-          ;; last text
-          (go (end-of-line)
-              (skip-syntax-backward "-" (line-beginning-position))
-              (point))
-
-          ;; visual line
-          (go (end-of-visual-line)
-              (point))
-
-          ;; real line
-          (line-end-position))))
-
-    ;; filter it
-    (setq positions (--filter (> it (point))
-                              positions))
-
-    (when positions
-      (goto-char (apply 'min positions)))))
-
-;; org-mode has similar behavior built-in, so use it instead
-(load-after 'org-mode
-  (setq org-special-ctrl-a/e t))
-
 (defun insert-file-name (filename &optional args)
   "Insert name of file FILENAME into buffer after point.
 
@@ -190,10 +100,6 @@ Point stops at elastic tab stops, end of the visual line and eventually the real
          (insert (expand-file-name filename)))
         (t
          (insert (file-relative-name filename)))))
-
-;; unique buffer names
-(require 'uniquify)
-(setq uniquify-buffer-name-style 'post-forward)
 
 ;; make mouse more usable
 (mouse-wheel-mode t)
@@ -218,13 +124,6 @@ Point stops at elastic tab stops, end of the visual line and eventually the real
   (noflet ((delete-horizontal-space (&rest args) t))
     ad-do-it))
 
-;; also indent when yanked
-(defun yank-and-indent ()
-  "Yank and then indent the newly formed region according to mode."
-  (interactive)
-  (yank)
-  (call-interactively 'indent-region))
-
 (defun unfill-region (beg end)
   "Remove all line breaks in a region but leave paragraphs,
   indented text (quotes, code) and lists intact."
@@ -240,25 +139,6 @@ Point stops at elastic tab stops, end of the visual line and eventually the real
   (interactive)
   (end-of-line)
   (newline-and-indent))
-
-;; delete spaces when killing a line
-(defun kill-and-join-forward (&optional arg)
-  "If at end of line, join with following; otherwise kill line.
-  Deletes whitespace at join."
-  (interactive "P")
-  (if (and (eolp) (not (bolp)))
-      (delete-indentation t)
-    (kill-line arg)))
-
-;; delete all space before point up to beginning of line or non-whitespace char
-(require 'hungry-delete)
-(global-hungry-delete-mode)
-(defun literal-delete-char (&optional arg)
-  (interactive "P")
-  (delete-char 1))
-(defun literal-delete-backward-char (&optional arg)
-  (interactive "P")
-  (delete-char -1))
 
 ;; spell checker
 (require 'wcheck-mode)
@@ -328,74 +208,12 @@ Point stops at elastic tab stops, end of the visual line and eventually the real
   (add-hook 'markdown-mode-hook	'turn-on-spell-check)
   (add-hook 'org-mode-hook     	'turn-on-spell-check))
 
-;; align
-(require 'align)
-(defun align-region-or-current ()
-  "Align current selected region or implied region if nothing is selected."
-  (interactive)
-  (if (and mark-active
-           (/= (point) (mark)))
-      (align (point) (mark))
-    (align-current)))
-
-;; repeat regex (teh fuck ain't that the default?!)
-(defun align-repeat (start end regexp)
-  "Repeat alignment with respect to the given regular expression."
-  (interactive "r\nsAlign regexp: ")
-  (align-regexp start end
-                (concat "\\(\\s-*\\)" regexp) 1 1 t))
-
-(defun align-whitespace (start end)
-  "Align region by whitespace."
-  (interactive "r")
-  (align-regexp start end (concat "\\(\\s-*\\)" "\\s-") 1 0 t))
-
-;; align should always indent with spaces
-(defadvice align-areas (around fix-tab-indent activate)
-  (let ((indent-tabs-mode nil))
-    ad-do-it))
-
 ;; diff- mode (better colors)
 (require 'diff-mode-)
 
 ;; a slightly saner diff command
 (require 'ediff)
 (setq ediff-diff-options "-w")
-
-;; if no region is active, act on current line
-(require 'whole-line-or-region)
-(setq whole-line-or-region-extensions-alist
-      '((comment-dwim       	whole-line-or-region-comment-dwim-2     	nil)
-        (copy-region-as-kill	whole-line-or-region-copy-region-as-kill	nil)
-        (kill-region        	whole-line-or-region-kill-region        	nil)
-        (kill-ring-save     	whole-line-or-region-kill-ring-save     	nil)
-        (yank               	whole-line-or-region-yank               	nil)
-        ))
-(whole-line-or-region-mode 1)
-
-(defun kill-without-append (&optional arg)
-  "kills line (region or whole) without appending it to the last kill"
-  (interactive "P")
-  (setq last-command nil)
-  (whole-line-or-region-kill-region arg))
-
-(defun blank-line ()
-  "intelligently blanks the line"
-  (interactive)
-  (smart-beginning-of-line)
-  (kill-line))
-
-(defun kill-with-append (&optional arg)
-  "kills line (region or whole) and appends it to last kill"
-  (interactive "P")
-  (append-next-kill)
-  (whole-line-or-region-kill-region arg))
-
-(defun copy-with-append (&optional arg)
-  "kills line (region or whole) and appends it to last kill"
-  (interactive "P")
-  (append-next-kill)
-  (whole-line-or-region-kill-ring-save arg))
 
 ;; tramp (remote files)
 (load-after 'tramp
@@ -419,44 +237,6 @@ Point stops at elastic tab stops, end of the visual line and eventually the real
      (concat "/sudo::" (buffer-file-name (current-buffer))))
     (goto-char pos)))
 
-;; input methods, including a direct mozc binding to avoid ibus (requires mozc install)
-(require 'custom-input-methods)
-(defmacro set-input-method-fun (name)
-  `(defun ,(intern (format "set-input-method-%s" name)) ()
-     (interactive)
-     (set-input-method ,name)))
-
-(require 'mozc nil t) ;; might be missing
-(setq mozc-leim-title "あ")
-
-;; default to the diacritic smasher
-(setq default-input-method "muflax-latin")
-(defun turn-on-default-input-method ()
-  (set-input-method default-input-method))
-(add-hook 'text-mode-hook       	'turn-on-default-input-method)
-(add-hook 'prog-mode-hook       	'turn-on-default-input-method)
-(add-hook 'dired-mode-hook      	'turn-on-default-input-method)
-(add-hook 'minibuffer-setup-hook	'turn-on-default-input-method)
-(add-hook 'occur-mode-hook      	'turn-on-default-input-method)
-(add-hook 'phi-search-init-hook 	'turn-on-default-input-method)
-(add-hook 'eshell-mode-hook     	'turn-on-default-input-method)
-
-;; don't underline partial input
-(setq input-method-highlight-flag nil)
-
-;;don't spam the minibuffer
-(setq input-method-verbose-flag 'complex-only)
-
-(defun clear-input-method ()
-  (interactive) (set-input-method nil))
-
-(set-input-method-fun "muflax-latin")
-(set-input-method-fun "muflax-cyrillic")
-(set-input-method-fun "muflax-turkish")
-(set-input-method-fun "muflax-greek")
-(set-input-method-fun "japanese-mozc")
-
-;; analog to delete-file
 (defun delete-current-file ()
   "Delete the file associated with the current buffer."
   (interactive)
@@ -474,61 +254,6 @@ Point stops at elastic tab stops, end of the visual line and eventually the real
     (when current-file
       (when (kill-buffer (current-buffer))
         (find-file current-file)))))
-
-;; move lines like in org-mode
-(require 'move-dup)
-
-;; move buffers
-(require 'buffer-move)
-
-;; undo window changes
-(require 'winner)
-(winner-mode 1)
-
-;; expand-region to mark stuff
-(require 'expand-region)
-(setq expand-region-contract-fast-key	"<left>")
-(setq expand-region-reset-fast-key   	"SPC")
-
-;; notes-mode speed-up
-(defun er/add-notes-mode-expansions ()
-  "Adds notes-mode expansions for buffers in notes-mode"
-  (set (make-local-variable 'er/try-expand-list)
-       (default-value 'er/try-expand-list))
-  (loop for fun in '(er/mark-email er/mark-url)
-        collect (set 'er/try-expand-list
-                     (remove fun er/try-expand-list))))
-
-(er/enable-mode-expansions 'notes-mode 'er/add-notes-mode-expansions)
-
-;; make zsh aliases work
-(require 'shell-command)
-(setq shell-command-switch "-lc")
-;; tab-completion for shell-command
-;; FIXME not working yet, but meh
-(shell-command-completion-mode)
-
-;; better handling than M-| / M-!
-(defun generalized-shell-command (command arg)
-  "Unifies `shell-command' and `shell-command-on-region'.
-You have:
-- (no arg)    	run command and place output
-- (C-u)       	... don't chomp output
-- (region)    	replace region with output from command
-- (C-u region)	... and print to minibuffer" ; TODO: make this also chomp
-  (interactive (list (read-from-minibuffer "$ " nil nil nil 'shell-command-history)
-                     current-prefix-arg))
-  (let ((p (if mark-active (region-beginning) 0))
-        (m (if mark-active (region-end) 0)))
-    (if (= p m)
-        ;; no active region, so just output the output
-        (if (eq arg nil)
-            (insert (chomp (shell-command-to-string command)))
-          (shell-command command t))
-      ;; Active region
-      (if (eq arg nil)
-          (shell-command-on-region p m command t t)
-        (shell-command-on-region p m command)))))
 
 (defun trim-whitespace (&optional start end)
   "Slightly less aggressive version of 'delete-trailing-whitespace'."
@@ -566,12 +291,6 @@ You have:
 
 (add-hook 'before-save-hook 'maybe-trim-whitespace)
 
-;; scratchpad buffers
-(require 'scratch)
-
-;; don't spam *Scratch*
-(setq initial-scratch-message nil)
-
 ;; work with numbers at point
 (require 'number)
 (defun number/increment ()
@@ -594,106 +313,6 @@ You have:
 (add-to-list 'rotate-text-words  	'("yes"   	"no"))
 (add-to-list 'rotate-text-symbols	'("?"     	"!"))
 
-;; handle camelcase better
-(require 'subword)
-(add-hook 'prog-mode-hook 'subword-mode)
-
-;; folding
-(defvar folding-ellipsis "๛" "replacement for folded content")
-
-(require 'hideshow)
-(require 'hideshowvis)
-(require 'fold-dwim)
-(require 'yafolding)
-
-(add-hook 'prog-mode-hook 	'hs-minor-mode)
-(add-hook 'notes-mode-hook	'hs-minor-mode)
-
-(setq hs-isearch-open t)
-
-;; better ellipsis
-(set-display-table-slot standard-display-table
-                        'selective-display
-                        folding-ellipsis)
-(setq yafolding-ellipsis-content folding-ellipsis)
-(setq hs-set-up-overlay
-      (fn (ov)
-        (when (eq 'code (overlay-get ov 'hs))
-          (overlay-put ov 'display folding-ellipsis))))
-
-(setq hs-fold-level 1)
-
-(defun hs-fold-increase ()
-  (interactive)
-  (set (make-local-variable 'hs-fold-level)
-       (1+ hs-fold-level))
-  (hs-hide-level hs-fold-level))
-
-(defun hs-fold-decrease ()
-  (interactive)
-  (set (make-local-variable 'hs-fold-level)
-       (max (1- hs-fold-level) 1))
-  (hs-hide-level hs-fold-level))
-
-(defun hs-fold-reset ()
-  (interactive)
-  (set (make-local-variable 'hs-fold-level) 0)
-  (fold-dwim-show-all))
-
-(defun hs-fold-levels ()
-  (interactive)
-
-  (set (make-local-variable 'hs-fold-level) 1)
-  (hs-hide-level hs-fold-level)
-
-  (set-temporary-overlay-map
-   (let ((map (make-sparse-keymap)))
-     (define-key map (kbd "<right>")	'hs-fold-increase)
-     (define-key map (kbd "<left>") 	'hs-fold-decrease)
-     (define-key map (kbd "SPC")    	'hs-fold-reset)
-     map) t)
-  (message "<right> to fold more, <left> to fold less, SPC to reset."))
-
-(setq whitespace-fold-level tab-width)
-
-(defun whitespace-fold-increase ()
-  (interactive)
-  (set (make-local-variable 'whitespace-fold-level)
-       (+ whitespace-fold-level tab-width))
-  (set-selective-display whitespace-fold-level))
-
-(defun whitespace-fold-decrease ()
-  (interactive)
-  (set (make-local-variable 'whitespace-fold-level)
-       (max (- whitespace-fold-level tab-width) tab-width))
-  (set-selective-display whitespace-fold-level))
-
-(defun whitespace-fold-reset ()
-  (interactive)
-  (set (make-local-variable 'whitespace-fold-level) 0)
-  (set-selective-display whitespace-fold-level))
-
-(defun whitespace-fold-levels ()
-  (interactive)
-
-  (set (make-local-variable 'whitespace-fold-level) tab-width)
-  (set-selective-display whitespace-fold-level)
-
-  (set-temporary-overlay-map
-   (let ((map (make-sparse-keymap)))
-     (define-key map (kbd "<right>")	'whitespace-fold-increase)
-     (define-key map (kbd "<left>") 	'whitespace-fold-decrease)
-     (define-key map (kbd "SPC")    	'whitespace-fold-reset)
-     map) t)
-  (message "<right> to fold more, <left> to fold less, SPC to reset."))
-
-;; parenthesis highlighting behavior
-(require 'paren)
-(setq blink-matching-paren-distance nil)
-(setq show-paren-style 'expression)
-(setq show-paren-delay 0.125)
-(show-paren-mode 1)
-
 ;; smart parentheses
 (require 'smartparens-config)
 (smartparens-global-mode t)
@@ -712,7 +331,6 @@ You have:
 (setq sp-hybrid-kill-excessive-whitespace t)
 (setq sp-navigate-close-if-unbalanced t)
 
-;; move to beginning of text on line
 (defun sp-kill-to-end-of-sexp ()
   "Kill everything in the sexp without unbalancing it."
   (interactive)
@@ -720,7 +338,6 @@ You have:
     (set-mark (point))
     (sp-end-of-sexp)
     (kill-region (mark) (point))))
-;; move to beginning of text on line
 (defun sp-kill-to-beginning-of-sexp ()
   "Kill everything in the sexp without unbalancing it."
   (interactive)
@@ -728,7 +345,6 @@ You have:
     (set-mark (point))
     (sp-beginning-of-sexp)
     (kill-region (mark) (point))))
-;; move to beginning of text on line
 (defun sp-copy-to-end-of-sexp ()
   "Copy everything in the sexp without unbalancing it."
   (interactive)
@@ -736,7 +352,6 @@ You have:
     (set-mark (point))
     (sp-end-of-sexp)
     (kill-ring-save (mark) (point))))
-;; move to beginning of text on line
 (defun sp-copy-to-beginning-of-sexp ()
   "copy everything in the sexp without unbalancing it."
   (interactive)
@@ -785,25 +400,8 @@ You have:
 ;; normalize buffer before saving
 (add-hook 'before-save-hook 'normalize-unicode-in-buffer)
 
-;; clean up buffers every once in a while
-(require 'midnight)
-(midnight-delay-set 'midnight-delay 0)
-
-;; use shift to mark things
-(setq shift-select-mode t)
-
 ;; transparently open compressed files
 (auto-compression-mode t)
-
-;; normally smartparens wraps selected text, but if input is not a pair, just overwrite the text
-(require 'delsel)
-(delete-selection-mode 1)
-
-;; when popping the mark, continue popping until the cursor actually moves
-(defadvice pop-to-mark-command (around ensure-new-position activate)
-  (let ((p (point)))
-    (dotimes (i 10)
-      (when (= p (point)) ad-do-it))))
 
 ;; automatically create directories if necessary
 (defadvice find-file (before make-directory-maybe (filename &optional wildcards) activate)
@@ -814,15 +412,6 @@ You have:
         (make-directory dir)))))
 
 (require 'keyboard-cat-mode)
-
-(defun compact-blank-lines ()
-  "replace multiple blank lines with a single one"
-  (interactive)
-  (save-excursion
-    (goto-char (point-min))
-    (while (re-search-forward "\\(^\\s-*$\\)\n" nil t)
-      (replace-match "\n")
-      (forward-char 1))))
 
 (defun toggle-title-case ()
   "Toggle case of the word / region between lower case and title case."
@@ -880,143 +469,13 @@ You have:
   (interactive)
   (apply 'downcase-region (word-or-region)))
 
-(defun kill-matching-lines (regexp &optional rstart rend interactive)
-  "Kill lines containing matches for REGEXP.
-
-See `flush-lines' or `keep-lines' for behavior of this command.
-
-If the buffer is read-only, Emacs will beep and refrain from deleting
-the line, but put the line in the kill ring anyway.  This means that
-you can use this command to copy text from a read-only buffer.
-\(If the variable `kill-read-only-ok' is non-nil, then this won't
-even beep.)"
-  (interactive
-   (keep-lines-read-args "Kill lines containing match for regexp"))
-  (let ((buffer-file-name nil)) ;; HACK for `clone-buffer'
-    (with-current-buffer (clone-buffer nil nil)
-      (let ((inhibit-read-only t))
-        (keep-lines regexp rstart rend interactive)
-        (kill-region (or rstart (line-beginning-position))
-                     (or rend (point-max))))
-      (kill-buffer)))
-  (unless (and buffer-read-only kill-read-only-ok)
-    ;; Delete lines or make the "Buffer is read-only" error.
-    (flush-lines regexp rstart rend interactive)))
-
-(defun copy-matching-lines (regexp &optional rstart rend interactive)
-  "Copy lines containing matches for REGEXP.
-
-See `flush-lines' or `keep-lines' for behavior of this command."
-  (interactive
-   (keep-lines-read-args "Copy lines containing match for regexp"))
-  (let ((buffer-file-name nil)) ;; HACK for `clone-buffer'
-    (with-current-buffer (clone-buffer nil nil)
-      (let ((inhibit-read-only t))
-        (keep-lines regexp rstart rend interactive)
-        (copy-region-as-kill (or rstart (line-beginning-position))
-                             (or rend (point-max))))
-      (kill-buffer))))
-
-;; sticky windows
-(require 'sticky-windows)
-
-;; tree sidebar
-(require 'neotree)
-(setq neo-show-header nil)
-
-;; TODO less key-intensive navigation
-;; (require 'nav-mode)
-
-(defun narrow-or-widen-dwim (p)
-  "If the buffer is narrowed, it widens. Otherwise, it narrows intelligently.
-Intelligently means: region, subtree, or defun, whichever applies
-first.
-
-With prefix P, don't widen, just narrow even if buffer is already
-narrowed."
-  (interactive "P")
-  (declare (interactive-only))
-  (cond ((and (buffer-narrowed-p)
-              (not p))
-         (widen))
-
-        ((region-active-p)
-         (narrow-to-region (region-beginning) (region-end)))
-
-        ((and (fboundp 'org-narrow-to-subtree)
-              (derived-mode-p 'org-mode)
-              (org-narrow-to-subtree)))
-
-        (t
-         (narrow-to-defun))))
-
 ;; help extension
 (require 'help-fns+)
-
-;; navigate windows
-(defalias 'focus-next-window 'other-window)
-(defun focus-prev-window ()
-  (interactive)
-  (other-window -1))
-
-(require 'buffer-move)
-(defun split-window-above ()
-  (interactive)
-  (split-window-below)
-  (buf-move-down))
-
-(defun split-window-left ()
-  (interactive)
-  (split-window-right)
-  (buf-move-right))
 
 ;; alternative to C-q TAB for easier keybindings
 (defun literal-tab ()
   (interactive)
   (insert "\t"))
-
-(defun toggle-subword-mode ()
-  "Switch between subword/superword-mode."
-  (interactive)
-  (if global-subword-mode
-      (if (fboundp 'global-superword-mode)
-          (global-superword-mode 1)
-        (global-subword-mode -1))
-    (global-subword-mode 1)))
-
-(defvar elastic-tab-align-modes
-  '(
-    enh-ruby-mode
-    notes-mode
-    nix-mode
-    emacs-lisp-mode
-    lisp-mode
-    racket-mode
-    scheme-mode
-    sh-mode
-    )
-  "modes that align elastic tabstops during indent")
-
-;; elastic tabstops
-(require 'elastic-tabstops)
-(defmacro elastic-advice-command (command-name)
-  `(defadvice ,command-name (after elastic-tabstops activate)
-     (when (member major-mode elastic-tab-align-modes)
-       (elastic-align-current))))
-
-;; TODO should be smarter and hijack the command's arguments
-(defmacro elastic-advice-command-region (command-name)
-  `(defadvice ,command-name (after elastic-tabstops activate)
-     (when (member major-mode elastic-tab-align-modes)
-       (elastic-align-region (point) (mark)))))
-
-(elastic-advice-command       	indent-for-tab-command)
-(elastic-advice-command       	literal-tab)
-(elastic-advice-command       	indent-according-to-mode)
-(elastic-advice-command-region	indent-region)
-(elastic-advice-command       	comment-dwim)
-(elastic-advice-command-region	comment-region)
-(elastic-advice-command-region	uncomment-region)
 
 (defun dos2unix ()
   (interactive)
