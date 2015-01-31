@@ -46,7 +46,7 @@
   "Keymap for hungry-delete-minor-mode.")
 
 (defun hungry-remap-key (from to)
-  (define-key hungry-delete-mode-map [remap from] to))
+  (define-key hungry-delete-mode-map `[remap ,from] to))
 
 (hungry-remap-key	'delete-char                  	'hungry-delete-forward)
 (hungry-remap-key	'delete-forward-char          	'hungry-delete-forward)
