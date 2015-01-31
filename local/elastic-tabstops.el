@@ -175,8 +175,14 @@
 
               ;; get into position for the next cell, and maybe put in the new cell
               (cond
-               ((= (following-char) ?\t)	(forward-char 1))
-               (elastic-extend-columns  	(insert ?\t)))
+               ;; next cell exists
+               ((= (following-char) ?\t)
+                (forward-char 1))
+
+               ;; missing cell, so put one in
+               ((and elastic-extend-columns
+                     (zerop width))
+                (insert ?\t)))
 
               (incf target-id 1)))
 
