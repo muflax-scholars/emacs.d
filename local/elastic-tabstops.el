@@ -144,7 +144,8 @@
         (goto-char beg)
 
         (dolist (line lines)
-          (let ((target-id 0)
+          (let ((target-id    	0)
+                (target-length	(length target))
                 width
                 start
                 diff
@@ -153,18 +154,17 @@
               (setq width 	(or (nth target-id line) 0)
                     spaces	0)
 
-              ;; get into position, if possible
-              (when width
-                (forward-char width))
-
+              ;; get into position
+              (forward-char width)
               (setq start (point))
 
               ;; go to the end of the cell
               (skip-chars-forward "^\t\n")
 
-              ;; add spaces unless we are in the last cell
+              ;; add spaces unless we are in the last cell or are supposed to extend them
               (when (or (= (following-char) ?\t)
-                        elastic-extend-columns)
+                        (and elastic-extend-columns
+                             (< target-id (1- target-length))))
                 (setq spaces (- target-width width)))
 
               (setq diff (- spaces (- (point) start)))
@@ -181,7 +181,7 @@
 
                ;; missing cell, so put one in
                ((and elastic-extend-columns
-                     (zerop width))
+                     (< target-id (1- target-length)))
                 (insert ?\t)))
 
               (incf target-id 1)))
