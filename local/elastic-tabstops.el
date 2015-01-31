@@ -19,6 +19,13 @@
   widths-lines	; width of each cell in each line
   target)     	; target width of each cell
 
+(defcustom elastic-extend-columns nil
+  "If non-nil, add tabs to the end of lines if necessary so that all lines have the same number of columns.")
+(make-variable-buffer-local 'elastic-extend-columns)
+
+(defcustom elastic-tab-align-modes '()
+  "modes that align elastic tabstops during indent")
+
 (defun elastic-tabs-width-of-line ()
   "Returns list of cell widths in current line."
   (let (widths
@@ -126,7 +133,7 @@
       nil)))
 
 (defun elastic-align-block (scope)
-  "align given block"
+  "Align given SCOPE."
 
   (when scope
     (let ((beg   	(elastic-scope-beg         	scope))
@@ -135,34 +142,43 @@
 
       (save-excursion
         (goto-char beg)
-        (--each lines
-          (--each (-zip it target)
-            ;; it -> (width, target width)
 
-            ;; get into position
-            (forward-char (first it))
+        (dolist (line lines)
+          (let ((target-id 0)
+                width
+                start
+                diff
+                spaces)
+            (dolist (target-width target)
+              (setq width 	(or (nth target-id line) 0)
+                    spaces	0)
 
-            (let ((start (point))
-                  (target-spaces 0)
-                  diff)
+              ;; get into position, if possible
+              (when width
+                (forward-char width))
+
+              (setq start (point))
 
               ;; go to the end of the cell
               (skip-chars-forward "^\t\n")
 
               ;; add spaces unless we are in the last cell
-              (when (= (following-char) ?\t)
-                (setq target-spaces (- (rest it) (first it))))
+              (when (or (= (following-char) ?\t)
+                        elastic-extend-columns)
+                (setq spaces (- target-width width)))
 
-              (setq diff (- target-spaces (- (point) start)))
+              (setq diff (- spaces (- (point) start)))
 
               (cond
                ((> diff 0)	(insert-char ?\s	diff))
                ((< diff 0)	(delete-char    	diff)))
 
-              ;; get into position for the next cell
-              (when (= (following-char) ?\t)
-                (forward-char 1))
-              ))
+              ;; get into position for the next cell, and maybe put in the new cell
+              (cond
+               ((= (following-char) ?\t)	(forward-char 1))
+               (elastic-extend-columns  	(insert ?\t)))
+
+              (incf target-id 1)))
 
           ;; get ready for next line
           (forward-line 1))
@@ -198,6 +214,22 @@
   "Called by the change hook."
   (save-excursion
     (elastic-align-region beg end)))
+
+(defmacro elastic-advice-command (command-name)
+  "Align tabstops after running COMMAND-NAME."
+  `(defadvice ,command-name (after elastic-tabstops activate)
+     (when (member major-mode elastic-tab-align-modes)
+       (elastic-align-current))))
+
+;; TODO should be smarter and hijack the command's arguments
+(defmacro elastic-advice-command-region (command-name)
+  "Align tabstops in active region after running COMMAND-NAME."
+  `(defadvice ,command-name (after elastic-tabstops activate)
+     (when (member major-mode elastic-tab-align-modes)
+       (elastic-align-region (point) (mark)))))
+
+(defun elastic-turn-on-extended-columns ()
+  (set (make-local-variable 'elastic-extend-columns) t))
 
 (define-minor-mode elastic-tabstops-minor-mode
   "Automatically adjusts elastic tabstops as you type."
