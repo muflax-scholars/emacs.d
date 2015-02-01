@@ -6,13 +6,12 @@
   nil " L" word-list-minor-mode-map
 
   (cond
-   (word-list-minor-mode	(add-hook   	'post-command-hook 'word-list/open-word nil t))
-   (t                   	(remove-hook	'post-command-hook 'word-list/open-word t))))
+   (word-list-minor-mode	(add-hook   	'post-command-hook 'word-list/fast-open-word nil t))
+   (t                   	(remove-hook	'post-command-hook 'word-list/fast-open-word t))))
 
 (defvar word-list/prepared 	nil)
 (defvar word-list/last-line	0)
 (defvar word-list/enable   	nil)
-
 
 (defun word-list/mark-item ()
   (interactive)
@@ -59,29 +58,30 @@
     (message "%s unmarked." current-word)))
 
 (defun word-list/find-current-word ()
-  (catch 'done
-    ;; look for beginning word
-    (save-excursion
-      (beginning-of-line)
-      (when (re-search-forward "^[ ]*\\([^ ]+\\)\\([ ]*|\\|[\t]\\)" (point-at-eol) t)
-        (throw 'done (word-list/simplify-word (match-string-no-properties 1)))))
+  (let ((word
+         (catch 'done
+           ;; look for beginning word
+           (save-excursion
+             (beginning-of-line)
+             (when (re-search-forward "^[ ]*\\([^ ]+\\)\\([ ]*|\\|[\t]\\)" (point-at-eol) t)
+               (throw 'done (match-string-no-properties 1))))
 
-    ;; try a word in brackets
-    (save-excursion
-      (beginning-of-line)
-      (when (re-search-forward "^[ \t]*\\+.*<\\([^ ]+\\)[ ]*/[ ]*[^>]*>" (point-at-eol) t)
-        (throw 'done (word-list/simplify-word (match-string-no-properties 1)))))
+           ;; try a word in brackets
+           (save-excursion
+             (beginning-of-line)
+             (when (re-search-forward "^[ \t]*\\+.*<\\([^ ]+\\)[ ]*/[ ]*[^>]*>" (point-at-eol) t)
+               (throw 'done (match-string-no-properties 1))))
 
-    ;; or first word of a plus line otherwise
-    (save-excursion
-      (beginning-of-line)
-      (when (re-search-forward "^[ \t]*\\+\\sw* \\([^ ]+\\)" (point-at-eol) t)
-        (throw 'done (word-list/simplify-word (match-string-no-properties 1)))))
-
-    nil))
+           ;; or first word of a plus line otherwise
+           (save-excursion
+             (beginning-of-line)
+             (when (re-search-forward "^[ \t]*\\+\\sw* \\([^ ]+\\)" (point-at-eol) t)
+               (throw 'done (match-string-no-properties 1)))))))
+    (if word (word-list/simplify-word word)
+      nil)))
 
 (defun word-list/simplify-word (word)
-  (replace-regexp-in-string "[^a-zA-ZäöüÄÖÜß-]" "" word))
+  (replace-regexp-in-string "[^a-zA-ZäöüÄÖÜß]" "" word))
 
 (defun word-list/auto-turn-on ()
   (interactive)
@@ -108,8 +108,9 @@
     "templates-adjectives"
     "templates-adverbs")
   "files to check for plus lines")
+(defvar word-list/sentence-directory "~/sentences/" "where the sentence files are")
 
-(defun word-list/open-word ()
+(defun word-list/open-word (&optional no-sentences)
   (interactive)
 
   (let ((current-line (line-number-at-pos))
@@ -117,38 +118,60 @@
         (case-fold-search nil))
     (setq word-list/prepared nil)
 
+    (setq word-list/last-line current-line)
+    (setq current-word (word-list/find-current-word))
+
+    (when (and current-word
+               (not (s-blank? current-word)))
+
+      ;; ensure open window
+      (when (< (count-windows nil) 2)
+        (split-window-right))
+      (other-window 1)
+
+      ;; find match
+      (unless
+          (catch 'done
+            ;; try plus files
+            (dolist (plus-file word-list/plus-files)
+              (let ((b (get-buffer plus-file)))
+                (if b
+                    (switch-to-buffer  b)
+                  (find-file (concat word-list/plus-directory plus-file))))
+              (goto-char (point-min))
+              (when (re-search-forward (concat "^\\[ " current-word) nil t)
+                (recenter 0)
+                (prompt/fold-plus-lines)
+                (throw 'done t)))
+
+            ;; try sentence files
+            (unless no-sentences
+              (dolist (dir (f-directories word-list/sentence-directory))
+                (let ((sentence-file (first (f-glob
+                                             (concat "* - " current-word ".txt")
+                                             dir))))
+                  (when sentence-file
+                    (let ((b (get-buffer sentence-file)))
+                      (if b (switch-to-buffer b)
+                        (find-file sentence-file))
+                      (goto-char (point-min)))
+                    (throw 'done t)))))
+            )
+        (message "«%s» not found :(" current-word))
+
+      ;; go back to other window
+      (other-window -1))
+    ))
+
+(defun word-list/fast-open-word ()
+  (let ((current-line (line-number-at-pos))
+        (case-fold-search nil))
+    (setq word-list/prepared nil)
+
     (when (not (= current-line word-list/last-line))
       (setq word-list/last-line current-line)
 
-      (setq current-word (word-list/find-current-word))
-
-      (when (and current-word
-                 (not (s-blank? current-word)))
-
-        ;; ensure open window
-        (when (< (count-windows nil) 2)
-          (split-window-right))
-        (other-window 1)
-
-        ;; find match
-        (unless
-            (catch 'done
-              (dolist (plus-file word-list/plus-files)
-                (let ((b (get-buffer plus-file)))
-                  (if b
-                      (switch-to-buffer  b)
-                    (find-file (concat word-list/plus-directory plus-file))))
-                (goto-char (point-min))
-                (when (re-search-forward (concat "^\\[ " current-word) nil t)
-                  (recenter 0)
-                  (prompt/fold-plus-lines)
-                  (throw 'done t))))
-          (message "«%s» not found :(" current-word))
-
-        ;; go back to other window
-        (other-window -1))
-      )))
-
+      (word-list/open-word t))))
 
 (provide 'word-list-minor-mode)
 ;;; word-list-minor-mode.el ends here
