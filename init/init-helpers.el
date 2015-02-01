@@ -16,9 +16,11 @@
 
 ;; some generic aliases that make elisp less painful
 (defalias 'first 	'cl-first)
+(defalias 'head  	'cl-first)
 (defalias 'hd    	'cl-first)
 (defalias 'second	'cl-second)
 (defalias 'rest  	'cl-rest)
+(defalias 'tail  	'cl-rest)
 (defalias 'tl    	'cl-rest)
 (defalias 'loop  	'cl-loop)
 (defalias 'case  	'cl-case)
