@@ -51,11 +51,10 @@
         (setq last  	(match-end 0)
               widths	(cons width widths)))
 
-      ;; add last item, if possible and we have at least one other field
-      (when (and (< (point) end)
-                 widths)
+      ;; add last item, if possible and we have at least one previous field
+      (when widths
         (goto-char end)
-        (skip-chars-backward " \t")
+        (skip-chars-backward " \t" last)
         (setq width 	(- (point) last)
               widths	(cons width widths))))
 
@@ -124,6 +123,15 @@
         (setq widths-lines (nreverse widths-lines)
               end (point-at-eol))))
 
+    ;; cut off empty end of target
+    (when target
+      (setq target (nreverse target))
+      (when (= 0 (head target))
+        (while (= 0 (head target))
+          (setq target (tail target)))
+        (setq target (cons 0 target)))
+      (setq target (nreverse target)))
+
     ;; return scope
     (if beg
         (make-elastic-scope :beg         	beg
@@ -138,57 +146,59 @@
   (when scope
     (let ((beg   	(elastic-scope-beg         	scope))
           (target	(elastic-scope-target      	scope))
-          (lines 	(elastic-scope-widths-lines	scope)))
+          (lines 	(elastic-scope-widths-lines	scope))
+          target-width target-left
+          cell-width
+          start diff)
 
       (save-excursion
         (goto-char beg)
 
         (dolist (line lines)
-          (let ((target-id    	0)
-                (target-length	(length target))
-                width
-                start
-                diff
-                spaces)
-            (dolist (target-width target)
-              (setq width 	(or (nth target-id line) 0)
-                    spaces	0)
+          (setq target-left target)
 
-              ;; get into position
-              (forward-char width)
-              (setq start (point))
+          ;; iterate through all target cells
+          (while (and target-left
+                      (or line elastic-extend-columns))
+            (setq target-width	(or (head target-left) 0)
+                  target-left 	(tail target-left)
+                  cell-width  	(head line)
+                  line        	(tail line)
+                  diff        	0)
 
-              ;; go to the end of the cell
-              (skip-chars-forward "^\t\n")
+            ;; jump over existing cell
+            (when cell-width (forward-char cell-width))
+            (setq start (point))
 
-              ;; add spaces unless we are in the last cell or are supposed to extend them
-              (when (or (= (following-char) ?\t)
-                        (and elastic-extend-columns
-                             (< target-id (1- target-length))))
-                (setq spaces (- target-width width)))
+            ;; skip over existing spaces so we don't cause anything to flicker
+            (skip-chars-forward " ")
 
-              (setq diff (- spaces (- (point) start)))
+            ;; add spaces unless we are in the last cell or are supposed to extend them
+            (when (or line
+                      (and elastic-extend-columns target-left)
+                      (and (> target-width 0) (= (following-char) ?\t)))
+              (setq diff (- (- target-width cell-width)
+                            (- (point) start))))
 
-              (cond
-               ((> diff 0)	(insert-char ?\s	diff))
-               ((< diff 0)	(delete-char    	diff)))
+            (cond ((> diff 0)	(insert-char ?\s	diff))
+                  ((< diff 0)	(delete-char    	diff)))
 
-              ;; get into position for the next cell, and maybe put in the new cell
-              (cond
-               ;; next cell exists
-               ((= (following-char) ?\t)
-                (forward-char 1))
-
-               ;; missing cell, so put one in
-               ((and elastic-extend-columns
-                     (< target-id (1- target-length)))
+            ;; get into position for the next cell, and maybe put in the new cell
+            (when (and target-left
+                       (or line elastic-extend-columns))
+              (if (= (following-char) ?\t)
+                  (forward-char 1)
                 (insert ?\t)))
+            )
 
-              (incf target-id 1)))
+          ;; delete trailing whitespace
+          (setq start (point))
+          (skip-chars-forward " \t")
+          (delete-char (- start (point)))
 
           ;; get ready for next line
           (forward-line 1))
-        ))))
+      ))))
 
 (defun elastic-align-current ()
   "elastic-align current block"
