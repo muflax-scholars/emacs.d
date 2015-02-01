@@ -133,11 +133,11 @@
         ;; find match
         (unless
             (catch 'done
-              (--each word-list/plus-files
-                (let ((b (get-buffer it)))
+              (dolist (plus-file word-list/plus-files)
+                (let ((b (get-buffer plus-file)))
                   (if b
                       (switch-to-buffer  b)
-                    (find-file (concat word-list/plus-directory it))))
+                    (find-file (concat word-list/plus-directory plus-file))))
                 (goto-char (point-min))
                 (when (re-search-forward (concat "^\\[ " current-word) nil t)
                   (recenter 0)

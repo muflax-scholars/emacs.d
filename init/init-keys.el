@@ -94,8 +94,8 @@
 
 (defun unset-complete-keymap (&rest maps)
   "unset all assignable keys in given keymap(s)"
-  (--each maps
-    (mangle-keys 'unset-keymap-by-keys it)))
+  (dolist (map maps)
+    (mangle-keys 'unset-keymap-by-keys map)))
 
 (defun copy-complete-keymap (from to)
   "copies over all assignable keys from one keymap to another"
@@ -124,8 +124,8 @@
 
 (defun kd (map &rest bindings)
   "Really short list version of 'key-def'."
-  (--each bindings
-    (apply 'key-def map it)))
+  (dolist (binding bindings)
+    (apply 'key-def map binding)))
 
 (defun* key-def (map key command &key
                      (type   	'simple)
