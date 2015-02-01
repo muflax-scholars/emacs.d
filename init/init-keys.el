@@ -472,9 +472,9 @@
       '("C-p SPC"   	phi-search-mc/mark-all)
       ))
 
-(load-after 'isearch
-  ;; make backspace more intuitive
+(load-after "isearch"
   (kd isearch-mode-map
+      ;; make backspace more intuitive
       '("<backspace>"	isearch-del-char)
 
       '("C-c C-c"	isearch-normalize-string)
@@ -493,7 +493,7 @@
       '("C-\\"	isearch-toggle-input-method)
       ))
 
-(load-after 'replace ;; occur
+(load-after "replace" ;; occur
   (kd occur-mode-map
       '("C-c C-c"	occur-edit-mode)
       '("C-c C-f"	next-error-follow-minor-mode)
