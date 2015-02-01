@@ -177,7 +177,7 @@
             (when (or line
                       (and elastic-extend-columns target-left)
                       (and (> target-width 0) (= (following-char) ?\t)))
-              (setq diff (- (- target-width cell-width)
+              (setq diff (- (- target-width (or cell-width 0))
                             (- (point) start))))
 
             (cond ((> diff 0)	(insert-char ?\s	diff))
