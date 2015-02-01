@@ -9,7 +9,6 @@
 ;; - tabs have one physical / two visual width, and that messes up some width calc; use "current column"?
 
 (eval-when-compile 'cl-lib)
-(eval-when-compile 'dash)
 
 ;; tabs separate block, spaces don't count
 (defconst elastic-line-separator-regexp "[ ]*[\t]")
