@@ -63,7 +63,7 @@
     ;; look for beginning word
     (save-excursion
       (beginning-of-line)
-      (when (re-search-forward "^[ ]*\\([^ ]+\\)[ ]|" (point-at-eol) t)
+      (when (re-search-forward "^[ ]*\\([^ ]+\\)\\([ ]*|\\|[\t]\\)" (point-at-eol) t)
         (throw 'done (word-list/simplify-word (match-string-no-properties 1)))))
 
     ;; try a word in brackets
