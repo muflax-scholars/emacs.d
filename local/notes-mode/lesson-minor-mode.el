@@ -24,7 +24,7 @@
   '(
     (lesson-block	(seq bol (* blank) (not (any "[" "]" "+" "$" blank "\n"))))
     (blank-line  	(seq bol (* blank) eol))
-    (lesson-file 	(seq bol "L" (+ digit) (* letter) eol))
+    (lesson-file 	(seq bol "L" (+ digit)))
     ))
 
 ;; blocks
