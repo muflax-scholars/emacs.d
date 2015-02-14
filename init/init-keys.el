@@ -184,6 +184,13 @@
 ;; allowed key components
 (setq free-keys-keys (apply 'concat assignable-normal-keys))
 
+;; key statistics
+(require 'keyfreq)
+(setq keyfreq-file     	(emacs-d "keyfreq"))
+(setq keyfreq-file-lock	(emacs-d "keyfreq.lock"))
+(defadvice keyfreq-mode (after always-autosave activate)
+  (keyfreq-autosave-mode 1))
+
 ;; built-ins prefix maps restated for clarity
 (defvar global-map)
 (defvar ctl-x-map)
