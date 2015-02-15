@@ -5,3 +5,4 @@
 /url
 /var
 !**/*.elc
+/keyfreq*
