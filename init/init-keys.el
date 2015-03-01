@@ -522,6 +522,7 @@
     '("d"  	eval-defun)
     '("e"  	eval-expression)
     '("r"  	eval-region)
+    '("R"  	eval-and-replace)
     )
 
 ;; debug
