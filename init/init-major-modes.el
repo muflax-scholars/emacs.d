@@ -280,7 +280,7 @@
 (defun dired-back-to-top ()
   (interactive)
   (goto-char (point-min))
-  (dired-next-line 3))
+  (dired-next-line 2))
 
 (defun dired-jump-to-bottom ()
   (interactive)
