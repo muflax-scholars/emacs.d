@@ -25,6 +25,7 @@
         enh-ruby-electric-brace
         enh-ruby-find-error
         er/mark-defun
+        eval-and-replace
         eval-defun
         fold-dwim-toggle
         generalized-shell-command
