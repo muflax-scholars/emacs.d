@@ -1,5 +1,8 @@
 ;; killing all kinds of things
 
+;; options
+(setq kill-do-not-save-duplicates t)
+
 ;; delete all space before point up to beginning of line or non-whitespace char
 (require 'hungry-delete)
 (global-hungry-delete-mode)
