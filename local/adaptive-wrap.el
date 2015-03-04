@@ -58,14 +58,24 @@
                          'wrap-prefix
                          (adaptive-wrap-fill-context-prefix lbp (point))))))
 
+(defun adaptive-wrap-strip-string-for-kill-ring (string &optional replace)
+  "Remove wrap prefix from kill-ring because it causes crashes. Yes, seriously."
+  (remove-text-properties 0 (length string)
+                          '(wrap-prefix nil)
+                          string))
+
 ;;;###autoload
 (define-minor-mode adaptive-wrap-prefix-mode
   "Wrap the buffer text with adaptive filling."
   :lighter ""
   :group 'visual-line
   (if adaptive-wrap-prefix-mode
-      (jit-lock-register #'adaptive-wrap-prefix-function)
+      (progn
+        (jit-lock-register #'adaptive-wrap-prefix-function)
+        (advice-add 'kill-new :before #'adaptive-wrap-strip-string-for-kill-ring))
+
     (jit-lock-unregister #'adaptive-wrap-prefix-function)
+    (advice-remove 'kill-new #'adaptive-wrap-strip-string-for-kill-ring)
     (with-silent-modifications
       (save-restriction
         (widen)
