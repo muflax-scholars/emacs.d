@@ -143,7 +143,7 @@
 ;; spell checker
 (require 'wcheck-mode)
 (let ((spell-prog  	"hunspell")
-      (spell-bindir	(expand-file-name "~/.nix-profile/bin/"))
+      (spell-bindir	(expand-file-name "/usr/bin/"))
       (spell-dir   	(expand-file-name "~/.hunspell/")))
 
   (setq ispell-really-hunspell t)
