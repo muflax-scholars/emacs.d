@@ -1,0 +1,1 @@
+(define-package "highlight-thing" "20150328.1845" "Minimalistic minor mode to highlight current thing under point." 'nil :url "https://github.com/fgeller/highlight-thing.el" :keywords '("highlight" "thing" "symbol"))
