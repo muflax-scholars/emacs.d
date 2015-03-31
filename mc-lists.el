@@ -16,6 +16,7 @@
         copy-with-append
         delimit-columns-current
         dired-back-to-start-of-files
+        dired-flag-file-deletion
         downcase-region
         downcase-word-or-region
         duplicate-line
@@ -59,6 +60,7 @@
         next-newline-and-indent
         notes-dedent-or-delete
         notes-indent-line
+        number/add
         number/decrement
         number/divide
         org-force-cycle-archived
@@ -110,9 +112,13 @@
         ibus-handle-event
         magit-status
         repeat
+        revert-buffer
         save-buffers-kill-terminal
         smex
         toggle-input-method
         use-big-font
+        use-normal-font
+        wdired-change-to-wdired-mode
+        wdired-finish-edit
         where-is
         ))
