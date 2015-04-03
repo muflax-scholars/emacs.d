@@ -536,6 +536,15 @@
    `(widget-single-line-field ((,class (:background "gray85"))))
    `(yas/field-debug-face ((,class (:background "ivory2"))))
    `(yas/field-highlight-face ((,class (:background "DarkSeaGreen1"))))
+
+
+   ;; phi grep
+   ;; `(phi-grep-heading-face ((,class (:background "DarkSeaGreen1"))))
+   ;; `(phi-grep-match-face ((,class (:background "DarkSeaGreen1"))))
+   `(phi-grep-overlay-face ((,class (:background "#CCE7FF"))))
+   ;; `(phi-grep-line-number-face ((,class (:background "DarkSeaGreen1"))))
+   ;; `(phi-grep-modified-face ((,class (:background "DarkSeaGreen1"))))
+
    )
 
   (custom-theme-set-variables

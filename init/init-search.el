@@ -139,4 +139,9 @@
 (setq recenter-positions '(2 middle))
 (add-hook 'imenu-after-jump-hook 'recenter-top-bottom)
 
+;; better grep
+(require 'phi-grep)
+(setq phi-grep-window-height 40)
+(setq phi-grep-make-backup-function nil)
+
 (provide 'init-search)

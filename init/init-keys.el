@@ -1179,4 +1179,8 @@
       '("<menu>" 	lesson-minor-mode)
       ))
 
+(load-after 'phi-grep
+  (kd phi-grep-mode-map))
+
+
 (provide 'init-keys)
