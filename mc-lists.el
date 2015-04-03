@@ -111,6 +111,7 @@
         focus-next-window
         ibus-handle-event
         magit-status
+        mouse-drag-mode-line
         repeat
         revert-buffer
         save-buffers-kill-terminal
