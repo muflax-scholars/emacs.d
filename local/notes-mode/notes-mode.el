@@ -227,10 +227,10 @@
 
 
 (defconst notes-regex-grab-bracket-square-start
-  "^\\([ \t]*\\)\\[\\([ \t]+[^\n]*\\)?$")
+  "^\\([ \t]*\\)\\[\\([ \t]*[^\n]+\\)?$")
 
 (defconst notes-regex-grab-bracket-wiggly-start
-  "^\\([ \t]*\\){\\([ \t]+[^\n]*\\)?$")
+  "^\\([ \t]*\\){\\([ \t]*[^\n]+\\)?$")
 
 (defconst notes-regex-grab-bracket-square-stop
   "^\\([ \t]*\\)\\][ \t]*$")
@@ -239,7 +239,7 @@
   "^\\([ \t]*\\)}[ \t]*$")
 
 (defconst notes-regex-header
-  "^\\([ \t]*\\)\\([\\[{][ \t]+\\)\\(.+\\)")
+  "^\\([ \t]*\\)\\([\\[{][ \t]*\\)\\(.+\\)")
 
 (defconst notes-regex-annotation-abstract
   (notes-rx (annotation-line-3 "+")))
@@ -634,7 +634,7 @@ With two \\[universal-argument] prefixes (i.e., when ARG is 16), decrease the in
   ;; imenu support
   (set (make-local-variable 'imenu-generic-expression)
        `(
-         (nil ,(notes-rx indent "[" (+ blank)
+         (nil ,(notes-rx indent "[" (* blank)
                          (group (* not-newline)) eol)
               1)
          ))
