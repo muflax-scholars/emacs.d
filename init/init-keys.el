@@ -1180,7 +1180,9 @@
       ))
 
 (load-after 'phi-grep
-  (kd phi-grep-mode-map))
+  (kd phi-grep-mode-map
+      '("RET"	phi-grep-exit)
+      ))
 
 
 (provide 'init-keys)
