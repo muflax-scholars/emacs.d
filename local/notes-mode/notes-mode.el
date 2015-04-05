@@ -625,7 +625,7 @@ With two \\[universal-argument] prefixes (i.e., when ARG is 16), decrease the in
 
   ;; make filling work with lists and annotations
   (set (make-local-variable 'paragraph-start)
-       "\f\\|[ \t]*$\\|[ \t]*[*+-] \\|[ \t]*[0-9]+\\. \\|[ \t]*[$?!<>=*+#%@|]\\sw* \||[\t]+")
+       "\f\\|[ \t]*$\\|[ \t]*[*+-] \\|[ \t]*[0-9]+\\. \\|[ \t]*[$?!<>=*+#%@|]\\sw* \\|[\t]+")
 
   ;; FIXME this isn't a good fix, but works for now...
   (set (make-local-variable 'adaptive-fill-regexp)
