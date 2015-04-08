@@ -412,7 +412,8 @@
 (load-lazy '(conf-mode) "conf-mode")
 
 (load-lazy '(paradox-list-packages) "paradox"
-  (setq paradox-github-token t))
+  (setq paradox-github-token t)
+  (setq paradox-execute-asynchronously nil))
 
 (load-lazy '(nix-mode) "nix-mode"
   (add-hook 'nix-mode-hook 'leerzeichen-mode))
