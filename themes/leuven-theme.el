@@ -122,7 +122,7 @@
    `(font-lock-doc-string-face ((,class (:foreground "#008000"))))
    `(font-lock-function-name-face ((,class (:weight normal :foreground "#006699"))))
    `(font-lock-keyword-face ((,class (:bold nil :foreground "#0000FF")))) ; #3654DC
-   `(font-lock-preprocessor-face ((,class (:foreground "#808080"))))
+   `(font-lock-preprocessor-face ((,class (:foreground "#E3258D"))))
    `(font-lock-regexp-grouping-backslash ((,class (:weight bold :inherit nil))))
    `(font-lock-regexp-grouping-construct ((,class (:weight bold :inherit nil))))
    `(font-lock-string-face ((,class ,string)))
