@@ -480,4 +480,10 @@
 (load-lazy '(shen-mode) "shen-mode")
 (add-to-list 'auto-mode-alist '("\\.shen$" . shen-mode))
 
+;; rust
+(load-lazy '(rust-mode) "rust-mode"
+  (setq rust-indent-offset tab-width)
+  (setq rust-indent-method-chain t)
+  (add-hook 'rust-mode-hook 'leerzeichen-mode))
+
 (provide 'init-major-modes)
