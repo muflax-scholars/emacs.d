@@ -40,6 +40,7 @@
         racket-mode
         scheme-mode
         sh-mode
+        js2-mode
         ))
 
 (elastic-advice-command       	indent-for-tab-command)

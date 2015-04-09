@@ -211,6 +211,8 @@
 
 ;; javascript
 (load-lazy '(js2-mode) "js2-mode")
+(load-lazy '(js2-mode) "js2-mode"
+  (add-hook 'js2-mode-hook 'leerzeichen-mode)))
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 
 ;; shell stuff
