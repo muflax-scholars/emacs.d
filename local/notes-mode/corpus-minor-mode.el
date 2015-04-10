@@ -106,13 +106,15 @@
     (beginning-of-line-text)))
 
 (defun corpus/clean-prompt-lines-region (beg end)
-  (let ((cur beg)
+  (let ((cur end)
         eol
         (line-regexp "^[ \t]+[?!]")
         (lines 0))
     (save-excursion
-      (while (< cur end)
+      (while (>= cur beg)
         (goto-char cur)
+        (beginning-of-line)
+        (setq cur (point))
 
         (when (looking-at-p line-regexp)
           (setq eol (min (point-at-eol) end))
@@ -151,7 +153,7 @@
           )
 
         (goto-char cur)
-        (forward-line)
+        (forward-line -1)
         (setq cur (point))
         ))))
 
