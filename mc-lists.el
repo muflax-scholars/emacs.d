@@ -11,6 +11,7 @@
         c-electric-colon
         c-electric-pound
         c-electric-semi&comma
+        c-electric-slash
         c-indent-line-or-region
         copy-line
         copy-with-append
