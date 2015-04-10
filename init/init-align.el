@@ -42,6 +42,8 @@
         sh-mode
         js2-mode
         rust-mode
+        c-mode
+        c++-mode
         ))
 
 (elastic-advice-command       	indent-for-tab-command)

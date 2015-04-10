@@ -488,4 +488,9 @@
   (setq rust-indent-method-chain t)
   (add-hook 'rust-mode-hook 'leerzeichen-mode))
 
+;; c
+(load-after 'cc-mode
+  (add-hook 'c-mode-hook  	'leerzeichen-mode)
+  (add-hook 'c++-mode-hook	'leerzeichen-mode))
+
 (provide 'init-major-modes)
