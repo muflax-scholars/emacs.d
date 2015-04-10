@@ -1125,7 +1125,7 @@
       '("<down>"   	prompt/next-example-block)
       '("<up>"     	prompt/prev-example-block)
       '("<left>"   	corpus/add-example-to-plus-line)
-      '("<right>"  	prompt/next-example-grab-bracket)
+      '("<right>"  	corpus/copy-example-block-over)
       '("C-<down>" 	next-line)
       '("C-<up>"   	previous-line)
       '("C-<left>" 	left-char)
