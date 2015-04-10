@@ -103,6 +103,7 @@
 
 (setq mc/cmds-to-run-once
       '(
+        Buffer-menu-execute
         align-current
         bc-set
         down-list
