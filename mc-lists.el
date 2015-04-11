@@ -9,6 +9,7 @@
         align-region-or-current
         beginning-of-visual-line
         c-electric-colon
+        c-electric-paren
         c-electric-pound
         c-electric-semi&comma
         c-electric-slash
