@@ -83,9 +83,6 @@
 ;; when would you ever *not* want a regexp?!
 (defalias 'mc/mark-all-in-region 'mc/mark-all-in-region-regexp)
 
-;; edit symbol in multiple places simultaneously
-(require 'iedit)
-
 ;; undo-tree like in vim
 (require 'undo-tree)
 (global-undo-tree-mode)

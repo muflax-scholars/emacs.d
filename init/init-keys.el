@@ -578,8 +578,6 @@
     '("d"  	mc/remove-duplicated-cursors)
     '("f"  	mc/skip-to-next-like-this)
     '("g"  	mc-jump-char)
-    '("i"  	iedit-mode)
-    '("I"  	iedit-mode-toggle-on-function)
     '("l"  	mc/edit-lines)
     '("m"  	mc/mark-more-like-this-extended)
     '("n"  	mc/insert-numbers)
