@@ -382,6 +382,9 @@
 
   (setq magit-log-cutoff-length 1000)
 
+  ;; disable recent warnings
+  (setq magit-last-seen-setup-instructions "1.4.0")
+
   ;; full screen magit-status
   (defadvice magit-status (around magit-fullscreen activate)
     (window-configuration-to-register :magit-fullscreen)
