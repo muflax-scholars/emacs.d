@@ -218,6 +218,7 @@
 ;; shell stuff
 (load-lazy '(sh-mode) "sh-script"
   (setq sh-basic-offset tab-width)
+  (setq sh-indentation tab-width)
   (add-hook 'sh-mode-hook 'leerzeichen-mode))
 
 ;; nxml stuff
