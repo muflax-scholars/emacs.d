@@ -81,12 +81,10 @@
 (defvar notes-placeholder-pointy-face        'notes-placeholder-pointy-face)
 (defvar notes-annotation-prompt-face         'notes-annotation-prompt-face)
 (defvar notes-annotation-reply-face          'notes-annotation-reply-face)
-(defvar notes-annotation-quote-face          'notes-annotation-quote-face)
-(defvar notes-annotation-abstract-face       'notes-annotation-abstract-face)
+(defvar notes-annotation-plus-face       'notes-annotation-plus-face)
 (defvar notes-annotation-comment-face        'notes-annotation-comment-face)
-(defvar notes-annotation-model-face          'notes-annotation-model-face)
+(defvar notes-annotation-say-face          'notes-annotation-say-face)
 (defvar notes-annotation-wrong-face          'notes-annotation-wrong-face)
-(defvar notes-annotation-equivalent-face     'notes-annotation-equivalent-face)
 (defvar notes-annotation-transformation-face 'notes-annotation-transformation-face)
 (defvar notes-bracket-face                   'notes-bracket-face)
 (defvar notes-header-face                    'notes-header-face)
@@ -142,11 +140,6 @@
   "Face for transformation annotation."
   :group 'notes-faces)
 
-(defface notes-annotation-quote-face
-  '((t (:inherit font-lock-doc-face)))
-  "Face for quote annotation."
-  :group 'notes-faces)
-
 (defface notes-annotation-comment-face
   '((t (:inherit font-lock-comment-face)))
   "Face for comment annotations."
@@ -162,12 +155,12 @@
   "Face for reply annotation."
   :group 'notes-faces)
 
-(defface notes-annotation-abstract-face
+(defface notes-annotation-plus-face
   '((t (:inherit font-lock-type-face :weight bold)))
   "Face for abstract annotation."
   :group 'notes-faces)
 
-(defface notes-annotation-model-face
+(defface notes-annotation-say-face
   '((t (:inherit font-lock-string-face)))
   "Face for model annotation."
   :group 'notes-faces)
@@ -175,11 +168,6 @@
 (defface notes-annotation-wrong-face
   '((t (:inherit font-lock-warning-face)))
   "Face for wrong annotation."
-  :group 'notes-faces)
-
-(defface notes-annotation-equivalent-face
-  '((t (:inherit font-lock-doc-face)))
-  "Face for equivalent annotation."
   :group 'notes-faces)
 
 (defface notes-list-face
@@ -212,7 +200,7 @@
 
     (annotation-2
      (:func (lambda (_form &rest args)
-              `(group-n 2 (any ,@args) (* (not (any blank "\n")))))))
+              `(group-n 2 (or ,@args) (* (not (any blank "\n")))))))
 
     (annotation-line-3
      (:func (lambda (_form &rest args)
@@ -241,7 +229,7 @@
 (defconst notes-regex-header
   "^\\([ \t]*\\)\\([\\[{][ \t]*\\)\\(.+\\)")
 
-(defconst notes-regex-annotation-abstract
+(defconst notes-regex-annotation-plus
   (notes-rx (annotation-line-3 "+")))
 
 (defconst notes-regex-annotation-transformation
@@ -250,17 +238,11 @@
 (defconst notes-regex-annotation-comment
   (notes-rx (annotation-line-3 "#")))
 
-(defconst notes-regex-annotation-equivalent
-  (notes-rx (annotation-line-3 "=")))
-
-(defconst notes-regex-annotation-model
-  (notes-rx (annotation-line-3 "$")))
+(defconst notes-regex-annotation-say
+  (notes-rx (annotation-line-3 "$" "!!")))
 
 (defconst notes-regex-annotation-prompt
   (notes-rx (annotation-line-3 "%" "?")))
-
-(defconst notes-regex-annotation-quote
-  (notes-rx (annotation-line-3 "|")))
 
 (defconst notes-regex-annotation-reply
   (notes-rx (annotation-line-3 "@" "!")))
@@ -304,27 +286,21 @@
          '((2 notes-header-face)
            (3 notes-header-face keep)))
 
-   (cons notes-regex-annotation-abstract
-         '((2 notes-annotation-abstract-face)
-           (3 notes-annotation-abstract-face keep)))
+   (cons notes-regex-annotation-plus
+         '((2 notes-annotation-plus-face)
+           (3 notes-annotation-plus-face keep)))
    (cons notes-regex-annotation-transformation
          '((2 notes-annotation-transformation-face)
            (3 notes-annotation-transformation-face keep)))
    (cons notes-regex-annotation-comment
          '((2 notes-annotation-comment-face)
            (3 notes-annotation-comment-face keep)))
-   (cons notes-regex-annotation-equivalent
-         '((2 notes-annotation-equivalent-face)
-           (3 notes-annotation-equivalent-face keep)))
-   (cons notes-regex-annotation-model
-         '((2 notes-annotation-model-face)
-           (3 notes-annotation-model-face keep)))
+   (cons notes-regex-annotation-say
+         '((2 notes-annotation-say-face)
+           (3 notes-annotation-say-face keep)))
    (cons notes-regex-annotation-prompt
          '((2 notes-annotation-prompt-face)))
    ;; (3 notes-annotation-prompt-face keep)))
-   ;; (cons notes-regex-annotation-quote
-   ;;       '((2 notes-annotation-quote-face)
-   ;;         (3 notes-annotation-quote-face keep)))
    (cons notes-regex-annotation-reply
          '((2 notes-annotation-reply-face)))
    ;; (3 notes-annotation-reply-face keep)))
