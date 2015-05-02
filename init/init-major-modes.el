@@ -31,10 +31,6 @@
 (require 'which-func)
 (which-function-mode 1)
 
-;; auctex
-(load-lazy '(latex-mode LaTeX-mode tex-mode TeX-mode) "latex")
-(add-hook 'LaTeX-mode-hook 'TeX-PDF-mode)
-
 ;; markdown
 (load-lazy '(markdown-mode) "markdown-mode"
   (setq markdown-command "kramdown"))
@@ -156,17 +152,6 @@
 (load-lazy '(python-mode) "python"
   (setq python-indent-offset 2)
   (add-hook 'python-mode-hook (lambda () (setq tab-width 2))))
-
-;; haskell mode
-(load-lazy '(haskell-mode) "haskell-mode"
-  (require 'haskell-doc)
-  (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
-
-  (require 'haskell-indentation)
-  (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
-
-  (require 'inf-haskell)
-  (add-hook 'inferior-haskell-mode-hook 'turn-on-ghci-completion))
 
 ;; ruby mode
 ;; replace normal ruby mode
@@ -421,70 +406,10 @@
   (setq paradox-github-token t)
   (setq paradox-execute-asynchronously nil))
 
-(load-lazy '(nix-mode) "nix-mode"
-  (add-hook 'nix-mode-hook 'leerzeichen-mode))
-(add-to-list 'auto-mode-alist '("\\.nix" . nix-mode))
-
-;; common lisp
-(load-after 'lisp-mode
-  (require 'slime-autoloads)
-  (load-lazy '(slime) "slime"
-    (setq slime-lisp-implementations
-          '((ccl 	("ccl"))
-            (sbcl	("sbcl" "--noinform" "--no-linedit") :coding-system utf-8-unix)))
-
-    (setq slime-default-lisp   	'sbcl)
-    (setq inferior-lisp-program	"sbcl --noinform --no-linedit")
-
-    (setq slime-contribs '(slime-fancy))
-    (setq slime-enable-evaluate-in-emacs t)
-    (setq slime-autodoc-use-multiline-p t)
-    (setq slime-auto-start 'always)
-    (setq slime-repl-history-file (emacs-d "cache/slime_history"))
-
-    (add-hook 'lisp-mode-hook (lambda ()
-                                (unless (slime-connected-p)
-                                  (save-excursion (slime)))))
-    )
-  (add-hook 'lisp-mode-hook 'leerzeichen-mode))
-
-(add-to-list 'auto-mode-alist '("\\.sbclrc$"	. lisp-mode))
-(add-to-list 'auto-mode-alist '("\\.cl$"    	. lisp-mode))
-
-;; racket
-(load-lazy '(racket-mode) "racket-mode"
-  (require 'geiser-mode)
-  (setq geiser-active-implementations '(racket))
-  (setq geiser-default-implementation 'racket)
-  (setq geiser-autodoc-delay 0.1)
-  (setq geiser-repl-history-filename (emacs-d "cache/geiser_history"))
-  (setq geiser-repl-company-p nil)
-  (setq geiser-mode-company-p nil)
-  (setq geiser-mode-start-repl-p t)
-
-  ;; don't replace a lambda - if anything, use pretty-symbol-mode later
-  (setq racket-mode-pretty-lambda nil)
-
-  (add-hook 'racket-mode-hook 'geiser-mode--maybe-activate)
-  (add-hook 'racket-mode-hook 'leerzeichen-mode))
-
-(add-to-list 'auto-mode-alist '("\\.sc$" 	. scheme-mode))
-(add-to-list 'auto-mode-alist '("\\.scm$"	. scheme-mode))
-(add-to-list 'auto-mode-alist '("\\.ss$" 	. scheme-mode))
-(add-to-list 'auto-mode-alist '("\\.rkt$"	. racket-mode))
-
 ;; repl
 (load-lazy '(ielm) "ielm"
   (setq ielm-prompt "> ")
   (add-hook 'ielm-mode-hook	'turn-on-eldoc-mode))
-
-;; arc
-(load-lazy '(arc-mode) "arc")
-(add-to-list 'auto-mode-alist '("\\.arc$" . arc-mode))
-
-;; shen
-(load-lazy '(shen-mode) "shen-mode")
-(add-to-list 'auto-mode-alist '("\\.shen$" . shen-mode))
 
 ;; rust
 (load-lazy '(rust-mode) "rust-mode"

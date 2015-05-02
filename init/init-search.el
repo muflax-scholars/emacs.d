@@ -13,8 +13,6 @@
 ;; goto and hint-style navigation
 (require 'ace-jump-mode)
 (require 'ace-jump-buffer)
-(require 'ace-link)
-(require 'ace-window)
 (setq ace-jump-mode-scope 'window)
 
 ;; use saner keys, and order

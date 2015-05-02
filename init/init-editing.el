@@ -137,74 +137,6 @@
   (end-of-line)
   (newline-and-indent))
 
-;; spell checker
-(require 'wcheck-mode)
-(let ((spell-prog  	"hunspell")
-      (spell-bindir	(expand-file-name "/usr/bin/"))
-      (spell-dir   	(expand-file-name "~/.hunspell/")))
-
-  (setq ispell-really-hunspell t)
-  (setq wcheck-timer-idle .2)
-
-  (defun make-wcheck-language-data (lang dict personal-dict)
-    `(,lang
-      (program       	. ,(concat spell-bindir spell-prog))
-      (args          	. ("-l" "-d" ,(concat spell-dir dict) "-p" ,(concat spell-dir personal-dict)))
-      (action-program	. ,(concat spell-bindir spell-prog))
-      (action-args   	. ("-a" "-d" ,(concat spell-dir dict) "-p" ,(concat spell-dir personal-dict)))
-      (action-parser 	. hunspell-suggestions-menu)
-      (connection    	. 'pty) ; FIXME pipe *should* work, but somehow gets stuck
-      (personal-dict 	. ,(concat spell-dir personal-dict))))
-
-  (setq-default
-   wcheck-language "English"
-   wcheck-language-data `(,(make-wcheck-language-data "English"	"en_US"	"en.dic")
-                          ,(make-wcheck-language-data "German" 	"de_DE"	"de.dic")
-                          ,(make-wcheck-language-data "French" 	"fr_Fr"	"fr.dic")))
-
-  ;; add to dictionary functionality
-  (defun hunspell-suggestions-menu (marked-text)
-    (cons (cons "[Add]" 'hunspell-add-to-dictionary)
-          (wcheck-parser-ispell-suggestions)))
-
-  (defun hunspell-add-to-dictionary (marked-text)
-    (let* ((word (aref marked-text 0))
-           (language (aref marked-text 4))
-           (file (wcheck-query-language-data
-                  language 'personal-dict)))
-
-      (when (and file (file-writable-p file))
-        (with-temp-buffer
-          (insert word) (newline)
-          (append-to-file (point-min) (point-max) file)
-          (message "Added word \"%s\" to the %s dictionary"
-                   word language)))))
-
-  ;; make it possible to toggle wcheck on/off globally
-  ;; TODO have it disable wcheck in open buffers too
-  (defvar use-spell-check t)
-
-  (defun disable-spell-check ()
-    "turns spell-check off globally"
-    (interactive)
-    (setq use-spell-check nil)
-    (dolist (buffer (buffer-list))
-      (wcheck--buffer-lang-proc-data-update buffer nil))
-    (wcheck-mode 0))
-
-  (defun enable-spell-check ()
-    "turns spell-check off globally"
-    (interactive)
-    (setq use-spell-check t)
-    (wcheck-mode 1))
-
-  (defun turn-on-spell-check ()
-    (if use-spell-check (wcheck-mode 1)))
-
-  ;; enable spell-check in certain modes
-  (add-hook 'markdown-mode-hook	'turn-on-spell-check)
-  (add-hook 'org-mode-hook     	'turn-on-spell-check))
-
 ;; diff- mode (better colors)
 (require 'diff-mode-)
 
@@ -296,19 +228,6 @@
 (defun number/decrement ()
   (interactive)
   (number/sub (number-read "1")))
-
-;; rotate / toggle text
-(require 'rotate-text)
-(add-to-list 'rotate-text-words  	'("auto"  	"manual"))
-(add-to-list 'rotate-text-words  	'("if"    	"unless"))
-(add-to-list 'rotate-text-words  	'("map"   	"each"))
-(add-to-list 'rotate-text-words  	'("on"    	"off"))
-(add-to-list 'rotate-text-words  	'("select"	"reject"))
-(add-to-list 'rotate-text-words  	'("t"     	"nil"))
-(add-to-list 'rotate-text-words  	'("true"  	"false"))
-(add-to-list 'rotate-text-words  	'("var"   	"const"))
-(add-to-list 'rotate-text-words  	'("yes"   	"no"))
-(add-to-list 'rotate-text-symbols	'("?"     	"!"))
 
 ;; smart parentheses
 (require 'smartparens-config)
@@ -407,8 +326,6 @@
     (let ((dir (file-name-directory filename)))
       (unless (file-exists-p dir)
         (make-directory dir)))))
-
-(require 'keyboard-cat-mode)
 
 (defun toggle-title-case ()
   "Toggle case of the word / region between lower case and title case."

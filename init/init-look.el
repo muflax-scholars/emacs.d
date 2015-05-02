@@ -127,11 +127,6 @@
 
 ;; blinking cursor
 (blink-cursor-mode -1)
-(require 'heartbeat-cursor)
-;; (heartbeat-cursor-mode))
-
-;; TODO should be a bar, as soon as multiple-coursors figures out a way to draw that
-;; (setq-default cursor-type '(bar . 2))
 (setq-default cursor-type 'box)
 
 ;; nyan nyan nyan
@@ -155,11 +150,6 @@
 
 ;; light-weight default whitespace highlighting
 (require 'leerzeichen)
-
-;; fancier space highlighting
-(require 'whitespace)
-(setq whitespace-space-regexp "\\( +\t\\)")
-(setq whitespace-style '(face spaces tabs))
 
 ;; nested parentheses are highlighted when inside of them
 (require 'highlight-parentheses)

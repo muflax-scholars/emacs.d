@@ -3,9 +3,6 @@
 ;; input methods, including a direct mozc binding to avoid ibus (requires mozc install)
 (require 'custom-input-methods)
 
-(require 'mozc nil t) ;; might be missing
-(setq mozc-leim-title "あ")
-
 ;; default to the diacritic smasher
 (setq default-input-method "muflax-latin")
 (defun turn-on-default-input-method ()
@@ -37,6 +34,5 @@
 (set-input-method-fun "muflax-cyrillic")
 (set-input-method-fun "muflax-turkish")
 (set-input-method-fun "muflax-greek")
-(set-input-method-fun "japanese-mozc")
 
 (provide 'init-input)

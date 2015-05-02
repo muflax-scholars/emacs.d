@@ -85,24 +85,6 @@
   (when (file-exists-p abbrev-file-name)
     (quietly-read-abbrev-file)))
 
-;; racket repl
-(load-after 'racket-mode
-  (require 'ac-geiser)
-  (add-hook 'geiser-mode-hook     	'ac-geiser-setup)
-  (add-hook 'geiser-repl-mode-hook	'ac-geiser-setup)
-
-  (add-to-list 'ac-modes 'racket-mode)
-  (add-to-list 'ac-modes 'geiser-repl-mode))
-
-;; common lisp repl
-(load-after 'lisp-mode
-  (require 'ac-slime)
-  (add-hook 'slime-mode-hook     	'set-up-slime-ac)
-  (add-hook 'slime-repl-mode-hook	'set-up-slime-ac)
-
-  (add-to-list 'ac-modes 'common-lisp-mode)
-  (add-to-list 'ac-modes 'slime-repl-mode))
-
 ;; emacs-lisp
 (load-after 'ielm
   (add-hook 'ielm-mode-hook 'ac-emacs-lisp-mode-setup)
