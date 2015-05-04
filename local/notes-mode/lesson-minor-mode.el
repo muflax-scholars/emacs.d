@@ -10,15 +10,27 @@
   (if lesson-minor-mode
       (progn
         (read-only-mode 1)
+
+        (if hl-line-mode
+            (setq lesson/hl-line-mode-was-on t)
+          (setq lesson/hl-line-mode-was-on nil)
+          (hl-line-mode 1))
+
         (smooth-scrolling-mode nil))
     (progn
       (lesson/unhighlight-blocks)
       (read-only-mode 0)
+
+      (unless lesson/hl-line-mode-was-on
+        (hl-line-mode 0))
+      (setq lesson/hl-line-mode-was-on nil)
+
       (smooth-scrolling-mode t))
     ))
 
 (defvar lesson/window-margin 15)
 (defvar lesson/scroll-margin 0)
+(defvar lesson/hl-line-mode-was-on nil)
 
 (define-arx lesson/rx
   '(
