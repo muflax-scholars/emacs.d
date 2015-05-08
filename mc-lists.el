@@ -19,6 +19,8 @@
         delimit-columns-current
         dired-back-to-start-of-files
         dired-flag-file-deletion
+        dired-next-line
+        dired-previous-line
         downcase-region
         downcase-word-or-region
         duplicate-line
@@ -93,6 +95,7 @@
         toggle-title-case
         toggle-upcase
         uncomment-region
+        undefined
         upcase-word-or-region
         wdired-previous-line
         whole-line-or-region-comment-dwim-2
@@ -108,6 +111,7 @@
         Buffer-menu-execute
         align-current
         bc-set
+        dired-next
         down-list
         edebug-step-mode
         find-tag
@@ -115,6 +119,7 @@
         ibus-handle-event
         magit-status
         mouse-drag-mode-line
+        phi-search
         repeat
         revert-buffer
         save-buffers-kill-terminal
