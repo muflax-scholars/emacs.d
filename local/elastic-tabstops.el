@@ -243,6 +243,18 @@
      (when (member major-mode elastic-tab-align-modes)
        (elastic-align-region (point) (mark)))))
 
+(defun elastic-strip-redundant-tabs-region (beg end)
+  (interactive "r")
+
+  (save-excursion
+    (goto-char beg)
+    (while (re-search-forward (rx (>= 2 "\t")) end t)
+      (replace-match "\t" nil nil))))
+
+(defun elastic-strip-redundant-tabs ()
+  (interactive)
+  (elastic-strip-redundant-tabs-region (point-min) (point-max)))
+
 (defun elastic-turn-on-extended-columns ()
   (set (make-local-variable 'elastic-extend-columns) t))
 
