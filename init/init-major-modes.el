@@ -362,14 +362,13 @@
 (setq vc-handled-backends ())
 
 ;; fancy git interactions
+;; disable recent warnings
+(setq magit-last-seen-setup-instructions "1.4.0")
 (load-lazy '(magit-status) "magit"
   (set-default 'magit-stage-all-confirm  	nil)
   (set-default 'magit-unstage-all-confirm	nil)
 
   (setq magit-log-cutoff-length 1000)
-
-  ;; disable recent warnings
-  (setq magit-last-seen-setup-instructions "1.4.0")
 
   ;; full screen magit-status
   (defadvice magit-status (around magit-fullscreen activate)
