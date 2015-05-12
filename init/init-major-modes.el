@@ -151,7 +151,9 @@
 ;; new python mode
 (load-lazy '(python-mode) "python"
   (setq python-indent-offset 2)
-  (add-hook 'python-mode-hook (lambda () (setq tab-width 2))))
+  (add-hook 'python-mode-hook (lambda () (setq tab-width 2)))
+  (add-hook 'python-mode-hook (lambda () (electric-indent-local-mode -1)))
+  )
 
 ;; ruby mode
 ;; replace normal ruby mode
