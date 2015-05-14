@@ -1175,6 +1175,7 @@
       '("<SPC>"  	lesson/next-thing)
       '("<kanji>"	recenter-top-bottom)
       '("<menu>" 	lesson-minor-mode)
+      '("q"      	lesson-minor-mode)
       ))
 
 (load-after 'phi-grep
