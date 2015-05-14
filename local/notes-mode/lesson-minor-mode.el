@@ -16,6 +16,8 @@
           (setq lesson/hl-line-mode-was-on nil)
           (hl-line-mode 1))
 
+        (set-face-background 'cursor "red")
+
         (smooth-scrolling-mode nil))
     (progn
       (lesson/unhighlight-blocks)
@@ -25,12 +27,15 @@
         (hl-line-mode 0))
       (setq lesson/hl-line-mode-was-on nil)
 
+      (set-face-background 'cursor lesson/cursor-old-color)
+
       (smooth-scrolling-mode t))
     ))
 
 (defvar lesson/window-margin 15)
 (defvar lesson/scroll-margin 0)
 (defvar lesson/hl-line-mode-was-on nil)
+(defvar lesson/cursor-old-color (face-background 'cursor))
 
 (define-arx lesson/rx
   '(
@@ -165,7 +170,8 @@
   (let ((ov (make-overlay beg (1+ end))))
     (overlay-put ov 'lesson-block t)
     (overlay-put ov 'priority 10000)
-    (overlay-put ov 'face '(:background "#f6f6f6"))))
+    ;; (overlay-put ov 'face '(:background "#f6f6f6"))
+    ))
 
 (defun lesson/unhighlight-blocks ()
   (interactive)
