@@ -63,13 +63,13 @@
 (defun whitespace-fold-increase ()
   (interactive)
   (setq whitespace-fold-level
-        (+ whitespace-fold-level tab-width))
+        (+ whitespace-fold-level 1))
   (set-selective-display whitespace-fold-level))
 
 (defun whitespace-fold-decrease ()
   (interactive)
   (setq whitespace-fold-level
-        (max (- whitespace-fold-level tab-width) tab-width))
+        (max (- whitespace-fold-level 1) 1))
   (set-selective-display whitespace-fold-level))
 
 (defun whitespace-fold-reset ()
@@ -80,7 +80,7 @@
 (defun whitespace-fold-levels ()
   (interactive)
 
-  (setq whitespace-fold-level tab-width)
+  (setq whitespace-fold-level 1)
   (set-selective-display whitespace-fold-level)
 
   (set-temporary-overlay-map
