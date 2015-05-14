@@ -39,7 +39,7 @@
 
 (define-arx lesson/rx
   '(
-    (lesson-block	(seq bol (* blank) (not (any "[" "]" "+" "#" "<" blank "\n"))))
+    (lesson-block	(seq bol (* blank) (any "!" "?" "$")))
     (blank-line  	(seq bol (* blank) eol))
     (lesson-file 	(seq bol "L" (+ digit)))
     ))
