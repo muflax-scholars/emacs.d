@@ -74,24 +74,25 @@
 
 (require 'font-lock)
 
-(defvar notes-italic-face                    'notes-italic-face)
-(defvar notes-bold-face                      'notes-bold-face)
-(defvar notes-placeholder-square-face        'notes-placeholder-square-face)
-(defvar notes-placeholder-wiggly-face        'notes-placeholder-wiggly-face)
-(defvar notes-placeholder-pointy-face        'notes-placeholder-pointy-face)
-(defvar notes-annotation-prompt-face         'notes-annotation-prompt-face)
-(defvar notes-annotation-reply-face          'notes-annotation-reply-face)
-(defvar notes-annotation-plus-face       'notes-annotation-plus-face)
-(defvar notes-annotation-comment-face        'notes-annotation-comment-face)
-(defvar notes-annotation-say-face          'notes-annotation-say-face)
-(defvar notes-annotation-wrong-face          'notes-annotation-wrong-face)
-(defvar notes-annotation-transformation-face 'notes-annotation-transformation-face)
-(defvar notes-bracket-face                   'notes-bracket-face)
-(defvar notes-header-face                    'notes-header-face)
-(defvar notes-list-face                      'notes-list-face)
-(defvar notes-link-face                      'notes-link-face)
-(defvar notes-reference-face                 'notes-reference-face)
-(defvar notes-footnote-face                  'notes-footnote-face)
+(defvar notes-italic-face                   	'notes-italic-face)
+(defvar notes-bold-face                     	'notes-bold-face)
+(defvar notes-placeholder-square-face       	'notes-placeholder-square-face)
+(defvar notes-placeholder-wiggly-face       	'notes-placeholder-wiggly-face)
+(defvar notes-placeholder-pointy-face       	'notes-placeholder-pointy-face)
+(defvar notes-annotation-prompt-face        	'notes-annotation-prompt-face)
+(defvar notes-annotation-reply-face         	'notes-annotation-reply-face)
+(defvar notes-annotation-plus-face          	'notes-annotation-plus-face)
+(defvar notes-annotation-comment-face       	'notes-annotation-comment-face)
+(defvar notes-annotation-say-face           	'notes-annotation-say-face)
+(defvar notes-annotation-wrong-face         	'notes-annotation-wrong-face)
+(defvar notes-annotation-transformation-face	'notes-annotation-transformation-face)
+(defvar notes-special-lines-face            	'notes-special-lines-face)
+(defvar notes-bracket-face                  	'notes-bracket-face)
+(defvar notes-header-face                   	'notes-header-face)
+(defvar notes-list-face                     	'notes-list-face)
+(defvar notes-link-face                     	'notes-link-face)
+(defvar notes-reference-face                	'notes-reference-face)
+(defvar notes-footnote-face                 	'notes-footnote-face)
 
 ;; Customization
 
@@ -170,6 +171,11 @@
   "Face for wrong annotation."
   :group 'notes-faces)
 
+(defface notes-special-lines-face
+  '((t (:inherit font-lock-preprocessor-face)))
+  "Face for special comment-y lines."
+  :group 'notes-faces)
+
 (defface notes-list-face
   '((t (:inherit font-lock-builtin-face)))
   "Face for list item markers."
@@ -208,6 +214,12 @@
                     (annotation-2 ,@args)
                     (group-n 3 (or (seq (+ blank) (* not-newline))
                                    (seq (* blank) eol)))))))
+
+    (special-line-1
+     (:func (lambda (_form &rest args)
+              `(seq bol (* blank)
+                    (group-n 1 (or ,@args))
+                    (* blank) eol))))
 
     (open-bracket 	(any "[" "{"))
     (close-bracket	(any "]" "}"))
@@ -250,6 +262,9 @@
 (defconst notes-regex-annotation-wrong
   (notes-rx (annotation-line-3 "*")))
 
+(defconst notes-regex-special-lines
+  (notes-rx (special-line-1 "##" "lll" "sss")))
+
 (defconst notes-regex-list
   "^\\([ \t]*\\)\\([0-9]+\\.\\|[-]\\)\\([ \t]+\\)")
 
@@ -285,6 +300,9 @@
    (cons notes-regex-header
          '((2 notes-header-face)
            (3 notes-header-face keep)))
+
+   (cons notes-regex-special-lines
+         '((1 notes-special-lines-face)))
 
    (cons notes-regex-annotation-plus
          '((2 notes-annotation-plus-face)
