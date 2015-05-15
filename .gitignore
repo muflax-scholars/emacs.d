@@ -6,3 +6,5 @@
 /var
 !**/*.elc
 /keyfreq*
+
+flycheck_*.el
