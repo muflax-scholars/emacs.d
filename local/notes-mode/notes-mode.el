@@ -362,32 +362,24 @@
 (defun notes-prev-line-indent ()
   "Return the number of leading whitespace characters in the previous line."
   (save-excursion
-    (cond
-     ((> (line-number-at-pos) 1)
-      (forward-line -1)
-      (while (and (notes-cur-line-blank-p) (not (bobp)))
-        (forward-line -1))
+    (catch 'pos
+      (while (> (point) (point-min))
+        (forward-line -1)
 
-      (cond
-       ;; blocks force increased indentation
-       ((re-search-forward notes-regex-grab-bracket-square-start
-                           (point-at-eol) t)
-        (goto-char (match-end 1))
-        (+ (current-column) tab-width))
-       ((re-search-forward notes-regex-grab-bracket-wiggly-start
-                           (point-at-eol) t)
-        (goto-char (match-end 1))
-        (+ (current-column) tab-width))
+        (when (looking-at notes-regex-grab-bracket-square-start)
+          (goto-char (match-end 1))
+          (throw 'pos (+ (current-column) tab-width)))
 
-       ;; otherwise preserve indentation
-       (t (notes-cur-line-indent))))
+        (when (looking-at notes-regex-grab-bracket-wiggly-start)
+          (goto-char (match-end 1))
+          (throw 'pos (+ (current-column) tab-width)))
+        )
 
-     ;; default to 0
-     (t 0))))
+      ;; default to 0
+      (throw 'pos 0))))
 
 (defun notes-calc-indent ()
-  "Return a list of indentation columns to cycle through.
-The first element in the returned list should be considered the default indentation level."
+  "Return the intended indent of the line."
   (let (pos prev-line-pos)
 
     ;; figure out last line indent
