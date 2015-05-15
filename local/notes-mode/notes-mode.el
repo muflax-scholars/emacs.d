@@ -453,6 +453,7 @@ The first element in the returned list should be considered the default indentat
 
   ;; indentation
   (set (make-local-variable 'indent-line-function) #'notes-indent-line)
+  (electric-indent-local-mode -1)
 
   ;; folding
   (add-to-list 'hs-special-modes-alist

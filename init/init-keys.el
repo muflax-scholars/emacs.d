@@ -1184,4 +1184,10 @@
       ))
 
 
+(load-after 'notes-mode
+  (kd notes-mode-map
+      '("RET"	newline-and-indent)
+      ))
+
+
 (provide 'init-keys)
