@@ -1187,6 +1187,7 @@
 (load-after 'notes-mode
   (kd notes-mode-map
       '("RET"	newline-and-indent)
+      '("C-j"	newline)
       ))
 
 
