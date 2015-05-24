@@ -13,7 +13,13 @@
 ;; make sure we always know what's happening when eval-ing things
 (setq eval-expression-print-level nil)
 
-;; basic encoding header
-(setq safe-local-variable-values '((encoding . utf-8)))
+(setq safe-local-variable-values
+      '(
+        ;; basic encoding header
+        (encoding . utf-8)
+        ;; formatting
+        (truncate-lines 1)
+        ))
+
 
 (provide 'init-misc)
