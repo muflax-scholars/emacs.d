@@ -251,7 +251,7 @@
   (notes-rx (annotation-line-3 "#")))
 
 (defconst notes-regex-annotation-say
-  (notes-rx (annotation-line-3 "$" "!!")))
+  (notes-rx (annotation-line-3 "$" "!!" "??")))
 
 (defconst notes-regex-annotation-prompt
   (notes-rx (annotation-line-3 "%" "?")))
