@@ -445,4 +445,34 @@
     (error (message "Invalid expression")
            (insert (current-kill 0)))))
 
+(defun save-compile-run ()
+  "Save the current buffer, ask for (and remember) compile command, and run it."
+  (interactive)
+  (save-buffer)
+
+  ;; some simple defaults
+  (let ((command (case major-mode
+                   (c-mode   	"make")
+                   (rust-mode	"cargo run")
+                   (t        	nil))))
+
+    (setq-local compile-command (or compile-command command)))
+
+  ;; don't ask for a command unless we C-u for it
+  (setq-local compilation-read-command nil)
+
+  (call-interactively 'compile))
+
+(load-after 'compile
+  (setq compilation-always-kill t)
+
+  ;; color the compilation buffer
+  (require 'ansi-color)
+  (defun colorize-compilation-buffer ()
+    (when (eq major-mode 'compilation-mode)
+      (ansi-color-apply-on-region compilation-filter-start (point-max))))
+  (add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
+
+  )
+
 (provide 'init-editing)

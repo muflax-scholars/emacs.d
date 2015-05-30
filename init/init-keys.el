@@ -426,11 +426,12 @@
     )
 
 (kd mode-specific-map
-    '("C-w"  	kill-with-append)
-    '("SPC"  	comment-dwim)
-    '("c"    	comment-region)
-    '("u"    	uncomment-region)
-    '("w"    	copy-with-append)
+    '("C-w"	kill-with-append)
+    '("C-c"	save-compile-run)
+    '("SPC"	comment-dwim)
+    '("c"  	comment-region)
+    '("u"  	uncomment-region)
+    '("w"  	copy-with-append)
     )
 
 ;; search
