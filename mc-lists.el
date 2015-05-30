@@ -67,6 +67,7 @@
         number/add
         number/decrement
         number/divide
+        nxml-electric-slash
         org-force-cycle-archived
         org-force-self-insert
         org-indent-line
