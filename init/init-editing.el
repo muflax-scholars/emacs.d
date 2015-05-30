@@ -473,6 +473,7 @@
       (ansi-color-apply-on-region compilation-filter-start (point-max))))
   (add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
 
+  (add-hook 'compilation-mode-hook 'leerzeichen-mode))
   )
 
 (provide 'init-editing)
