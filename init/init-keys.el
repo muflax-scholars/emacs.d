@@ -269,6 +269,7 @@
 
     '("M-<backspace>"	sp-unwrap-sexp)
     '("M-<delete>"   	sp-unwrap-sexp)
+    '("M-<tab>"      	elastic-align-region-or-current)
 
     '("<f1>"       	help-command)
     '("<f2>"       	save-buffer)
