@@ -465,6 +465,7 @@
 
 (load-after 'compile
   (setq compilation-always-kill t)
+  (setq-default compile-command nil)
 
   ;; color the compilation buffer
   (require 'ansi-color)
