@@ -145,6 +145,18 @@
 
 (define-abbrev-table 'ruby-mode-abbrev-table '())
 
+(define-abbrev-table 'rust-mode-abbrev-table
+  '(
+    ("fsf" "f64" nil 2)
+    ("ftt" "f32" nil 2)
+    ("isf" "i64" nil 2)
+    ("ist" "i16" nil 2)
+    ("itt" "i32" nil 4)
+    ("usf" "u64" nil 2)
+    ("ust" "u16" nil 2)
+    ("utt" "u32" nil 2)
+   ))
+
 (define-abbrev-table 'scheme-mode-abbrev-table '())
 
 (define-abbrev-table 'select-tags-table-mode-abbrev-table '())
