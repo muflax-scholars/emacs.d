@@ -453,7 +453,7 @@
   ;; some simple defaults
   (let ((command (case major-mode
                    (c-mode   	"make")
-                   (rust-mode	"cargo run")
+                   (rust-mode	"cargo build")
                    (t        	nil))))
 
     (setq-local compile-command (or compile-command command)))
