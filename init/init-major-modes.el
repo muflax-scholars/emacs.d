@@ -416,11 +416,52 @@
 (load-lazy '(rust-mode) "rust-mode"
   (setq rust-indent-offset tab-width)
   (setq rust-indent-method-chain t)
-  (add-hook 'rust-mode-hook 'leerzeichen-mode))
+  (add-hook 'rust-mode-hook 'leerzeichen-mode)
+  (add-hook 'rust-mode-hook 'abbrev-mode)
+  )
 
 ;; c
 (load-after 'cc-mode
   (add-hook 'c-mode-hook  	'leerzeichen-mode)
   (add-hook 'c++-mode-hook	'leerzeichen-mode))
+
+(defun save-compile-run ()
+  "Save the current buffer, ask for (and remember) compile command, and run it."
+  (interactive)
+  (save-buffer)
+
+  ;; some simple defaults
+  (let ((command (case major-mode
+                   (c-mode   	"make")
+                   (rust-mode	"cargo build")
+                   (t        	""))))
+
+    (setq-local compile-command
+                (if (s-blank? compile-command)
+                    command
+                  compile-command)))
+
+  ;; don't ask for a command unless we C-u for it
+  (setq-local compilation-read-command nil)
+
+  (call-interactively 'compile))
+
+(load-after 'compile
+  (setq compilation-always-kill t)
+  (setq-default compile-command "")
+
+  ;; color the compilation buffer
+  (require 'ansi-color)
+  (defun colorize-compilation-buffer ()
+    (when (eq major-mode 'compilation-mode)
+      (ansi-color-apply-on-region compilation-filter-start (point-max))))
+  (add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
+
+  (add-hook 'compilation-mode-hook 'leerzeichen-mode)
+
+  (require 'bury-successful-compilation)
+  (bury-successful-compilation 1)
+  )
+
 
 (provide 'init-major-modes)
