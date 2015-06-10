@@ -19,6 +19,8 @@
         (encoding . utf-8)
         ;; formatting
         (truncate-lines 1)
+        ;; zsh files
+        (eval sh-set-shell "zsh")
         ))
 
 
