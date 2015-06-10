@@ -1,4 +1,0 @@
-#name : each { |...| ... }
-#group : collections
-# --
-map{|${x}| $0}

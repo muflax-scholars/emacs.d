@@ -1,6 +1,0 @@
-#name : each_index { |i| ... }
-#group : collections
-# --
-each.with_index do |${x}, ${index}|
-  $0
-end
