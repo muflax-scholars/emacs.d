@@ -305,6 +305,8 @@
 ;; sort number naturally
 (setq dired-listing-switches "--group-directories-first -v -al")
 
+(add-hook 'dired-mode-hook 'leerzeichen-mode)
+
 ;; eldoc, ie function signatures in the minibuffer
 (load-lazy '(turn-on-eldoc-mode) "eldoc"
   (setq eldoc-idle-delay 0.1))
