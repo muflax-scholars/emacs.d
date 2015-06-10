@@ -160,7 +160,7 @@
 (defalias 'ruby-mode 'enh-ruby-mode)
 ;; enhanced ruby mode
 (load-lazy '(ruby-mode enh-ruby-mode rhtml-mode) "enh-ruby-mode"
-  (setq enh-ruby-program "~/.rbenv/shims/ruby")
+  (setq enh-ruby-program "ruby")
 
   ;; flycheck covers errors anyway
   (setq enh-ruby-check-syntax nil)
