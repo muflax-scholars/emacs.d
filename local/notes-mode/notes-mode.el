@@ -366,13 +366,17 @@
       (while (> (point) (point-min))
         (forward-line -1)
 
-        (when (looking-at notes-regex-grab-bracket-square-start)
+        (when (or (looking-at notes-regex-grab-bracket-square-start)
+                  (looking-at notes-regex-grab-bracket-wiggly-start)
+                  )
           (goto-char (match-end 1))
           (throw 'pos (+ (current-column) tab-width)))
 
-        (when (looking-at notes-regex-grab-bracket-wiggly-start)
+        (when (or (looking-at notes-regex-grab-bracket-square-stop)
+                  (looking-at notes-regex-grab-bracket-wiggly-stop)
+                  )
           (goto-char (match-end 1))
-          (throw 'pos (+ (current-column) tab-width)))
+          (throw 'pos (current-column)))
         )
 
       ;; default to 0
