@@ -195,11 +195,19 @@
     (save-excursion
       (let ((end-marker (copy-marker (or end (point-max))))
             (start (or start (point-min))))
+
+        ;; delete trailing spaces
         (goto-char start)
-        ;; only delete spaces
         (while (re-search-forward "[ ]+$" end-marker t)
           (skip-chars-backward " " (line-beginning-position))
           (delete-region (point) (match-end 0)))
+
+        ;; delete trailing spaces
+        (goto-char start)
+        (while (re-search-forward "^[\t]+$" end-marker t)
+          (skip-chars-backward "\t" (line-beginning-position))
+          (delete-region (point) (match-end 0)))
+
         ;; Delete trailing empty lines.
         (goto-char end-marker)
         (when (and (not end)
