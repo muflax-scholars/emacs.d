@@ -54,6 +54,7 @@
         literal-delete-char
         literal-tab
         lua-electric-match
+        markdown-dedent-or-delete
         mc/many-to-one-yank-indent
         md/duplicate-down
         md/move-lines-down
