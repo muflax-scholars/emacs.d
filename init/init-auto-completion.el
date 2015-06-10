@@ -121,5 +121,6 @@
 (auto-insert-from-yas "cpp"	'c-mode)
 (auto-insert-from-yas "go" 	'go-mode)
 (auto-insert-from-yas "rkt"	'racket-mode)
+(auto-insert-from-yas "rs" 	'rust-mode)
 
 (provide 'init-auto-completion)

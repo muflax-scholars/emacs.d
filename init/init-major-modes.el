@@ -416,6 +416,8 @@
 (load-lazy '(rust-mode) "rust-mode"
   (setq rust-indent-offset tab-width)
   (setq rust-indent-method-chain t)
+  (setq rust-blink-matching-angle-brackets nil)
+
   (add-hook 'rust-mode-hook 'leerzeichen-mode)
   (add-hook 'rust-mode-hook 'abbrev-mode)
   )
