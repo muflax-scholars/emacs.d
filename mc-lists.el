@@ -24,6 +24,7 @@
         downcase-region
         downcase-word-or-region
         duplicate-line
+        elastic-align-region-or-current
         electric-graphviz-dot-semi
         end-of-buffer
         end-of-visual-line
