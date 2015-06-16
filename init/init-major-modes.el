@@ -462,9 +462,6 @@
   (add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
 
   (add-hook 'compilation-mode-hook 'leerzeichen-mode)
-
-  (require 'bury-successful-compilation)
-  (bury-successful-compilation 1)
   )
 
 
