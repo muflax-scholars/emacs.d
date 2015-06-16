@@ -1189,5 +1189,9 @@
       '("C-j"	newline)
       ))
 
+(load-after 'eww-mode
+  (kd eww-mode-map
+      '("C-SPC"	set-mark-command)
+      ))
 
 (provide 'init-keys)
