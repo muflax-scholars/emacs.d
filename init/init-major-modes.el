@@ -452,6 +452,7 @@
 
 (load-after 'compile
   (setq compilation-always-kill t)
+  (setq compilation-auto-jump-to-first-error nil)
   (setq-default compile-command "")
 
   ;; color the compilation buffer
