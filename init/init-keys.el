@@ -367,7 +367,7 @@
     '("M-p"	undo-tree-redo)
     '("M-q"	fill-region)
     '("M-Q"	unfill-region)
-    '("M-t"	find-tag)
+    '("M-t"	next-error)
     '("M-w"	kill-ring-save)
     '("M-x"	smex)
     '("M-X"	smex-major-mode-commands)
