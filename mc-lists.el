@@ -33,6 +33,7 @@
         er/mark-defun
         eval-and-replace
         eval-defun
+        eval-region
         fold-dwim-toggle
         generalized-shell-command
         go-mode-insert-and-indent
