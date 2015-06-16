@@ -64,7 +64,7 @@
 
   ;; unset annoying keys
   (define-key org-mouse-map     	[(tab)]        	nil)
-  (define-key org-goto-map      	[(tab)]        	nil)
+  ;; (define-key org-goto-map   	[(tab)]        	nil)
   (define-key orgstruct-mode-map	[(tab)]        	nil)
   (define-key orgstruct-mode-map	(kbd "C-i")    	nil)
   (define-key org-mode-map      	[(tab)]        	nil)
