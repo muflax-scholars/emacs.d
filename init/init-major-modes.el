@@ -462,6 +462,20 @@
   (add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
 
   ;; (add-hook 'compilation-mode-hook 'leerzeichen-mode)
+
+  (defun bury-compile-buffer-if-successful (buffer string)
+    "Bury a compilation buffer if succeeded without warnings "
+    (when (and
+           (string-match "compilation" (buffer-name buffer))
+           (string-match "finished" string)
+           (not
+            (with-current-buffer buffer
+              (search-forward "warning" nil t))))
+      (bury-buffer buffer)
+      (switch-to-prev-buffer (get-buffer-window buffer) 'kill)))
+
+  (add-hook 'compilation-finish-functions 'bury-compile-buffer-if-successful)
+
   )
 
 
