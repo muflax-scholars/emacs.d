@@ -1,7 +1,6 @@
 #[cfg(test)]
-mod tests {
-  #[test]
-  fn $0() {
-    
-  }
-}
+mod ${1:`(let ((fn (file-name-nondirectory
+                    (file-name-sans-extension
+                     (or (buffer-file-name)
+                         (buffer-name (current-buffer)))))))
+           fn)`}_test;
