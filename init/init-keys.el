@@ -1191,6 +1191,7 @@
 
 (load-after 'eww-mode
   (kd eww-mode-map
+      '("S-SPC"	set-mark-command)
       '("C-SPC"	set-mark-command)
       ))
 
