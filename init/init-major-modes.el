@@ -422,6 +422,9 @@
 
   (add-hook 'rust-mode-hook 'leerzeichen-mode)
   (add-hook 'rust-mode-hook 'abbrev-mode)
+
+  (load-after 'flycheck
+    (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
   )
 
 ;; c
