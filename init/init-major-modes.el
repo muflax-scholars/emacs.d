@@ -43,8 +43,6 @@
 (require 'notes-mode)
 (add-hook 'notes-mode-hook 'leerzeichen-mode)
 (add-to-list 'auto-mode-alist '("\\.txt$"   	. notes-mode))
-(add-to-list 'auto-mode-alist '("\\.notes$" 	. notes-mode))
-(add-to-list 'auto-mode-alist '("\\.script$"	. notes-mode))
 
 ;; yaml
 (load-lazy '(yaml-mode) "yaml-mode")
@@ -64,7 +62,6 @@
 
   ;; unset annoying keys
   (define-key org-mouse-map     	[(tab)]        	nil)
-  ;; (define-key org-goto-map   	[(tab)]        	nil)
   (define-key orgstruct-mode-map	[(tab)]        	nil)
   (define-key orgstruct-mode-map	(kbd "C-i")    	nil)
   (define-key org-mode-map      	[(tab)]        	nil)
@@ -87,37 +84,6 @@
 
   ;; priorities
   (setq org-default-priority 67) ;C
-
-  ;; code block
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((emacs-lisp	. t)
-     (sh        	. t)
-     (ruby      	. t)
-     (python    	. t)
-     (haskell   	. t)))
-
-  (add-to-list 'org-src-lang-modes '("ruby"	. enh-ruby))
-  (add-to-list 'org-src-lang-modes '("r"   	. enh-ruby))
-  (add-to-list 'org-src-lang-modes '("h"   	. haskell))
-  (add-to-list 'org-src-lang-modes '("s"   	. sh))
-  (add-to-list 'org-src-lang-modes '("p"   	. python))
-
-  (setq org-src-fontify-natively t)
-  (setq org-confirm-babel-evaluate nil)
-
-  ;; shortcut for C-u C-c C-l
-  (defun org-insert-file-link ()
-    (interactive)
-    (org-insert-link '(4)))
-
-  ;; some templates
-  (setcdr (assoc "c" org-structure-template-alist)
-          '("#+BEGIN_COMMENT\n?\n#+END_COMMENT"))
-  (add-to-list 'org-structure-template-alist
-               '("r"
-                 "#+BEGIN_SRC ruby\n?\n#+END_SRC"
-                 "<src lang=\"ruby\">\n\n</src>"))
 
   (defmacro org-todo-fun (name)
     `(defun ,(intern (format "org-todo-%s" (downcase name))) ()
@@ -183,9 +149,6 @@
 (add-to-list 'auto-mode-alist       	'("\\.gemspec$"	. enh-ruby-mode))
 
 (load-after 'enh-ruby-mode
-  ;; ri documentation tool
-  (require 'yari)
-
   ;; show what block an end belongs to
   (require 'ruby-block)
   (ruby-block-mode t)
@@ -234,7 +197,6 @@
 (require 'dired-x)
 (require 'dired-details)
 (require 'dired-details+)
-(require 'dired-open)
 
 ;; fast navigation through files in a directory
 ;; TODO this is super simplistic, but meh
@@ -296,12 +258,6 @@
 (setq dired-omit-files "^\\(\\..*[^.]\\|\\.\\)$")
 (setq dired-omit-verbose nil)
 
-;; open by extension
-(setq dired-open-extensions '(
-                              ("pdf" 	. "zathura")
-                              ("djvu"	. "zathura")
-                              ))
-
 ;; sort number naturally
 (setq dired-listing-switches "--group-directories-first -v -al")
 
@@ -347,10 +303,6 @@
   (add-hook 'lisp-mode-hook 'lisp-extra-font-lock-mode t)
 
   (add-hook 'emacs-lisp-mode-hook 'leerzeichen-mode))
-
-;; ag search
-(load-lazy '(ag) "ag"
-  (setq ag-highlight-search t))
 
 ;; Flycheck for code linting
 (require 'flycheck)
@@ -481,6 +433,5 @@
   (add-hook 'compilation-finish-functions 'bury-compile-buffer-if-successful)
 
   )
-
 
 (provide 'init-major-modes)

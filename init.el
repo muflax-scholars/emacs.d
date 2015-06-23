@@ -41,9 +41,6 @@
 ;; major modes
 (require 'init-major-modes)
 
-;; mail
-(require 'init-mail)
-
 ;; shell
 (require 'init-shell)
 

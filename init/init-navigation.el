@@ -70,12 +70,6 @@ Point stops at elastic tab stops, end of the visual line and eventually the real
 (load-after 'org-mode
   (setq org-special-ctrl-a/e t))
 
-;; when popping the mark, continue popping until the cursor actually moves
-(defadvice pop-to-mark-command (around ensure-new-position activate)
-  (let ((p (point)))
-    (dotimes (i 10)
-      (when (= p (point)) ad-do-it))))
-
 ;; handle camelcase better
 (require 'subword)
 (add-hook 'prog-mode-hook 'subword-mode)

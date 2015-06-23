@@ -57,10 +57,6 @@
 
 (yas-global-mode 1)
 
-;; auto-yasnippet
-(load-after 'yasnippet
-  (require 'auto-yasnippet))
-
 ;; auto completion
 (require 'auto-complete-config)
 (add-to-list 'ac-modes   	'enh-ruby-mode)

@@ -35,12 +35,6 @@
         search-ring
         ))
 
-;; save open buffers etc.
-;; (require 'desktop)
-;;   (setq desktop-path (emacs-d "cache/desktop/"))
-;;   (desktop-save-mode 1)
-;;   )
-
 ;; text stuff
 (setq undo-limit     	10000000)
 (setq message-log-max	100000)
@@ -304,15 +298,6 @@
 ;; overwrite |pipe| handling in ruby
 (sp-with-modes '(enh-ruby-mode ruby-mode)
   (sp-local-pair "|"	"|"	:pre-handlers	nil)	)
-
-;; perspectives / workspaces (has to be loaded late)
-;; FIXME stupid
-;; (require 'persp-mode)
-;;   (setq persp-save-dir (expand-file-name (emacs-d "cache/persp-confs")))
-;;   (setq persp-set-last-persp-for-new-frames nil)
-;;   (setq persp-auto-save-num-of-backups 10)
-;;   (setq wg-morph-on nil)
-;;   (persp-mode t))
 
 ;; normalize unicode in buffer
 (defun normalize-unicode-in-buffer ()
