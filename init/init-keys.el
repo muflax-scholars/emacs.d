@@ -252,7 +252,6 @@
     ;; special keys
     '("C-<backspace>"	backward-kill-word)
     '("C-<delete>"   	kill-word)
-    '("C-<menu>"     	nav-global-mode)
     '("C-<return>"   	md/duplicate-down)
     '("C-<tab>"      	literal-tab)
 
@@ -829,5 +828,28 @@
       '("S-SPC"	set-mark-command)
       '("C-SPC"	set-mark-command)
       ))
+
+(require 'nav-mode)
+(kd nav-mode-map
+    ;; simple navigation
+    '("i"	backward-sentence)
+    '("a"	forward-sentence)
+    '("u"	backward-word)
+    '("e"	forward-word)
+
+    '("p"	scroll-up-command)
+    '("|"	scroll-down-command)
+
+    '("o"	focus-next-window)
+    '("n"	focus-next-window)
+    '("r"	focus-prev-window)
+
+    ;; editing
+    '("c"	kill-and-join-forward)
+    '("w"	whole-line-or-region-kill-region)
+    '("y"	yank-and-indent)
+
+    '("SPC"	nav-mode)
+    )
 
 (provide 'init-keys)
