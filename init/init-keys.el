@@ -197,14 +197,12 @@
 (defvar help-map)
 (defvar mode-specific-map)
 (defvar universal-argument-map)
-(defvar narrow-map)
 
 ;; unset a lot of default keys so we can properly re-assign them later
 (loop for map in (list
                   global-map
                   ctl-x-map
                   mode-specific-map
-                  narrow-map
                   special-mode-map
                   )
       collect (unset-complete-keymap map))
@@ -267,22 +265,13 @@
 
     '("C-SPC"	set-mark-command)
 
-    '("M-<backspace>"	sp-unwrap-sexp)
-    '("M-<delete>"   	sp-unwrap-sexp)
     '("M-<tab>"      	elastic-align-region-or-current)
 
-    '("<f1>"       	help-command)
-    '("<f2>"       	save-buffer)
     '("<f3>"       	kmacro-start-macro-or-insert-counter)
     '("<f4>"       	kmacro-end-or-call-macro)
-    '("<f11>"      	automargin-mode)
     '("<backspace>"	delete-backward-char)
     '("<delete>"   	delete-char) ; make DEL always work like intended
-    '("<kanji>"    	toggle-input-method)
-    '("<menu>"     	nav-minor-mode)
 
-    '("S-<f2>"        	save-some-buffers)
-    '("S-<f7>"        	backward-kill-word) ; make C-Backspace "work" in terminal
     '("S-<backspace>" 	literal-delete-backward-char)
     '("S-<delete>"    	literal-delete-char)
     '("S-<insert>"    	whole-line-or-region-yank)
@@ -299,7 +288,6 @@
     '("C-|" 	generalized-shell-command)
 
     '("M--"	negative-argument)
-    '("M-^"	delete-indentation)
     '("M-|"	shell-command-on-region)
 
     ;; numbers
@@ -342,7 +330,6 @@
     '("C-n"	focus-next-window)
     '("C-N"	focus-prev-window)
     '("C-o"	yas-expand)
-    '("C-O"	next-newline-and-indent)
     '("C-p"	mc-prefix-map :type prefix)
     '("C-q"	quoted-insert)
     '("C-r"	window-prefix-map :type prefix)
@@ -356,21 +343,13 @@
     '("C-Y"	yank)
     '("C-z"	undo-tree-undo)
 
-    '("M-b"	sp-backward-symbol)
-    '("M-d"	blank-line)
-    '("M-f"	sp-forward-symbol)
-    '("M-h"	mark-paragraph)
-    '("M-j"	indent-new-comment-line)
     '("M-k"	copy-line)
     '("M-n"	undo-tree-undo)
-    '("M-o"	yas-insert-snippet)
     '("M-p"	undo-tree-redo)
     '("M-q"	fill-region)
     '("M-Q"	unfill-region)
-    '("M-t"	next-error)
     '("M-w"	kill-ring-save)
     '("M-x"	smex)
-    '("M-X"	smex-major-mode-commands)
     '("M-y"	yank-pop)
     '("M-Y"	yank-pop-reverse)
     '("M-z"	undo-tree-redo)
@@ -381,7 +360,6 @@
     '("C-+"	text-scale-adjust)
     '("C--"	text-scale-adjust)
     '("C-="	text-scale-adjust)
-    '("C-~"	aya-expand)
     '("C-0"	text-scale-adjust)
     '("C-b"	list-buffers)
     '("C-c"	save-buffers-kill-terminal)
@@ -391,17 +369,10 @@
     '("C-o"	yas-reload-all)
     '("C-r"	recentf-ido-find-file)
     '("C-s"	save-buffer)
-    '("C-t"	rotate-text)
     '("C-v"	find-alternate-file)
     '("C-w"	write-file)
-    '("C-x"	exchange-point-and-mark)
-    '("M-f"	find-file-at-point)
     '("SPC"	eval-prefix-map :type prefix)
-    '("#"  	server-edit)
-    '("("  	sexp-prefix-map :type prefix)
     '("+"  	balance-windows)
-    '("~"  	aya-create)
-    '("a"  	align-prefix-map :type prefix)
     '("b"  	switch-to-buffer)
     '("c"  	case-prefix-map :type prefix)
     '("d"  	debug-prefix-map :type prefix)
@@ -412,15 +383,9 @@
     '("k"  	kill-buffer)
     '("m"  	number-prefix-map :type prefix)
     '("M"  	macro-prefix-map :type prefix)
-    '("n"  	narrow-map)
     '("p"  	paradox-list-packages)
-    '("r"  	rectangle-prefix-map :type prefix)
-    '("R"  	register-prefix-map :type prefix)
     '("s"  	save-some-buffers)
     '("t"  	input-prefix-map :type prefix)
-    '("w"  	spell-check-prefix-map :type prefix)
-    '("z"  	repeat)
-    '("Z"  	repeat-complex-command)
     )
 
 (kd mode-specific-map
@@ -435,38 +400,23 @@
 (kd search-prefix-map
     '("C-r"	isearch-backward-use-region)
     '("C-s"	isearch-forward-use-region)
-    '("SPC"	er/mark-defun)
     '("*"  	isearch-forward-symbol)
     '("b"  	isearch-backward-regexp)
     '("B"  	isearch-backward-use-region)
-    '("d"  	er/mark-defun)
     '("e"  	next-error)
     '("E"  	previous-error)
-    '("g"  	jump-prefix-map :type prefix)
     '("i"  	idomenu)
     '("I"  	imenu-anywhere)
+    '("l"  	goto-line)
     '("o"  	occur)
-    '("p"  	phi-search)
     '("p"  	phi-search)
     '("P"  	phi-search-backward)
     '("r"  	vr/query-replace)
     '("R"  	vr/query-replace-from-beginning)
     '("s"  	isearch-forward-use-region)
     '("S"  	isearch-forward-regexp)
-    '("w"  	er/mark-symbol)
     '("y"  	kill-ring-search)
     '("["  	idomenu)
-    '("]"  	imenu-anywhere)
-    )
-
-;; ace-jump
-(kd jump-prefix-map
-    '("b"	ace-jump-buffer)
-    '("c"	ace-jump-char-mode)
-    '("g"	ace-jump-mode)
-    '("l"	ace-jump-line-mode)
-    '("n"	goto-line)
-    '("w"	ace-window)
     )
 
 ;; with active search
@@ -603,24 +553,6 @@
       '("M-RET"	c-indent-new-comment-line)
       ))
 
-;; aligning things
-(kd align-prefix-map
-    '("SPC"	align-repeat)
-    '("a"  	align-region-or-current)
-    '("r"  	align-repeat)
-    '("t"  	delimit-columns-current)
-    '("T"  	delimit-columns-region)
-    '("w"  	align-whitespace)
-    )
-
-;; spell-check
-(kd spell-check-prefix-map
-    '("SPC"	wcheck-actions)
-    '("d"  	disable-spell-check)
-    '("e"  	enable-spell-check)
-    '("w"  	wcheck-mode)
-    )
-
 ;; input methods
 (kd input-prefix-map
     '("SPC"	toggle-input-method)
@@ -630,7 +562,7 @@
     '("j"  	set-input-method-japanese-mozc)
     '("l"  	set-input-method-muflax-latin)
     '("m"  	set-input-method-muflax-latin)
-    '("s"  	toggle-subword-mode )
+    '("s"  	toggle-subword-mode)
     '("t"  	set-input-method-muflax-turkish)
     )
 
@@ -640,18 +572,15 @@
     '("<left>"  	split-window-left)
     '("<right>" 	split-window-right)
     '("<up>"    	split-window-above)
-    '("<return>"	sticky-window-delete-other-windows)
-    '("C-r"     	sticky-window-delete-other-windows)
+    '("<return>"	delete-other-windows)
+    '("C-r"     	delete-other-windows)
     '("S-SPC"   	kill-buffer-and-window)
-    '("SPC"     	sticky-window-delete-window)
+    '("SPC"     	delete-window)
     '("="       	balance-windows)
     '("b"       	winner-undo)
     '("f"       	winner-redo)
-    '("k"       	sticky-window-delete-other-windows)
-    '("n"       	neotree-toggle)
-    '("s"       	scratch)
-    '("v"       	sticky-window-keep-window-visible)
-    '("w"       	sticky-window-delete-window)
+    '("k"       	delete-other-windows)
+    '("w"       	delete-window)
     )
 
 ;; arithmetic
@@ -684,49 +613,7 @@
     '("S"  	whitespace-fold-reset)
     '("y"  	yafolding-hide-all)
     '("Y"  	yafolding-show-all)
-    '("w"  	whitespace-mode)
-    )
-
-;; smartparens
-(kd sexp-prefix-map
-    '("C-<tab>"	sp-indent-adjust-sexp)
-    '("<tab>"  	sp-dedent-adjust-sexp)
-    '("C-a"    	sp-kill-to-beginning-of-sexp)
-    '("C-e"    	sp-kill-to-end-of-sexp)
-    '("M-a"    	sp-copy-to-beginning-of-sexp)
-    '("M-e"    	sp-copy-to-end-of-sexp)
-    '("|"      	sp-split-sexp)
-    '("a"      	sp-beginning-of-sexp)
-    '("e"      	sp-end-of-sexp)
-    '("j"      	sp-join-sexp)
-    '("k"      	sp-kill-sexp)
-    '("r"      	sp-rewrap-sexp)
-    '("u"      	sp-unwrap-sexp)
-    '("U"      	sp-backward-unwrap-sexp)
-    '("w"      	sp-copy-sexp)
-    )
-
-;; narrowing
-(kd narrow-map
-    '("SPC"	narrow-or-widen-dwim)
-    '("d"  	narrow-to-defun)
-    '("n"  	narrow-to-region)
-    '("p"  	narrow-to-page)
-    '("s"  	sp-narrow-to-sexp)
-    '("w"  	widen)
-    )
-
-;; macro
-(kd macro-prefix-map
-    '("a"	kmacro-add-counter)
-    '("b"	kmacro-bind-to-key)
-    '("c"	kmacro-set-counter)
-    '("e"	edit-kbd-macro)
-    '("l"	kmacro-edit-lossage)
-    '("m"	kmacro-end-or-call-macro-repeat)
-    '("n"	kmacro-name-last-macro)
-    '("s"	kmacro-start-macro-or-insert-counter)
-    '("t"	insert-kbd-macro)
+    '("w"  	leerzeichen-mode)
     )
 
 ;; org-mode
@@ -735,17 +622,7 @@
   (org-defkey org-mode-map (kbd "C-c C-t")	'org-todo-todo)
   (org-defkey org-mode-map (kbd "C-c C-w")	'org-todo-waiting))
 
-;; haskell
-(load-after 'haskell-mode
-  (kd haskell-mode-map
-      '("C-c ?"  	haskell-process-do-type)
-      '("C-c C-?"	haskell-process-do-info)))
-
-;; ruby
-(load-after 'enh-ruby-mode
-  (kd enh-ruby-mode-map
-      '("C-c ?"	yari)))
-
+;; dired
 (load-after 'dired
   (load-after 'wdired
     (kd dired-mode-map
@@ -771,47 +648,11 @@
     (define-key dired-mode-map 	[remap smart-down]   	'dired-jump-to-bottom)
     (define-key wdired-mode-map	[remap end-of-buffer]	'dired-jump-to-bottom)))
 
-;; golang
-(load-after 'go-mode
-  (kd go-mode-map
-      '("M-t"	godef-jump)
-      '("M-T"	godef-jump-other-window)))
-
 (load-after 'magit
   ;; needed because of fullscreen override
   (kd magit-status-mode-map
       '("q"	magit-quit-session)
       '("W"	magit-toggle-whitespace)))
-
-;; rectangle selection
-(kd rectangle-prefix-map
-    '("M-w"	copy-rectangle-as-kill)
-    '("c"  	clear-rectangle)
-    '("d"  	delete-rectangle)
-    '("k"  	kill-rectangle)
-    '("n"  	rectangle-number-lines)
-    '("o"  	open-rectangle)
-    '("r"  	copy-rectangle-to-register)
-    '("t"  	string-rectangle)
-    '("y"  	yank-rectangle)
-    )
-
-;; registers (still unused)
-(kd register-prefix-map
-    '("SPC"	point-to-register)
-    '("+"  	increment-register)
-    '("b"  	bookmark-jump)
-    '("f"  	frame-configuration-to-register)
-    '("g"  	insert-register)
-    '("i"  	insert-register)
-    '("j"  	jump-to-register)
-    '("l"  	bookmark-bmenu-list)
-    '("m"  	bookmark-set)
-    '("n"  	number-to-register)
-    '("s"  	copy-to-register)
-    '("w"  	window-configuration-to-register)
-    '("x"  	copy-to-register)
-    )
 
 ;; case changes
 (kd case-prefix-map
@@ -828,152 +669,9 @@
 (load-after 'lisp-mode
   ;; operate on sexps
   (kd lisp-mode-shared-map
-      ;; TODO these might want to be remaps instead for consistency
-
-      ;; '("C-<return>" md/duplicate-down)
-
-      '("C-("	sp-down-sexp)
-      '("C-)"	sp-up-sexp)
-
       '("C-k"	sp-kill-hybrid-sexp)
-
-      '("M-a"	sp-beginning-of-sexp)
-      '("M-b"	sp-forward-sexp)
-      '("M-e"	sp-end-of-sexp)
-      '("M-f"	sp-backward-sexp)
-
-      '("C-;"	sp-comment)
-      '("C-<"	sp-dedent-adjust-sexp)
-      '("C->"	sp-indent-adjust-sexp)
-      '("C-^"	sp-raise-sexp)
-
       '("<return>"	sp-newline)
-
-
-      ;; sp-kill-to-beginning-of-sexp
-      ;; sp-kill-to-end-of-sexp
-      ;; sp-copy-to-beginning-of-sexp
-      ;; sp-copy-to-end-of-sexp
-
       ))
-
-;; slime
-(load-after 'slime
-  ;; disable slime default keys
-  (setq slime-parent-bindings	nil
-        slime-prefix-bindings	nil
-        slime-editing-keys   	nil
-        slime-keys           	nil
-        slime-doc-bindings   	nil
-        slime-who-bindings   	nil)
-
-  ;; (re-)setup keymaps
-  (slime-init-keymaps)
-
-  ;; define actual keys
-  ;; (kd slime-doc-map
-  ;;     '()
-  ;;     ;; '((?a slime-apropos)
-  ;;     ;;   (?z slime-apropos-all)
-  ;;     ;;   (?p slime-apropos-package)
-  ;;     ;;   (?d slime-describe-symbol)
-  ;;     ;;   (?f slime-describe-function)
-  ;;     ;;   (?h slime-documentation-lookup)
-  ;;     ;;   (?~ common-lisp-hyperspec-format)
-  ;;     ;;   (?# common-lisp-hyperspec-lookup-reader-macro)))
-  ;;     )
-  ;; (kd slime-who-map
-  ;;     '()
-  ;;     ;; '((?c slime-who-calls)
-  ;;     ;;   (?w slime-calls-who)
-  ;;     ;;   (?r slime-who-references)
-  ;;     ;;   (?b slime-who-binds)
-  ;;     ;;   (?s slime-who-sets)
-  ;;     ;;   (?m slime-who-macroexpands)
-  ;;     ;;   (?a slime-who-specializes)))
-  ;;     )
-  ;; (kd slime-prefix-map
-  ;;     '()
-  ;;     ;; '(("\C-r"  slime-eval-region)
-  ;;     ;;   (":"     slime-interactive-eval)
-  ;;     ;;   ("\C-e"  slime-interactive-eval)
-  ;;     ;;   ("E"     slime-edit-value)
-  ;;     ;;   ("\C-l"  slime-load-file)
-  ;;     ;;   ("\C-b"  slime-interrupt)
-  ;;     ;;   ("\M-d"  slime-disassemble-symbol)
-  ;;     ;;   ("\C-t"  slime-toggle-trace-fdefinition)
-  ;;     ;;   ("I"     slime-inspect)
-  ;;     ;;   ("\C-xt" slime-list-threads)
-  ;;     ;;   ("\C-xn" slime-cycle-connections)
-  ;;     ;;   ("\C-xc" slime-list-connections)
-  ;;     ;;   ("<"     slime-list-callers)
-  ;;     ;;   (">"     slime-list-callees)
-  ;;     ;;   ;; Include DOC keys...
-  ;;     ;;   ("\C-d"  slime-doc-map)
-  ;;     ;;   ;; Include XREF WHO-FOO keys...
-  ;;     ;;   ("\C-w"  slime-who-map)
-  ;;     )
-  ;; (kd slime-parent-map
-  ;;     '()
-  ;;     ;; '(("\M-."      slime-edit-definition)
-  ;;     ;;   ("\M-,"      slime-pop-find-definition-stack)
-  ;;     ;;   ("\M-_"      slime-edit-uses)    ; for German layout
-  ;;     ;;   ("\M-?"      slime-edit-uses)    ; for USian layout
-  ;;     ;;   ("\C-x4."	 slime-edit-definition-other-window)
-  ;;     ;;   ("\C-x5."	 slime-edit-definition-other-frame)
-  ;;     ;;   ("\C-x\C-e"  slime-eval-last-expression)
-  ;;     ;;   ("\C-\M-x"   slime-eval-defun)
-  ;;     ;;   ;; Include PREFIX keys...
-  ;;     ;;   ("\C-c"	 slime-prefix-map)))
-
-  ;;     )
-  ;; (kd slime-editing-map
-  ;;     '()
-  ;;     ;; ("\M-\t"      slime-complete-symbol)
-  ;;     ;; (" "          slime-space)
-  ;;     ;; ;; Evaluating
-  ;;     ;; ;;("\C-x\M-e" slime-eval-last-expression-display-output :inferior t)
-  ;;     ;; ("\C-c\C-p"   slime-pprint-eval-last-expression)
-  ;;     ;; ;; Macroexpand
-  ;;     ;; ("\C-c\C-m"   slime-expand-1)
-  ;;     ;; ("\C-c\M-m"   slime-macroexpand-all)
-  ;;     ;; ;; Misc
-  ;;     ;; ("\C-c\C-u"   slime-undefine-function)
-  ;;     ;; (,(kbd "C-M-.")   slime-next-location)
-  ;;     ;; (,(kbd "C-M-,")   slime-previous-location)
-  ;;     ;; ;; Obsolete, redundant bindings
-  ;;     ;; ("\C-c\C-i" slime-complete-symbol)
-  ;;     ;; ;;("\M-*" pop-tag-mark) ; almost to clever
-
-  ;;     )
-  ;; (kd slime-mode-map
-  ;;     '()
-  ;;     ;; ("\M-p"       slime-previous-note)
-  ;;     ;; ("\M-n"       slime-next-note)
-  ;;     ;; ("\C-c\M-c"   slime-remove-notes)
-  ;;     ;; ("\C-c\C-k"   slime-compile-and-load-file)
-  ;;     ;; ("\C-c\M-k"   slime-compile-file)
-  ;;     ;; ("\C-c\C-c"   slime-compile-defun)))
-  ;;     )
-  )
-
-;; sp-insert-pair
-;; sp-next-sexp
-;; sp-previous-sexp
-
-;; sp-splice-sexp-killing-backward
-;; sp-splice-sexp-killing-forward
-
-;; sp-forward-slurp-sexp
-;; sp-forward-barf-sexp
-
-;; sp-absorb-sexp
-;; sp-emit-sexp
-
-;; sp-extract-before-sexp
-;; sp-extract-after-sexp
-
-;; sp-indent-defun
 
 ;; fonts
 (kd font-prefix-map
@@ -994,68 +692,12 @@
     '("q"     	quit-window)
     )
 
-;; racket
-(load-after 'racket-mode
-  (unset-complete-keymap racket-mode-map)
-
-  (kd racket-mode-map
-      '("C-c b" 	racket-unvisit)
-      '("C-c d "	racket-doc)
-      '("C-c f" 	racket-fold-all-tests)
-      '("C-c F" 	racket-unfold-all-tests)
-      '("C-c m" 	racket-visit-module)
-      '("C-c p" 	racket-cycle-paren-shapes)
-      '("C-c t" 	racket-test)
-      '("C-c v" 	racket-visit-definition)
-
-      '("RET"	racket-cr)
-      '(")"  	racket-insert-closing-paren)
-      '("]"  	racket-insert-closing-bracket)
-      '("}"  	racket-insert-closing-brace)
-      ))
-
-(load-after 'geiser-mode
-  (unset-complete-keymap geiser-mode-map)
-
-  (kd geiser-mode-map
-      '("C-c C-c"	geiser-mode-switch-to-repl-and-enter)
-
-      '("C-x SPC C-c"  	geiser-compile-current-buffer)
-      '("C-x SPC SPC"  	geiser-eval-definition-and-go)
-      '("C-x SPC S-SPC"	geiser-eval-definition)
-      '("C-x SPC b"    	geiser-eval-buffer-and-go)
-      '("C-x SPC B"    	geiser-eval-buffer)
-      '("C-x SPC c"    	geiser-compile-definition-and-go)
-      '("C-x SPC C"    	geiser-compile-definition)
-      '("C-x SPC l"    	geiser-eval-last-sexp)
-      '("C-x SPC r"    	geiser-eval-region-and-go)
-      '("C-x SPC R"    	geiser-eval-region)
-
-      '("C-c <"	geiser-xref-callers)
-      '("C-c >"	geiser-xref-callees)
-
-      '("C-c d d"	geiser-doc-symbol-at-point)
-      '("C-c d m"	geiser-doc-module)
-      '("C-c d w"	geiser-doc-look-up-manual)
-      '("C-c e e"	geiser-expand-definition)
-      '("C-c e l"	geiser-expand-last-sexp)
-      '("C-c e r"	geiser-expand-region)
-      '("C-c l"  	geiser-add-to-load-path)
-      '("C-c r"  	geiser-mode-switch-to-repl)
-
-      ;; ;; '(""	geiser-edit-symbol-at-point)
-      ;; ;; '(""	geiser-pop-symbol-stack)
-      ;; ;; '(""	geiser-edit-module)
-      ))
-
 (load-after 'prompt-minor-mode
   (kd prompt-minor-mode-map
       '("<f12>"    	corpus/open-corpus-file)
       '("<mouse-9>"	corpus/open-corpus-file)
 
       '("<f10>"	prompt/bunf-current-line)
-
-      ;; '("|"	yas-expand)
 
       ;; navigation
       '("C-c t a"  	prompt/beginning-of-plus-block)
