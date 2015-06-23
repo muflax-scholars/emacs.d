@@ -1,10 +1,10 @@
 ;;; dired-open-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-
+(add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
 
-;;;### (autoloads (dired-open-file) "dired-open" "dired-open.el"
-;;;;;;  (21296 58292 546976 535000))
+;;;### (autoloads nil "dired-open" "dired-open.el" (21896 44335 399151
+;;;;;;  366000))
 ;;; Generated autoloads from dired-open.el
 
 (autoload 'dired-open-file "dired-open" "\
@@ -20,16 +20,9 @@ With \\[universal-argument], run `dired-find-file' normally.
 
 ;;;***
 
-;;;### (autoloads nil nil ("dired-open-pkg.el") (21296 58292 569519
-;;;;;;  657000))
-
-;;;***
-
-(provide 'dired-open-autoloads)
 ;; Local Variables:
 ;; version-control: never
 ;; no-byte-compile: t
 ;; no-update-autoloads: t
-;; coding: utf-8
 ;; End:
 ;;; dired-open-autoloads.el ends here
