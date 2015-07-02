@@ -107,6 +107,7 @@
         whole-line-or-region-kill-ring-save
         whole-line-or-region-yank
         yank-and-indent
+        yank-pop-reverse
         yas-expand
         ))
 
