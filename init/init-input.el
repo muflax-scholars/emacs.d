@@ -3,8 +3,8 @@
 ;; input methods, including a direct mozc binding to avoid ibus (requires mozc install)
 (require 'custom-input-methods)
 
-;; default to the diacritic smasher
-(setq default-input-method "muflax-latin")
+;; default to no input method
+(setq default-input-method nil)
 (defun turn-on-default-input-method ()
   (set-input-method default-input-method))
 (add-hook 'text-mode-hook       	'turn-on-default-input-method)
