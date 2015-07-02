@@ -227,8 +227,6 @@
     '("C-<prior>"	dired-prev)
 
     '("M-<down>" 	md/move-lines-down)
-    '("M-<left>" 	er/mark-symbol)
-    '("M-<right>"	er/mark-defun)
     '("M-<up>"   	md/move-lines-up)
 
     '("M-<next>" 	dired-next)
@@ -279,7 +277,6 @@
     '("C-\\"	generalized-shell-command) ; terminal bug, same as C-|
     '("C-|" 	generalized-shell-command)
 
-    '("M--"	negative-argument)
     '("M-|"	shell-command-on-region)
 
     ;; numbers
@@ -293,16 +290,6 @@
     '("C-7"	digit-argument)
     '("C-8"	digit-argument)
     '("C-9"	digit-argument)
-    '("M-0"	digit-argument)
-    '("M-1"	digit-argument)
-    '("M-2"	digit-argument)
-    '("M-3"	digit-argument)
-    '("M-4"	digit-argument)
-    '("M-5"	digit-argument)
-    '("M-6"	digit-argument)
-    '("M-7"	digit-argument)
-    '("M-8"	digit-argument)
-    '("M-9"	digit-argument)
 
     ;; alphabet
     '("C-a"	smart-beginning-of-line)
@@ -338,8 +325,6 @@
     '("M-k"	copy-line)
     '("M-n"	undo-tree-undo)
     '("M-p"	undo-tree-redo)
-    '("M-q"	fill-region)
-    '("M-Q"	unfill-region)
     '("M-w"	kill-ring-save)
     '("M-x"	smex)
     '("M-y"	yank-pop)
@@ -507,7 +492,7 @@
   (kd ac-completing-map
       '("C-j"	ac-complete)
       '("C-d"	ac-next)
-      '("M-t"	ac-previous)
+      '("C-D"	ac-previous)
       ))
 
 ;; multiple cursors
@@ -542,7 +527,7 @@
 ;; handle comments
 (load-after 'cc-mode
   (kd c-mode-map
-      '("M-RET"	c-indent-new-comment-line)
+      '("C-j"	c-indent-new-comment-line)
       ))
 
 ;; input methods
@@ -697,10 +682,10 @@
       '("C-c t C-a"	prompt/beginning-of-example-grab-bracket)
       '("C-c t C-e"	prompt/end-of-example-grab-bracket)
 
-      '("C-S-f"	prompt/next-block)
-      '("C-S-b"	prompt/prev-block)
-      '("M-f"  	prompt/next-bracket)
-      '("M-b"  	prompt/prev-bracket)
+      '("C-S-f" 	prompt/next-block)
+      '("C-S-b" 	prompt/prev-block)
+      ;; '("M-f"	prompt/next-bracket)
+      ;; '("M-b"	prompt/prev-bracket)
 
       ;; folding
       '("C-c t f a"	prompt/fold-show-adjectives)
@@ -712,11 +697,11 @@
       '("C-c t f F"	prompt/fold-show-all)
 
       ;; moving blocks
-      '("<insert>" 	prompt/copy-example-block)
-      '("C-S-w"    	prompt/kill-example-block)
-      '("C-<left>" 	prompt/select-example-block)
-      '("M-<prior>"	prompt/move-example-block-up)
-      '("M-<next>" 	prompt/move-example-block-down)
+      '("<insert>"    	prompt/copy-example-block)
+      '("C-S-w"       	prompt/kill-example-block)
+      '("C-<left>"    	prompt/select-example-block)
+      ;; '("M-<prior>"	prompt/move-example-block-up)
+      ;; '("M-<next>" 	prompt/move-example-block-down)
 
       ;; cleaning
       '("C-c t c"  	prompt/convert-all-dict-entry)
@@ -735,12 +720,6 @@
       ;; open corpus file
       '("<f12>"  	corpus/open-next-corpus-file)
       '("C-<f12>"	corpus/open-next-corpus-file)
-
-      '("<mouse-9>"  	corpus/open-next-corpus-file)
-      '("C-<mouse-9>"	corpus/open-next-corpus-file)
-      '("M-<mouse-9>"	corpus/open-prev-corpus-file)
-
-      ;; moving blocks
 
       ;; navigation in corpus
       '("n"	prompt/next-example-block)
@@ -780,10 +759,10 @@
   (kd word-list-minor-mode-map
       '("<f12>"	word-list/open-word)
 
-      '("<left>"   	word-list/unmark-item)
-      '("<right>"  	word-list/mark-item)
-      '("M-<left>" 	word-list/unmark-item-all)
-      '("M-<right>"	word-list/mark-item-all)
+      '("<left>"      	word-list/unmark-item)
+      '("<right>"     	word-list/mark-item)
+      ;; '("M-<left>" 	word-list/unmark-item-all)
+      ;; '("M-<right>"	word-list/mark-item-all)
       ))
 
 (load-after 'lesson-minor-mode
@@ -832,22 +811,96 @@
 (require 'nav-mode)
 (kd nav-mode-map
     ;; simple navigation
-    '("i"	backward-sentence)
-    '("a"	forward-sentence)
-    '("u"	backward-word)
+    '("n"	left-char)
+    '("r"	next-line)
+    '("t"	right-char)
+    '("g"	previous-line)
+
+    '("i"	backward-word)
+    '("a"	mc/mark-next-like-this)
     '("e"	forward-word)
+    '("l"	mc/mark-previous-like-this)
 
-    '("p"	scroll-up-command)
-    '("|"	scroll-down-command)
+    ;; '("M-<down>"     	md/move-lines-down)
+    ;; '("M-<up>"       	md/move-lines-up)
+    ;; '("M-<next>"     	dired-next)
+    ;; '("M-<prior>"    	dired-prev)
+    ;; '("C-<left>"     	er/contract-region)
+    ;; '("C-<right>"    	er/expand-region)
+    ;; '("C-<backspace>"	backward-kill-word)
+    ;; '("C-<delete>"   	kill-word)
+    ;; '("C-<return>"   	md/duplicate-down)
+    ;; '("C-<tab>"      	literal-tab)
+    ;; '("C-SPC"        	set-mark-command)
+    ;; '("M-<tab>"      	elastic-align-region-or-current)
+    ;; '("<backspace>"  	delete-backward-char)
+    ;; '("<delete>"     	delete-char) ; make DEL always work like intended
+    ;; '("RET"          	newline)
+    ;; '("TAB"          	indent-for-tab-command)
+    ;; '("C-a"          	smart-beginning-of-line)
+    ;; '("C-A"          	beginning-of-line)
+    ;; '("C-b"          	backward-word)
+    ;; '("C-e"          	smart-end-of-line)
+    ;; '("C-E"          	end-of-line)
+    ;; ;; '("C-g"       	keyboard-quit) ; also change quit-char if you wanna move it
+    ;; '("C-h"          	help-command)
+    ;; '("C-j"          	newline-and-indent)
+    ;; '("C-k"          	kill-and-join-forward)
+    ;; '("C-l"          	recenter-top-bottom)
+    ;; '("C-n"          	focus-next-window)
+    ;; '("C-N"          	focus-prev-window)
+    ;; '("C-o"          	yas-expand)
+    ;; '("C-p"          	mc-prefix-map :type prefix)
+    ;; '("C-r"          	window-prefix-map :type prefix)
+    ;; '("C-s"          	search-prefix-map :type prefix)
+    ;; '("C-t"          	save-compile-run)
+    ;; ;; '("C-u"       	universal-argument)
+    ;; '("C-v"          	visual-prefix-map :type prefix)
+    ;; '("C-w"          	kill-region)
+    ;; ;; '("C-x"       	command-prefix-map :type prefix)
+    ;; '("C-y"          	yank-and-indent)
+    ;; '("C-Y"          	yank)
+    ;; '("M-k"          	copy-line)
+    ;; '("M-n"          	undo-tree-undo)
+    ;; '("M-p"          	undo-tree-redo)
+    ;; '("M-w"          	kill-ring-save)
+    ;; ;; '("M-x"       	smex)
+    ;; '("M-y"          	yank-pop)
+    ;; '("M-Y"          	yank-pop-reverse)
 
-    '("o"	focus-next-window)
-    '("n"	focus-next-window)
-    '("r"	focus-prev-window)
+    ;; '("C-b"	list-buffers)
+    ;; '("C-c"	save-buffers-kill-terminal)
+    ;; '("C-f"	find-file)
+    ;; '("C-g"	abort-recursive-edit)
+    ;; '("C-j"	dired-jump)
+    ;; '("C-o"	yas-reload-all)
+    ;; '("C-r"	recentf-ido-find-file)
+    ;; '("C-s"	save-buffer)
+    ;; '("C-v"	find-alternate-file)
+    ;; '("C-w"	write-file)
+    ;; '("SPC"	eval-prefix-map :type prefix)
+    ;; '("+"  	balance-windows)
+    ;; '("b"  	switch-to-buffer)
+    ;; '("c"  	case-prefix-map :type prefix)
+    ;; '("d"  	debug-prefix-map :type prefix)
+    ;; '("f"  	font-prefix-map :type prefix)
+    ;; '("g"  	magit-status)
+    ;; '("h"  	mark-whole-buffer)
+    ;; '("i"  	indent-region)
+    ;; '("k"  	kill-buffer)
+    ;; '("m"  	number-prefix-map :type prefix)
+    ;; '("M"  	macro-prefix-map :type prefix)
+    ;; '("p"  	paradox-list-packages)
+    ;; '("s"  	save-some-buffers)
+    ;; '("t"  	input-prefix-map :type prefix)
 
-    ;; editing
-    '("c"	kill-and-join-forward)
-    '("w"	whole-line-or-region-kill-region)
-    '("y"	yank-and-indent)
+    ;; '("C-w"	kill-with-append)
+    ;; '("SPC"	comment-dwim)
+    ;; '("c"  	comment-region)
+    ;; '("u"  	uncomment-region)
+    ;; '("w"  	copy-with-append)
+
+    ;; and clean up search a bit etc?
 
     '("SPC"	nav-mode)
     )
