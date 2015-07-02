@@ -434,4 +434,9 @@
 
   )
 
+(load-after 'haskell-mode
+  (add-hook 'haskell-mode-hook 'leerzeichen-mode)
+  )
+
+
 (provide 'init-major-modes)
