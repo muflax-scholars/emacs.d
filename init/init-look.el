@@ -168,6 +168,20 @@
 (global-adaptive-wrap-prefix-mode 1)
 (setq visual-line-fringe-indicators '(nil right-curly-arrow))
 
+;; make regexpes a bit more readable by default
+(defun fontify-glyph (item glyph)
+  `((,item
+     (0 font-lock-preprocessor-face t)
+     (0 (prog1
+            (compose-region (match-beginning 0)
+                            (match-end 0)
+                            ,glyph) nil)))))
+
+(font-lock-add-keywords 'emacs-lisp-mode	(fontify-glyph "\\\\\\\\|" "|"))
+(font-lock-add-keywords 'emacs-lisp-mode	(fontify-glyph "\\\\\\\\(" "("))
+(font-lock-add-keywords 'emacs-lisp-mode	(fontify-glyph "\\\\\\\\)" ")"))
+
+
 ;; clean up modeline and hide standard minor modes
 (defmacro diminish-minor-mode (package mode &optional short-name)
   `(load-after ,package
