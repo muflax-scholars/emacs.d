@@ -263,7 +263,7 @@
   (notes-rx (annotation-line-3 "*")))
 
 (defconst notes-regex-special-lines
-  (notes-rx (special-line-1 "##" "lll" "sss")))
+  (notes-rx (special-line-1 "##" "lll" "sss" ">>")))
 
 (defconst notes-regex-list
   "^\\([ \t]*\\)\\([0-9]+\\.\\|[-]\\)\\([ \t]+\\)")
