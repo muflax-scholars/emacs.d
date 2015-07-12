@@ -274,5 +274,48 @@
   (s-match (lesson/rx lesson-file)
            (file-name-nondirectory (buffer-file-name))))
 
+;; maintenance
+(defun lesson/count-sentences (beg end)
+  (how-many "^[ \t]*![!?]?[ \t]+.+" beg end nil))
+
+(defun lesson/time-estimate (count)
+  (* (+ 1 (/ count
+             (* 5 5)))
+     5))
+
+(defun lesson/format-minutes (minutes)
+  (format "%d:%02d" (/ minutes 60) (% minutes 60)))
+
+(defun lesson/insert-time-mark (&optional count)
+  (interactive)
+  (insert "# TIME "
+          (lesson/format-minutes
+           (lesson/time-estimate
+            (or count
+                (lesson/count-sentences (point-min) (point)))))
+          "\n"))
+
+(defun lesson/update-time-marks ()
+  (interactive)
+  (let ((sentences 0)
+        (last-pos (point-min)))
+    (save-excursion
+      (goto-char (point-min))
+      (while (re-search-forward "^# TIME [0-9]+:[0-9]+$" nil t)
+        (forward-line 1)
+        (delete-region (match-beginning 0) (point))
+
+        ;; minor performance tweak
+        (setq sentences (+ sentences
+                           (lesson/count-sentences last-pos (point)))
+              last-pos (point))
+
+        (lesson/insert-time-mark sentences)))))
+
+(defun lesson/update-and-insert-time-mark ()
+  (interactive)
+  (lesson/update-time-marks)
+  (lesson/insert-time-mark))
+
 (provide 'lesson-minor-mode)
 ;;; lesson-minor-mode.el ends here

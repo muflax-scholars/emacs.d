@@ -795,11 +795,13 @@
       '("RET"	phi-grep-exit)
       ))
 
-
 (load-after 'notes-mode
   (kd notes-mode-map
       '("RET"	newline-and-indent)
       '("C-j"	newline)
+
+      '("C-c t"  	lesson/update-and-insert-time-mark)
+      '("C-c C-t"	lesson/update-time-marks)
       ))
 
 (load-after 'eww-mode
