@@ -229,9 +229,6 @@
     '("M-<down>" 	md/move-lines-down)
     '("M-<up>"   	md/move-lines-up)
 
-    '("M-<next>" 	dired-next)
-    '("M-<prior>"	dired-prev)
-
     '("C-M-<down>" 	buf-move-down)
     '("C-M-<left>" 	buf-move-left)
     '("C-M-<right>"	buf-move-right)
@@ -255,7 +252,7 @@
 
     '("C-SPC"	set-mark-command)
 
-    '("M-<tab>"      	elastic-align-region-or-current)
+    '("M-<tab>"	elastic-align-region-or-current)
 
     '("<f3>"       	kmacro-start-macro-or-insert-counter)
     '("<f4>"       	kmacro-end-or-call-macro)
@@ -277,8 +274,6 @@
     '("C-\\"	generalized-shell-command) ; terminal bug, same as C-|
     '("C-|" 	generalized-shell-command)
 
-    '("M-|"	shell-command-on-region)
-
     ;; numbers
     '("C-0"	digit-argument)
     '("C-1"	digit-argument)
@@ -292,43 +287,50 @@
     '("C-9"	digit-argument)
 
     ;; alphabet
-    '("C-a"	smart-beginning-of-line)
-    '("C-A"	beginning-of-line)
-    '("C-b"	backward-word)
-    '("C-c"	mode-specific-command-prefix)
-    '("C-e"	smart-end-of-line)
-    '("C-E"	end-of-line)
-    '("C-f"	forward-word)
-    '("C-g"	keyboard-quit) ; also change quit-char if you wanna move it
-    '("C-h"	help-command)
-    '("C-i"	indent-for-tab-command :type terminal :alt-key "TAB")
-    '("C-j"	newline-and-indent)
-    '("C-k"	kill-and-join-forward)
-    '("C-l"	recenter-top-bottom)
-    '("C-m"	newline :type terminal :alt-key "RET")
-    '("C-n"	focus-next-window)
-    '("C-N"	focus-prev-window)
-    '("C-o"	yas-expand)
-    '("C-p"	mc-prefix-map :type prefix)
-    '("C-q"	quoted-insert)
-    '("C-r"	window-prefix-map :type prefix)
-    '("C-s"	search-prefix-map :type prefix)
-    '("C-t"	save-compile-run)
-    '("C-u"	universal-argument)
-    '("C-v"	visual-prefix-map :type prefix)
-    '("C-w"	kill-region)
-    '("C-x"	command-prefix-map :type prefix)
-    '("C-y"	yank-and-indent)
-    '("C-Y"	yank)
-    '("C-z"	undo-tree-undo)
+    '("C-a"   	smart-beginning-of-line)
+    '("C-A"   	beginning-of-line)
+    '("C-b"   	backward-word)
+    '("C-c"   	mode-specific-command-prefix)
+    ;; '("C-d"	ac-trigger-key)
+    '("C-e"   	smart-end-of-line)
+    '("C-E"   	end-of-line)
+    '("C-f"   	forward-word)
+    '("C-g"   	keyboard-quit) ; also change quit-char if you wanna move it
+    '("C-h"   	help-command)
+    '("C-i"   	indent-for-tab-command :type terminal :alt-key "TAB")
+    '("C-j"   	newline-and-indent)
+    '("C-k"   	kill-and-join-forward)
+    '("C-K"   	copy-line)
+    '("C-l"   	recenter-top-bottom)
+    '("C-m"   	newline :type terminal :alt-key "RET")
+    '("C-n"   	focus-next-window)
+    '("C-N"   	focus-prev-window)
+    '("C-o"   	yas-expand)
+    '("C-p"   	mc-prefix-map :type prefix)
+    '("C-q"   	quoted-insert)
+    '("C-r"   	window-prefix-map :type prefix)
+    '("C-s"   	search-prefix-map :type prefix)
+    '("C-t"   	save-compile-run)
+    '("C-u"   	universal-argument)
+    '("C-v"   	visual-prefix-map :type prefix)
+    '("C-w"   	kill-region)
+    '("C-W"   	kill-ring-save)
+    '("C-x"   	command-prefix-map :type prefix)
+    '("C-y"   	yank-and-indent)
+    '("C-Y"   	yank)
+    '("C-z"   	undo-tree-undo)
+    '("C-Z"   	undo-tree-redo)
 
+    ;; to convert
+    '("M-y"	yank-pop)
+    '("M-Y"	yank-pop-reverse)
+
+    ;; done
     '("M-k"	copy-line)
     '("M-n"	undo-tree-undo)
     '("M-p"	undo-tree-redo)
-    '("M-w"	kill-ring-save)
     '("M-x"	smex)
-    '("M-y"	yank-pop)
-    '("M-Y"	yank-pop-reverse)
+    '("M-w"	kill-ring-save)
     '("M-z"	undo-tree-redo)
     )
 
@@ -348,6 +350,7 @@
     '("C-s"	save-buffer)
     '("C-v"	find-alternate-file)
     '("C-w"	write-file)
+    '("C-x"	smex)
     '("SPC"	eval-prefix-map :type prefix)
     '("+"  	balance-windows)
     '("b"  	switch-to-buffer)
