@@ -324,6 +324,7 @@
   (set-default 'magit-stage-all-confirm  	nil)
   (set-default 'magit-unstage-all-confirm	nil)
 
+  (setq git-commit-summary-max-length 80)
   (setq magit-log-cutoff-length 1000)
 
   ;; full screen magit-status
