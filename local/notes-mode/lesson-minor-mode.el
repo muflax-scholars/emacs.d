@@ -301,7 +301,7 @@
         (last-pos (point-min)))
     (save-excursion
       (goto-char (point-min))
-      (while (re-search-forward "^# TIME [0-9]+:[0-9]+$" nil t)
+      (while (re-search-forward "^# TIME" nil t)
         (forward-line 1)
         (delete-region (match-beginning 0) (point))
 
