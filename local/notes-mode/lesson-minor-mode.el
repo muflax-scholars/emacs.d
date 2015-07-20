@@ -297,34 +297,46 @@
 (defun lesson/format-minutes (minutes)
   (format "%d:%02d" (/ minutes 60) (% minutes 60)))
 
-(defun lesson/insert-time-mark (&optional count)
-  (interactive)
-  (insert "# TIME "
-          (lesson/format-minutes
-           (lesson/time-estimate
-            (or count
-                (lesson/count-sentences (point-min) (point)))))
+(defun lesson/insert-mark (mark count)
+  (insert mark " "
+          (lesson/format-minutes (lesson/time-estimate count))
           "\n"))
 
-(defun lesson/find-time-marks (beg end)
+(defun lesson/insert-time-mark (&optional count)
+  (interactive)
+  (lesson/insert-mark
+   "# TIME"
+   (or count (lesson/count-sentences (point-min) (point)))))
+
+(defun lesson/insert-duration-mark (count)
+  (lesson/insert-mark "# DURATION" count))
+
+(defun lesson/find-marks (mark beg end)
   (let (marks)
     (save-excursion
       (goto-char beg)
       (beginning-of-line)
       (while (< (point) end)
-        (when (looking-at "^# TIME")
+        (when (looking-at mark)
           (setq marks (cons (point) marks)))
         (forward-line 1)))
-    (reverse marks)))
+    ;; marks are returned backwards so we can easily replace them without worrying about offsets
+    marks))
+
+(defun lesson/find-time-marks (beg end)
+  (lesson/find-marks "^# TIME" beg end))
+
+(defun lesson/find-duration-marks (beg end)
+  (lesson/find-marks "^# DURATION" beg end))
 
 (defun lesson/update-time-marks ()
   (interactive)
-  (let ((sentences 	(lesson/find-sentences 	(point-min) (point-max)))
-        (time-marks	(lesson/find-time-marks	(point-min) (point-max)))
+  (let ((sentences	(lesson/find-sentences 	(point-min) (point-max)))
+        (marks    	(lesson/find-time-marks	(point-min) (point-max)))
         count
         )
     (save-excursion
-      (dolist (mark time-marks)
+      (dolist (mark marks)
         (setq count (length (--filter (<= it mark) sentences)))
 
         (goto-char mark)
@@ -337,6 +349,26 @@
   (interactive)
   (lesson/update-time-marks)
   (lesson/insert-time-mark))
+
+(defun lesson/update-duration-marks ()
+  (interactive)
+  (let ((sentences	(lesson/find-sentences     	(point-min) (point-max)))
+        (marks    	(lesson/find-duration-marks	(point-min) (point-max)))
+        count
+        (last-section (point-max))
+        )
+    (save-excursion
+      (dolist (mark marks)
+        (setq count (length (--filter (and (>= it mark)
+                                           (<= it last-section))
+                                      sentences))
+              last-section mark)
+
+        (goto-char mark)
+        (forward-line 1)
+        (delete-region mark (point))
+
+        (lesson/insert-duration-mark count)))))
 
 (provide 'lesson-minor-mode)
 ;;; lesson-minor-mode.el ends here
