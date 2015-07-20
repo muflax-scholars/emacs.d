@@ -275,8 +275,19 @@
            (file-name-nondirectory (buffer-file-name))))
 
 ;; maintenance
+(defun lesson/find-sentences (beg end)
+  (let (sentences)
+    (save-excursion
+      (goto-char beg)
+      (beginning-of-line)
+      (while (< (point) end)
+        (when (looking-at "^[ \t]*![!?]?[ \t]+.+")
+          (setq sentences (cons (point) sentences)))
+        (forward-line 1)))
+    (reverse sentences)))
+
 (defun lesson/count-sentences (beg end)
-  (how-many "^[ \t]*![!?]?[ \t]+.+" beg end nil))
+  (length (lesson/find-sentences beg end)))
 
 (defun lesson/time-estimate (count)
   (* (+ 1 (/ count
@@ -295,22 +306,32 @@
                 (lesson/count-sentences (point-min) (point)))))
           "\n"))
 
+(defun lesson/find-time-marks (beg end)
+  (let (marks)
+    (save-excursion
+      (goto-char beg)
+      (beginning-of-line)
+      (while (< (point) end)
+        (when (looking-at "^# TIME")
+          (setq marks (cons (point) marks)))
+        (forward-line 1)))
+    (reverse marks)))
+
 (defun lesson/update-time-marks ()
   (interactive)
-  (let ((sentences 0)
-        (last-pos (point-min)))
+  (let ((sentences 	(lesson/find-sentences 	(point-min) (point-max)))
+        (time-marks	(lesson/find-time-marks	(point-min) (point-max)))
+        count
+        )
     (save-excursion
-      (goto-char (point-min))
-      (while (re-search-forward "^# TIME" nil t)
+      (dolist (mark time-marks)
+        (setq count (length (--filter (<= it mark) sentences)))
+
+        (goto-char mark)
         (forward-line 1)
-        (delete-region (match-beginning 0) (point))
+        (delete-region mark (point))
 
-        ;; minor performance tweak
-        (setq sentences (+ sentences
-                           (lesson/count-sentences last-pos (point)))
-              last-pos (point))
-
-        (lesson/insert-time-mark sentences)))))
+        (lesson/insert-time-mark count)))))
 
 (defun lesson/update-and-insert-time-mark ()
   (interactive)
