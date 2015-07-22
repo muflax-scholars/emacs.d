@@ -326,6 +326,7 @@
 
   (setq git-commit-summary-max-length 80)
   (setq magit-log-cutoff-length 1000)
+  (setq magit-diff-auto-show '())
 
   ;; full screen magit-status
   (defadvice magit-status (around magit-fullscreen activate)
