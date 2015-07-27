@@ -119,6 +119,7 @@
   (setq python-indent-offset 2)
   (add-hook 'python-mode-hook (lambda () (setq tab-width 2)))
   (add-hook 'python-mode-hook (lambda () (electric-indent-local-mode -1)))
+  (add-hook 'python-mode-hook 'leerzeichen-mode)
   )
 
 ;; ruby mode
