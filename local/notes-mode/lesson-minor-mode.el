@@ -347,7 +347,7 @@
 
 (defun lesson/update-and-insert-time-mark ()
   (interactive)
-  (lesson/update-time-marks)
+  (lesson/update-all-marks)
   (lesson/insert-time-mark))
 
 (defun lesson/update-duration-marks ()
@@ -369,6 +369,12 @@
         (delete-region mark (point))
 
         (lesson/insert-duration-mark count)))))
+
+(defun lesson/update-all-marks ()
+  (interactive)
+  (lesson/update-time-marks)
+  (lesson/update-duration-marks))
+
 
 (provide 'lesson-minor-mode)
 ;;; lesson-minor-mode.el ends here

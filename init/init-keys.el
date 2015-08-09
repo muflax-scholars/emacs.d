@@ -804,7 +804,7 @@
       '("C-j"	newline)
 
       '("C-c t"  	lesson/update-and-insert-time-mark)
-      '("C-c C-t"	lesson/update-time-marks)
+      '("C-c C-t"	lesson/update-all-marks)
       ))
 
 (load-after 'eww-mode
