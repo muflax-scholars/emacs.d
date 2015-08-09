@@ -168,6 +168,9 @@
 (global-adaptive-wrap-prefix-mode 1)
 (setq visual-line-fringe-indicators '(nil right-curly-arrow))
 
+;; don't wrap lines by default
+(setq-default truncate-lines t)
+
 ;; make regexpes a bit more readable by default
 (defun fontify-glyph (item glyph)
   `((,item
