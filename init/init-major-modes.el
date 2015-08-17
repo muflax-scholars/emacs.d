@@ -406,7 +406,8 @@
   ;; don't ask for a command unless we C-u for it
   (setq-local compilation-read-command nil)
 
-  (call-interactively 'compile))
+  (unless (s-blank? compile-command)
+    (call-interactively 'compile)))
 
 (load-after 'compile
   (setq compilation-always-kill t)
