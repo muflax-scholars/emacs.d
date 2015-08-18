@@ -290,9 +290,10 @@
   (length (lesson/find-sentences beg end)))
 
 (defun lesson/time-estimate (count)
-  (* (+ 1 (/ count
-             (* 5 5)))
-     5))
+  (if (> count 0)
+      (* 5 (+ 1 (/ count
+                   (* 5 5))))
+    0))
 
 (defun lesson/format-minutes (minutes)
   (format "%d:%02d" (/ minutes 60) (% minutes 60)))
