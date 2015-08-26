@@ -1,0 +1,1 @@
+(define-package "help-fns+" "20150822.2314" "Extensions to `help-fns.el'." 'nil :stars '("") :url "http://www.emacswiki.org/help-fns+.el" :keywords '("help" "faces" "characters" "packages" "description"))

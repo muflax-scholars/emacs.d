@@ -1,0 +1,1 @@
+(define-package "dired-subtree" "20150819.948" "Insert subdirectories in a tree-like fashion" '((dash "2.5.0") (dired-hacks-utils "0.0.1")) :stars '(#("68" 0 2 (font-lock-face paradox-star-face))) :keywords '("files"))
