@@ -394,9 +394,10 @@
 
   ;; some simple defaults
   (let ((command (case major-mode
-                   (c-mode   	"make")
-                   (rust-mode	"cargo build")
-                   (t        	""))))
+                   (c-mode    	"make")
+                   (rust-mode 	"cargo build")
+                   (notes-mode	"")
+                   (t         	""))))
 
     (setq-local compile-command
                 (if (s-blank? compile-command)
