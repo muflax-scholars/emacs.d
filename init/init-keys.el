@@ -300,7 +300,7 @@
     '("C-i"   	indent-for-tab-command :type terminal :alt-key "TAB")
     '("C-j"   	newline-and-indent)
     '("C-k"   	kill-and-join-forward)
-    '("C-K"   	copy-line)
+    '("C-K"   	sp-kill-hybrid-sexp)
     '("C-l"   	recenter-top-bottom)
     '("C-m"   	newline :type terminal :alt-key "RET")
     '("C-n"   	focus-next-window)
@@ -649,7 +649,7 @@
 (load-after 'lisp-mode
   ;; operate on sexps
   (kd lisp-mode-shared-map
-      '("C-k"	sp-kill-hybrid-sexp)
+      '("C-k"     	sp-kill-hybrid-sexp)
       '("<return>"	sp-newline)
       ))
 
