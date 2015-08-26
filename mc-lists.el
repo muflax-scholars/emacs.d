@@ -123,6 +123,7 @@
         find-tag
         focus-next-window
         ibus-handle-event
+        ido-find-alternate-file
         magit-status
         mouse-drag-mode-line
         phi-search
