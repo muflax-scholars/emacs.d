@@ -83,6 +83,7 @@
         phi-rectangle-kill-ring-save
         phi-rectangle-next-line
         phi-rectangle-yank
+        sgml-slash
         sh-assignment
         smart-beginning-of-line
         smart-end-of-line
