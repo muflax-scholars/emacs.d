@@ -169,11 +169,12 @@
 (defun unbreak-stupid-map (stupid-map)
   (define-key stupid-map (kbd "C-c") nil))
 
-(load-after 'python       	(unbreak-stupid-map python-mode-map))
-(load-after 'enh-ruby-mode	(unbreak-stupid-map enh-ruby-mode-map))
-(load-after 'go-mode      	(unbreak-stupid-map go-mode-map))
-(load-after 'flycheck     	(unbreak-stupid-map flycheck-mode-map))
-(load-after 'conf-mode    	(unbreak-stupid-map conf-mode-map))
+(load-after 'python       	(unbreak-stupid-map   	python-mode-map))
+(load-after 'enh-ruby-mode	(unbreak-stupid-map   	enh-ruby-mode-map))
+(load-after 'go-mode      	(unbreak-stupid-map   	go-mode-map))
+(load-after 'flycheck     	(unbreak-stupid-map   	flycheck-mode-map))
+(load-after 'conf-mode    	(unbreak-stupid-map   	conf-mode-map))
+(load-after 'wdired-mode  	(unset-complete-keymap	wdired-mode-map))
 
 ;; fix mod4 bug
 (define-key special-event-map (kbd "<key-17>")  	'ignore)
@@ -615,7 +616,9 @@
         )
 
     (kd wdired-mode-map
-        '("C-a"	dired-back-to-start-of-files)
+        '("C-a"    	dired-back-to-start-of-files)
+        '("C-c C-c"	wdired-finish-edit)
+        '("C-c C-k"	wdired-abort-changes)
         )
 
     ;; M-up goes to first file
