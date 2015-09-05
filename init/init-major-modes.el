@@ -411,34 +411,32 @@
   (unless (s-blank? compile-command)
     (call-interactively 'compile)))
 
-(load-after 'compile
-  (setq compilation-always-kill t)
-  (setq compilation-auto-jump-to-first-error nil)
-  (setq-default compile-command "")
+(require 'compile)
+(setq compilation-always-kill t)
+(setq compilation-auto-jump-to-first-error nil)
+(setq compile-command "")
 
-  ;; color the compilation buffer
-  (require 'ansi-color)
-  (defun colorize-compilation-buffer ()
-    (when (eq major-mode 'compilation-mode)
-      (ansi-color-apply-on-region compilation-filter-start (point-max))))
-  (add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
+;; color the compilation buffer
+(require 'ansi-color)
+(defun colorize-compilation-buffer ()
+  (when (eq major-mode 'compilation-mode)
+    (ansi-color-apply-on-region compilation-filter-start (point-max))))
+(add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
 
-  ;; (add-hook 'compilation-mode-hook 'leerzeichen-mode)
+;; (add-hook 'compilation-mode-hook 'leerzeichen-mode)
 
-  (defun bury-compile-buffer-if-successful (buffer string)
-    "Bury a compilation buffer if succeeded without warnings "
-    (when (and
-           (string-match "compilation" (buffer-name buffer))
-           (string-match "finished" string)
-           (not
-            (with-current-buffer buffer
-              (search-forward "warning" nil t))))
-      (bury-buffer buffer)
-      (switch-to-prev-buffer (get-buffer-window buffer) 'kill)))
+(defun bury-compile-buffer-if-successful (buffer string)
+  "Bury a compilation buffer if succeeded without warnings "
+  (when (and
+         (string-match "compilation" (buffer-name buffer))
+         (string-match "finished" string)
+         (not
+          (with-current-buffer buffer
+            (search-forward "warning" nil t))))
+    (bury-buffer buffer)
+    (switch-to-prev-buffer (get-buffer-window buffer) 'kill)))
 
-  (add-hook 'compilation-finish-functions 'bury-compile-buffer-if-successful)
-
-  )
+(add-hook 'compilation-finish-functions 'bury-compile-buffer-if-successful)
 
 (load-after 'haskell-mode
   (add-hook 'haskell-mode-hook 'leerzeichen-mode)
