@@ -42,6 +42,8 @@
     (lesson-block	(seq bol (* blank) (any "!" "?" "$")))
     (blank-line  	(seq bol (* blank) eol))
     (lesson-file 	(seq bol "L" (+ digit)))
+    (sentence    	(seq bol (* blank) "!" (? (any "!" "?")) (+ blank) (+ nonl)))
+    (translation 	(seq sentence "\t?"))
     ))
 
 ;; blocks
@@ -219,6 +221,34 @@
   (unless (<= (1- (smooth-scroll-lines-below-point))
               lesson/scroll-margin)
     (scroll-down-line)))
+
+(defun lesson/add-translations-to-block ()
+  (interactive)
+
+  (trim-whitespace)
+
+  (let* ((cur-block (lesson/current-block))
+         (beg (first 	cur-block))
+         (end (second	cur-block))
+         )
+    (save-excursion
+      (goto-char beg)
+
+      (while (< (point) end)
+        (when (looking-at (lesson/rx sentence))
+          (unless (looking-at (lesson/rx translation))
+            (end-of-line)
+            (when (= (preceding-char) ?\t)
+              (delete-char -1)
+              (setq end (- end 1)))
+            (insert "\t? ")
+            (setq end (+ end 3))))
+
+        (forward-line 1)))
+
+    (elastic-align-region beg end))
+
+  (end-of-line))
 
 ;; verbs
 
