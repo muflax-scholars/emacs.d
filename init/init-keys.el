@@ -174,7 +174,6 @@
 (load-after 'go-mode      	(unbreak-stupid-map   	go-mode-map))
 (load-after 'flycheck     	(unbreak-stupid-map   	flycheck-mode-map))
 (load-after 'conf-mode    	(unbreak-stupid-map   	conf-mode-map))
-(load-after 'wdired-mode  	(unset-complete-keymap	wdired-mode-map))
 
 ;; fix mod4 bug
 (define-key special-event-map (kbd "<key-17>")  	'ignore)
@@ -192,12 +191,15 @@
 (defvar mode-specific-map)
 (defvar universal-argument-map)
 
+(require 'wdired)
+
 ;; unset a lot of default keys so we can properly re-assign them later
 (loop for map in (list
                   global-map
                   ctl-x-map
                   mode-specific-map
                   special-mode-map
+                  wdired-mode-map
                   )
       collect (unset-complete-keymap map))
 
