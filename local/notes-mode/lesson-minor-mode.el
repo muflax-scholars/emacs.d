@@ -406,6 +406,17 @@
   (lesson/update-time-marks)
   (lesson/update-duration-marks))
 
+(defun lesson/remove-reading-mark ()
+  (interactive)
+  (save-excursion
+    (flush-lines "^>>[ \t]*$" (point-min) (point-max))))
+
+(defun lesson/set-reading-mark ()
+  (interactive)
+  (lesson/remove-reading-mark)
+  (save-excursion
+    (beginning-of-line)
+    (insert ">>\n")))
 
 (provide 'lesson-minor-mode)
 ;;; lesson-minor-mode.el ends here

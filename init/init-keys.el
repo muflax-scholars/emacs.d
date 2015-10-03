@@ -811,6 +811,8 @@
       '("C-c t"  	lesson/update-and-insert-time-mark)
       '("C-c C-t"	lesson/update-all-marks)
       '("C-c C-c"	lesson/add-translations-to-block)
+      '("C-c r"  	lesson/set-reading-mark)
+
       ))
 
 (load-after 'eww-mode
