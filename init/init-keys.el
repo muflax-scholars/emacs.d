@@ -655,7 +655,6 @@
 (load-after 'lisp-mode
   ;; operate on sexps
   (kd lisp-mode-shared-map
-      '("C-k"     	sp-kill-hybrid-sexp)
       '("<return>"	sp-newline)
       ))
 
