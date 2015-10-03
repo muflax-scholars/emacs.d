@@ -131,6 +131,7 @@
         repeat
         revert-buffer
         save-buffers-kill-terminal
+        save-compile-run
         smex
         toggle-input-method
         use-big-font
