@@ -411,9 +411,15 @@
   (save-excursion
     (flush-lines "^>>[ \t]*$" (point-min) (point-max))))
 
+(defun lesson/remove-hash-mark ()
+  (interactive)
+  (save-excursion
+    (flush-lines "^##[ \t]*$" (point-min) (point))))
+
 (defun lesson/set-reading-mark ()
   (interactive)
   (lesson/remove-reading-mark)
+  (lesson/remove-hash-mark)
   (save-excursion
     (beginning-of-line)
     (insert ">>\n")))
