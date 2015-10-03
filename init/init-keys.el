@@ -591,6 +591,7 @@
     '("SPC"	hs-show-block)
     '("f"  	hs-fold-levels)
     '("F"  	fold-dwim-show-all)
+    '("h"  	hl-line-mode)
     '("l"  	toggle-truncate-lines)
     '("s"  	whitespace-fold-levels)
     '("S"  	whitespace-fold-reset)
