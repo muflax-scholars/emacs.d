@@ -1,0 +1,1 @@
+(define-package "elmacro" "20141109.806" "Convert keyboard macros to elisp" '((s "1.9.0") (dash "1.5.0")) :stars '(#("36" 0 2 (font-lock-face paradox-star-face))) :url "https://github.com/Silex/elmacro" :keywords '("macro" "elisp" "convenience"))
