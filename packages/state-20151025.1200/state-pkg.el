@@ -1,0 +1,1 @@
+(define-package "state" "20151025.1200" "Quick navigation between workspaces" '((emacs "24")) :stars '(#("9" 0 1 (font-lock-face paradox-star-face))) :url "https://github.com/thisirs/state.git" :keywords '("convenience" "workspaces"))
