@@ -417,6 +417,11 @@
       ;; make backspace more intuitive
       '("<backspace>"	isearch-del-char)
 
+      '("S-<down>" 	isearch-repeat-forward)
+      '("S-<left>" 	isearch-repeat-backward)
+      '("S-<right>"	isearch-repeat-forward)
+      '("S-<up>"   	isearch-repeat-backward)
+
       '("C-c C-c"	isearch-normalize-string)
       '("C-c SPC"	isearch-toggle-lax-whitespace)
       '("C-c c"  	isearch-toggle-case-fold)
