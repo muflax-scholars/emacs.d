@@ -20,8 +20,10 @@
         delimit-columns-current
         dired-back-to-start-of-files
         dired-flag-file-deletion
+        dired-mark
         dired-next-line
         dired-previous-line
+        dired-unmark
         downcase-region
         downcase-word-or-region
         duplicate-line
