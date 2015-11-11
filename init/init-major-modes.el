@@ -395,10 +395,11 @@
 
   ;; some simple defaults
   (let ((command (case major-mode
-                   (c-mode    	"make")
-                   (rust-mode 	"cargo build")
-                   (notes-mode	"")
-                   (t         	""))))
+                   (c-mode     	"make")
+                   (rust-mode  	"cargo build")
+                   (racket-mode	"")
+                   (notes-mode 	"")
+                   (t          	""))))
 
     (setq-local compile-command
                 (if (s-blank? compile-command)
@@ -441,6 +442,15 @@
 (load-after 'haskell-mode
   (add-hook 'haskell-mode-hook 'leerzeichen-mode)
   )
+
+;; racket
+(load-lazy '(racket-mode) "racket-mode"
+  (add-hook 'racket-mode-hook 'leerzeichen-mode)
+  )
+
+(add-to-list 'auto-mode-alist '("\\.rkt$" . racket-mode))
+(add-to-list 'interpreter-mode-alist '("racket" . racket-mode))
+
 
 
 (provide 'init-major-modes)
