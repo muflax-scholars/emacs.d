@@ -5,18 +5,9 @@
 
 (setq elastic-tab-align-modes
       '(
-        enh-ruby-mode
+        prog-mode
+        text-mode
         notes-mode
-        nix-mode
-        emacs-lisp-mode
-        lisp-mode
-        racket-mode
-        scheme-mode
-        sh-mode
-        js2-mode
-        rust-mode
-        c-mode
-        c++-mode
         ))
 
 (elastic-advice-command       	indent-for-tab-command)

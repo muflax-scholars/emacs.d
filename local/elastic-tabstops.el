@@ -233,14 +233,16 @@
 (defmacro elastic-advice-command (command-name)
   "Align tabstops after running COMMAND-NAME."
   `(defadvice ,command-name (after elastic-tabstops activate)
-     (when (member major-mode elastic-tab-align-modes)
+     (when (or (memq major-mode elastic-tab-align-modes)
+               (derived-mode-p major-mode elastic-tab-align-modes))
        (elastic-align-current))))
 
 ;; TODO should be smarter and hijack the command's arguments
 (defmacro elastic-advice-command-region (command-name)
   "Align tabstops in active region after running COMMAND-NAME."
   `(defadvice ,command-name (after elastic-tabstops activate)
-     (when (member major-mode elastic-tab-align-modes)
+     (when (or (memq major-mode elastic-tab-align-modes)
+               (derived-mode-p major-mode elastic-tab-align-modes))
        (elastic-align-region (point) (mark)))))
 
 (defun elastic-strip-redundant-tabs-region (beg end)
