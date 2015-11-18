@@ -146,6 +146,12 @@
 
 ;; light-weight default whitespace highlighting
 (require 'leerzeichen)
+(add-hook 'prog-mode-hook          	'leerzeichen-mode)
+(add-hook 'text-mode-hook          	'leerzeichen-mode)
+(add-hook 'notes-mode-hook         	'leerzeichen-mode)
+(add-hook 'dired-mode-hook         	'leerzeichen-mode)
+;; (add-hook 'compilation-mode-hook	'leerzeichen-mode)
+
 
 ;; nested parentheses are highlighted when inside of them
 (require 'highlight-parentheses)

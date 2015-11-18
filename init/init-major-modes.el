@@ -41,7 +41,6 @@
 
 ;; notes-mode
 (require 'notes-mode)
-(add-hook 'notes-mode-hook 'leerzeichen-mode)
 (add-to-list 'auto-mode-alist '("\\.txt$"   	. notes-mode))
 
 ;; yaml
@@ -119,7 +118,6 @@
   (setq python-indent-offset 2)
   (add-hook 'python-mode-hook (lambda () (setq tab-width 2)))
   (add-hook 'python-mode-hook (lambda () (electric-indent-local-mode -1)))
-  (add-hook 'python-mode-hook 'leerzeichen-mode)
   )
 
 ;; ruby mode
@@ -136,8 +134,7 @@
   (setq ruby-indent-level tab-width)
   (setq enh-ruby-bounce-deep-indent nil)
   (setq enh-ruby-deep-indent-paren nil)
-
-  (add-hook 'enh-ruby-mode-hook 'leerzeichen-mode))
+  )
 
 ;;ruby files
 (add-to-list 'interpreter-mode-alist	'("ruby"       	. enh-ruby-mode))
@@ -162,15 +159,12 @@
 
 ;; javascript
 (load-lazy '(js2-mode) "js2-mode")
-(load-lazy '(js2-mode) "js2-mode"
-  (add-hook 'js2-mode-hook 'leerzeichen-mode))
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 
 ;; shell stuff
 (load-lazy '(sh-mode) "sh-script"
   (setq sh-basic-offset tab-width)
-  (setq sh-indentation tab-width)
-  (add-hook 'sh-mode-hook 'leerzeichen-mode))
+  (setq sh-indentation tab-width))
 
 ;; nxml stuff
 (load-lazy '(nxml-mode) "nxml-mode"
@@ -262,8 +256,6 @@
 ;; sort number naturally
 (setq dired-listing-switches "--group-directories-first -v -al")
 
-(add-hook 'dired-mode-hook 'leerzeichen-mode)
-
 ;; eldoc, ie function signatures in the minibuffer
 (load-lazy '(turn-on-eldoc-mode) "eldoc"
   (setq eldoc-idle-delay 0.1))
@@ -302,8 +294,7 @@
   (require 'lisp-extra-font-lock)
   ;; make sure it's loaded late so whitespace etc are still fine
   (add-hook 'lisp-mode-hook 'lisp-extra-font-lock-mode t)
-
-  (add-hook 'emacs-lisp-mode-hook 'leerzeichen-mode))
+  )
 
 ;; Flycheck for code linting
 (require 'flycheck)
@@ -376,17 +367,11 @@
   (setq rust-indent-method-chain t)
   (setq rust-blink-matching-angle-brackets nil)
 
-  (add-hook 'rust-mode-hook 'leerzeichen-mode)
   (add-hook 'rust-mode-hook 'abbrev-mode)
 
   (load-after 'flycheck
     (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
   )
-
-;; c
-(load-after 'cc-mode
-  (add-hook 'c-mode-hook  	'leerzeichen-mode)
-  (add-hook 'c++-mode-hook	'leerzeichen-mode))
 
 (defun save-compile-run ()
   "Save the current buffer, ask for (and remember) compile command, and run it."
@@ -424,8 +409,6 @@
     (ansi-color-apply-on-region compilation-filter-start (point-max))))
 (add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
 
-;; (add-hook 'compilation-mode-hook 'leerzeichen-mode)
-
 (defun bury-compile-buffer-if-successful (buffer string)
   "Bury a compilation buffer if succeeded without warnings "
   (when (and
@@ -439,18 +422,8 @@
 
 (add-hook 'compilation-finish-functions 'bury-compile-buffer-if-successful)
 
-(load-after 'haskell-mode
-  (add-hook 'haskell-mode-hook 'leerzeichen-mode)
-  )
-
 ;; racket
-(load-lazy '(racket-mode) "racket-mode"
-  (add-hook 'racket-mode-hook 'leerzeichen-mode)
-  )
-
 (add-to-list 'auto-mode-alist '("\\.rkt$" . racket-mode))
 (add-to-list 'interpreter-mode-alist '("racket" . racket-mode))
-
-
 
 (provide 'init-major-modes)
