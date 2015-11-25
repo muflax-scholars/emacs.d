@@ -11,7 +11,7 @@
 (setq hs-isearch-open t)
 
 ;; better ellipsis
-(defvar folding-ellipsis "๛" "replacement for folded content")
+(defvar folding-ellipsis "…" "replacement for folded content")
 
 (set-display-table-slot standard-display-table
                         'selective-display
