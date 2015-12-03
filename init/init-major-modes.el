@@ -426,4 +426,10 @@
 (add-to-list 'auto-mode-alist '("\\.rkt$" . racket-mode))
 (add-to-list 'interpreter-mode-alist '("racket" . racket-mode))
 
+;; perl6
+(load-lazy '(perl6-mode) "perl6-mode"
+  (setq perl6-indent-offset tab-width))
+(add-to-list 'auto-mode-alist '("\\.p[lm]?6$" . perl6-mode))
+(add-to-list 'interpreter-mode-alist '("perl6" . perl6-mode))
+
 (provide 'init-major-modes)
