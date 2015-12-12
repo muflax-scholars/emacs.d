@@ -958,4 +958,9 @@
     '("SPC"	nav-mode)
     )
 
+(load-after 'ido
+  (kd ido-common-completion-map
+      '("SPC"	nil)
+      ))
+
 (provide 'init-keys)
