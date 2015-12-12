@@ -1,1 +1,0 @@
-(define-package "region-state" "20151111.2241" "Show the number of chars/lines or rows/columns in the region" 'nil :stars '(#("3" 0 1 (font-lock-face paradox-star-face))) :url "https://github.com/xuchunyang/region-state.el" :keywords '("convenience"))
