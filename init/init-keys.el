@@ -959,8 +959,11 @@
     )
 
 (load-after 'ido
-  (kd ido-common-completion-map
-      '("SPC"	nil)
-      ))
+  (defun ido-my-keys ()
+    (kd ido-common-completion-map
+        '("SPC"	nil)
+        ))
+
+  (add-hook 'ido-setup-hook 'ido-my-keys))
 
 (provide 'init-keys)
