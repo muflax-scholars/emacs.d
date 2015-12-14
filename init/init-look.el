@@ -162,12 +162,12 @@
 ;; don't hard-wrap text, but use nice virtual wrapping
 (require 'adaptive-wrap)
 (setq-default fill-column 80)
-(global-visual-line-mode 1)
 (global-adaptive-wrap-prefix-mode 1)
 (setq visual-line-fringe-indicators '(nil right-curly-arrow))
 
 ;; don't wrap lines by default
 (setq-default truncate-lines t)
+(setq truncate-partial-width-windows nil)
 
 ;; make regexpes a bit more readable by default
 (defun fontify-glyph (item glyph)
@@ -181,7 +181,6 @@
 (font-lock-add-keywords 'emacs-lisp-mode	(fontify-glyph "\\\\\\\\|" "|"))
 (font-lock-add-keywords 'emacs-lisp-mode	(fontify-glyph "\\\\\\\\(" "("))
 (font-lock-add-keywords 'emacs-lisp-mode	(fontify-glyph "\\\\\\\\)" ")"))
-
 
 ;; clean up modeline and hide standard minor modes
 (defmacro diminish-minor-mode (package mode &optional short-name)
