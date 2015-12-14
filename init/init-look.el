@@ -156,7 +156,7 @@
 (require 'paren)
 (setq blink-matching-paren-distance nil)
 (setq show-paren-style 'expression)
-(setq show-paren-delay 0)
+(setq show-paren-delay 0.05) ; don't start highlighting when just scrolling past
 (show-paren-mode 1)
 
 ;; don't hard-wrap text, but use nice virtual wrapping
