@@ -107,7 +107,7 @@
 (setq auto-window-vscroll nil)
 
 (require 'smooth-scrolling)
-(smooth-scrolling-mode 1)
+;; (smooth-scrolling-mode 1)
 (setq smooth-scroll-margin	5)
 (setq scroll-margin       	5)
 (setq scroll-conservatively 10000)
