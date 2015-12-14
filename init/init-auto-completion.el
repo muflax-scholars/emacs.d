@@ -59,7 +59,7 @@
 
 ;; auto completion
 (require 'auto-complete-config)
-(add-to-list 'ac-modes   	'enh-ruby-mode)
+;; (add-to-list 'ac-modes	'enh-ruby-mode)
 (add-to-list 'ac-modes   	'go-mode)
 (add-to-list 'ac-modes   	'rust-mode)
 ;; (add-to-list 'ac-modes	'notes-mode)
