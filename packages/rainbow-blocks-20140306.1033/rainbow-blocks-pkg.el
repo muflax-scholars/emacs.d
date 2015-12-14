@@ -1,0 +1,1 @@
+(define-package "rainbow-blocks" "20140306.1033" "Block syntax highlighting for lisp code" 'nil :stars '(#("39" 0 2 (font-lock-face paradox-star-face))) :url "https://github.com/istib/rainbow-blocks")
