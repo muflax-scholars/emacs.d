@@ -152,19 +152,11 @@
 (add-hook 'dired-mode-hook         	'leerzeichen-mode)
 ;; (add-hook 'compilation-mode-hook	'leerzeichen-mode)
 
-
-;; nested parentheses are highlighted when inside of them
-(require 'highlight-parentheses)
-(defun turn-on-highlight-parentheses ()
-  (highlight-parentheses-mode 1))
-(add-hook 'prog-mode-hook    	'turn-on-highlight-parentheses)
-(add-hook 'enh-ruby-mode-hook	'turn-on-highlight-parentheses)
-
 ;; parenthesis highlighting behavior
 (require 'paren)
 (setq blink-matching-paren-distance nil)
 (setq show-paren-style 'expression)
-(setq show-paren-delay 0.125)
+(setq show-paren-delay 0)
 (show-paren-mode 1)
 
 ;; don't hard-wrap text, but use nice virtual wrapping
