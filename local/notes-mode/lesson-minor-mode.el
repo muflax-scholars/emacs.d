@@ -44,7 +44,7 @@
     (lesson-file 	(seq bol "L" (+ digit)))
     (sentence    	(seq bol (* blank) "!" (? (any "!" "?")) (+ blank) (+ nonl)))
     (translation 	(seq sentence "\t?"))
-    (section     	(seq bol "#" (any "S" "IS" "SP") (or (+ blank) eol)))
+    (section     	(seq bol "[ #" (any "S" "IS" "SP") (or (+ blank) eol)))
     (times       	(seq "{" (* nonl) "}"))
     ))
 
