@@ -44,6 +44,8 @@
     (lesson-file 	(seq bol "L" (+ digit)))
     (sentence    	(seq bol (* blank) "!" (? (any "!" "?")) (+ blank) (+ nonl)))
     (translation 	(seq sentence "\t?"))
+    (section     	(seq bol "#" (any "S" "IS" "SP") (or (+ blank) eol)))
+    (times       	(seq "{" (* nonl) "}"))
     ))
 
 ;; blocks
@@ -328,83 +330,48 @@
 (defun lesson/format-minutes (minutes)
   (format "%d:%02d" (/ minutes 60) (% minutes 60)))
 
-(defun lesson/insert-mark (mark count)
-  (insert mark " "
-          (lesson/format-minutes (lesson/time-estimate count))
-          "\n"))
-
-(defun lesson/insert-time-mark (&optional count)
-  (interactive)
-  (lesson/insert-mark
-   "# TIME"
-   (or count (lesson/count-sentences (point-min) (point)))))
-
-(defun lesson/insert-duration-mark (count)
-  (lesson/insert-mark "# DURATION" count))
-
-(defun lesson/find-marks (mark beg end)
+(defun lesson/find-time-marks (beg end)
   (let (marks)
     (save-excursion
       (goto-char beg)
       (beginning-of-line)
       (while (< (point) end)
-        (when (looking-at mark)
-          (setq marks (cons (point) marks)))
+        (when (and (looking-at-p (lesson/rx section))
+                   (re-search-forward (lesson/rx times) (point-at-eol) t))
+          (setq marks (cons (match-data 0) marks)))
         (forward-line 1)))
-    ;; marks are returned backwards so we can easily replace them without worrying about offsets
+      ;; marks are returned backwards so we can easily replace them without worrying about offsets
     marks))
 
-(defun lesson/find-time-marks (beg end)
-  (lesson/find-marks "^# TIME" beg end))
-
-(defun lesson/find-duration-marks (beg end)
-  (lesson/find-marks "^# DURATION" beg end))
+(defun lesson/update-time-mark (count-section count-total mark)
+  (let* ((section  	(lesson/format-minutes (lesson/time-estimate count-section)))
+         (total    	(lesson/format-minutes (lesson/time-estimate count-total)))
+         (time-mark	(format "{%s - %s}" section total))
+         (beg      	(first mark))
+         (end      	(second mark)))
+    (save-excursion
+      (goto-char beg)
+      (unless (string= (buffer-substring beg end)
+                       time-mark)
+        (delete-region beg end)
+        (insert time-mark)))))
 
 (defun lesson/update-time-marks ()
   (interactive)
   (let ((sentences	(lesson/find-sentences 	(point-min) (point-max)))
         (marks    	(lesson/find-time-marks	(point-min) (point-max)))
         count
-        )
-    (save-excursion
-      (dolist (mark marks)
-        (setq count (length (--filter (<= it mark) sentences)))
-
-        (goto-char mark)
-        (forward-line 1)
-        (delete-region mark (point))
-
-        (lesson/insert-time-mark count)))))
-
-(defun lesson/update-and-insert-time-mark ()
-  (interactive)
-  (lesson/update-all-marks)
-  (lesson/insert-time-mark))
-
-(defun lesson/update-duration-marks ()
-  (interactive)
-  (let ((sentences	(lesson/find-sentences     	(point-min) (point-max)))
-        (marks    	(lesson/find-duration-marks	(point-min) (point-max)))
-        count
         (last-section (point-max))
         )
-    (save-excursion
-      (dolist (mark marks)
-        (setq count (length (--filter (and (>= it mark)
-                                           (<= it last-section))
-                                      sentences))
-              last-section mark)
-
-        (goto-char mark)
-        (forward-line 1)
-        (delete-region mark (point))
-
-        (lesson/insert-duration-mark count)))))
-
-(defun lesson/update-all-marks ()
-  (interactive)
-  (lesson/update-time-marks)
-  (lesson/update-duration-marks))
+        (save-excursion
+          (dolist (mark marks)
+            (let ((beg (first mark)))
+              (setq count-total  	(length (--filter (<= it last-section) sentences))
+                    count-section	(length (--filter (and (>= it beg)
+                                                          (<= it last-section))
+                                                     sentences))
+                    last-section beg)
+              (lesson/update-time-mark count-section count-total mark))))))
 
 (defun lesson/remove-reading-mark ()
   (interactive)
