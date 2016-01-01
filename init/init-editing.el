@@ -17,9 +17,9 @@
 (savehist-mode 1)
 (setq kill-ring-max           	1000)
 (setq history-length          	1000)
-(setq search-ring-max         	1000)
-(setq regexp-search-ring-max  	1000)
-(setq kmacro-ring-max         	1000)
+(setq search-ring-max         	100)
+(setq regexp-search-ring-max  	100)
+(setq kmacro-ring-max         	100)
 (load-after 'comint           	
   (setq comint-input-ring-size	1000))
 
