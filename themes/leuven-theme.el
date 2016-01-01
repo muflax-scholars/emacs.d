@@ -97,7 +97,6 @@
    `(whitespace-trailing ((,class (:weight bold :foreground "yellow" :background "red1"))))
    `(leerzeichen ((,class (:foreground "#b0b0b0"))))
 
-
    ;; Mode line faces
    `(mode-line ((,class (:box (:line-width 1 :color "#1A2F54") :foreground "#85CEEB" :background "#335EA8"))))
    `(mode-line-inactive ((,class (:box (:line-width 1 :color "#4E4E4C") :foreground "#F0F0EF" :background "#9B9C97"))))
