@@ -245,6 +245,11 @@
 (set-default	'sp-autoskip-opening-pair              	nil)
 (set-default	'sp-autoskip-closing-pair              	nil)
 
+;; deal with hungry-delete
+(defadvice hungry-delete-backward (before sp-delete-pair-advice activate)
+  (save-match-data
+    (sp-delete-pair (ad-get-arg 0))))
+
 ;; sexp manipulation
 (setq sp-hybrid-kill-excessive-whitespace t)
 (setq sp-navigate-close-if-unbalanced t)
