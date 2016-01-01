@@ -105,12 +105,25 @@
 ;; necessary or scrolling is really slow
 (setq-default bidi-display-reordering nil)
 (setq auto-window-vscroll nil)
-
-(require 'smooth-scrolling)
-;; (smooth-scrolling-mode 1)
-(setq smooth-scroll-margin	5)
-(setq scroll-margin       	5)
+(setq scroll-margin 5)
 (setq scroll-conservatively 10000)
+
+(defun lines-above-point ()
+  "Return the number of lines in window above point.
+
+This does not include the line that point is on."
+  (count-screen-lines (window-start)
+                      (beginning-of-visual-line)))
+
+(defun lines-below-point ()
+  "Return the number of lines in window above point.
+
+This does not include the line that point is on."
+  ;; We don't rely on `window-end' because if we are scrolled near the
+  ;; end of the buffer, it will only give the number of lines
+  ;; remaining in the file, not the number of lines to the bottom of
+  ;; the window.
+  (- (window-height) 2 (lines-above-point)))
 
 ;; undo highlighting
 (require 'volatile-highlights)

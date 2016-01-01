@@ -16,9 +16,7 @@
           (setq lesson/hl-line-mode-was-on nil)
           (hl-line-mode 1))
 
-        (set-face-background 'cursor "red")
-
-        (smooth-scrolling-mode nil))
+        (set-face-background 'cursor "red"))
     (progn
       (lesson/unhighlight-blocks)
       (read-only-mode 0)
@@ -27,9 +25,7 @@
         (hl-line-mode 0))
       (setq lesson/hl-line-mode-was-on nil)
 
-      (set-face-background 'cursor lesson/cursor-old-color)
-
-      (smooth-scrolling-mode t))
+      (set-face-background 'cursor lesson/cursor-old-color))
     ))
 
 (defvar lesson/window-margin 15)
@@ -162,7 +158,7 @@
   (goto-char beg))
 
 (defun lesson/smooth-recenter ()
-  (when (< (smooth-scroll-lines-below-point)
+  (when (< (lines-below-point)
            lesson/window-margin)
     (recenter (- lesson/window-margin))))
 
@@ -213,14 +209,14 @@
 (defun lesson/scroll-up-line ()
   (interactive)
 
-  (unless (<= (smooth-scroll-lines-above-point)
+  (unless (<= (lines-above-point)
            lesson/scroll-margin)
     (scroll-up-line)))
 
 (defun lesson/scroll-down-line ()
   (interactive)
 
-  (unless (<= (1- (smooth-scroll-lines-below-point))
+  (unless (<= (1- (lines-below-point))
               lesson/scroll-margin)
     (scroll-down-line)))
 

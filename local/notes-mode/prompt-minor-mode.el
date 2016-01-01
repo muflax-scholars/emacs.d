@@ -7,7 +7,6 @@
 (require 'rx)
 (require 'ample-regexps)
 (require 's)
-(require 'smooth-scrolling)
 
 (defvar prompt-minor-mode-map (make-keymap))
 (define-minor-mode prompt-minor-mode
@@ -421,7 +420,7 @@
 
   (beginning-of-line-text)
 
-  (when (< (smooth-scroll-lines-below-point)
+  (when (< (lines-below-point)
            corpus/window-margin)
     (recenter (- corpus/window-margin))))
 
@@ -449,7 +448,7 @@
 
   (beginning-of-line-text)
 
-  (when (< (smooth-scroll-lines-above-point)
+  (when (< (lines-above-point)
            corpus/window-margin)
     (recenter corpus/window-margin)))
 
@@ -501,7 +500,7 @@
   (prompt/end-of-bracket)
   (prompt/prev-example-block)
 
-  (when (< (smooth-scroll-lines-below-point)
+  (when (< (lines-below-point)
            corpus/window-margin)
     (recenter (- corpus/window-margin))))
 
@@ -630,7 +629,7 @@
   (prompt/fold-plus-lines)
   (prompt/beginning-of-bracket)
 
-  (when (> (smooth-scroll-lines-above-point) 0)
+  (when (> (lines-above-point) 0)
     (recenter 0))
 
   ;; jump to plus line
