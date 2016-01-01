@@ -343,7 +343,7 @@
     '("C--"	text-scale-adjust)
     '("C-="	text-scale-adjust)
     '("C-0"	text-scale-adjust)
-    '("C-b"	list-buffers)
+    '("C-b"	ibuffer)
     '("C-c"	save-buffers-kill-terminal)
     '("C-f"	find-file)
     '("C-g"	abort-recursive-edit)

@@ -34,4 +34,13 @@
   (split-window-right)
   (buf-move-right))
 
+(require 'ibuffer)
+(setq ibuffer-saved-filter-groups
+      `(("Default"   	;; everything else
+         ("Dired"    	(mode . dired-mode))
+         ("Temporary"	(name . "\*.*\*"))
+         )))
+(setq ibuffer-show-empty-filter-groups nil)
+(setq ibuffer-use-other-window t)
+
 (provide 'init-buffers)
