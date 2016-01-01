@@ -3,7 +3,6 @@
 (require 'hideshow)
 (require 'hideshowvis)
 (require 'fold-dwim)
-(require 'yafolding)
 
 (add-hook 'prog-mode-hook 	'hs-minor-mode)
 (add-hook 'notes-mode-hook	'hs-minor-mode)
@@ -16,7 +15,6 @@
 (set-display-table-slot standard-display-table
                         'selective-display
                         folding-ellipsis)
-(setq yafolding-ellipsis-content folding-ellipsis)
 (setq hs-set-up-overlay
       (fn (ov)
         (when (eq 'code (overlay-get ov 'hs))

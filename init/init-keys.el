@@ -592,7 +592,6 @@
 ;; visual display
 (kd visual-prefix-map
     '("C-f"	fold-dwim-toggle)
-    '("C-y"	yafolding-toggle-element)
     '("SPC"	hs-show-block)
     '("f"  	hs-fold-levels)
     '("F"  	fold-dwim-show-all)
@@ -600,8 +599,6 @@
     '("l"  	toggle-truncate-lines)
     '("s"  	whitespace-fold-levels)
     '("S"  	whitespace-fold-reset)
-    '("y"  	yafolding-hide-all)
-    '("Y"  	yafolding-show-all)
     '("w"  	leerzeichen-mode)
     )
 
