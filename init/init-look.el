@@ -191,9 +191,7 @@ This does not include the line that point is on."
                             (match-end 0)
                             ,glyph) nil)))))
 
-(font-lock-add-keywords 'emacs-lisp-mode	(fontify-glyph "\\\\\\\\|" "|"))
-(font-lock-add-keywords 'emacs-lisp-mode	(fontify-glyph "\\\\\\\\(" "("))
-(font-lock-add-keywords 'emacs-lisp-mode	(fontify-glyph "\\\\\\\\)" ")"))
+(font-lock-add-keywords 'emacs-lisp-mode (fontify-glyph "\\\\\\\\" "\\"))
 
 ;; clean up modeline and hide standard minor modes
 (defmacro diminish-minor-mode (package mode &optional short-name)
