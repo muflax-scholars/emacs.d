@@ -248,8 +248,8 @@
     '("<prior>"	scroll-down-command)
 
     ;; special keys
-    '("C-<backspace>"	backward-kill-word)
-    '("C-<delete>"   	kill-word)
+    '("C-<backspace>"	smart-backward-kill-word)
+    '("C-<delete>"   	smart-kill-word)
     '("C-<return>"   	md/duplicate-down)
     '("C-<tab>"      	literal-tab)
 

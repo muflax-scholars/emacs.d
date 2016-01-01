@@ -198,6 +198,18 @@ or -1 by default)."
   "Do the dirty work of calling hungry-delete-backward."
   (hungry-delete-impl 'hungry-delete-skip-ws-backward -1))
 
+(defun smart-backward-kill-word (arg)
+  (interactive "p")
+  (if (member (char-syntax (preceding-char)) '(?\ ?>))
+      (hungry-delete-backward arg)
+    (backward-kill-word arg)))
+
+(defun smart-kill-word (arg)
+  (interactive "p")
+  (if (member (char-syntax (following-char)) '(?\ ?>))
+      (hungry-delete-forward arg)
+    (kill-word arg)))
+
 ;;;###autoload
 (define-minor-mode hungry-delete-mode
   "Minor mode to enable hungry deletion.  This will delete all
