@@ -697,10 +697,10 @@
 
 ;; fonts
 (kd font-prefix-map
-    '("<f1>"	use-small-font)
-    '("<f2>"	use-normal-font)
-    '("<f3>"	use-big-font)
-    '("<f4>"	use-huge-font)
+    '("1"	use-small-font)
+    '("2"	use-normal-font)
+    '("3"	use-big-font)
+    '("4"	use-huge-font)
     )
 
 ;; special read-only buffers
