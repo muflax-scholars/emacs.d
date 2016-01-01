@@ -9,19 +9,13 @@ Point stops at elastic tab stops, beginning of the visual line and eventually th
 
   (let ((positions
          (list
-          ;; elastic tabs
-          ;; (go (when (= (preceding-char) ?\t)
-          ;;       (skip-chars-backward "\t"))
-          ;;     (skip-chars-backward "^\t\n")
-          ;;     (point))
-
           ;; first text
-          (go (beginning-of-line-text)
-              (point))
+          (save-excursion (beginning-of-line-text)
+                          (point))
 
           ;; visual line
-          (go (beginning-of-visual-line)
-              (point))
+          (save-excursion (beginning-of-visual-line)
+                          (point))
 
           ;; real line
           (line-beginning-position))))
@@ -41,20 +35,14 @@ Point stops at elastic tab stops, end of the visual line and eventually the real
 
   (let ((positions
          (list
-          ;; elastic tabs
-          ;; (go (when (= (preceding-char) ?\t)
-          ;;       (skip-chars-forward "^\t\n"))
-          ;;     (skip-chars-forward "\t")
-          ;;     (point))
-
           ;; last text
-          (go (end-of-line)
-              (skip-syntax-backward "-" (line-beginning-position))
-              (point))
+          (save-excursion (end-of-line)
+                          (skip-syntax-backward "-" (line-beginning-position))
+                          (point))
 
           ;; visual line
-          (go (end-of-visual-line)
-              (point))
+          (save-excursion (end-of-visual-line)
+                          (point))
 
           ;; real line
           (line-end-position))))
