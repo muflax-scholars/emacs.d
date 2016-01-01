@@ -11,10 +11,6 @@
 ;; associate non-standardish interpreters with modes
 (add-to-list 'interpreter-mode-alist '("python2"	. python-mode))
 (add-to-list 'interpreter-mode-alist '("python3"	. python-mode))
-(add-to-list 'interpreter-mode-alist '("ruby18" 	. enh-ruby-mode))
-(add-to-list 'interpreter-mode-alist '("ruby19" 	. enh-ruby-mode))
-(add-to-list 'interpreter-mode-alist '("ruby20" 	. enh-ruby-mode))
-(add-to-list 'interpreter-mode-alist '("ruby21" 	. enh-ruby-mode))
 
 ;; c style (1TBS, but guess offsets for other files)
 (setq c-default-style "k&r" c-basic-offset tab-width)
