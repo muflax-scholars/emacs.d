@@ -53,7 +53,7 @@
   ;; proper indentation / folding
   (setq org-startup-indented t)
   (setq org-hide-leading-stars t)
-  (setq org-indent-indentation-per-level 2)
+  (setq org-indent-indentation-per-level tab-width)
   (setq org-startup-folded 'content)
   (setq org-blank-before-new-entry '((heading        	. nil)
                                      (plain-list-item	. auto)))
@@ -115,7 +115,7 @@
 
 ;; new python mode
 (load-lazy '(python-mode) "python"
-  (setq python-indent-offset 2)
+  (setq python-indent-offset tab-width)
   (add-hook 'python-mode-hook (lambda () (setq tab-width 2)))
   (add-hook 'python-mode-hook (lambda () (electric-indent-local-mode -1)))
   )
@@ -172,19 +172,19 @@
 
 ;; lua
 (load-lazy '(lua-mode) "lua-mode"
-  (setq lua-indent-level 2))
+  (setq lua-indent-level tab-width))
 
 ;; (s)css
 (load-lazy '(scss-mode) "scss-mode"
   (setq scss-compile-at-save nil))
 (load-lazy '(css-mode) "css-mode"
-  (setq css-indent-level 2))
 
 ;; mark stuff like FIXME
 (load-lazy '(fic-mode) "fic-mode")
 (add-hook 'prog-mode-hook    	'fic-mode)
 (add-hook 'enh-ruby-mode-hook	'fic-mode)
 (add-hook 'js2-mode-hook     	'fic-mode)
+  (setq css-indent-level tab-width))
 
 ;; dired
 (require 'dired)
