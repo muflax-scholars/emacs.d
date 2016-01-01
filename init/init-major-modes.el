@@ -174,12 +174,6 @@
 (load-lazy '(scss-mode) "scss-mode"
   (setq scss-compile-at-save nil))
 (load-lazy '(css-mode) "css-mode"
-
-;; mark stuff like FIXME
-(load-lazy '(fic-mode) "fic-mode")
-(add-hook 'prog-mode-hook    	'fic-mode)
-(add-hook 'enh-ruby-mode-hook	'fic-mode)
-(add-hook 'js2-mode-hook     	'fic-mode)
   (setq css-indent-level tab-width))
 
 ;; dired
