@@ -224,6 +224,7 @@ This does not include the line that point is on."
 (diminish-minor-mode	'subword              	'subword-mode              	    	)
 (diminish-minor-mode	'undo-tree            	'undo-tree-mode            	    	)
 (diminish-minor-mode	'volatile-highlights  	'volatile-highlights-mode  	    	)
+(diminish-minor-mode	'which-key            	'which-key-mode            	    	)
 (diminish-minor-mode	'whole-line-or-region 	'whole-line-or-region-mode 	    	)
 (diminish-minor-mode	'yasnippet            	'yas-minor-mode            	    	)
 
