@@ -92,6 +92,7 @@
         sh-assignment
         smart-beginning-of-line
         smart-end-of-line
+        smart-kill-word
         sp--self-insert-command
         sp-add-to-previous-sexp
         sp-backward-symbol
