@@ -291,13 +291,13 @@
 
 ;; notes-mode
 (sp-with-modes '(notes-mode)
-  (sp-local-pair "*"	"*"	:actions	'(wrap)	)
-  (sp-local-pair "/"	"/"	:actions	'(wrap)	)
-  (sp-local-pair "<"	">"	:actions	'(wrap)	)
-  (sp-local-pair "["	"]"	        	       	)
-  (sp-local-pair "'"	"'"	:actions	'(wrap)	)
-  (sp-local-pair "`"	"`"	:actions	'(wrap)	)
-  (sp-local-pair "«"	"»"	:actions	'(wrap)	)
+  (sp-local-pair "*"	"*"	:actions	'(wrap)       	)
+  (sp-local-pair "/"	"/"	:actions	'(wrap)       	)
+  (sp-local-pair "<"	">"	:actions	'(wrap)       	)
+  (sp-local-pair "["	"]"	:actions	'(wrap insert)	)
+  (sp-local-pair "'"	"'"	:actions	'(wrap)       	)
+  (sp-local-pair "`"	"`"	:actions	'(wrap)       	)
+  (sp-local-pair "«"	"»"	:actions	'(wrap insert)	)
   )
 
 ;; overwrite |pipe| handling in ruby
