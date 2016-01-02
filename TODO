@@ -49,7 +49,7 @@ Stuff that doesn't work:
 	- quick jump to terminal
 	- make zsh suspend painless, or run some eshell thingy, or something
 	- dired should casefold
-	
+
 ]
 
 [ bugs / misc
@@ -63,14 +63,10 @@ Stuff that doesn't work:
 
 	- before-save-hooks should have a way to turn them off; probably a minor mode
 
-	- fonts should have a bigger range, and their own temp-keymap so you can left-right select them
-
 	- occur-x keymap conflicts with occur-edit
 
 	- mc + wdired don't work together
 
-	- smooth-scrolling should either be faster for big, messy files or auto-disable itself in them
-	
 	- rainbow identifiers are neat; try to come up with a useful coloring algo
 ]
 
@@ -115,28 +111,5 @@ Stuff that doesn't work:
 
 [ reorganize how buffers are used
 	It might be useful to no longer have ido auto-open old files so we have a clean buffer list, and instead start using recentf.
-
-]
-
-[ company-mode
-	Might be worth it to switch to company-mode if that makes extensions simpler to write.
-
-]
-
-[ eshell
-	- auto completion
-	- convert everything ugh
-	- fix hungry-delete deleting read-only parts
-
-]
-
-[ lisp
-	{ poss aliases
-		(unroll list a b)
-		(apply 'f a b x) -> (-> f a b x)
-		some short names for common stuff
-	}
-	
-	- always load repl? maybe load in background?
 
 ]
