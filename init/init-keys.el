@@ -194,9 +194,10 @@
 ;; prefix help
 (require 'which-key)
 (which-key-mode)
-(which-key-setup-side-window-bottom)
+(which-key-setup-side-window-right)
 (setq which-key-separator " ")
-(setq which-key-unicode-correction 8)
+(setq which-key-unicode-correction 0)
+(setq which-key-max-description-length nil)
 (setq which-key-idle-delay 0.5)
 (setq which-key-special-keys nil)
 
