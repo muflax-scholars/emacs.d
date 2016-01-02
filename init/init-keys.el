@@ -130,7 +130,8 @@
 (defun* key-def (map key command &key
                      (type   	'simple)
                      (alt-key	nil)
-                     (debug  	nil))
+                     (debug  	nil)
+                     (help   	nil))
   "Short, unified key definition."
   (interactive)
 
@@ -140,6 +141,12 @@
              (not (fboundp command)))
     (message "key error: «%s» -> «%s» (undefined)"
              key command))
+
+  ;; help for which-key
+  (when help
+    (when (boundp 'which-key-description-replacement-alist)
+      (add-to-list 'which-key-description-replacement-alist
+                   (cons (symbol-name command) help))))
 
   (case type
     ;; Creates a prefix map for the key.
