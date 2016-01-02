@@ -36,7 +36,7 @@
 
 (require 'ibuffer)
 (setq ibuffer-saved-filter-groups
-      `(("Default"   	;; everything else
+      `(("Default"
          ("Dired"    	(mode . dired-mode))
          ("Magit"    	(name . "\*magit-.*\*"))
          ("Temporary"	(name . "\*.*\*"))
