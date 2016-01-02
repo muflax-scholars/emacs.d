@@ -13,17 +13,9 @@
   (interactive "P")
   (delete-char -1))
 
-;; FIXME replace this mess
+;; FIXME the mode is terribly broken, but the standard functions work well enough
 ;; if no region is active, act on current line
 (require 'whole-line-or-region)
-(setq whole-line-or-region-extensions-alist
-      '((comment-dwim       	whole-line-or-region-comment-dwim-2     	nil)
-        (copy-region-as-kill	whole-line-or-region-copy-region-as-kill	nil)
-        (kill-region        	whole-line-or-region-kill-region        	nil)
-        (kill-ring-save     	whole-line-or-region-kill-ring-save     	nil)
-        (yank               	whole-line-or-region-yank               	nil)
-        ))
-(whole-line-or-region-mode 1)
 
 (defun copy-line ()
   "Copy to end of line."
@@ -41,7 +33,7 @@
 (defun yank-and-indent ()
   "Yank and then indent the newly formed region according to mode."
   (interactive)
-  (yank)
+  (call-interactively 'whole-line-or-region-yank)
   (call-interactively 'indent-region))
 
 (defun kill-and-join-forward (&optional arg)

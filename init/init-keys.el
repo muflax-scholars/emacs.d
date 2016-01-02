@@ -325,8 +325,8 @@
     '("C-t"   	save-compile-run)
     '("C-u"   	universal-argument)
     '("C-v"   	visual-prefix-map :type prefix)
-    '("C-w"   	kill-region)
-    '("C-W"   	kill-ring-save)
+    '("C-w"   	whole-line-or-region-kill-region)
+    '("C-W"   	whole-line-or-region-kill-ring-save)
     '("C-x"   	command-prefix-map :type prefix)
     '("C-y"   	yank-and-indent)
     '("C-Y"   	yank)
@@ -342,7 +342,7 @@
     '("M-n"	undo-tree-undo)
     '("M-p"	undo-tree-redo)
     '("M-x"	smex)
-    '("M-w"	kill-ring-save)
+    '("M-w"	whole-line-or-region-kill-ring-save)
     '("M-z"	undo-tree-redo)
     )
 
@@ -382,7 +382,7 @@
 
 (kd mode-specific-map
     '("C-w"	kill-with-append)
-    '("SPC"	comment-dwim)
+    '("SPC"	whole-line-or-region-comment-dwim-2)
     '("c"  	comment-region)
     '("u"  	uncomment-region)
     '("w"  	copy-with-append)
