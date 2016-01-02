@@ -33,7 +33,8 @@
 (defun yank-and-indent ()
   "Yank and then indent the newly formed region according to mode."
   (interactive)
-  (call-interactively 'whole-line-or-region-yank)
+  ;; (call-interactively 'whole-line-or-region-yank)
+  (yank)
   (call-interactively 'indent-region))
 
 (defun kill-and-join-forward (&optional arg)
