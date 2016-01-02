@@ -189,7 +189,7 @@
 (which-key-mode)
 (which-key-setup-side-window-bottom)
 (setq which-key-separator " ")
-(setq which-key-unicode-correction 0)
+(setq which-key-unicode-correction 8)
 (setq which-key-idle-delay 0.5)
 (setq which-key-special-keys nil)
 
