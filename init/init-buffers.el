@@ -38,6 +38,7 @@
 (setq ibuffer-saved-filter-groups
       `(("Default"   	;; everything else
          ("Dired"    	(mode . dired-mode))
+         ("Magit"    	(name . "\*magit-.*\*"))
          ("Temporary"	(name . "\*.*\*"))
          )))
 (setq ibuffer-show-empty-filter-groups nil)
