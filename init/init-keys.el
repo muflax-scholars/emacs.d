@@ -200,6 +200,8 @@
 (setq which-key-max-description-length nil)
 (setq which-key-idle-delay 0.5)
 (setq which-key-special-keys nil)
+(setq which-key-echo-keystrokes 0.1)
+(setq which-key-show-prefix 'echo)
 
 ;; built-ins prefix maps restated for clarity
 (defvar global-map)
