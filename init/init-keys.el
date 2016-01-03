@@ -146,7 +146,8 @@
   (when help
     (when (boundp 'which-key-description-replacement-alist)
       (add-to-list 'which-key-description-replacement-alist
-                   (cons (symbol-name command) help))))
+                   (cons (symbol-name command)
+                         (format "%s (%s)" command help)))))
 
   (case type
     ;; Creates a prefix map for the key.
