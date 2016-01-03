@@ -243,7 +243,9 @@
   `(defadvice ,command-name (after elastic-tabstops activate)
      (when (or (memq major-mode elastic-tab-align-modes)
                (derived-mode-p major-mode elastic-tab-align-modes))
-       (elastic-align-region (point) (mark)))))
+       (when (and mark-active
+                  (/= (point) (mark)))
+         (elastic-align-region (point) (mark))))))
 
 (defun elastic-strip-redundant-tabs-region (beg end)
   (interactive "r")
