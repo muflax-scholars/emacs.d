@@ -75,6 +75,7 @@
  '(isearch ((t (:foreground "#C4BE89" :background "#000000"))))
  '(isearch-fail ((t (:foreground "#FFFFFF" :background "#333333"))))
  '(lazy-highlight ((t (:foreground "#465457" :background "#000000"))))
+ '(leerzeichen ((t (:foreground "#b0b0b0"))))
  '(markdown-italic-face ((t (:slant italic))))
  '(markdown-bold-face ((t (:weight bold))))
  '(markdown-header-face ((t (:weight normal))))

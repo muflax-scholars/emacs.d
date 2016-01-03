@@ -91,6 +91,7 @@
    `(ido-subdir ((((type graphic)) (:foreground ,purple-1 :background ,purple-1bg))))
 
    ;; whitespace-mode
+   `(leerzeichen ((((type graphic)) (:foreground ,gray-1))))
    `(whitespace-empty ((((type graphic)) (:foreground ,yellow-1bg :background ,yellow-1))))
    `(whitespace-hspace ((((type graphic)) (:foreground ,gray-2))))
    `(whitespace-indentation ((((type graphic)) (:foreground ,gray-2))))
