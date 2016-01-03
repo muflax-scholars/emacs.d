@@ -11,6 +11,9 @@
 ;; don't spam *Scratch*
 (setq initial-scratch-message nil)
 
+;; recreate scratch when saving it
+(require 'scratch-ext)
+
 ;; clean up buffers every once in a while
 (require 'midnight)
 (midnight-delay-set 'midnight-delay 0)
