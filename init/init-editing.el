@@ -455,6 +455,7 @@
 (add-lispish-hook 'adjust-parens-mode)
 
 (require 'lispy)
+(require 'hydra)
 (add-lispish-hook 'lispy-mode)
 
 (provide 'init-editing)
