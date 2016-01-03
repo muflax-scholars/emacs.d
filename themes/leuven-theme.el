@@ -330,6 +330,7 @@
    `(highlight-symbol-face ((,class (:background "#FFFFA0"))))
    `(hl-line ((,class ,highlight-line)))
    `(hl-tags-face ((,class (:background "#FEFCAE"))))
+   `(hl-sexp-face ((,class :weight bold)))
    `(holiday-face ((,class (:foreground "#777777" :background "#E4EBFE"))))
    `(html-helper-bold-face ((,class (:weight bold :foreground "black"))))
    `(html-helper-italic-face ((,class (:slant italic :foreground "black"))))
