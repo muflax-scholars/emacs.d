@@ -1,0 +1,1 @@
+(define-package "paxedit" "20160102.1821" "Structured, Context Driven LISP Editing and Refactoring" '((cl-lib "0.5") (paredit "23")) :stars '(#("112" 0 3 (font-lock-face paradox-star-face))) :url "https://github.com/promethial/paxedit" :keywords '("lisp" "refactoring" "context"))
