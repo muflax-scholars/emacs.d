@@ -31,7 +31,7 @@
         "<next>"     	"<prior>" 	"<home>"  	"<end>"
         "<backspace>"	"<delete>"	"<insert>"	"<insertchar>"
         "<ret>"      	"<return>"	"<tab>"   	"<escape>"
-        "<menu>"     	"<kanji>"
+        "<menu>"     	"<kanji>" 	"<backtab>"
 
         "SPC"	"TAB"	"DEL"	"ESC"
         ))
