@@ -141,4 +141,7 @@
 ;;;###autoload
 (provide-theme 'twilight-anti-bright)
 
+;; Local Variables:
+;; eval: (rainbow-mode)
+;; End:
 ;;; twilight-anti-bright-theme.el ends here

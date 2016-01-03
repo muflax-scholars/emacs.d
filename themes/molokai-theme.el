@@ -123,4 +123,7 @@
 
 (provide-theme 'molokai)
 
+;; Local Variables:
+;; eval: (rainbow-mode)
+;; End:
 ;;; molokai-theme.el ends here
