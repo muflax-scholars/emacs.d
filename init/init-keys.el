@@ -972,7 +972,23 @@
       ;; '("8"  	digit-argument          	:type lispy)
       ;; '("9"  	digit-argument          	:type lispy)
 
-      ;; lispy global
+      ;; base           	
+      ;; '("C-a"        	lispy-move-beginning-of-line)
+      ;; '("C-e"        	lispy-move-end-of-line)
+      ;; killing        	
+      ;; '("C-k"        	lispy-kill)
+      ;; '("M-d"        	lispy-kill-word)
+      ;; '("M-DEL"      	lispy-backward-kill-word)
+      ;; misc           	
+      ;; '("("          	lispy-parens)
+      ;; '(";"          	lispy-comment)
+      ;; '("M-q"        	lispy-fill)
+      ;; '("C-j"        	lispy-newline-and-indent)
+      ;; '("RET"        	lispy-newline-and-indent-plain)
+      ;; tags           	
+      ;; '("M-."        	lispy-goto-symbol)
+      ;; '("M-,"        	pop-tag-mark)
+      ;; paredit        	
       ;; '("M-)"        	lispy-close-round-and-newline)
       ;; '("C-M-n"      	lispy-forward)
       ;; '("C-M-p"      	lispy-backward)
