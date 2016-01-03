@@ -611,15 +611,15 @@
 
 ;; visual display
 (kd visual-prefix-map
-    '("C-f"	fold-dwim-toggle)
-    '("SPC"	hs-show-block)
-    '("f"  	hs-fold-levels)
-    '("F"  	fold-dwim-show-all)
-    '("h"  	hl-line-mode)
-    '("l"  	toggle-truncate-lines)
-    '("s"  	whitespace-fold-levels)
-    '("S"  	whitespace-fold-reset)
-    '("w"  	leerzeichen-mode)
+    '("C-f"	fold-dwim-toggle      	:help "toggle current bracket")
+    '("SPC"	hs-show-block         	:help "unfold current bracket")
+    '("f"  	hs-fold-levels        	:help "fold all brackets")
+    '("F"  	fold-dwim-show-all    	:help "unfold all brackets")
+    '("h"  	hl-line-mode          	:help "highlight current line")
+    '("l"  	toggle-truncate-lines 	:help "truncate lines")
+    '("s"  	whitespace-fold-levels	:help "fold whitespace")
+    '("S"  	whitespace-fold-reset 	:help "unfold whitespace")
+    '("w"  	leerzeichen-mode      	:help "show whitespace")
     )
 
 ;; org-mode
