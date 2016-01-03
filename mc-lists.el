@@ -55,6 +55,8 @@
         kill-without-append
         kmacro-end-or-call-macro
         lesson/add-translations-to-block
+        lisp-dedent-adjust-parens
+        lisp-indent-adjust-parens
         literal-delete-backward-char
         literal-delete-char
         literal-tab

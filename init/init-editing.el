@@ -443,4 +443,12 @@
     (error (message "Invalid expression")
            (insert (current-kill 0)))))
 
+;; better s-expression handling
+(require 'adjust-parens)
+(load-after 'lisp-mode
+  (add-hook 'lisp-mode-hook 'adjust-parens-mode)
+  (add-hook 'emacs-lisp-mode-hook 'adjust-parens-mode))
+(load-after 'racket-mode
+  (add-hook 'racket-mode-hook 'adjust-parens-mode))
+
 (provide 'init-editing)
