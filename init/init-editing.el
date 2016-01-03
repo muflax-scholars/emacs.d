@@ -443,12 +443,18 @@
     (error (message "Invalid expression")
            (insert (current-kill 0)))))
 
+(defun add-lispish-hook (hook)
+  (load-after 'lisp-mode           	
+    (add-hook 'lisp-mode-hook      	hook)
+    (add-hook 'emacs-lisp-mode-hook	hook))
+  (load-after 'racket-mode         	
+    (add-hook 'racket-mode-hook    	hook)))
+
 ;; better s-expression handling
 (require 'adjust-parens)
-(load-after 'lisp-mode           	
-  (add-hook 'lisp-mode-hook      	'adjust-parens-mode)
-  (add-hook 'emacs-lisp-mode-hook	'adjust-parens-mode))
-(load-after 'racket-mode         	
-  (add-hook 'racket-mode-hook    	'adjust-parens-mode))
+(add-lispish-hook 'adjust-parens-mode)
+
+(require 'lispy)
+(add-lispish-hook 'lispy-mode)
 
 (provide 'init-editing)
