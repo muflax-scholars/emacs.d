@@ -182,6 +182,13 @@
 (defun unbreak-stupid-map (stupid-map)
   (define-key stupid-map (kbd "C-c") nil))
 
+(defun nuke-keymap (map &optional mode)
+  ;; nuke the keymap so we can start over
+  (set map (make-sparse-keymap))
+  (when (and mode (boundp mode))
+    (setcdr (assq mode minor-mode-map-alist)
+            (symbol-value map))))
+
 (load-after 'python       	(unbreak-stupid-map	python-mode-map))
 (load-after 'enh-ruby-mode	(unbreak-stupid-map	enh-ruby-mode-map))
 (load-after 'go-mode      	(unbreak-stupid-map	go-mode-map))
@@ -896,12 +903,9 @@
 
   (add-hook 'ido-setup-hook 'ido-my-keys))
 
-(load-after 'lispy
-  ;; nuke the keymap so we can start over
-  (setq lispy-mode-map (make-sparse-keymap))
-  (setcdr (assq 'lispy-mode minor-mode-map-alist)
-          lispy-mode-map)
 
+(load-after 'lispy
+  (nuke-keymap 'lispy-mode-map 'lispy-mode)
   (kd lispy-mode-map
       ;; modal  	
       ;; '("l"  	lispy-right             	:type lispy)
