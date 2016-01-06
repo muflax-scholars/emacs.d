@@ -168,7 +168,7 @@
 
     ;; lispy modal key
     ('lispy
-     (lispy-define-key map (kbd key) command `(:override ,override)))
+     (lispy-define-key map key command `(:override ,override)))
 
     ;; Plain key with a simple command.
     ('simple
