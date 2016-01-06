@@ -344,7 +344,7 @@
     '("C-q"   	quoted-insert)
     '("C-r"   	window-prefix-map :type prefix)
     '("C-s"   	search-prefix-map :type prefix)
-    '("C-t"   	save-compile-run)
+    '("C-t"   	save-buffer)
     '("C-u"   	universal-argument)
     '("C-v"   	visual-prefix-map :type prefix)
     '("C-w"   	whole-line-or-region-kill-region)
