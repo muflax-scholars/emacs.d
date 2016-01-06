@@ -452,6 +452,8 @@
 
 ;; better s-expression handling
 (require 'adjust-parens)
+(advice-add 'lisp-dedent-adjust-parens :before #'beginning-of-line-text)
+(advice-add 'lisp-indent-adjust-parens :before #'beginning-of-line-text)
 (add-lispish-hook 'adjust-parens-mode)
 
 (require 'lispy)
