@@ -443,12 +443,12 @@
     (error (message "Invalid expression")
            (insert (current-kill 0)))))
 
-(defun add-lispish-hook (hook)
-  (load-after 'lisp-mode           	
-    (add-hook 'lisp-mode-hook      	hook)
-    (add-hook 'emacs-lisp-mode-hook	hook))
-  (load-after 'racket-mode         	
-    (add-hook 'racket-mode-hook    	hook)))
+(defmacro add-lispish-hook (hook)
+  `(load-after 'lisp-mode           	
+     (add-hook 'lisp-mode-hook      	,hook)
+     (add-hook 'emacs-lisp-mode-hook	,hook))
+  `(load-after 'racket-mode         	
+     (add-hook 'racket-mode-hook    	,hook)))
 
 ;; better s-expression handling
 (require 'adjust-parens)
