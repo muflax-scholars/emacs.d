@@ -287,10 +287,16 @@
     '("<backspace>"	delete-backward-char)
     '("<delete>"   	delete-char) ; make DEL always work like intended
 
-    '("S-<backspace>" 	literal-delete-backward-char)
-    '("S-<delete>"    	literal-delete-char)
+    '("S-<backspace>" 	kill-beginning-of-line)
+    '("S-<delete>"    	kill-line)
     '("S-<insert>"    	whole-line-or-region-yank)
     '("S-<insertchar>"	whole-line-or-region-yank)
+
+    '("C-S-<backspace>"	kill-beginning-of-line-and-join-backward)
+    '("C-S-<delete>"   	kill-and-join-forward)
+
+    '("M-<backspace>"	copy-beginning-of-line)
+    '("M-<delete>"   	copy-line)
 
     '("RET"  	newline)
     '("SPC"  	self-insert-command)

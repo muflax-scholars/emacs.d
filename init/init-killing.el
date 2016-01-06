@@ -30,6 +30,19 @@
         (append-next-kill))
     (kill-ring-save (mark) (point))))
 
+(defun copy-beginning-of-line ()
+  "Copy to beginning of line."
+  (interactive)
+  (set 'this-command 'copy-to-kill)
+  (save-excursion
+    (set-mark (point))
+    (if (= (point) (line-beginning-position))
+        (backward-line)
+      (goto-char (line-beginning-position)))
+    (if (eq last-command 'copy-to-kill)
+        (append-next-kill))
+    (kill-ring-save (mark) (point))))
+
 (defun yank-and-indent ()
   "Yank and then indent the newly formed region according to mode."
   (interactive)
@@ -44,6 +57,19 @@
   (if (and (eolp) (not (bolp)))
       (delete-indentation t)
     (kill-line arg)))
+
+(defun kill-beginning-of-line (&optional arg)
+  "Kill to the beginning of the line."
+  (interactive "P")
+  (kill-line (- (or arg 0))))
+
+(defun kill-beginning-of-line-and-join-backward (&optional arg)
+  "If at end of line, join with following; otherwise kill line.
+  Deletes whitespace at join."
+  (interactive "P")
+  (kill-beginning-of-line arg)
+  (when (and (bolp) (not (eolp)))
+    (delete-indentation)))
 
 (defun blank-line ()
   "Intelligently blanks the line."
