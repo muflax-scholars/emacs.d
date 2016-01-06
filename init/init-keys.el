@@ -903,6 +903,12 @@
 
   (add-hook 'ido-setup-hook 'ido-my-keys))
 
+(load-after 'adjust-parens
+  (nuke-keymap 'adjust-parens-mode-map 'adjust-parens-mode)
+  (kd adjust-parens-mode-map
+      '("TAB"  	lisp-indent-adjust-parens)
+      '("S-TAB"	lisp-dedent-adjust-parens)
+      ))
 
 (load-after 'lispy
   (nuke-keymap 'lispy-mode-map 'lispy-mode)
