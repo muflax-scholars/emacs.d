@@ -19,7 +19,8 @@
 (elastic-advice-command-region	uncomment-region)
 
 (load-after 'lispy
-  (elastic-advice-command	lispy-comment))
+  (elastic-advice-command	lispy-comment)
+  (elastic-advice-command	lispy-clone))
 
 (add-hook 'notes-mode-hook 'elastic-turn-on-extended-columns)
 
