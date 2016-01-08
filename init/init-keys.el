@@ -909,8 +909,8 @@
 (load-after 'adjust-parens
   (nuke-keymap 'adjust-parens-mode-map 'adjust-parens-mode)
   (kd adjust-parens-mode-map
-      '("TAB"  	lisp-indent-adjust-parens)
-      '("S-TAB"	lisp-dedent-adjust-parens)
+      '("M-<left>" 	lisp-dedent-adjust-parens)
+      '("M-<right>"	lisp-indent-adjust-parens)
       ))
 
 (load-after 'lispy
