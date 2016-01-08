@@ -696,11 +696,14 @@
   ;; operate on sexps
   (kd lisp-mode-shared-map
       '("<return>"	sp-newline)
+      '("C-c C-l" 	lispy-mode)
       ))
 
 (load-after 'racket-mode
   ;; operate on sexps
   (kd racket-mode-map
+      '("C-c C-l" 	lispy-mode)
+
       '("<return>"	sp-newline)
 
       '("C-c SPC"	racket-run)
