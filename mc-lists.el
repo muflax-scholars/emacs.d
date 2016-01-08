@@ -59,6 +59,7 @@
         lesson/add-translations-to-block
         lisp-dedent-adjust-parens
         lisp-indent-adjust-parens
+        lispy-backward-delete
         lispy-braces
         lispy-brackets
         lispy-delete
