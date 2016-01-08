@@ -14,7 +14,6 @@
         c-electric-pound
         c-electric-semi&comma
         c-electric-slash
-        c-electric-star
         c-indent-line-or-region
         copy-line
         copy-with-append
@@ -52,6 +51,8 @@
         indent-new-comment-line
         indent-region
         kill-and-join-forward
+        kill-beginning-of-line
+        kill-beginning-of-line-and-join-backward
         kill-with-append
         kill-without-append
         kmacro-end-or-call-macro
@@ -144,6 +145,8 @@
         special-lispy-goto-projectile
         special-lispy-goto-recursive
         special-lispy-join
+        special-lispy-knight-down
+        special-lispy-knight-up
         special-lispy-left
         special-lispy-mark-list
         special-lispy-move-down
@@ -173,6 +176,8 @@
         special-lispy-tab
         special-lispy-teleport
         special-lispy-tilde
+        special-lispy-to-defun
+        special-lispy-to-lambda
         special-lispy-underscore
         special-lispy-undo
         special-lispy-up
