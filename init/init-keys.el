@@ -1081,6 +1081,16 @@
       ;; '("C-7"        	lispy-cursor-down)
       ;; '("C-8"        	lispy-parens-down)
       ;; '("C-9"        	lispy-out-forward-newline)
+      )
+
+  (defun lispy-eb-finalize ()
+    (interactive)
+    (lispy-eb-delete-overlay)
+    (lispy-backward 1))
+
+  (nuke-keymap 'lispy-eb-keymap)
+  (kd lispy-eb-keymap
+      '("C-c C-c"	lispy-eb-finalize)
       ))
 
 
