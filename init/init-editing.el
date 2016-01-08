@@ -460,4 +460,11 @@
 (require 'hydra)
 (add-lispish-hook 'lispy-mode)
 
+;; for lispy keys
+(load-after 'lispy
+  (defun lispy-eb-finalize ()
+    (interactive)
+    (lispy-eb-delete-overlay)
+    (lispy-backward 1)))
+
 (provide 'init-editing)
