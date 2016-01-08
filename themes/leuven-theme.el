@@ -197,7 +197,7 @@
    `(rainbow-delimiters-depth-5-face ((,class (:bold t :foreground "#00d7af"))))
    `(rainbow-delimiters-depth-6-face ((,class (:bold t :foreground "#ff8700"))))
    `(rainbow-delimiters-depth-7-face ((,class (:bold t :foreground "#b218b2"))))
-   `(rainbow-delimiters-depth-8-face ((,class (:bold t :foreground "#ffd700"))))
+   `(rainbow-delimiters-depth-8-face ((,class (:bold t :foreground "#449900"))))
    `(rainbow-delimiters-depth-9-face ((,class (:bold t :foreground "#5f5f5f"))))
    `(rainbow-delimiters-mismatched-face ((,class ,paren-unmatched)))
    `(rainbow-delimiters-unmatched-face ((,class ,paren-unmatched)))
