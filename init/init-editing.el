@@ -459,7 +459,6 @@
 
 (require 'lispy)
 (require 'hydra)
-(add-lispish-hook 'lispy-mode)
 
 ;; for lispy keys
 (load-after 'lispy
