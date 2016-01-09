@@ -696,7 +696,11 @@
   ;; operate on sexps
   (kd lisp-mode-shared-map
       '("<return>"	sp-newline)
-      '("C-c C-l" 	lispy-mode)
+
+      '("C->"	sp-forward-slurp-sexp)
+      '("C-<"	sp-backward-slurp-sexp)
+      '("M-<"	sp-forward-barf-sexp)
+      '("M->"	sp-backward-barf-sexp)
       ))
 
 (load-after 'racket-mode
