@@ -177,9 +177,9 @@ This does not include the line that point is on."
 (show-paren-mode 1)
 
 (require 'rainbow-delimiters)
-(add-hook 'prog-mode-hook 	'rainbow-delimiters-mode)
-(add-hook 'text-mode-hook 	'rainbow-delimiters-mode)
-(add-hook 'notes-mode-hook	'rainbow-delimiters-mode)
+(add-hook 'prog-mode-hook    	'rainbow-delimiters-mode)
+;; (add-hook 'text-mode-hook 	'rainbow-delimiters-mode)
+;; (add-hook 'notes-mode-hook	'rainbow-delimiters-mode)
 
 ;; don't hard-wrap text, but use nice virtual wrapping
 (require 'adaptive-wrap)
