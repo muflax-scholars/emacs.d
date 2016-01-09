@@ -62,12 +62,14 @@
         lispy-backward-delete
         lispy-braces
         lispy-brackets
+        lispy-colon
         lispy-comment
         lispy-delete
         lispy-kill
         lispy-parens
         lispy-quotes
         lispy-right-nostring
+        lispy-tick
         literal-delete-backward-char
         literal-delete-char
         literal-tab
