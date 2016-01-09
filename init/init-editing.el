@@ -457,6 +457,9 @@
 (advice-add 'lisp-indent-adjust-parens :before #'beginning-of-line-text)
 (add-lispish-hook 'adjust-parens-mode)
 
+;; load for now so we have functions available
+(require 'paredit)
+(require 'paxedit)
 (require 'lispy)
 (require 'hydra)
 
