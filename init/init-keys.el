@@ -914,175 +914,208 @@
       ))
 
 (load-after 'lispy
-  (nuke-keymap 'lispy-mode-map 'lispy-mode)
   (kd lispy-mode-map
-      ;; modal  	
-      ;; '("l"  	lispy-right             	:type lispy)
-      ;; '("h"  	lispy-left              	:type lispy)
-      ;; '("f"  	lispy-flow              	:type lispy)
-      ;; '("j"  	lispy-down              	:type lispy)
-      ;; '("k"  	lispy-up                	:type lispy)
-      ;; '("d"  	lispy-different         	:type lispy)
-      ;; '("o"  	lispy-other-mode        	:type lispy)
-      ;; '("p"  	lispy-eval-other-window 	:type lispy)
-      ;; '("P"  	lispy-paste             	:type lispy)
-      ;; '("y"  	lispy-occur             	:type lispy)
-      ;; '("z"  	lh-knight/body          	:type lispy)
+      ;; modal keys
+
+      ;; navigate	
+      '("n"      	lispy-up                	:type lispy)
+      '("r"      	lispy-down              	:type lispy)
+      '("h"      	lispy-left              	:type lispy)
+      '("g"      	lispy-right             	:type lispy)
+      '("k"      	lispy-knight-up         	:type lispy)
+      '("f"      	lispy-knight-down       	:type lispy)
+      '("a"      	lispy-flow              	:type lispy)
+      '("e"      	lispy-different         	:type lispy)
+      ;; '("z"   	lh-knight/body          	:type lispy)
+      '("G"      	lispy-goto-mode         	:type lispy)
+      ;; '("D"   	pop-tag-mark            	:type lispy)
+      ;; '("A"   	lispy-beginning-of-defun	:type lispy)
+
+      ;; jump 	
+      '("s"   	lispy-ace-symbol        	:type lispy)
+      '("S"   	lispy-ace-symbol-replace	:type lispy)
+      '("-"   	lispy-ace-subword       	:type lispy)
+      '("p"   	lispy-ace-paren         	:type lispy)
+      ;; '("P"	lispy-cursor-ace        	:type lispy)
+      ;; '("y"	lispy-occur             	:type lispy)
+
+      ;; move         	
+      ;; '("M-<left>" 	lispy-move-left 	:type lispy)
+      ;; '("M-n"      	lispy-move-up)
+      ;; '("M-r"      	lispy-move-down)
+      ;; '("M-<right>"	lispy-move-right	:type lispy)
+      '("C"           	lispy-clone     	:type lispy)
+      ;; '("C"        	lispy-convolute 	:type lispy)
+      ;; '("^"        	lispy-raise     	:type lispy)
+      '("^"           	lispy-raise-some	:type lispy)
+      '("R"           	lispy-raise-some	:type lispy)
+      ;; '("t"        	lispy-teleport  	:type lispy 	:override '(cond ((looking-at lispy-outline) (end-of-line))))
+
+      ;; change	
+      '(">"    	lispy-slurp     	:type lispy)
+      '("<"    	lispy-barf      	:type lispy)
+      ;; '("D" 	lispy-down-slurp	:type lispy)
+      ;; '("U" 	lispy-up-slurp  	:type lispy)
+      '("*"    	lispy-splice    	:type lispy)
+      '("+"    	lispy-join      	:type lispy)
+      '("J"    	lispy-join      	:type lispy)
+      '("u"    	lispy-undo      	:type lispy)
+
+      ;; format	
+      '("O"    	lispy-oneline      	:type lispy)
+      '("M"    	lispy-alt-multiline	:type lispy)
+      '("S"    	lispy-stringify    	:type lispy)
+
       ;; outline	
       ;; '("J"  	lispy-outline-next      	:type lispy)
       ;; '("K"  	lispy-outline-prev      	:type lispy)
       ;; '("L"  	lispy-outline-goto-child	:type lispy)
-      ;; Paredit	
-      ;; '(">"  	lispy-slurp             	:type lispy)
-      ;; '("<"  	lispy-barf              	:type lispy)
-      ;; '("/"  	lispy-splice            	:type lispy)
-      ;; '("r"  	lispy-raise             	:type lispy)
-      ;; '("R"  	lispy-raise-some        	:type lispy)
-      ;; '("+"  	lispy-join              	:type lispy)
-      ;; '("C"  	lispy-convolute         	:type lispy)
-      ;; '("w"  	lispy-move-up           	:type lispy)
-      ;; '("s"  	lispy-move-down         	:type lispy)
-      ;; '("O"  	lispy-oneline           	:type lispy)
-      ;; '("M"  	lispy-alt-multiline     	:type lispy)
-      ;; '("S"  	lispy-stringify         	:type lispy)
-      ;; marking	
-      ;; '("a"  	lispy-ace-symbol        	:type lispy 	:override '(cond ((looking-at lispy-outline '(lispy-meta-return)))))
-      ;; '("H"  	lispy-ace-symbol-replace	:type lispy)
-      ;; '("m"  	lispy-mark-list         	:type lispy)
-      ;; dialect	
-      ;; '("e"  	lispy-eval              	:type lispy)
-      ;; '("E"  	lispy-eval-and-insert   	:type lispy)
-      ;; '("G"  	lispy-goto-local        	:type lispy)
-      ;; '("g"  	lispy-goto              	:type lispy)
-      ;; '("F"  	lispy-follow            	:type lispy)
-      ;; '("D"  	pop-tag-mark            	:type lispy)
-      ;; '("A"  	lispy-beginning-of-defun	:type lispy)
-      ;; '("_"  	lispy-underscore        	:type lispy)
-      ;; misc   	
-      ;; '("SPC"	lispy-space             	:type lispy)
-      ;; '("i"  	lispy-tab               	:type lispy)
-      ;; '("I"  	lispy-shifttab          	:type lispy)
-      ;; '("N"  	lispy-narrow            	:type lispy)
-      ;; '("W"  	lispy-widen             	:type lispy)
-      ;; '("c"  	lispy-clone             	:type lispy)
-      ;; '("u"  	lispy-undo              	:type lispy)
-      ;; '("q"  	lispy-ace-paren         	:type lispy 	:override '(cond ((bound-and-true-p view-mode) (View-quit))))
-      ;; '("Q"  	lispy-ace-char          	:type lispy)
-      ;; '("v"  	lispy-view              	:type lispy)
-      ;; '("t"  	lispy-teleport          	:type lispy 	:override '(cond ((looking-at lispy-outline) (end-of-line))))
-      ;; '("n"  	lispy-new-copy          	:type lispy)
-      ;; '("b"  	lispy-back              	:type lispy)
-      ;; '("B"  	lispy-ediff-regions     	:type lispy)
-      ;; '("x"  	lispy-x                 	:type lispy)
-      ;; '("Z"  	lispy-edebug-stop       	:type lispy)
-      ;; '("V"  	lispy-visit             	:type lispy)
-      ;; '("-"  	lispy-ace-subword       	:type lispy)
-      ;; '("."  	lispy-repeat            	:type lispy)
-      ;; '("~"  	lispy-tilde             	:type lispy)
-      ;; digit  	
-      ;; '("0"  	digit-argument          	:type lispy)
-      ;; '("1"  	digit-argument          	:type lispy)
-      ;; '("2"  	digit-argument          	:type lispy)
-      ;; '("3"  	digit-argument          	:type lispy)
-      ;; '("4"  	digit-argument          	:type lispy)
-      ;; '("5"  	digit-argument          	:type lispy)
-      ;; '("6"  	digit-argument          	:type lispy)
-      ;; '("7"  	digit-argument          	:type lispy)
-      ;; '("8"  	digit-argument          	:type lispy)
-      ;; '("9"  	digit-argument          	:type lispy)
 
-      ;; base           	
-      ;; '("C-a"        	lispy-move-beginning-of-line)
-      ;; '("C-e"        	lispy-move-end-of-line)
-      ;; killing        	
-      ;; '("C-k"        	lispy-kill)
-      ;; '("M-d"        	lispy-kill-word)
-      ;; '("M-DEL"      	lispy-backward-kill-word)
-      ;; misc           	
-      ;; '("("          	lispy-parens)
-      ;; '(";"          	lispy-comment)
-      ;; '("M-q"        	lispy-fill)
-      ;; '("C-j"        	lispy-newline-and-indent)
-      ;; '("RET"        	lispy-newline-and-indent-plain)
+      ;; marking	
+      '("m"     	lispy-mark-list	:type lispy)
+
+      ;; eval 	
+      ;; '("e"	lispy-eval              	:type lispy)
+      ;; '("E"	lispy-eval-and-insert   	:type lispy)
+      ;; '("W"	lispy-eval-other-window 	:type lispy)
+
+      ;; insert	
+      '("_"    	lispy-underscore	:type lispy)
+      '("~"    	lispy-tilde     	:type lispy)
+      '("SPC"  	lispy-space     	:type lispy)
+
+      ;; misc 	
+      ;; '("i"	lispy-tab              	:type lispy)
+      ;; '("I"	lispy-shifttab         	:type lispy)
+      ;; '("N"	lispy-narrow           	:type lispy)
+      ;; '("W"	lispy-widen            	:type lispy)
+      ;; '("v"	lispy-view             	:type lispy)
+      ;; '("n"	lispy-new-copy         	:type lispy)
+      ;; '("b"	lispy-back             	:type lispy)
+      ;; '("B"	lispy-ediff-regions    	:type lispy)
+      ;; '("Z"	lispy-edebug-stop      	:type lispy)
+      ;; '("V"	lispy-visit            	:type lispy)
+      ;; '("."	lispy-repeat           	:type lispy)
+
+      ;; x-misc	
+      '("B"    	lispy-bind-variable          	:type lispy)
+      '("C"    	lispy-to-cond                	:type lispy)
+      '("D"    	lispy-to-defun               	:type lispy)
+      ;; '("e" 	lispy-edebug                 	:type lispy)
+      ;; '("f" 	lispy-flatten                	:type lispy)
+      ;; '("h" 	lispy-describe               	:type lispy)
+      '("I"    	lispy-to-ifs                 	:type lispy)
+      ;; '("j" 	lispy-debug-step-in          	:type lispy)
+      ;; '("k" 	lispy-extract-block          	:type lispy)
+      '("L"    	lispy-to-lambda              	:type lispy)
+      ;; '("r" 	lispy-eval-and-replace       	:type lispy)
+      ;; '("u" 	lispy-unbind-variable        	:type lispy)
+      ;; '("v" 	lispy-view-test              	:type lispy)
+      ;; '("B" 	lispy-store-region-and-buffer	:type lispy)
+      ;; '("R" 	lispy-reverse                	:type lispy)
+
+      ;; digit	
+      '("0"   	digit-argument	:type lispy)
+      '("1"   	digit-argument	:type lispy)
+      '("2"   	digit-argument	:type lispy)
+      '("3"   	digit-argument	:type lispy)
+      '("4"   	digit-argument	:type lispy)
+      '("5"   	digit-argument	:type lispy)
+      '("6"   	digit-argument	:type lispy)
+      '("7"   	digit-argument	:type lispy)
+      '("8"   	digit-argument	:type lispy)
+      '("9"   	digit-argument	:type lispy)
+
+      ;; global keys
+
+      ;; insert	
+      '(";"    	lispy-comment)
+      '(":"    	lispy-colon)
+      '("'"    	lispy-tick)
+      '("`"    	lispy-backtick)
+      '("#"    	lispy-hash)
+      ;; '("^" 	lispy-hat) ;; clojure
+
+      ;; pairs	
+      '("("   	lispy-parens)
+      '(")"   	lispy-right-nostring)
+      '("["   	lispy-brackets)
+      '("]"   	lispy-close-square)
+      '("{"   	lispy-braces)
+      '("}"   	lispy-close-curly)
+      '("\""  	lispy-quotes)
+
+      ;; navigation	
+      ;; '("["     	lispy-backward)
+      ;; '("]"     	lispy-forward)
+      ;; '("C-3"   	lispy-right)
+
+      ;; killing          	
+      '("<delete>"        	lispy-forward-delete)
+      '("<backspace>"     	lispy-backward-delete)
+      ;; '("C-<delete>"   	lispy-kill-word)         	;; needs to be integrated into smart-kill-word
+      ;; '("C-<backspace>"	lispy-backward-kill-word)
+      '("C-k"             	lispy-kill)              	;; better default
+      '("C-K"             	kill-and-join-forward)   	
+      ;; '(""             	lispy-kill-sentence)
+      ;; '(""             	lispy-mark-symbol)
+      ;; '(""             	lispy-kill-at-point)
+      ;; '(""             	lispy-mark)
+      ;; '(""             	lispy-meta-return)
+
+      ;; misc       	
+      '("C-j"       	lispy-newline-and-indent)
+      '("RET"       	lispy-newline-and-indent-plain)
+      '("<M-return>"	lispy-open-line)
+      '("M-q"       	lispy-fill)
+
       ;; tags           	
       ;; '("M-."        	lispy-goto-symbol)
       ;; '("M-,"        	pop-tag-mark)
-      ;; paredit        	
-      ;; '("M-)"        	lispy-close-round-and-newline)
+
+      ;; change         	
+      '("M-("           	lispy-wrap-round)
+      '("M-)"           	lispy-close-round-and-newline)
       ;; '("C-M-n"      	lispy-forward)
       ;; '("C-M-p"      	lispy-backward)
-      ;; '("["          	lispy-open-square)
-      ;; '("]"          	lispy-close-square)
-      ;; '("{"          	lispy-open-curly)
-      ;; '("}"          	lispy-close-curly)
-      ;; '(")"          	lispy-right-nostring)
-      ;; '("\""         	lispy-doublequote)
       ;; '("M-\""       	lispy-meta-doublequote)
-      ;; '("C-d"        	lispy-forward-delete)
-      ;; '("DEL"        	lispy-backward-delete)
       ;; '("C-M-f"      	lispy-forward)
       ;; '("C-M-b"      	lispy-backward)
-      ;; '("M-("        	lispy-wrap-round)
       ;; '("M-s"        	lispy-splice)
       ;; '("M-<up>"     	lispy-splice-sexp-killing-backward)
       ;; '("M-<down>"   	lispy-splice-sexp-killing-backward)
       ;; '("M-r"        	lispy-raise-sexp)
       ;; '("M-?"        	lispy-convolute-sexp)
-      ;; '("C-)"        	lispy-forward-slurp-sexp)
-      ;; '("C-<right>"  	lispy-forward-slurp-sexp)
-      ;; '("C-}"        	lispy-forward-barf-sexp)
-      ;; '("C-<left>"   	lispy-forward-barf-sexp)
       ;; '("C-("        	lispy-backward-slurp-sexp)
+      ;; '("C-)"        	lispy-forward-slurp-sexp)
+      ;; '("C-<left>"   	lispy-forward-barf-sexp)
+      ;; '("C-<right>"  	lispy-forward-slurp-sexp)
       ;; '("C-M-<left>" 	lispy-backward-slurp-sexp)
       ;; '("C-M-<right>"	lispy-backward-barf-sexp)
       ;; '("C-{"        	lispy-backward-barf-sexp)
-      ;; '("M-S"        	lispy-split)
-      ;; '("M-J"        	lispy-join)
+      ;; '("C-}"        	lispy-forward-barf-sexp)
+      '("C-)"           	lispy-split)
+      '("C-+"           	lispy-join)
       ;; '("C-M-u"      	lispy-left)
       ;; '("C-M-n"      	lispy-right)
-      ;; navigation     	
-      ;; '("]"          	lispy-forward)
-      ;; '("["          	lispy-backward)
-      ;; '(")"          	lispy-right-nostring)
-      ;; kill-related   	
-      ;; '("C-y"        	lispy-yank)
-      ;; '("C-d"        	lispy-delete)
-      ;; '("DEL"        	lispy-delete-backward)
-      ;; '("M-k"        	lispy-kill-sentence)
-      ;; '("M-m"        	lispy-mark-symbol)
-      ;; '("C-,"        	lispy-kill-at-point)
-      ;; '("C-M-,"      	lispy-mark)
-      ;; pairs          	
-      ;; '("{"          	lispy-braces)
-      ;; '("}"          	lispy-brackets)
-      ;; '("\""         	lispy-quotes)
-      ;; insert         	
-      ;; '(":"          	lispy-colon)
-      ;; '("^"          	lispy-hat)
-      ;; '("'"          	lispy-tick)
-      ;; '("`"          	lispy-backtick)
-      ;; '("#"          	lispy-hash)
-      ;; '("M-j"        	lispy-split)
-      ;; '("M-J"        	lispy-join)
-      ;; '("<C-return>" 	lispy-open-line)
-      ;; '("<M-return>" 	lispy-meta-return)
-      ;; misc           	
-      ;; '("M-o"        	lispy-string-oneline)
-      ;; '("M-i"        	lispy-iedit)
-      ;; '("<backtab>"  	lispy-shifttab)
-      ;; outline        	
-      ;; '("M-<left>"   	lispy-outline-left)
-      ;; '("M-<right>"  	lispy-outline-right)
-      ;; c-digits       	
-      ;; '("C-1"        	lispy-describe-inline)
-      ;; '("C-2"        	lispy-arglist-inline)
-      ;; '("C-3"        	lispy-right)
-      ;; '("C-4"        	lispy-mode-map-x)
-      ;; '("C-7"        	lispy-cursor-down)
-      ;; '("C-8"        	lispy-parens-down)
-      ;; '("C-9"        	lispy-out-forward-newline)
-      )
 
+      ;; misc          	
+      ;; '("M-o"       	lispy-string-oneline)
+      ;; '("M-i"       	lispy-iedit)
+      ;; '("<backtab>" 	lispy-shifttab)
+
+      ;; outline      	
+      ;; '("M-<left>" 	lispy-outline-left)
+      ;; '("M-<right>"	lispy-outline-right)
+
+      ;; c-digits	
+      ;; '("C-1" 	lispy-describe-inline)
+      ;; '("C-2" 	lispy-arglist-inline)
+      ;; '("C-4" 	lispy-mode-map-x)
+      ;; '("C-8" 	lispy-parens-down)
+      ;; '("C-9" 	lispy-out-forward-newline)
+      )
+  (nuke-keymap 'lispy-mode-map 'lispy-mode)
 
   (nuke-keymap 'lispy-eb-keymap)
   (kd lispy-eb-keymap
