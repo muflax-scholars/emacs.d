@@ -700,12 +700,9 @@
       ))
 
 (load-after 'racket-mode
-  ;; operate on sexps
+  (set-keymap-parent racket-mode-map lisp-mode-shared-map)
+
   (kd racket-mode-map
-      '("C-c C-l" 	lispy-mode)
-
-      '("<return>"	sp-newline)
-
       '("C-c SPC"	racket-run)
       '("C-c C-c"	racket-run)
       '("C-c r"  	racket-repl)
