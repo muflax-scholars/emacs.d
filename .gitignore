@@ -2,6 +2,7 @@
 /packages/archives
 /packages/*.txt
 /cache
+/semanticdb
 /url
 /var
 !**/*.elc
