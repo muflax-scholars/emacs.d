@@ -953,5 +953,59 @@
       '("C-c C-c"	lispy-eb-finalize)
       ))
 
+(load-after 'sly
+  ;; start fresh
+  (nuke-keymap 'sly-mode-map        	'sly-mode)
+  (nuke-keymap 'sly-editing-mode-map	'sly-editing-mode)
+  (nuke-keymap 'sly-mrepl-mode-map  	'sly-mrepl-mode)
+
+  (kd lisp-mode-map
+      '("C-c C-s"	sly)
+      )
+
+  (kd sly-mode-map
+  ;; (define-key map (kbd "M-.")     'sly-edit-definition)
+  ;; (define-key map (kbd "M-,")     'sly-pop-find-definition-stack)
+  ;; (define-key map (kbd "M-_")     'sly-edit-uses)    ; for German layout
+  ;; (define-key map (kbd "M-?")     'sly-edit-uses)    ; for USian layout
+  ;; (define-key map (kbd "C-x 4 .") 'sly-edit-definition-other-window)
+  ;; (define-key map (kbd "C-x 5 .") 'sly-edit-definition-other-frame)
+  ;; (define-key map (kbd "C-x C-e") 'sly-eval-last-expression)
+  ;; (define-key map (kbd "C-M-x")   'sly-eval-defun)
+  ;; ;; Include PREFIX keys...
+  ;; (define-key map (kbd "C-c")     sly-prefix-map)
+  ;; ;; Completion
+  ;; (define-key map (kbd "C-c TAB") 'sly-complete-symbol)
+  ;; ;; Evaluating
+  ;; (define-key map (kbd "C-c C-p") 'sly-pprint-eval-last-expression)
+  ;; ;; Macroexpand
+  ;; (define-key map (kbd "C-c C-m") 'sly-expand-1)
+  ;; (define-key map (kbd "C-c M-m") 'sly-macroexpand-all)
+  ;; ;; Misc
+  ;; (define-key map (kbd "C-c C-u") 'sly-undefine-function)
+      )
+
+  (kd sly-editing-mode-map
+      ;; (define-key map (kbd "M-p")     'sly-previous-note)
+      ;; (define-key map (kbd "M-n")     'sly-next-note)
+      ;; (define-key map (kbd "C-c M-c") 'sly-remove-notes)
+      ;; (define-key map (kbd "C-c C-k") 'sly-compile-and-load-file)
+      ;; (define-key map (kbd "C-c M-k") 'sly-compile-file)
+      ;; (define-key map (kbd "C-c C-c") 'sly-compile-defun)
+      )
+
+  (kd sly-mrepl-mode-map
+      ;; (define-key map (kbd "RET")     'sly-mrepl-return)
+      ;; (define-key map [return]        'sly-mrepl-return)
+      ;; (define-key map (kbd "TAB")     'sly-indent-and-complete-symbol)
+      ;; (define-key map (kbd "C-c C-b") 'sly-interrupt)
+      ;; (define-key map (kbd "C-c C-c") 'sly-interrupt)
+      ;; (define-key map (kbd "M-p")     'sly-mrepl-previous-input-or-button)
+      ;; (define-key map (kbd "M-n")     'sly-mrepl-next-input-or-button)
+      ;; (define-key map (kbd "C-M-p")     'sly-button-backward)
+      ;; (define-key map (kbd "C-M-n")     'sly-button-forward)
+      )
+
+  )
 
 (provide 'init-keys)
