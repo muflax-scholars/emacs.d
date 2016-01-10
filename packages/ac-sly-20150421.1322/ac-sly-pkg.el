@@ -1,0 +1,1 @@
+(define-package "ac-sly" "20150421.1322" "An auto-complete source using sly completions" '((sly "1.0.0alpha") (auto-complete "1.4") (cl-lib "0.5")) :stars '(#("3" 0 1 (font-lock-face paradox-star-face))) :url "https://github.com/qoocku/ac-sly")
