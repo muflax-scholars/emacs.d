@@ -709,6 +709,8 @@
 
       '("C-("	sp-down-sexp)
       '("C-)"	sp-up-sexp)
+
+      '("C-;"	sotlisp-comment-or-uncomment-sexp)
       ))
 
 (load-after 'racket-mode

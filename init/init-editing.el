@@ -460,6 +460,7 @@
 ;; load for now so we have functions available
 (require 'paredit)
 (require 'paxedit)
+(require 'sotlisp)
 (require 'lispy)
 (require 'hydra)
 
