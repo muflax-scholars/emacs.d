@@ -708,12 +708,12 @@
   (set-keymap-parent racket-mode-map lisp-mode-shared-map)
 
   (kd racket-mode-map
-      '("C-c SPC"	racket-run)
-      '("C-c C-c"	racket-run)
-      '("C-c r"  	racket-repl)
-      '("C-c C-r"	racket-run-and-switch-to-repl)
-      '("C-c C-p"	racket-profile)
-      '("C-c C-t"	racket-test)
+      ;; '("C-c SPC"	racket-run)
+      '("C-c C-c"   	racket-run)
+      '("C-c r"     	racket-repl)
+      '("C-c C-r"   	racket-run-and-switch-to-repl)
+      '("C-c C-p"   	racket-profile)
+      '("C-c C-t"   	racket-test)
 
       '("C-c s d"	racket-send-definition)
       '("C-c s e"	racket-send-last-sexp)
