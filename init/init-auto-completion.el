@@ -94,6 +94,12 @@
   (add-hook 'sly-mode-hook 'set-up-sly-ac)
   '(add-to-list 'ac-modes 'sly-mrepl-mode))
 
+;; rust
+(load-after 'racer
+  (require 'ac-racer)
+
+  (add-hook 'racer-mode-hook 'ac-racer-setup))
+
 ;; use automatic file headers
 ;; #TODO recognize name automagically
 (require 'autoinsert)
