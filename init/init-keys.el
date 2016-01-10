@@ -696,6 +696,8 @@
 (load-after 'lisp-mode
   ;; operate on sexps
   (kd lisp-mode-shared-map
+      '("<backtab>"	sp-indent-defun)
+
       '("<return>"  	sp-newline)
       '("M-<return>"	sp-clone-sexp)
 
