@@ -1013,17 +1013,16 @@
       )
 
   (kd sly-mrepl-mode-map
-      ;; '("RET"	'sly-mrepl-return)
-      ;; '([return]        'sly-mrepl-return)
-      ;; '("TAB"    	'sly-indent-and-complete-symbol)
-      ;; '("C-c C-b"	'sly-interrupt)
-      ;; '("C-c C-c"	'sly-interrupt)
-      ;; '("M-p"    	'sly-mrepl-previous-input-or-button)
-      ;; '("M-n"    	'sly-mrepl-next-input-or-button)
-      ;; '("C-M-p"  	'sly-button-backward)
-      ;; '("C-M-n"  	'sly-button-forward)
+      '("RET"     	sly-mrepl-return)
+      '("TAB"     	sly-indent-and-complete-symbol)
+      '("C-c C-b" 	sly-interrupt)
+      '("C-c C-c" 	sly-interrupt)
+      '("C-<up>"  	sly-mrepl-previous-input-or-button)
+      '("C-<down>"	sly-mrepl-next-input-or-button)
+      '("M-<up>"  	sly-button-backward)
+      '("M-<down>"	sly-button-forward)
+      '("C-c C-l" 	sly-mrepl-clear-repl)
       )
-
   )
 
 (provide 'init-keys)
