@@ -703,6 +703,12 @@
       '("C-<"	sp-backward-slurp-sexp)
       '("M-<"	sp-forward-barf-sexp)
       '("M->"	sp-backward-barf-sexp)
+
+      '("M-("	lispy-wrap-round)
+      '("M-)"	lispy-close-round-and-newline)
+
+      '("C-("	sp-down-sexp)
+      '("C-)"	sp-up-sexp)
       ))
 
 (load-after 'racket-mode
@@ -943,10 +949,7 @@
       ;; killing	
       ;; '("C-k"	lispy-kill)           	;; better default?
       ;; '("C-K"	kill-and-join-forward)	
-
       ;; change 	
-      ;; '("M-("	lispy-wrap-round)
-      ;; '("M-)"	lispy-close-round-and-newline)
       )
 
   (nuke-keymap 'lispy-eb-keymap)
