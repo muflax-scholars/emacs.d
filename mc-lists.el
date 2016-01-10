@@ -103,6 +103,7 @@
         phi-rectangle-next-line
         phi-rectangle-yank
         racket-insert-closing
+        racket-smart-open-bracket
         sgml-slash
         sh-assignment
         smart-backward-kill-word
