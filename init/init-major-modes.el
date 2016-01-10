@@ -429,6 +429,7 @@
   (setq inferior-lisp-program "sbcl --noinform --no-linedit")
   (setq sly-kill-without-query-p t)
   ;; (setq sly-auto-start 'ask)
+  (setq sly-mrepl-eli-like-history-navigation t)
   )
 
 (provide 'init-major-modes)
