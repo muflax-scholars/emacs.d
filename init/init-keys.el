@@ -1030,4 +1030,13 @@
       )
   )
 
+(load-after 'racer
+  (nuke-keymap 'racer-mode-map 'racer-mode)
+  (kd racer-mode-map
+      '("C-c C-t"	racer-find-definition)
+      '("C-c C-T"	pop-tag-mark)
+      '("C-c t"  	racer-find-definition)
+      '("C-c T"  	pop-tag-mark)
+      ))
+
 (provide 'init-keys)

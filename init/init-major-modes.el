@@ -361,6 +361,10 @@
 
   (load-after 'flycheck
     (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
+
+  (require 'racer)
+  (add-hook 'rust-mode-hook 	'racer-mode)
+  (add-hook 'racer-mode-hook	'eldoc-mode)
   )
 
 (defun save-compile-run ()
