@@ -426,6 +426,9 @@
 ;; common-lisp
 (load-lazy '(common-lisp-mode) "lisp-mode"
   (require 'sly)
-  (setq inferior-lisp-program "sbcl"))
+  (setq inferior-lisp-program "sbcl --noinform --no-linedit")
+  (setq sly-kill-without-query-p t)
+  ;; (setq sly-auto-start 'ask)
+  )
 
 (provide 'init-major-modes)
