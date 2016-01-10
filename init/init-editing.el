@@ -471,4 +471,25 @@
     (lispy-eb-delete-overlay)
     (lispy-backward 1)))
 
+;; TODO these functions are just placeholders
+(defun sp-comment-sexp ()
+  (interactive)
+  (sp-get (sp-get-hybrid-sexp)
+    (comment-region
+     (save-excursion
+       (goto-char :beg)
+       (beginning-of-line)
+       (point))
+     :end)))
+
+(defun sp-uncomment-sexp ()
+  (interactive)
+  (sp-get (sp-get-thing)
+    (uncomment-region
+     (save-excursion
+       (goto-char :beg)
+       (beginning-of-line)
+       (point))
+     :end)))
+
 (provide 'init-editing)
