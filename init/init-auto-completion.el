@@ -87,6 +87,13 @@
   (add-hook 'ielm-mode-hook 'ac-emacs-lisp-mode-setup)
   (add-to-list 'ac-modes 'inferior-emacs-lisp-mode))
 
+;; common-lisp
+(load-after 'sly
+  (require 'ac-sly)
+
+  (add-hook 'sly-mode-hook 'set-up-sly-ac)
+  '(add-to-list 'ac-modes 'sly-mrepl-mode))
+
 ;; use automatic file headers
 ;; #TODO recognize name automagically
 (require 'autoinsert)
