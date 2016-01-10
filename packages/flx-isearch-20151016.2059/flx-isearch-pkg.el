@@ -1,1 +1,0 @@
-(define-package "flx-isearch" "20151016.2059" "Fuzzy incremental searching for emacs" '((emacs "24") (flx "20140821") (cl-lib "0.5")) :stars '(#("11" 0 2 (font-lock-face paradox-star-face))) :url "https://github.com/pythonnut/flx-isearch" :keywords '("convenience" "search" "flx"))

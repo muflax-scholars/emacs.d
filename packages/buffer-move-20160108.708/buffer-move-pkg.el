@@ -1,0 +1,1 @@
+(define-package "buffer-move" "20160108.708" "easily swap buffers" 'nil :stars '(#("20" 0 2 (font-lock-face paradox-star-face))) :url "https://github.com/lukhas/buffer-move" :keywords '("lisp" "convenience"))
