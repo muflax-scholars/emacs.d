@@ -423,4 +423,9 @@
 (add-to-list 'auto-mode-alist '("\\.nqp$"     	. perl6-mode))
 (add-to-list 'interpreter-mode-alist '("perl6"	. perl6-mode))
 
+;; common-lisp
+(load-lazy '(common-lisp-mode) "lisp-mode"
+  (require 'sly)
+  (setq inferior-lisp-program "sbcl"))
+
 (provide 'init-major-modes)
