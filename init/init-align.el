@@ -17,6 +17,8 @@
 (elastic-advice-command       	comment-dwim)
 (elastic-advice-command-region	comment-region)
 (elastic-advice-command-region	uncomment-region)
+(elastic-advice-command       	indent-sexp)
+(elastic-advice-command       	sp-indent-defun)
 
 (load-after 'lispy
   (elastic-advice-command	lispy-comment)
