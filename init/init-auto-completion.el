@@ -131,5 +131,6 @@
 (auto-insert-from-yas "go" 	'go-mode)
 (auto-insert-from-yas "rkt"	'racket-mode)
 (auto-insert-from-yas "rs" 	'rust-mode)
+(auto-insert-from-yas "ml" 	'tuareg-mode)
 
 (provide 'init-auto-completion)
