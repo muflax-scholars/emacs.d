@@ -69,6 +69,8 @@
         lispy-kill
         lispy-parens
         lispy-quotes
+        lispy-raise
+        lispy-raise-some
         lispy-right-nostring
         lispy-tick
         literal-delete-backward-char
@@ -115,6 +117,7 @@
         sp-add-to-previous-sexp
         sp-backward-symbol
         sp-beginning-of-sexp
+        sp-copy-sexp
         sp-end-of-sexp
         sp-kill-hybrid-sexp
         sp-newline
