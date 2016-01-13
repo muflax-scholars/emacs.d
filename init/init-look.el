@@ -41,6 +41,7 @@
 (add-hook 'after-init-hook 'run-after-make-frame-hooks-current-frame)
 
 ;; color themes
+(setq custom-safe-themes t)
 (add-to-list 'custom-theme-load-path (emacs-d "themes/"))
 
 (defvar bright-theme	'leuven              	"Bright theme to use")
