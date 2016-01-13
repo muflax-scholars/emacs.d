@@ -704,6 +704,8 @@
       '("<return>"  	sp-newline)
       '("M-<return>"	sp-clone-sexp)
 
+      '("C-^"	lispy-raise-some)
+
       '("C->"	sp-forward-slurp-sexp)
       '("C-<"	sp-backward-slurp-sexp)
       '("M-<"	sp-forward-barf-sexp)
