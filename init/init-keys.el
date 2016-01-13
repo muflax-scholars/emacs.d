@@ -346,7 +346,7 @@
     '("C-m"   	newline :type terminal :alt-key "RET")
     '("C-n"   	focus-next-window)
     '("C-N"   	focus-prev-window)
-    '("C-o"   	yas-expand)
+    ;; '("C-o"	yas-expand)
     '("C-p"   	mc-prefix-map :type prefix)
     '("C-q"   	quoted-insert)
     '("C-r"   	window-prefix-map :type prefix)
@@ -514,6 +514,9 @@
   ;; saner trigger key
   (define-key yas-minor-mode-map [(tab)]    	nil)
   (define-key yas-minor-mode-map (kbd "TAB")	nil)
+
+  (kd yas-minor-mode-map
+      '("C-o"	yas-expand))
 
   (kd yas-keymap
       '("<return>"	yas/exit-all-snippets)
