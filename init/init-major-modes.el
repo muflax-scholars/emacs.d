@@ -434,6 +434,9 @@
   (setq sly-kill-without-query-p t)
   ;; (setq sly-auto-start 'ask)
   (setq sly-mrepl-eli-like-history-navigation t)
+
+  ;; refactoring
+  (require 'redshank)
   )
 
 (provide 'init-major-modes)
