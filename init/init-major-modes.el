@@ -439,4 +439,7 @@
   (require 'redshank)
   )
 
+(load-after 'tuareg
+  (add-hook 'tuareg-mode-hook 'merlin-mode))
+
 (provide 'init-major-modes)

@@ -100,6 +100,11 @@
 
   (add-hook 'racer-mode-hook 'ac-racer-setup))
 
+;; ocaml
+(load-after 'merlin
+  (setq merlin-ac-setup t)
+  (add-to-list 'ac-modes 'tuareg-mode))
+
 ;; use automatic file headers
 ;; #TODO recognize name automagically
 (require 'autoinsert)
