@@ -543,9 +543,12 @@
   (define-key ac-completing-map "\r"         	nil)
 
   (kd ac-completing-map
-      '("C-j"	ac-complete)
-      '("C-d"	ac-next)
-      '("C-D"	ac-previous)
+      '("C-j"     	ac-complete)
+      '("C-d"     	ac-next)
+      '("C-D"     	ac-previous)
+      '("<return>"	ac-complete)
+      '("<down>"  	ac-next)
+      '("<up>"    	ac-previous)
       ))
 
 ;; multiple cursors
