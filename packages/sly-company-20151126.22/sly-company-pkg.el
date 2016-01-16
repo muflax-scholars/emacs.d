@@ -1,0 +1,1 @@
+(define-package "sly-company" "20151126.22" "sly completion backend for company mode" '((sly "1.0.0alpha") (company "0.7") (emacs "24.3")) :stars '(#("4" 0 1 (font-lock-face paradox-star-face))) :keywords '("convenience" "lisp" "abbrev"))
