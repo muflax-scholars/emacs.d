@@ -439,6 +439,7 @@
   (require 'redshank)
   )
 
+;; ocaml
 (load-after 'tuareg
   (add-hook 'tuareg-mode-hook 'merlin-mode))
 
