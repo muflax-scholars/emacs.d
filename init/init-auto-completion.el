@@ -68,6 +68,7 @@
 (setq ac-comphist-file (emacs-d "cache/ac-comphist.dat"))
 (setq ac-auto-show-menu nil)
 (setq ac-ignore-case nil)
+(setq ac-auto-start nil)
 (setq ac-quick-help-delay 0.8)
 (ac-config-default)
 
