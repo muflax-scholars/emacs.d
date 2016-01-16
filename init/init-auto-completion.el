@@ -105,6 +105,10 @@
   (setq merlin-ac-setup t)
   (add-to-list 'ac-modes 'tuareg-mode))
 
+;; elm
+(load-after 'elm-mode
+  (add-hook 'elm-mode-hook 'elm-oracle-setup-ac))
+
 ;; use automatic file headers
 ;; #TODO recognize name automagically
 (require 'autoinsert)
