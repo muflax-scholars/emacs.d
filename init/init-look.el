@@ -217,8 +217,9 @@ This does not include the line that point is on."
 
 (require 'diminish)
 (diminish-minor-mode	'abbrev               	'abbrev-mode               	    	)
-(diminish-minor-mode	'auto-complete        	'auto-complete-mode        	    	)
+(diminish-minor-mode	'auto-complete        	'auto-complete-mode        	"AC"	)
 (diminish-minor-mode	'autorevert           	'auto-revert-mode          	    	)
+(diminish-minor-mode	'company              	'company-mode              	"Co"	)
 (diminish-minor-mode	'eldoc                	'eldoc-mode                	    	)
 (diminish-minor-mode	'fic-mode             	'fic-mode                  	    	)
 (diminish-minor-mode	'hideshow             	'hs-minor-mode             	    	)

@@ -58,23 +58,17 @@
 (yas-global-mode 1)
 
 ;; auto completion
-(require 'auto-complete-config)
-(add-to-list 'ac-modes	'enh-ruby-mode)
-(add-to-list 'ac-modes	'go-mode)
-(add-to-list 'ac-modes	'rust-mode)
-(add-to-list 'ac-modes	'notes-mode)
+(require 'company)
+(setq company-idle-delay nil) ;; no idle completion because it's too slow
+(setq company-tooltip-align-annotations t)
+(global-company-mode)
 
-(add-to-list 'ac-dictionary-directories (emacs-d "ac-dict"))
-(setq ac-comphist-file (emacs-d "cache/ac-comphist.dat"))
-(setq ac-auto-show-menu nil)
-(setq ac-ignore-case nil)
-(setq ac-auto-start nil)
-(setq ac-quick-help-delay 0.8)
-(ac-config-default)
+(require 'company-quickhelp)
+(company-quickhelp-mode 1)
 
 ;; fancy go autocompletion
 (load-after 'go-mode
-  (require 'go-autocomplete))
+  (require 'company-go))
 
 ;; abbrev-mode
 (load-after 'abbrev
@@ -83,32 +77,24 @@
   (when (file-exists-p abbrev-file-name)
     (quietly-read-abbrev-file)))
 
-;; emacs-lisp
-(load-after 'ielm
-  (add-hook 'ielm-mode-hook 'ac-emacs-lisp-mode-setup)
-  (add-to-list 'ac-modes 'inferior-emacs-lisp-mode))
-
 ;; common-lisp
 (load-after 'sly
-  (require 'ac-sly)
-
-  (add-hook 'sly-mode-hook 'set-up-sly-ac)
-  '(add-to-list 'ac-modes 'sly-mrepl-mode))
+  (require 'sly-company)
+  (add-hook 'sly-mode-hook 	'sly-company-mode)
+  (add-hook 'sly-mrepl-hook	'sly-company-mode))
 
 ;; rust
 (load-after 'racer
-  (require 'ac-racer)
-
-  (add-hook 'racer-mode-hook 'ac-racer-setup))
+  (add-hook 'racer-mode-hook #'company-mode))
 
 ;; ocaml
 (load-after 'merlin
-  (setq merlin-ac-setup t)
-  (add-to-list 'ac-modes 'tuareg-mode))
+  (add-to-list 'company-backends 'merlin-company-backend))
 
 ;; elm
 (load-after 'elm-mode
-  (add-hook 'elm-mode-hook 'elm-oracle-setup-ac))
+  (add-hook 'elm-mode-hook #'elm-oracle-setup-completion)
+  (add-to-list 'company-backends 'company-elm))
 
 ;; use automatic file headers
 ;; #TODO recognize name automagically

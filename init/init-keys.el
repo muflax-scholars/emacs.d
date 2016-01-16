@@ -332,7 +332,7 @@
     '("C-A"   	beginning-of-line)
     '("C-b"   	backward-word)
     '("C-c"   	mode-specific-command-prefix)
-    ;; '("C-d"	ac-trigger-key)
+    '("C-d"   	company-complete)
     '("C-e"   	smart-end-of-line)
     '("C-E"   	end-of-line)
     '("C-f"   	forward-word)
@@ -526,7 +526,7 @@
       '("C-O"     	yas-next-field)
       ))
 
-;; auto-completion
+;; auto-completion (ac)
 (load-after 'auto-complete-config
   (setq ac-use-menu-map nil)
   (ac-set-trigger-key "C-d")
@@ -550,6 +550,12 @@
       '("<down>"  	ac-next)
       '("<up>"    	ac-previous)
       ))
+
+;; auto-completion (company-mode)
+(load-after 'company
+  (kd company-active-map
+      ))
+
 
 ;; multiple cursors
 (kd mc-prefix-map
