@@ -59,10 +59,10 @@
 
 ;; auto completion
 (require 'auto-complete-config)
-;; (add-to-list 'ac-modes	'enh-ruby-mode)
-(add-to-list 'ac-modes   	'go-mode)
-(add-to-list 'ac-modes   	'rust-mode)
-;; (add-to-list 'ac-modes	'notes-mode)
+(add-to-list 'ac-modes	'enh-ruby-mode)
+(add-to-list 'ac-modes	'go-mode)
+(add-to-list 'ac-modes	'rust-mode)
+(add-to-list 'ac-modes	'notes-mode)
 
 (add-to-list 'ac-dictionary-directories (emacs-d "ac-dict"))
 (setq ac-comphist-file (emacs-d "cache/ac-comphist.dat"))
