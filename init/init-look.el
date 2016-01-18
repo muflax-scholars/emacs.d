@@ -137,7 +137,8 @@ This does not include the line that point is on."
 ;; show #colors in matching color
 (require 'rainbow-mode)
 (defadvice rainbow-mode (after rainbow-mode-refresh activate)
-  (font-lock-fontify-buffer))
+  (font-lock-flush)
+  (font-lock-ensure))
 
 ;; blinking cursor
 (blink-cursor-mode -1)
