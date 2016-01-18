@@ -741,22 +741,23 @@
       '("C-c r"     	racket-repl)
       '("C-c C-r"   	racket-run-and-switch-to-repl)
       '("C-c C-p"   	racket-profile)
+      '("C-c C-s"   	racket-check-syntax-mode)
       '("C-c C-t"   	racket-test)
 
       '("C-c s d"	racket-send-definition)
       '("C-c s e"	racket-send-last-sexp)
       '("C-c s r"	racket-send-region)
 
-      '("C-c e d"	racket-expand-definition)
-      '("C-c e e"	racket-expand-last-sexp)
-      '("C-c e r"	racket-expand-region)
-      '("C-c e e"	racket-expand-again)
+      '("C-c e d"  	racket-expand-definition)
+      '("C-c e e"  	racket-expand-last-sexp)
+      '("C-c e r"  	racket-expand-region)
+      '("C-c e SPC"	racket-expand-again)
 
       '("C-c C-x C-f"	racket-open-require-path)
-      '("M-C-u"      	racket-backward-up-list)
+      ;; '("M-C-u"   	racket-backward-up-list)
 
+      '("C-c d"  	racket-describe)
       '("C-c C-d"	racket-doc)
-      '("C-c C-."	racket-describe)
       '("C-c f"  	racket-fold-all-tests)
       '("C-c F"  	racket-unfold-all-tests)
 
