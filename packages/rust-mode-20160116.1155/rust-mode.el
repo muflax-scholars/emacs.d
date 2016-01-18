@@ -1,7 +1,7 @@
 ;;; rust-mode.el --- A major emacs mode for editing Rust source code -*-lexical-binding: t-*-
 
 ;; Version: 0.2.0
-;; Package-Version: 20151215.1934
+;; Package-Version: 20160116.1155
 ;; Author: Mozilla
 ;; Url: https://github.com/rust-lang/rust-mode
 ;; Keywords: languages
@@ -15,6 +15,7 @@
 ;;; Code:
 
 (eval-when-compile (require 'rx)
+                   (require 'cl)
                    (require 'compile)
                    (require 'url-vars))
 
@@ -373,7 +374,7 @@ function or trait.  When nil, where will be aligned with fn or trait."
                      (+ baseline rust-indent-offset))))
 
               ;; A closing brace is 1 level unindented
-              ((looking-at "[])}]") (- baseline rust-indent-offset))
+              ((looking-at "[]})]") (- baseline rust-indent-offset))
 
               ;; Doc comments in /** style with leading * indent to line up the *s
               ((and (nth 4 (syntax-ppss)) (looking-at "*"))
@@ -526,6 +527,21 @@ function or trait.  When nil, where will be aligned with fn or trait."
   (concat "\\_<" (regexp-opt words t) "\\_>"))
 (defconst rust-re-special-types (regexp-opt-symbols rust-special-types))
 
+
+(defun rust-module-font-lock-matcher (limit)
+  "Matches module names \"foo::\" but does not match type annotations \"foo::<\"."
+  (block nil
+    (while t
+      (let* ((symbol-then-colons (rx-to-string `(seq (group (regexp ,rust-re-ident)) "::")))
+             (match (re-search-forward symbol-then-colons limit t)))
+        (cond
+         ;; If we didn't find a match, there are no more occurrences
+         ;; of foo::, so return.
+         ((null match) (return nil))
+         ;; If this isn't a type annotation foo::<, we've found a
+         ;; match, so a return it!
+         ((not (looking-at (rx (0+ space) "<"))) (return match)))))))
+
 (defvar rust-mode-font-lock-keywords
   (append
    `(
@@ -549,8 +565,8 @@ function or trait.  When nil, where will be aligned with fn or trait."
      ;; Field names like `foo:`, highlight excluding the :
      (,(concat (rust-re-grab rust-re-ident) ":[^:]") 1 font-lock-variable-name-face)
 
-     ;; Module names like `foo::`, highlight including the ::
-     (,(rust-re-grab (concat rust-re-ident "::")) 1 font-lock-type-face)
+     ;; Module names like `foo::`, highlight excluding the ::
+     (rust-module-font-lock-matcher 1 font-lock-type-face)
 
      ;; Lifetimes like `'foo`
      (,(concat "'" (rust-re-grab rust-re-ident) "[^']") 1 font-lock-variable-name-face)
@@ -1232,7 +1248,6 @@ This is written mainly to be used as `end-of-defun-function' for Rust."
   (setq-local fill-forward-paragraph-function 'rust-fill-forward-paragraph)
   (setq-local adaptive-fill-function 'rust-find-fill-prefix)
   (setq-local adaptive-fill-first-line-regexp "")
-  (setq-local adaptive-fill-regexp "[\t ]*\\(?://[/!]*\\|/\\*[*!]?\\)[[:space:]]*")
   (setq-local comment-multi-line t)
   (setq-local comment-line-break-function 'rust-comment-indent-new-line)
   (setq-local imenu-generic-expression rust-imenu-generic-expression)

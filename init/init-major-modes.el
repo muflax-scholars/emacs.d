@@ -365,6 +365,11 @@
   (require 'racer)
   (add-hook 'rust-mode-hook 	'racer-mode)
   (add-hook 'racer-mode-hook	'eldoc-mode)
+
+  (add-hook 'rust-mode-hook
+            (lambda ()
+              (setq-local adaptive-fill-regexp
+                          "[\t ]*\\(?://[/!]*\\|/\\*[*!]?\\)[[:space:]]*")))
   )
 
 (defun save-compile-run ()
