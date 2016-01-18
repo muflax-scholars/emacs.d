@@ -1073,4 +1073,9 @@
       '("C-c T"  	pop-tag-mark)
       ))
 
+(load-after 'comint
+  (nuke-key comint-mode-map (kbd "C-d"))
+  )
+
+
 (provide 'init-keys)
