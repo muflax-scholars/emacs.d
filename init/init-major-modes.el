@@ -422,6 +422,9 @@
 (add-hook 'compilation-finish-functions 'bury-compile-buffer-if-successful)
 
 ;; racket
+(load-after 'racket-mode
+  (add-hook 'lisp-mode-hook	'turn-on-eldoc-mode))
+
 (add-to-list 'auto-mode-alist '("\\.rkt$" . racket-mode))
 (add-to-list 'interpreter-mode-alist '("racket" . racket-mode))
 
