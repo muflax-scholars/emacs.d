@@ -13,6 +13,7 @@
 
 ;; recreate scratch when saving it
 (require 'scratch-ext)
+(setq scratch-ext-log-directory (emacs-d "scratch/"))
 
 ;; clean up buffers every once in a while
 (require 'midnight)
