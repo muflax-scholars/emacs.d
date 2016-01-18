@@ -183,11 +183,15 @@
   (define-key stupid-map (kbd "C-c") nil))
 
 (defun nuke-keymap (map &optional mode)
-  ;; nuke the keymap so we can start over
+  "nuke the keymap so we can start over"
   (set map (make-sparse-keymap))
   (when (and mode (boundp mode))
     (setcdr (assq mode minor-mode-map-alist)
             (symbol-value map))))
+
+(defun nuke-key (map key)
+  "nuke individual keys in a keymap"
+  (define-key map key nil))
 
 (load-after 'python       	(unbreak-stupid-map	python-mode-map))
 (load-after 'enh-ruby-mode	(unbreak-stupid-map	enh-ruby-mode-map))
@@ -512,8 +516,8 @@
 
 (load-after 'yasnippet
   ;; saner trigger key
-  (define-key yas-minor-mode-map [(tab)]    	nil)
-  (define-key yas-minor-mode-map (kbd "TAB")	nil)
+  (nuke-key yas-minor-mode-map [(tab)])
+  (nuke-key yas-minor-mode-map (kbd "TAB"))
 
   (kd yas-minor-mode-map
       '("C-o"	yas-expand))
@@ -532,15 +536,15 @@
   (ac-set-trigger-key "C-d")
 
   ;; unset stupid keys
-  (define-key ac-completing-map "\t"         	nil)
-  (define-key ac-completing-map [tab]        	nil)
-  (define-key ac-completing-map (kbd "<Tab>")	nil)
-  (define-key ac-completing-map [up]         	nil)
-  (define-key ac-completing-map [down]       	nil)
-  (define-key ac-completing-map (kbd "M-n")  	nil)
-  (define-key ac-completing-map (kbd "M-p")  	nil)
-  (define-key ac-completing-map [return]     	nil)
-  (define-key ac-completing-map "\r"         	nil)
+  (nuke-key ac-completing-map "\t")
+  (nuke-key ac-completing-map [tab])
+  (nuke-key ac-completing-map (kbd "<Tab>"))
+  (nuke-key ac-completing-map [up])
+  (nuke-key ac-completing-map [down])
+  (nuke-key ac-completing-map (kbd "M-n"))
+  (nuke-key ac-completing-map (kbd "M-p"))
+  (nuke-key ac-completing-map [return])
+  (nuke-key ac-completing-map "\r")
 
   (kd ac-completing-map
       '("C-j"     	ac-complete)
@@ -555,7 +559,6 @@
 (load-after 'company
   (kd company-active-map
       ))
-
 
 ;; multiple cursors
 (kd mc-prefix-map
