@@ -650,7 +650,7 @@
     '("f"  	hs-fold-levels        	:help "fold all brackets")
     '("F"  	fold-dwim-show-all    	:help "unfold all brackets")
     '("h"  	hl-line-mode          	:help "highlight current line")
-    '("l"  	toggle-truncate-lines 	:help "truncate lines")
+    '("l"  	toggle-line-wrap      	:help "truncate lines")
     '("s"  	whitespace-fold-levels	:help "fold whitespace")
     '("S"  	whitespace-fold-reset 	:help "unfold whitespace")
     '("w"  	leerzeichen-mode      	:help "show whitespace")

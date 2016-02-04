@@ -193,6 +193,15 @@ This does not include the line that point is on."
 (setq-default truncate-lines t)
 (setq truncate-partial-width-windows nil)
 
+(defun toggle-line-wrap ()
+  (interactive)
+  (if truncate-lines
+      (toggle-truncate-lines 1)
+    (toggle-truncate-lines 0))
+  (if visual-line-mode
+      (visual-line-mode 0)
+    (visual-line-mode 1)))
+
 ;; make regexpes a bit more readable by default
 (defun fontify-glyph (item glyph)
   `((,item
