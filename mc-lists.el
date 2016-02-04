@@ -43,6 +43,7 @@
         handle-switch-frame
         hungry-delete-backward
         hungry-delete-forward
+        ibuffer-do-kill-on-deletion-marks
         ibuffer-mark-for-delete
         ibus-exec-callback
         ido-switch-buffer
