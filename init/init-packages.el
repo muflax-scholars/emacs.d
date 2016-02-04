@@ -1,6 +1,9 @@
 ;;; local packages
 
 ;; elpa package-repositories
+(setq package--init-file-ensured t)
+(setq package-enable-at-startup nil)
+
 (require 'package)
 (setq package-user-dir (emacs-d "packages"))
 (setq package-archives nil)
