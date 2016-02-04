@@ -425,8 +425,9 @@
 (load-after 'racket-mode
   (add-hook 'lisp-mode-hook	'turn-on-eldoc-mode))
 
-(add-to-list 'auto-mode-alist '("\\.rkt$" . racket-mode))
-(add-to-list 'interpreter-mode-alist '("racket" . racket-mode))
+(add-to-list 'auto-mode-alist '("\\.rkt$"      	. racket-mode))
+(add-to-list 'auto-mode-alist '("\\.al[c]?$"   	. racket-mode))
+(add-to-list 'interpreter-mode-alist '("racket"	. racket-mode))
 
 ;; perl6
 (load-lazy '(perl6-mode) "perl6-mode"
