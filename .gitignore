@@ -8,5 +8,5 @@
 !**/*.elc
 /keyfreq*
 /scratch
-
+/network-security.data
 flycheck_*.el
