@@ -161,7 +161,8 @@ This does not include the line that point is on."
 
 ;; don't warn about impossible undo
 (require 'warnings)
-(setq warning-suppress-types (append '(undo discard-info) warning-suppress-types))
+(add-to-list 'warning-suppress-types 'undo)
+(add-to-list 'warning-suppress-types 'discard-info)
 
 ;; light-weight default whitespace highlighting
 (require 'leerzeichen)
