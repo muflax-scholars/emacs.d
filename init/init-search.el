@@ -125,7 +125,6 @@
 ;; fast navigation
 (require 'imenu)
 (require 'idomenu)
-(require 'imenu-anywhere)
 (set-default 'imenu-auto-rescan t)
 
 (defun imenu-flush-cache ()
