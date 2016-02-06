@@ -9,4 +9,5 @@
 /keyfreq*
 /scratch
 /network-security.data
+/irony
 flycheck_*.el
