@@ -592,6 +592,7 @@
 ;; handle comments
 (load-after 'cc-mode
   (kd c-mode-map
+      '("C-d"	nil)
       '("C-j"	c-indent-new-comment-line)
       ))
 
