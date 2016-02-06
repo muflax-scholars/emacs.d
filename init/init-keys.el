@@ -1079,5 +1079,10 @@
   (nuke-key comint-mode-map (kbd "C-d"))
   )
 
+(load-after 'make-mode
+  (nuke-key makefile-mode-map (kbd "M-n"))
+  (nuke-key makefile-mode-map (kbd "M-p"))
+  )
+
 
 (provide 'init-keys)

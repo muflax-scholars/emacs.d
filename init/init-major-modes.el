@@ -452,4 +452,8 @@
 (load-after 'tuareg
   (add-hook 'tuareg-mode-hook 'merlin-mode))
 
+;; make files
+(load-after 'make-mode
+  (add-hook 'makefile-mode-hook (lambda () (setq indent-tabs-mode nil))))
+
 (provide 'init-major-modes)
