@@ -9,6 +9,7 @@
         ace-jump-line-mode
         align-region-or-current
         beginning-of-visual-line
+        c-electric-brace
         c-electric-colon
         c-electric-paren
         c-electric-pound
